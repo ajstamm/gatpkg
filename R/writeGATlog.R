@@ -1,0 +1,298 @@
+#' Write GAT Log
+#'
+#' This function writes a log of the aggregation process. It reports the
+#' input and output datasets, variables and settings used, distributions of
+#' aggregation variables, map projection, program start and end times, and
+#' any warnings that were generated.
+#'
+#' @param area       A spatial polygons data frame.
+#' @param gatvars    A list of objects created by the GAT tool. It contains
+#'                   the strings myidvar, aggregator1, aggregator2, mergeopt1,
+#'                   and boundary, which are all variables in the area, the
+#'                   numbers minvalue1 and minvalue2, and the boolean
+#'                   rigidbound. Both aggregator1 and aggregator2 must be
+#'                   numeric and myidvar must contain unique values.
+#' @param aggvars    A list of objects created by the aggregation process. See
+#'                   mergeGATpolygons() for the elements created.
+#' @param filevars   A list of file names and paths. Of relevance to this
+#'                   function are the filename, filein, and the combined save
+#'                   path and save name, userout.
+#' @param mysettings A list of system settings, including version, pkgdate,
+#'                   starttime, and the booleans savekml and exists.
+#' @param mergevars  A list of settings for the aggregation, including type of
+#'                   aggregation (mergeopt1) and, if relevant, the variables
+#'                   to compare, similar1 and similar2.
+#' @param ratevars   A list of settings for calculating rate, including
+#'                   ratename, numerator and denominator variable names,
+#'                   multiplier value, and color name and scheme for the map.
+#' @param exclist    A list of exclusion criteria to use when merging.
+#'
+#' @examples
+#'
+#' # if you run this example, it saves "my_hftown.log" to your working
+#' # directory
+#'
+#' gatvars <- list(
+#'   myidvar = "ID",             # character variable of unique values
+#'   aggregator1 = "TOTAL_POP",  # numeric variable
+#'   aggregator2 = "TOTAL_POP",  # numeric variable
+#'   minvalue1 = 5000, minvalue2 = 5000,
+#'   maxvalue1 = 15000, maxvalue2 = 15000,
+#'   boundary = "COUNTY",        # character variable of non-unique values
+#'   mergeopt1 = "closest",      # method used to merge polygons
+#'   rigidbound = FALSE,         # boolean: were boundaries enforced?,
+#'   savekml = FALSE,
+#'   popwt = FALSE
+#' )
+#'
+#' mergevars <- list(
+#'   mergeopt1 = "similar",    # can be similar, closest, or least
+#'   similar1 = "B_TOT",       # numeric variable
+#'   similar2 = "W_TOT",       # numeric variable without any zeros
+#'   centroid = "geographic"
+#' )
+#'
+#' ratevars <- list(
+#'   ratename = "pop_density",
+#'   numerator = "TOTAL_POP",
+#'   denominator = "AREALAND",
+#'   multiplier = 5000,
+#'   colorname = "Blue-Green",
+#'   colorscheme = "BuGn"
+#' )
+#'
+#' aggvars <- defineGATmerge(
+#'   area = hftown,
+#'   gatvars = gatvars,
+#'   mergevars = mergevars
+#' )
+#'
+#' filevars <- list(
+#'   filein = "hftown",                        # original filename
+#'   userin = paste0(getwd(), "/hftown"),      # original file and path name
+#'   userout = paste0(getwd(), "/my_hftown"),  # save file path and name
+#'   pathout = getwd(),                        # save path name
+#'   fileout = "my_hftown"                     # save file name
+#' )
+#'
+#' mysettings <- list(
+#'   starttime = Sys.time(),
+#'   version = "1.0",
+#'   pkgdate = format(Sys.Date(), "%m-%d-%Y"),
+#'   exists = FALSE
+#' )
+#'
+#' exclist <-
+#'   list(
+#'     var1 = "exclusion1",
+#'     var2 = "exclusion2",
+#'     var3 = "NONE",           # flag to denote no third variable
+#'     math1 = "greater than",
+#'     math2 = "less than",
+#'     math3 = "equals",
+#'     val1 = 5000,
+#'     val2 = 50,
+#'     val3 = 0,
+#'     flagsum = 5
+#'   )
+#'
+#' writeGATlog(
+#'   area = hftown,
+#'   gatvars = gatvars,
+#'   filevars = filevars,
+#'   aggvars = aggvars,
+#'   mysettings = mysettings,
+#'   mergevars = mergevars,
+#'   ratevars = ratevars,
+#'   exclist = exclist
+#' )
+#'
+#' @export
+
+# should the log include these?
+# * rate calculations
+# * GAT version? currently reads in package version
+# * gatpkg citation?
+# re-order distributions by aggregation variable? - done
+
+writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
+                        mergevars, ratevars, exclist) {
+  # fill in full list of names below; code will error otherwise
+  listitems <- names(area@data)
+  listitems <- listitems[listitems != "flag"]
+  myvars <- ""
+  for (i in 1:(length(listitems)-1)) {
+    myvars <- paste0(myvars, listitems[i],", ")
+    if (i %% 8 == 0) {
+      myvars <- paste0(myvars, "\n", paste(rep(" ", 22), collapse = ""))
+    }
+  }
+  myvars <- paste0(myvars, listitems[length(listitems)])
+  if (gatvars$aggregator2 == "NONE") {
+    gatvars$aggregator2 <- gatvars$aggregator1
+  }
+
+  # begin log file
+  endtime <- Sys.time()
+  logfile <- paste0(filevars$userout, ".log")
+
+  # GAT settings
+  logtext <- c("NYSDOH Geographic Aggregation Tool log",
+               "\nVersion & date:", mysettings$version, mysettings$pkgdate,
+               "\nDate run:", as.character(Sys.Date()), "\n")
+  write(logtext, file = logfile, ncolumns = length(logtext), append = FALSE)
+
+  # input file
+  logtext <- c("\nInput file:          ", filevars$userin,
+               "\n  Projection:        ", sp::proj4string(area),
+               "\n  Field names:       ", myvars,
+               "\n  Identifier:        ", gatvars$myidvar,
+               "\n  Boundary variable: ", gatvars$boundary)
+  if (!gatvars$rigidbound & gatvars$boundary != "NONE") {
+    logtext <- c(logtext, "\nYou did not require the aggregation to respect",
+                 "the borders of", gatvars$boundary)
+  } else if (gatvars$boundary != "NONE") {
+    logtext <- c(logtext, "\nYou chose to require the aggregation to respect",
+                 "the borders of", gatvars$boundary)
+  }
+  write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+
+  # Output file
+  logtext <- c("\nOutput file:", filevars$userout,
+               "\nTime this program took to run:",
+               round(difftime(endtime, mysettings$starttime, units = "mins"),
+                     digits = 2), "minutes",
+               "\n  Number of input areas:    ",
+               format(gatvars$numrow, big.mark=",", scientific=FALSE),
+               "\n  Number of output areas:   ",
+               format(nrow(aggvars$allpolydata), big.mark=",", scientific=FALSE),
+               # does not take into account aborted aggregations
+               "\n  Number of aggregations:   ",
+               format(nrow(area@data) - nrow(aggvars$allpolydata), big.mark=",",
+                      scientific=FALSE),
+               "\n  Number of excluded areas: ",
+               format(exclist$flagsum, big.mark=",", scientific=FALSE))
+  write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+
+  # Merge settings
+  logtext <- c("\nMerge type:", mergevars$mergeopt1)
+  if (mergevars$mergeopt1 == "similar") {
+    logtext <- c(logtext, "\n  First similar variable:  ", mergevars$similar1,
+                 "\n  Second similar variable: ", mergevars$similar2)
+  } else if (mergevars$mergeopt1 == "closest") {
+    logtext <- c(logtext, mergevars$centroid, "centroid")
+    if (mergevars$centroid == "population-weighted") {
+      logtext <- c(logtext, "\n  Population file:", filevars$popin,
+                   "\n  Population variable:", gatvars$popvar)
+    }
+  }
+  write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+
+  # Exclusion criteria
+  if (exclist$var1 != "NONE" | exclist$var1 != "NONE" | exclist$var1 != "NONE") {
+    logtext <- c("\nExclusion criteria:")
+    if (exclist$var1 != "NONE") {
+      logtext <- c(logtext, "\n  1. ", exclist$var1, exclist$math1,
+                   format(exclist$val1, big.mark=",", scientific=FALSE))
+    }
+    if (exclist$var2 != "NONE") {
+      logtext <- c(logtext, "\n  2. ", exclist$var2, exclist$math2,
+                   format(exclist$val2, big.mark=",", scientific=FALSE))
+    }
+    if (exclist$var3 != "NONE") {
+      logtext <- c(logtext, "\n  3. ", exclist$var3, exclist$math3,
+                   format(exclist$val3, big.mark=",", scientific=FALSE))
+    }
+    write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+  }
+
+  # First aggregation variable
+  logtext <- c("\nFirst aggregation variable:", gatvars$aggregator1,
+               "\nMinimum value:", format(gatvars$minvalue1, big.mark=",", scientific=FALSE),
+               "\nMaximum value:", format(gatvars$maxvalue1, big.mark=",", scientific=FALSE),
+               "\nPre-aggregation distribution:")
+  write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+  write.table(quantile(area@data[, gatvars$aggregator1]), file = logfile, row.names = TRUE,
+              col.names = FALSE, append = TRUE)
+
+  logtext <- c("\nPost-aggregation distribution:")
+  write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+
+  write.table(quantile(aggvars$allpolydata[, gatvars$aggregator1]),
+              file = logfile, row.names = TRUE, col.names = FALSE, append = TRUE)
+
+  # second aggregation variable
+  if (gatvars$aggregator1 != gatvars$aggregator2) {
+    logtext <- c("\n\nSecond aggregation variable:", gatvars$aggregator2,
+                 "\nMinimum value:", format(gatvars$minvalue2, big.mark=",", scientific=FALSE),
+                 "\nMaximum value:", format(gatvars$maxvalue2, big.mark=",", scientific=FALSE),
+                 "\nPre-aggregation distribution:")
+    write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+    write.table(quantile(area@data[, gatvars$aggregator2]), file = logfile, row.names = TRUE,
+                col.names = FALSE, append = TRUE)
+  }
+
+  if (gatvars$aggregator1 != gatvars$aggregator2) {
+    logtext <- c("\nPost-aggregation distribution:")
+    write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+    write.table(quantile(aggvars$allpolydata[, gatvars$aggregator2]),
+                file = logfile, row.names = TRUE, col.names = FALSE, append = TRUE)
+  }
+
+# rate calculation if requested
+  if (ratevars$ratename == "no_rate") {
+    logtext <- "\nYou chose not to calculate a rate.\n"
+  } else {
+    logtext <- paste0("\nGAT calculated the rate ", ratevars$ratename,
+                      " using the color scheme ", ratevars$colorname, ".")
+    logtext <- c(logtext, paste0("\n  Numerator:   ", ratevars$numerator),
+                 paste0("\n  Denominator: ", ratevars$denominator),
+                 paste0("\n  Multiplier:  ",
+                        format(as.numeric(ratevars$multiplier), big.mark=",",
+                                          scientific=FALSE)), "\n")
+  }
+  write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+
+  # saved files
+  logtext <- c("All files have been saved to ", filevars$pathout)
+  if (!mysettings$exists) {
+    logtext <- c(logtext, "\n  The shapefiles failed to save. ")
+  } else {
+    logtext <- c(logtext,
+                 "\n  Aggregated shapefile:             ",
+                 paste0(filevars$fileout, ".shp"),
+                 "\n    Variables created by GAT: GATx, GATy, GATcratio, GATflag,")
+    if (ratevars$ratename != "no_rate") {
+      logtext <- c(logtext, paste0(ratevars$ratename, ","))
+    }
+    if (gatvars$popwt) {
+      logtext <- c(logtext, "GATpop,")
+    }
+    logtext <- c(logtext, "GATnumIDs",
+                 "\n  Original shapefile with crosswalk:",
+                 paste0(filevars$fileout, "in.shp"),
+                 "\n    Variables created by GAT: GATflag, GATid")
+  }
+  logtext <- c(logtext,
+               "\n  Maps:                             ",
+               paste0(filevars$fileout, "plots.pdf"),
+               "\n  Log file:                         ",
+               paste0(filevars$fileout, ".log"),
+               "\n  R settings file:                  ",
+               paste0(filevars$fileout, "settings.Rdata"))
+  if (gatvars$savekml) {
+    logtext <- c(logtext,
+                 "\n  KML file:                          ",
+                 paste0(filevars$fileout, ".kml"))
+  } else {
+    logtext <- c(logtext, "\n  You chose not to write a KML file.")
+  }
+
+  # warnings and errors
+  if (aggvars$logmsg != "") logtext <-
+    c(logtext, "\n\nThe following warnings were called while aggregating areas:",
+      "\n", trimws(aggvars$logmsg))
+  write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
+  #end code to create log file
+}
+

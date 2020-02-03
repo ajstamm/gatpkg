@@ -1,0 +1,103 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+# gatpkg
+
+Written by Thomas Talbot, revised and converted to Markdown by Abigail Stamm
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+This package is maintained by the New York State Department of Health’s 
+Environmental Health Surveillance (EHS) Section. Its purpose is to run the 
+Geographic Aggregation Tool (GAT) in R. 
+
+Health outcome maps with fine geographic resolution can be misleading due to 
+random fluctuations in disease rates caused by small numbers. In some cases 
+these maps can also inadvertently disclose confidential data. To overcome 
+these limitations EHS developed GAT to join neighboring geographic areas 
+together until a user defined population and/or number of cases is reached. 
+GAT can be used to produce maps for the public at the finest geographic 
+resolution practicable.
+    
+The input object is a polygon shapefile. The shapefile must contain a 
+character variable that uniquely identifies areas 
+and a numeric variable to sum for aggregation. A series of dialog boxes 
+allows the user to select: a variable to uniquely identify areas, one or 
+more aggregation variables, optionally, a variable of areas within which 
+merging will be preferred (ex. county), the amount (sum) the aggregation 
+variable(s) should be aggregated to, and the preferred aggregation method 
+- closest, least value, or ratio. The output is a shapefile with before 
+and after choropleth maps in R graphics saved to PDF. For output regions, 
+most numeric variables will be summed, except variables with the 
+following names, which will be averaged instead: x, y, GATx, GATy, lat, 
+lon, latitude, longitude, and long. For character variables, the values 
+of the last region merged will be used, with three additional variables 
+added: Sp_id for R row number and GATx, GATy for geographic centroids as 
+determined by the GAT. 
+
+The user must have an input shapefile (*.shp). The shapefile must have the 
+geographic boundaries of the areas the user would like to merge, a character 
+variable that uniquely identifies these areas, and a numeric variable to merge 
+by, such as the number of cases of disease or the population.
+
+GAT outputs a shapefile containing the aggregated regions with 
+associated data, which can be used in GIS programs such as ArcGIS, MapInfo and 
+QGIS. A KML file can also be produced, which can be displayed in Google Earth 
+as well as other Internet-based mapping programs. Last, GAT outputs several 
+before and after plots and a log of all selections and processes.
+
+The package includes an embedded map file to use when testing several of the 
+package functions. For details, type \code{?albanytown}. 
+
+If you use GAT, we would appreciate if you cite it. Suggestions for improvement 
+and bug reports are welcome.
+
+## Disclaimer
+
+This version of GAT is provided as is. 
+
+GAT was written in R-2.9.2 under Windows XP. It was revised and converted to 
+a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. The user needs 
+minimal R programming experience to run GAT. 
+
+## Installation
+
+**This is a placeholder. We are not live yet.**
+
+You can install the released version of gatpkg from 
+[CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("gatpkg")
+```
+
+## Running GAT
+
+This is the primary function to run GAT:
+
+```{r example, eval=FALSE}
+# not run
+library(gatpkg)
+# this is the only code that is likely to matter
+# to most users
+runGATprogram()
+```
+
+The package contains over 20 additional functions that are used in the 
+function above and could be combined in different ways to create slightly 
+modified versions of GAT. If there are specific conditions or options you 
+would like to request, or if you have specific recommendations to improve 
+GAT, let us know.
+

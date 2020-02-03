@@ -1,0 +1,11 @@
+^.*\.Rproj$
+^.Rproj\.user$
+^testdata$
+^notes$
+^.Rhistory$
+^man.bak$
+^data_raw$
+^\.Rproj\.user$
+^NEWS.0$
+^README\.Rmd$
+^NEWS_old

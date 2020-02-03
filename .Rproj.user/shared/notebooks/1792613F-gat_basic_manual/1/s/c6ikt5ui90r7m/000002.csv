@@ -1,0 +1,1 @@
+"0","filepath <- paste0(tools::getVignetteInfo(""gatpkg"", all = TRUE)[1, ""Dir""], ""/extdata/"")"

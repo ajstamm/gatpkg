@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580478579306.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "86|23|172|4|\n173|23|200|4|\n201|23|240|4|\n241|23|298|4|\n299|23|469|4|\n470|23|536|4|\n537|23|596|4|\n597|23|701|4|\n702|23|729|4|\n730|24|747|4|\n748|24|780|4|\n858|31|867|0|\n868|26|877|0|\n878|38|889|0|\n890|47|940|0|\n941|48|987|0|\n943|67|986|4|\n988|52|998|0|\n999|32|1012|0|\n1013|30|1048|0|\n1049|29|1067|0|\n1068|29|1078|0|\n1079|27|1094|0|\n1095|24|1104|5|\n1105|24|1158|0|\n1159|10|1166|2|\n",
+    "hash" : "3021940362",
+    "id" : "E17C3189",
+    "lastKnownWriteTime" : 1580480136,
+    "last_content_update" : 1580736172094,
+    "path" : "P:/Sections/EHS/Abigail/SubcountyData/Rcode/gatpkg/R/runGATprogram.R",
+    "project_path" : "R/runGATprogram.R",
+    "properties" : {
+        "cursorPosition" : "836,25",
+        "scrollLine" : "821",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

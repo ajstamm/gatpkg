@@ -1,0 +1,7 @@
+"0","# not run"
+"0","library(gatpkg)"
+"0","# this is the only code that is likely to matter"
+"0","# to most users"
+"0","runGATprogram()"
+"1",""
+"1",""

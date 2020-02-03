@@ -1,0 +1,60 @@
+---
+title: "GAT for R Technical Notes"
+author: "Abigail Stamm"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GAT for R Technical Notes}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Description
+
+*Initial draft written by Thomas Talbot. This version revised and converted to Markdown by Abigail Stamm.*
+
+This package is maintained by the New York State Department of Health’s Environmental Health Surveillance (EHS) Section. The purpose of this package is to run the Geographic Aggregation Tool (GAT) in R. 
+
+Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases these maps can also inadvertently disclose confidential data. To overcome these limitations EHS developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
+    
+The input object is a polygon shapefile. The shapefile must contain a character variable that uniquely identifies areas and a numeric variable to sum for aggregation. A series of dialog boxes allows the user to select: a variable to uniquely identify areas, one or more aggregation variables, optionally, a variable of areas within which merging will be preferred (ex. county), the amount (sum) the aggregation variable(s) should be aggregated to, and the preferred aggregation method - closest, least value, or ratio. The output is a shapefile with before and after choropleth maps in R graphics saved to PDF. For output regions, most numeric variables will be summed, except variables with the following names, which will be averaged instead: x, y, GATx, GATy, lat, lon, latitude, longitude, and long. For character variables, the values of the last region merged will be used, with three additional variables added: Sp_id for R row number and GATx, GATy for geographic centroids as determined by the GAT. 
+
+The user must have an input shapefile (*.shp). The shapefile must have the geographic boundaries of the areas the user would like to merge, a character variable that uniquely identifies these areas, and a numeric variable to merge by, such as the number of cases of disease or the population.
+
+GAT outputs a shapefile containing the aggregated regions with associated data, which can be used in GIS programs such as ArcGIS, MapInfo and QGIS. A KML file can also be produced, which can be displayed in Google Earth as well as other Internet-based mapping programs. Last, GAT outputs several before and after plots and a log of all selections and processes.
+
+The package includes embedded map files to use when testing several of the package functions. For details, type \code{?albanytown} or \code{?hhtract}. 
+
+# Technical Notes
+
+*I am putting all of Tom Talbot's notes here, unedited, for now, as a placeholder. - Abby*
+
+## How the program merges
+
+The overall goal of the merging is to create a relatively large number of compact regions which meet the specified criteria. To accomplish this, the areas in the input shapefile are aggregated pairwise until all regions have the minimum values specified. First, all the areas which need to be merged are sorted from the highest values of the aggregation variable(s) to the lowest. If there is only one aggregation variable, the area with the highest value is merged first. If there is more than one aggregation variable, the aggregation variable is divided by the minimum value specified for it, and the area with the highest proportion is selected to be aggregated first. For example, suppose we wish to merge areas until they have a population of 1000 and at least 100 births. An area with 90 births and 200 population will be merged ahead of an area with 50 births and 400 population, because the maximum of 90/100=0.9 and 200/1000=0.2 is 0.9, but the maximum of 50/100=0.5 and 400/100=0.4 is 0.5, which is less.
+
+Next, a list of the neighbors of the selected area is obtained. Areas are considered neighbors if they share at least two points with the selected area. If you specified a boundary variable, and neighbors exist within a boundary, they are the first candidates for merging. If there are no neighbors within the boundary, the closest area within the boundary will be merged. Only after all areas within a boundary are merged will merging occur across boundaries. If you did not specify a boundary variable or if you specified a boundary variable and areas do not exist within the boundary, then all neighbors are considered as candidates for merging. If the “closest” option was selected, then the closest area is merged with the previously selected area. Closeness is calculated as the distance between the areas' centroids. If the “least” option is selected, the area with the lowest proportion of aggregation variable to minimum value specified is selected. If the “most similar” option is selected, then the area with the least absolute difference between the ratios of the variables chosen for similarity comparison is merged with the selected area. For example, suppose the variables chosen for similarity comparison are counts of persons under poverty and total population. If the area to be merged has a percent under poverty of 10%, and it has neighbors have 9%, 13%, and 15% under poverty, then then it would be merged with the area with 9% under poverty. If an area has no neighbors, then it is merged with the closest area to form a new region.
+
+The new region then becomes a candidate for additional merging, and merging continues until all regions contain the minimum values of the aggregation variables specified.
+
+
+## Thinning geographic boundaries
+
+The program may merge very slowly if the geographic boundaries are unnecessarily complex. Boundaries can be simplified by a process known as “thinning” (or “simplification” or “integrating” or “generalizing”). Thinning is removing nodes based on how far apart they are and/or their collinearity to decrease the complexity of the maps (see figure below). GIS systems like MapInfo and ArcGIS can be used to thin maps. After thinning, areas should merge much more quickly in the GAT, but the map may appear crude. If high resolution maps are needed for display, the thinned map used for processing data can be linked back to the high resolution boundaries using unique area identifiers.
+
+
+```{r nodespacing, out.width = '80%', fig.cap = 'Example of decreasing level of detail as nodes are thinned', echo = FALSE}
+knitr::include_graphics("images/node_spacing.png")
+
+# I have left out the low birthweight information since at present, that is not included in the package. - Abby
+
+```
+
+

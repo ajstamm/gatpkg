@@ -1,0 +1,87 @@
+---
+title: "GAT for R Troubleshooting"
+author: "Abigail Stamm"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GAT for R Troubleshooting}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+# Troubleshooting
+
+*I tried to keep the issues that are still relevant for the package. Some may still need to be revised. I also added package-specific issues. - Abby*
+
+### When I import my shapefile into my GIS program, a blank map appears
+
+When importing a shapefile, be sure that the same projection is selected in the GIS program as in the original map file.
+
+### No KML file is produced
+
+Do not end the program before the “NYS Geographic Aggregation Tool is finished” message appears in the taskbar. Also, make sure to select that you want a KML file. Check the log to confirm that you requested one.
+
+### I'm not asked where to save my output files
+
+The dialog box may be hidden beneath other windows. Close or minimize extraneous windows or check the taskbar for the dialog box.
+
+### When I click on a region in Google Earth, the data does not appear in the description callout
+
+Use Google Earth 5.0 or greater. The data may not appear in GE 4.x.  Try clicking on the area's link in the left sidebar to see the data.
+
+### Output files are not saved 
+
+This message appears in the R console: “Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", : GDAL Error 4: Failed to open shapefile G:/aggtest/output/testin\\.shp. It may be corrupt or read-only file accessed in update mode.”
+
+Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ”.shp”, “.dbf”, “.prj”) from the directory you are trying to save to.
+
+### Program is very slow
+
+Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technocal notes](../doc/gat_tech_notes.html)).
+
+
+### I'm missing library permissions
+
+This message appears in the R console: 
+
+`Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :`
+`isTRUE(gpclibPermitStatus()) is not TRUE`
+
+This error appears due to a conflict between the packages rgeos and rgdal. Reinstall rgdal after each update of rgeos to fix it.
+
+### The legend scales for my before and after maps don't match
+
+This issue occurs if there are too few polygons in the map. If the total number of polygons is less than 2 plus the number of categories (default is 7), the code that assigns the categories will force the scale to be redefined. To fix this issue, use a smaller minimum value, use a map with more polygons, or redefine the number of categories.
+
+*This issue should be fixed in the latest version of GAT.*
+
+### I got a warning for large numbers not writing correctly
+
+This issue occurs when there are numeric fields with very large values, such as land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original file against the crosswalk. To avoid this issue, set large number fields to character or remove them from your DBF before running GAT.
+
+### I got a warning for classInt
+
+This message appears in the R console: 
+
+`In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :`
+`n greater than number of different finite values\nn reset to number of different finite values`
+
+This warning appears when the number of polygons or individual values matches or is less than the number of categories in the choropleth maps. The maps will still be drawn accurately.
+
+### I got a warning for st_centroid
+
+One or both of these messages appears in the R console: 
+
+`st_centroid assumes attributes are constant over geometries of x`
+
+`st_centroid does not give correct centroids for longitude/latitude data`
+
+These warnings appear when you first install the package. They also appear if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using an appropriate coordinate systems. They do not appear if you are using geographic centroids.
+
+

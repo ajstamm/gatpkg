@@ -1,0 +1,15 @@
+Geographic Aggregation Tool (GAT) v1.4 (Release date: 2019-12-11)
+==============
+
+
+Alpha version of the GAT package released.
+
+
+
+Geographic Aggregation Tool (GAT) v1.34 (Release date: 2015-08-28)
+==============
+
+All changes to the GAT code prior to converting it to a package are listed in
+the GAT Change Log, accessible via this code:
+  vignette("gat_changelog", package = "gatpkg")
+

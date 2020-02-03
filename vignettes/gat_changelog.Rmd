@@ -1,0 +1,150 @@
+---
+title: "GAT Change Log"
+author: "Abigail Stamm"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GAT Change Log Prior to Being Converted to a Package}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Geographic Aggregation Tool (GAT) v1.40 Change Log
+
+Changes since January 2019 by Abigail Stamm.
+
+> Below is a summary of differences between the R script for GAT released in 
+> 2015 and the R package for GAT.
+
+* Jan 2019 - Jan 2020:
+    * Converted GAT to an R package and created accompanying help files, 
+      examples, and vignettes.
+    * Replaced statewide shapefile with two smaller shapefiles, hftown and 
+      hftract.
+    * Revised user input dialogs to allow the following:
+        * maximum values
+        * enforced boundaries
+        * population weighting
+        * exclusion criteria
+        * optional KML file
+        * reading in prior settings
+    * Reordered GAT steps by section: user input, aggregation, mapping, and 
+      file saving.
+    * Converted all instances of svdialogs to tcltk.
+    * Added help functionality and instructions to user input dialogs.
+    * Reordered and restructured user input dialogs.
+    * Added aggregation and summary information to maps and saved maps to PDF.
+    * Added all settings and aggregation warnings to the log and a list of 
+      created files to the console.
+    * Rewrote KML code to use plotKML().
+    * Rewrote and expanded quitting messaging to not crash GAT.
+    * Standardized GAT-created variable names.
+    * Made GAT ID length dynamic and consistent.
+
+
+
+# Geographic Aggregation Tool (GAT) v1.34 Change Log
+
+*(Release date: Aug 28, 2015)*
+
+All changes prior to 2019 by Gwen Babcock.
+
+> Changes prior to 2019 are listed below as they were entered in the program
+> comments, with minor formatting changes. Most do not appear to correspond
+> directly to specific versions. Comments appear to cover a mix of actual and
+> planned changes. 
+
+Changes:
+
+* Jan 11, 2009 modified to add kml output
+    * want to add capability to use two variables, and to merge from the
+      highest down instead of lowest up
+    * modify to use rgdal to read & write shapefile. It allows for projection
+      info, but does have other limitations
+    * Note: need to explicitly specify any libraries needed to run as a batch
+      file, even those that would ordinarily be loaded by default
+    * have problem with svDialog list.  We hypothesize that it can bomb if
+      the list contains less than 3 items so modify the program accordingly
+* April 20, 2009 modify to put compactness ratio measure in output data
+* beta v5 June 21, 2010 change dialogs to add 'back' and 'help' options
+* beta v6 July 15, 2010 add option to calculate rate, added popup when
+  aggregation occurs to warn of slowness
+    * added column with number of areas per region
+    * add comparison of file size with memory availability
+* beta v6.1 December 7, 2010 add conditional code to run gpclibPermit()
+  function if needed
+* December 10, 2010 change name to production version 1.0
+* Dec 14, 2010 add merging option to most similar neighbor
+* May 2011 v 1.2 bug fixes: check for errors in rate calculations and remove
+  extra linking variable before re-exporting input shapfile
+* October 27, 2011 found bug: will not export shapefile if field names are
+  more than 10 characters
+    * fix this by adding substring function to reduce variable name length if
+      needed
+* Sept 27,2012 modify to not standardize compactness ratios
+* Feb 13, 2013 include version number and date in message, so it will be
+  included in the log
+* Aug 15, 2013 modify to work in R 3.0.1
+    * That looks like it will take a lot of work
+    * some packages I used before are no longer available, such as gpclib
+    * svDialogs has changed - new function names
+    * add progress dialog
+    * also make KML output always, reprojecting if needed
+    * need to wait for listboxes to be visible before populating them
+* October 31, 2013 add code to make similarity based on a ratio, not a count
+* November 5, 2013 change logic to merge in same specified boundary whenever
+  possible, even if not contiguous
+* November 7, 2013 test rates and similarity ratios for zero denominators.
+  Don't allow them for similarity, but plot the rates while ignoring bad
+  values
+* November 8, 2013 change rate plot to show integers only, and use jenks
+  (natural breaks) because quintiles was not working
+* Feb 5, 2014 fix bugs in transformations - wrong formula to calculate UTM
+  zones; rename version to v1.31
+* June 13, 2014 add filter to open dialog to limit view to shapefiles.
+* April 10, 2015 fix problem: limit dialog messages to 255 characters
+* August 28, 2015 fix typo mergoption->mergeoption
+* November 20, 2015 fix typo indentified->identified
+
+## Package notes as of GAT v1.34
+
+1. attached base packages:
+    * tcltk
+    * stats
+    * graphics
+    * grDevices
+    * utils
+    * datasets
+    * methods
+    * base
+1. other attached packages:
+    * Matrix_1.0-12
+    * lattice_0.20-15
+    * rgdal_0.8-10
+    * foreign_0.8-53
+    * svDialogs_0.9-54
+    * svGUI_0.9-54
+    * classInt_0.1-20
+    * e1071_1.6-1
+    * class_7.3-8
+    * RColorBrewer_1.0-5
+    * maptools_0.8-26
+    * rgeos_0.2-19
+    * sp_1.0-11
+1. loaded via a namespace (and not attached):
+    * boot_1.3-9
+    * coda_0.16-1
+    * deldir_0.0-22
+    * grid_3.0.1
+    * LearnBayes_2.12
+    * MASS_7.3-26
+    * nlme_3.1-109
+    * spdep_0.5-62
+    * splines_3.0.1

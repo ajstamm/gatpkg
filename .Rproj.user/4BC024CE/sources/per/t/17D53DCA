@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1580736083207.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4077190407",
+    "id" : "17D53DCA",
+    "lastKnownWriteTime" : 1580736485,
+    "last_content_update" : 1580736485452,
+    "path" : "P:/Sections/EHS/Abigail/SubcountyData/Rcode/gatpkg/R/importGATweights.R",
+    "project_path" : "R/importGATweights.R",
+    "properties" : {
+        "cursorPosition" : "53,24",
+        "scrollLine" : "40"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

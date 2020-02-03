@@ -1,0 +1,55 @@
+---
+title: "GAT for R Setup Instructions"
+author: "Abigail Stamm"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{GAT for R Setup Instructions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Installing and running GAT
+
+**This is a placeholder. We are not live yet.**
+
+You can install the released version of gatpkg from [CRAN](https://CRAN.R-project.org) with `install.packages("gatpkg")`. 
+
+To load GAT, run `library(gatpkg)`.
+
+To run the entire GAT program as is, run `runGATprogram()`. For most users, this function alone is probably sufficient. If you would like more detail on what this program does, check out the [GAT step by step vignette](gat_basic_manual.html).
+
+The full default program looks like this:
+
+```{r, eval=FALSE}
+# not run
+install.packages("gatpkg")
+library(gatpkg)
+runGATprogram()
+```
+
+The package contains over 20 additional functions that are used in the function `runGATprogram()`. Feel free to use these to customize GAT to meet your needs. 
+
+# Disclaimer
+
+This version of GAT is provided as is. 
+
+GAT was written in R-2.9.2 under Windows XP. It was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. The user needs minimal R programming experience to run GAT. 
+
+# Citation and feedback
+
+If you use any part of the GAT package, please cite it. For the suggested citation, type:
+
+```{r}
+citation(package = "gatpkg")
+```
+
+Suggestions for improvement and bug reports are welcome. Send feedback to epht@health.ny.gov and include *GAT in R* in the subject line.
+
