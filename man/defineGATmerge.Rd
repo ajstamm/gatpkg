@@ -10,7 +10,7 @@ defineGATmerge(
   mergevars,
   filevars,
   pwrepeat = FALSE,
-  adjacent = FALSE
+  adjacent = TRUE
 )
 }
 \arguments{

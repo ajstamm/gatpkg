@@ -1,0 +1,1 @@
+{"frames":[{"character_number":0,"end_character_number":0,"end_line_number":0,"file":"","func":"paste0(tools::getVignetteInfo(\"gatpkg\", all = TRUE)[1, \"Dir\"], \n    \"/extdata/\")","line_number":0}],"message":"Error in tools::getVignetteInfo(\"gatpkg\", all = TRUE)[1, \"Dir\"] : \n  subscript out of bounds\n"}

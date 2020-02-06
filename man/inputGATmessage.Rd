@@ -35,7 +35,8 @@ no/cancel button.}
 This function opens a dialog window for the user to confirm the contents
 of the provided message.
 
-placeholder for image
+\if{html}{\figure{inputGATmessage.png}{options: width="450px"
+                  alt="Figure: Screenshot of message dialog"}}
 
 Select your desired variables and the exclusion criterion for each.
 \itemize{

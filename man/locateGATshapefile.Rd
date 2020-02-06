@@ -4,19 +4,21 @@
 \alias{locateGATshapefile}
 \title{Locate GAT Shapefile}
 \usage{
-locateGATshapefile(type = "aggregation", myfile = "")
+locateGATshapefile(type = "aggregation", myfile = "", step = 0)
 }
 \arguments{
 \item{type}{String to identify what type of file is being requested.
 Accepted values are "aggregation" and "population".}
 
 \item{myfile}{String denoting default file name and location to open.}
+
+\item{step}{Step in GAT to print in title bar.}
 }
 \description{
 This function opens a window that asks the user to select a shapefile for
 aggregation. The file selection window looks like this.
 
-\if{html}{\figure{locateGATshapefile.png}{options: width="700px"
+\if{html}{\figure{locateGATshapefile.png}{options: width="500px"
                   alt="Figure: Screenshot of dialog to select your shapefile"}}
 
 Select your folder and file and click \code{Open}. Clicking \code{Cancel}

@@ -215,7 +215,8 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
 
     # get latitude/longitude limits from shapefile
     extent <- sp::bbox(area)
-    if (extent["x", "max"] - extent["x", "min"] < (extent["y", "max"] - extent["y", "min"])) {
+    if (extent["x", "max"] - extent["x", "min"] <
+        (extent["y", "max"] - extent["y", "min"])) {
       xbuffer <- extent["x", "max"] + (extent["x", "max"] - extent["x", "min"]) / 2
     } else if (extent["x", "max"] - extent["x", "min"] <
                (extent["y", "max"] - extent["y", "min"]) * 3/2) {

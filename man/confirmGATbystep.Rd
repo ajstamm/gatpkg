@@ -44,7 +44,7 @@ This function opens a dialog window for the user to select whether the
 selected settings for GAT are correct. It provides the settings in list
 format. The dialog window looks like this.
 
-\if{html}{\figure{confirmGATlist.png}{options: width="395px"
+\if{html}{\figure{confirmGATdialog.png}{options: width="395px"
                   alt="Figure: Screenshot of dialog to confirm your settings"}}
 
 Review your settings. Then click on one of the following buttons.

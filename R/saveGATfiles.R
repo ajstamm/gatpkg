@@ -5,7 +5,7 @@
 #' filename to use when saving the files to be processed. The dialog window
 #' looks like this.
 #'
-#' \if{html}{\figure{identify_save.png}{options: width="705px"
+#' \if{html}{\figure{saveGATfiles.png}{options: width="500px"
 #'                   alt="Figure: Screenshot of dialog to select your save location"}}
 #'
 #' Select the folder in which to save your file, then type a file name without

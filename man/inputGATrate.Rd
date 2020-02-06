@@ -34,7 +34,7 @@ This function opens a dialog window for the user to select the settings to
 calculate the rate for a map, if so desired. The dialog window looks like
 this.
 
-\if{html}{\figure{identify_rate.png}{options: width="450px"
+\if{html}{\figure{inputGATrate.png}{options: width="450px"
                   alt="Figure: Screenshot of dialog to select your rate settings"}}
 
 Select your desired rate settings. If you do not want to calculate a rate,

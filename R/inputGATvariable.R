@@ -1,7 +1,14 @@
 #' Input GAT Variable
 #'
+#' @description
+#'
 #' This function creates a dialog box to ask the user to select an item from
-#' a list and provides a link to the relevant help file in the GAT program.
+#' a list and provides a link to the relevant help file in the GAT program. It
+#' includes options to add a check box or text box if desired.
+#'
+#' \if{html}{\figure{inputGATvariable.png}{options: width="450px"
+#'                   alt="Figure: Screenshot of dialog to enter several values"}}
+#'
 #'
 #' @param title       A text string that denotes the dialog title.
 #' @param instruction A text string stating the instructions to the user.
