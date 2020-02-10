@@ -1,10 +1,10 @@
 ---
-title: "GAT for R Technical Notes"
+title: "Geographic Aggregation Tool (GAT) Technical Notes"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GAT for R Technical Notes}
+  %\VignetteIndexEntry{Geographic Aggregation Tool (GAT) Technical Notes}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

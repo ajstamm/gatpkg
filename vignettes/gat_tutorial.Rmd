@@ -74,11 +74,11 @@ warning('Error in structure(.External(.C_dotTclObjv, objv), class = "tclObj") :
 
 ## Step 1. Request aggregation shapefile
 
-This step requests the shapefile from the user using a pop-up dialog. This progress bar will be displayed:
-
 ```{r pbshp, out.width = '60%', fig.cap = 'Progress Bar: Identify Shapefile', echo = FALSE}
 knitr::include_graphics("images/pb_loadshp.png")
 ```
+
+This step requests the shapefile from the user using a pop-up dialog. This progress bar will be displayed:
 
 ### How this step works
 
@@ -111,11 +111,11 @@ Learn more about the example aggregation shapefile, [hftown](../html/hftown.html
 
 ## Step 2. Request shapefile identifier
 
-This step requests the identifier variable from the user using a pop-up dialog. The ID will be overwritten as areas are aggregated and a crosswalk from these identifiers to the ones produced by GAT will be generated at the end.
-
 ```{r pbid, out.width = '60%', fig.cap = 'Progress Bar: Identify Identifier', echo = FALSE}
 knitr::include_graphics("images/pb_id.png")
 ```
+
+This step requests the identifier variable from the user using a pop-up dialog. The ID will be overwritten as areas are aggregated and a crosswalk from these identifiers to the ones produced by GAT will be generated at the end.
 
 ### How this step works
 
@@ -199,7 +199,7 @@ Click `Next >` to move to the next step, `< Back` to move to the previous step (
 
 ### About this step
 
-The function [identifyGATaggregators()](../html/identifyGATaggregators.html) lists only numeric variables from the shapefile's DBF. The value boxes can support numbers, commas, and decimals. 
+The function [identifyGATaggregators()](../html/identifyGATaggregators.html) lists only numeric variables from the shapefile's DBF. The value boxes can support numbers, commas, and decimals. The value box also allows negative values, but the use of negative values has not been tested in GAT.
 
 If you enter any other characters into the value boxes, you will get an error and a new dialog will appear asking you to re-enter the value. If you enter "none" in the value boxes, that triggers default values, which are the minimum value of the selected variable for "minimum value" and the sum of values for the selected variable for "maximum value".
 
@@ -242,16 +242,22 @@ Click `Yes` to move to the next step, `< Back` to move to the previous step (sel
 ### About this step
 
 
-The function [inputGATexclusions()](../html/inputGATexclusions.html) lists only numeric variables from the shapefile's DBF and the option "NONE". The value dialog can support numbers, commas, and decimals. If you enter any other characters into the value box, you will get an error and a new dialog will appear asking you to re-enter the value. You will also get an error message and a request to reselect criteria if you exclude all areas or all except one area.
+The function [inputGATexclusions()](../html/inputGATexclusions.html) lists only numeric variables from the shapefile's DBF and the option "NONE". The value dialog can support numbers, commas, and decimals. The value box also allows negative values, but the use of negative values has not been tested in GAT.
+
+You will get an error message and a request to reselect criteria if:
+
+* you enter any characters into the value box other than numbers, comma, decimal, or dash
+* you exclude all areas or all except one area
+
 
 
 ## Step 6. Request merge type
 
-This step requests the merge method from the user using a pop-up dialog.
-
 ```{r pb7, out.width = '60%', fig.cap = 'Progress Bar: Identify Merge Type', echo = FALSE}
 knitr::include_graphics("images/pb_pickmerge.png")
 ```
+
+This step requests the merge method from the user using a pop-up dialog.
 
 ### How this step works
 
@@ -274,6 +280,10 @@ Click `Next >` to move to the next step, `< Back` to move to the previous step (
 ### About this step
 
 The function [inputGATmerge()](../html/inputGATmerge.html) lists only numeric variables from the shapefile's DBF for the ratio drop-downs. The ratio denominator (second list) lists only numeric variables without zero or missing values after removing exclusion criteria.
+
+You will get an error message and a request to reselect criteria if:
+
+* you select the same variable for the numerator and denominator when selecting "area with most similar ratio of ..."
 
 ## Step 7. Request population shapefile
 
@@ -443,11 +453,11 @@ The function [saveGATfiles()](../html/saveGATfiles.html) checks if the name you 
 
 ## Step 11. Request settings confirmation
 
-This step requests confirmation of all settings from the user using a pop-up dialog.
-
 ```{r pb12, out.width = '60%', fig.cap = 'Progress Bar: Confirm GAT Settings', echo = FALSE}
 knitr::include_graphics("images/pb_confirm.png")
 ```
+
+This step requests confirmation of all settings from the user using a pop-up dialog.
 
 ### How this step works
 

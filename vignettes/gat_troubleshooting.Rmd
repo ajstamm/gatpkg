@@ -1,10 +1,10 @@
 ---
-title: "GAT for R Troubleshooting"
+title: "Geographic Aggregation Tool (GAT) Troubleshooting"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GAT for R Troubleshooting}
+  %\VignetteIndexEntry{Geographic Aggregation Tool (GAT) Troubleshooting}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
