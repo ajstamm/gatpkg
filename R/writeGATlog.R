@@ -265,7 +265,7 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
     logtext <- c(logtext,
                  "\n  Aggregated shapefile:             ",
                  paste0(filevars$fileout, ".shp"),
-                 "\n    Variables created by GAT:        ",
+                 "\n    Variables created by GAT:       ",
                  "GATx, GATy, GATcratio, GATflag,")
     if (ratevars$ratename != "no_rate") {
       logtext <- c(logtext, paste0(ratevars$ratename, ","))
@@ -287,7 +287,7 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
                paste0(filevars$fileout, "settings.Rdata"))
   if (gatvars$savekml) {
     logtext <- c(logtext,
-                 "\n  KML file:                          ",
+                 "\n  KML file:                         ",
                  paste0(filevars$fileout, ".kml"))
   } else {
     logtext <- c(logtext, "\n  You chose not to write a KML file.")

@@ -57,13 +57,15 @@ inputGATaggregators <- function(mapdata, step = 4, min1 = "5,000",
                 "click '< Back'. \n", "  \u2022  To quit GAT, click 'Cancel'.")
 
   instruct <- paste(" 1. Select each variable you would like to aggregate. \n",
+                    "     To ignore the second aggregation variable, select",
+                    "'NONE' \n      for its variable name. \n",
                     "2. Enter a number for the first minimum value, which is",
                     "required. \n      If you do not require a second minimum",
                     "value, enter 'none'. \n",
                     "3. Enter a number for each maximum value or 'none' if it",
                     "is not \n     required. \n \n",
-                    "The first variable is required. To ignore the second",
-                    "variable, \n select 'NONE' for its variable name.")
+                    "Note: The first variable and its minimum aggregation value",
+                    "are required. \n")
 
   fonthead <- tcltk2::tk2font.set(font = "fonthead",
                                   settings = list(family = "Segoe UI", size = 10,
@@ -171,10 +173,6 @@ inputGATaggregators <- function(mapdata, step = 4, min1 = "5,000",
 
     tcltk::tkdestroy(tt)
 
-    if (var2 == "NONE") {
-      min2 <- min1
-      max2 <- max1
-    }
 
     assign("agglist", list(var1 = var1, minval1 = min1, maxval1 = max1,
                            var2 = var2, minval2 = min2, maxval2 = max2),
@@ -182,14 +180,14 @@ inputGATaggregators <- function(mapdata, step = 4, min1 = "5,000",
   }
   onCancel <- function() {
     tcltk::tkdestroy(tt)
-    assign("agglist", list(var1 = "cancel", minval1 = 0, maxval1 = 0,
-                           var2 = "cancel", minval2 = 0, maxval2 = 0),
+    assign("agglist", list(var1 = "cancel", minval1 = 0, maxval1 = "none",
+                           var2 = "NONE", minval2 = "none", maxval2 = "none"),
            envir=myenv)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
-    assign("agglist", list(var1 = "back", minval1 = 0, maxval1 = 0,
-                           var2 = "back", minval2 = 0, maxval2 = 0),
+    assign("agglist", list(var1 = "back", minval1 = 0, maxval1 = "none",
+                           var2 = "NONE", minval2 = "none", maxval2 = "none"),
            envir=myenv)
   }
   onHelp <- function() {

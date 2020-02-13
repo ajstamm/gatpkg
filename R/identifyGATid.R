@@ -47,16 +47,22 @@ identifyGATid <- function(mapdata, step = 2) {
   noofchoices <- length(iditems)
 
   if (noofchoices == 1) {
-    msg <- paste("The only variable in the dataset that uniquely",
-                 "identifies the areas is", iditems)
-    mycancel <- tcltk::tkmessageBox(message = msg, type = "okcancel",
-                                    title = "Identification Variable")
-    x <- tcltk::tclvalue(mycancel)
+    msg <- paste0("The only variable in the dataset that uniquely identifies \n",
+                  "the areas is ", iditems, ".")
+    hlp <- "Click 'Yes' to continue or '< Back' to return to shapefile selection."
 
-    if (x == "ok") {
-      myidvar <- iditems
+    mycancel <- inputGATmessage(title = "Identification Variable",
+                                help = hlp, step = step, msg = msg,
+                                helptitle = "inputGATmessage",
+                                helppage = "inputGATmessage",
+                                buttonopt = "Cancel")
+
+    if (is.null(mycancel)) {
+      myidvar <- as.character(iditems)
+    } else if (mycancel == "Yes") {
+      myidvar <- as.character(iditems)
     } else {
-      myidvar <- "back"
+      myidvar <- mycancel
     }
   # need to use previous myidvar as default if available
   } else if (noofchoices > 1) {

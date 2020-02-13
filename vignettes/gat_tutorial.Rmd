@@ -663,10 +663,16 @@ This section contains the file saving steps.
 knitr::include_graphics("images/pb_saveold.png")
 ```
 
-In this section, the original shapefile is saved with the following changes:
+The purpose of saving this shapefile is to provide a key/crosswalk (GATid) identifying which aggregated area each original area fell inside when aggregated. The GATflag variable flags areas that were excluded from aggregation or generated warnings in the log:
+
+- *value = 0:* no flag
+- *value = 1:* area excluded based on exclusion criteria
+- *value = 5:* area excluded because value of aggregation variable exceeded maximum value
+
+The original shapefile is saved with the following changes:
 
 - It is renamed to match the save filename you selected with "in" at the end and saved in the same folder as the aggregated shapefile.
-- The aggregation key or crosswalk and flag variable are appended to its dataframe.
+- The variables GATid and GATflag are appended to its dataframe.
 
 Files saved to the save folder if you followed the vignette:
 
@@ -681,7 +687,22 @@ Files saved to the save folder if you followed the vignette:
 knitr::include_graphics("images/pb_savenew.png")
 ```
 
-In this section, the aggregated shapefile is saved. 
+In this section, the aggregated shapefile is saved. It includes all of the variables in the original shapefile with these changes:
+
+- For categorical variables, the first option was selected for each merge.
+- For numeric variables, the values were summed unless the variables represented latitude or longitude (or x and y), in which case they were averaged.
+
+Additional variables created as part of the aggregation process and included in the shapefile's database:
+
+- **GATx:** longitude of area centroid (geographic unless population weighting was selected)
+- **GATy:** latitude of area centroid (geographic unless population weighting was selected)
+- **GATcratio:** compactness ratio for the area
+- **GATnumIDs:** The number of original areas that were merged into each aggregated area
+- **GATflag:** flag of areas that were excluded from aggregation or generated warnings in the log
+    - *value = 0:* no flag
+    - *value = 1:* area excluded based on exclusion criteria
+    - *value = 5:* area excluded because value of aggregation variable exceeded maximum value
+    - *value = 10:* value of area's aggregation variable is below minimum value, but no other areas are eligible for further aggregation
 
 Files saved to the save folder if you followed the vignette:
 

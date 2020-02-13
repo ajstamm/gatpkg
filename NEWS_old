@@ -15,6 +15,13 @@ Changes to add to change log:
 * Cleaned up help language.
 * Fixed a bug in the rate dialog code.
 * Added more detail to the user manual vignette and rename it tutorial.
+* Revised code and instructions for *GATaggregators() functions.
+* Fixed various "back" and "cancel" issues in dialogs.
+* Changed single-variable dialog for ID selection to custom message box.
+* Added GAT IDs to merge warnings in the log.
+* Fixed code in defineGATmerge() that failed to merge across boundary lines.
+* Removed rate confirmation dialog.
+* Added check for minimum requested value below minimum value of variable.
 
 
 Changes:

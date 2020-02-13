@@ -79,6 +79,10 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL) {
                                   settings = list(family = "Segoe UI", size = 10,
                                                   bold = TRUE, italic = FALSE))
 
+
+
+
+
   if (is.null(exclist)) {
     myvar1 <- tcltk::tclVar("NONE")
     myvar2 <- tcltk::tclVar("NONE")
@@ -92,6 +96,15 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL) {
     myvalue2 <- tcltk::tclVar(0)
     myvalue3 <- tcltk::tclVar(0)
   } else {
+    if (exclist$var1 %in% c("back", "cancel", "repeat")) {
+      exclist$var1 <- "NONE"
+    }
+    if (exclist$var2 %in% c("back", "cancel", "repeat")) {
+      exclist$var2 <- "NONE"
+    }
+    if (exclist$var3 %in% c("back", "cancel", "repeat")) {
+      exclist$var3 <- "NONE"
+    }
     myvar1 <- tcltk::tclVar(exclist$var1)
     myvar2 <- tcltk::tclVar(exclist$var2)
     myvar3 <- tcltk::tclVar(exclist$var3)
@@ -202,15 +215,15 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL) {
     tcltk::tkdestroy(tt)
 
     if (var1 == "NONE") {
-      math1 <- ""
+      math1 <- "equals"
       val1 <- 0
     }
     if (var2 == "NONE") {
-      math2 <- ""
+      math2 <- "equals"
       val2 <- 0
     }
     if (var3 == "NONE") {
-      math3 <- ""
+      math3 <- "equals"
       val3 <- 0
     }
 
@@ -221,16 +234,16 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL) {
   }
   onCancel <- function() {
     tcltk::tkdestroy(tt)
-    assign("exclist", list(var1 = "cancel", math1 = "", val1 = 0,
-                           var2 = "cancel", math2 = "", val2 = 0,
-                           var3 = "cancel", math3 = "", val3 = 0),
+    assign("exclist", list(var1 = "cancel", math1 = "equals", val1 = 0,
+                           var2 = "cancel", math2 = "equals", val2 = 0,
+                           var3 = "cancel", math3 = "equals", val3 = 0),
            envir=myenv)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
-    assign("exclist", list(var1 = "back", math1 = "", val1 = 0,
-                           var2 = "back", math2 = "", val2 = 0,
-                           var3 = "back", math3 = "", val3 = 0),
+    assign("exclist", list(var1 = "back", math1 = "equals", val1 = 0,
+                           var2 = "back", math2 = "equals", val2 = 0,
+                           var3 = "back", math3 = "equals", val3 = 0),
            envir=myenv)
   }
   onHelp <- function() {

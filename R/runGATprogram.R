@@ -54,7 +54,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
 
   # pre-load lists
   step <- 1 # start at step 1
-  temp <- list(flagconfirm = FALSE)
+  temp <- list(flagconfirm = FALSE, msg = "")
   myshps <- list()
 
   if (!is.null(settings)) {
@@ -63,6 +63,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     temp$flagconfirm <- TRUE
     filevars$userout <- paste0(filevars$userout, "_2")
     filevars$fileout <- paste0(filevars$fileout, "_2")
+    temp$shp <- rgdal::readOGR(dsn = filevars$pathin,
+                               layer = filevars$filein,
+                               stringsAsFactors = FALSE)
     temp$mapdata <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
                                       as.is = TRUE)
     temp$mapflag <- temp$mapdata[temp$mapdata$GATflag == 0, ]
@@ -95,7 +98,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         names(temp$mapdata)[i] <- paste0("old_", names(temp$mapdata)[i])
       }
     }
-    if (temp$msg != "") {
+    if (!temp$msg == "") {
       tcltk::tkmessageBox(title = "Some variable names changed", type = "ok",
                           icon = "warning", message = temp$msg)
     }
@@ -135,7 +138,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         temp$mapdata <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
                                           as.is = TRUE)
         temp$shp <- rgdal::readOGR(dsn = filevars$pathin,
-                                   layer = filevars$filein)
+                                   layer = filevars$filein,
+                                   stringsAsFactors = FALSE)
 
         # check for both numeric and character data
         temp$numerics <- checkGATvariabletypes(temp$mapdata, type = "number")
@@ -592,9 +596,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
             filevars$poppath <- tempfiles$pathin
             temp$popdata <- foreign::read.dbf(paste0(filevars$popin, ".dbf"),
                                               as.is = TRUE)
-            temp$shp <- rgdal::readOGR(dsn = filevars$poppath,
+            temp$popshp <- rgdal::readOGR(dsn = filevars$poppath,
                                        layer = filevars$popfile)
-            temp$polys <- class(temp$shp)
+            temp$polys <- class(temp$popshp)
             temp$popnumvars <- checkGATvariabletypes(temp$popdata, type = "number")
 
             # add dialog specifying each issue
@@ -653,78 +657,83 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
               ratevars <- list(ratename = "cancel")
             } else {
               error <- TRUE
+              ratevars <- list(ratename = "gat_rate")
             }
           }
           if (ratevars$ratename == "cancel") {
             mysettings$quit <- TRUE
             step <- 20
-          } else if (!ratevars$ratename == "no_rate" & !error) {
-            # quality control - force numeric
-            while (grepl("[^0-9.,-]", ratevars$multiplier)) {
-              gats <- list(title = paste("Multiplier for", ratevars$ratename),
-                           msg = paste0("Please enter a valid number for the ",
-                                        "multiplier for ", ratevars$ratename, "."),
-                           help = paste0("Enter a valid number. \n",
-                                         "  \u2022  To continue,  click 'Next >'. \n",
-                                         "  \u2022  To return to rate settings, click '< Back'.",
-                                         "  \u2022  To quit GAT, click 'Cancel'."))
-              ratevars$multiplier <- inputGATvalue(title = gats$title, help = gats$help,
-                                                   message = gats$msg, defaulttext = "10,000",
-                                                   helppage = "inputGATvalue", step = step)
-              if (ratevars$multiplier == "back") {
-                ratevars$ratename <- "back"
-                ratevars$multiplier <- 1
-              } else if (ratevars$multiplier == "cancel") {
-                ratevars$ratename <- "cancel"
-                ratevars$multiplier <- 1
-                mysettings$quit <- TRUE
-                step <- 20
-              }
-            }
-            ratevars$multiplier <- as.numeric(gsub(",", "", ratevars$multiplier))
-
-            # quality control - force selection of different numerator and denominator
-            # create a dialog specifically for this?
-            if (!exists("numerator", ratevars) | !exists("denominator", ratevars)) {
-              temp$msg <- "Please select different variables for numerator and denominator"
-              tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
-                                  type = "ok", icon = "warning")
-              ratevars$ratename <- "back"
-            } else if (ratevars$numerator == ratevars$denominator) {
-              temp$msg <- "Please reselect the numerator and denominator"
-              tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
-                                  type = "ok", icon = "warning")
-              ratevars$ratename <- "back"
-            }
-          }
-          if (ratevars$ratename == "back") {
+          } else if (ratevars$ratename == "back") {
             step <- step - 1
-          } else if (!ratevars$ratename %in% c("back", "cancel") & !error) {
+          } else if (!error) {
             if (ratevars$ratename == "no_rate") {
-              temp$msg <- "You have chosen not to calculate a rate."
+              #temp$msg <- "You have chosen not to calculate a rate."
             } else {
-              temp$msg <- paste0("You have chosen to calculate the rate ",
-                                 ratevars$ratename, " from ", ratevars$numerator,
-                                 " and ", ratevars$denominator, " with multiplier ",
-                                 format(as.numeric(ratevars$multiplier), big.mark=",",
-                                        scientific=FALSE),
-                                 " using the color scheme ", ratevars$colorname,
-                                 ". Is this correct?")
-            }
-            temp$title <- "Confirm your rate calculation settings"
-            temp$x <- tcltk::tkmessageBox(title = temp$title, message = temp$msg,
-                                          type = "okcancel", icon = "question")
-            temp$confirm <- tcltk::tclvalue(temp$x)
-
-            if (temp$confirm == "ok") {
-              if (temp$flagconfirm) {
-                step <- 11
-              } else {
-                step <- step + 1
+              # quality control - force numeric
+              while (grepl("[^0-9.,-]", ratevars$multiplier)) {
+                gats <- list(title = paste("Multiplier for", ratevars$ratename),
+                             msg = paste0("Please enter a valid number for the ",
+                                          "multiplier for ", ratevars$ratename, "."),
+                             help = paste0("Enter a valid number. \n",
+                                           "  \u2022  To continue,  click 'Next >'. \n",
+                                           "  \u2022  To return to rate settings, click '< Back'.",
+                                           "  \u2022  To quit GAT, click 'Cancel'."))
+                ratevars$multiplier <- inputGATvalue(title = gats$title, help = gats$help,
+                                                     message = gats$msg, defaulttext = "10,000",
+                                                     helppage = "inputGATvalue", step = step)
+                if (ratevars$multiplier == "back") {
+                  ratevars$ratename <- "back"
+                  ratevars$multiplier <- 1
+                } else if (ratevars$multiplier == "cancel") {
+                  ratevars$ratename <- "cancel"
+                  ratevars$multiplier <- 1
+                  mysettings$quit <- TRUE
+                  step <- 20
+                }
               }
+              ratevars$multiplier <- as.numeric(gsub(",", "", ratevars$multiplier))
+
+              # quality control - force selection of different numerator and denominator
+              # create a dialog specifically for this?
+              if (!exists("numerator", ratevars) | !exists("denominator", ratevars) |
+                  length(ratevars$numerator) == 0 | length(ratevars$denominator) == 0) {
+                temp$msg <- "Please select different variables for numerator and denominator"
+                tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
+                                    type = "ok", icon = "warning")
+                ratevars$ratename <- "gat_rate"
+                error <- TRUE
+              } else if (ratevars$numerator == ratevars$denominator) {
+                temp$msg <- "Please reselect the numerator and denominator"
+                tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
+                                    type = "ok", icon = "warning")
+                ratevars$ratename <- "gat_rate"
+                error <- TRUE
+              }
+              #temp$msg <- paste0("You have chosen to calculate the rate ",
+              #                   ratevars$ratename, " from ", ratevars$numerator,
+              #                   " and ", ratevars$denominator, " with multiplier ",
+              #                   format(as.numeric(ratevars$multiplier), big.mark=",",
+              #                          scientific=FALSE),
+              #                   " using the color scheme ", ratevars$colorname,
+              #                   ". Is this correct?")
+
             }
           }
         }
+        #if (!ratevars$ratename %in% c("back", "cancel")) {
+        #  temp$title <- "Confirm your rate calculation settings"
+        #  temp$x <- tcltk::tkmessageBox(title = temp$title, message = temp$msg,
+        #                                type = "okcancel", icon = "question")
+        #  temp$confirm <- tcltk::tclvalue(temp$x)
+
+        #  if (temp$confirm == "ok") {
+        #    if (temp$flagconfirm) {
+        #      step <- 11
+        #    } else {
+        #      step <- step + 1
+        #    }
+        #  }
+        #}
       } else {
         # message: wrong kind of shapefile; repeat dialog
         temp$msg <- "There are not enough numeric variables to calculate a rate."
@@ -809,6 +818,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       }
       if (temp$cancel %in% c("Yes", "None")) {
         step <- 20 # done with user input
+        myshps$original <- temp$shp
+        temp$shp@data <- temp$mapdata
       } else if (temp$cancel == "back") {
         step <- step - 1 # go back one
       } else if (temp$cancel == "cancel") {
@@ -829,11 +840,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
 
     # reads map in as spatialpolygonsdataframe with projection information
-    myshps$original <- rgdal::readOGR(dsn = filevars$pathin,
-                                      layer = filevars$filein,
-                                      stringsAsFactors = FALSE)
-    myshps$original@data <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
-                                              as.is = TRUE) # maintains numerics
+    # myshps$original <- rgdal::readOGR(dsn = filevars$pathin,
+    #                                   layer = filevars$filein,
+    #                                   stringsAsFactors = FALSE)
+    # myshps$original@data <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
+    #                                           as.is = TRUE) # maintains numerics
     if ("GATy" %in% names(myshps$original@data)) {
       myshps$original@data <- myshps$original@data[,
         names(myshps$original@data)[!names(myshps$original@data) %in%

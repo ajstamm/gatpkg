@@ -19,6 +19,14 @@ knitr::opts_chunk$set(
 
 *I tried to keep the issues that are still relevant for the package. Some may still need to be revised. I also added package-specific issues. - Abby*
 
+### There is an issue with the package installation
+
+Usually, the vignettes failed to install. To fix this, uninstall gatpkg, restart R, and reinstall gatpkg.
+
+### The variable names in my aggregated dataset are truncated
+
+This appears to be an issue with the DBF driver used by the foreign package. The driver identifies at least one variable that it interprets as too long, but truncates several variable names, not just the offender. The data otherwise still write correctly.
+
 ### When I import my shapefile into my GIS program, a blank map appears
 
 When importing a shapefile, be sure that the same projection is selected in the GIS program as in the original map file.
@@ -37,7 +45,11 @@ Use Google Earth 5.0 or greater. The data may not appear in GE 4.x.  Try clickin
 
 ### Output files are not saved 
 
-This message appears in the R console: “Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", : GDAL Error 4: Failed to open shapefile G:/aggtest/output/testin\\.shp. It may be corrupt or read-only file accessed in update mode.”
+This message appears in the R console: 
+
+`Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :`
+`GDAL Error 4: Failed to open shapefile G:/aggtest/output/testin.shp.` 
+`It may be corrupt or read-only file accessed in update mode.`
 
 Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ”.shp”, “.dbf”, “.prj”) from the directory you are trying to save to.
 
@@ -45,6 +57,7 @@ Be sure to enter a valid file name in the save dialog. Remove all files with ext
 
 Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technocal notes](../doc/gat_tech_notes.html)).
 
+Using population weighted centroids, merging shapefiles with thousands of polygons, and saving KML files can also cause GAT to run slowly.
 
 ### I'm missing library permissions
 
