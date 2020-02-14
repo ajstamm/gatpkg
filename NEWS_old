@@ -22,6 +22,7 @@ Changes to add to change log:
 * Fixed code in defineGATmerge() that failed to merge across boundary lines.
 * Removed rate confirmation dialog.
 * Added check for minimum requested value below minimum value of variable.
+* Added GAT-generated variable definitions to writeGATlog().
 
 
 Changes:

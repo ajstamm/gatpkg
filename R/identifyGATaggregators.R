@@ -90,17 +90,6 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL) {
         error <- TRUE
       }
       # issues with minimum value 1 ####
-      if (agglist$minval1 < min(mapdata[, agglist$var1], na.rm = TRUE)) {
-        msg <- paste("Your selected minimum value of", agglist$minvalue1,
-                     "is lower than the minimum value of", agglist$var1, "(",
-                     min(mapdata[, agglist$var1], na.rm = TRUE), "),",
-                     "so no areas would be merged. Please change either your",
-                     "aggregation variable or your desired minimum value.")
-        tcltk::tkmessageBox(title = "Please change selections", message = msg,
-                            type = "yesno", icon = "info")
-        error <- TRUE
-      }
-
       while (is.na(suppressWarnings(as.numeric(gsub(",", "", agglist$minval1))))) {
         gats <- list(title = paste("Minimum value for", agglist$var1),
                      msg = paste0("Please enter a valid minimum value for ",
@@ -134,6 +123,18 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL) {
           error <- FALSE
         }
       }
+      if (as.numeric(gsub(",", "", agglist$minval1)) <
+          min(mapdata[, agglist$var1], na.rm = TRUE)) {
+        msg <- paste("Your selected minimum value of", agglist$minvalue1,
+                     "is lower than the minimum value of", agglist$var1, "(",
+                     min(mapdata[, agglist$var1], na.rm = TRUE), "),",
+                     "so no areas would be merged. Please change either your",
+                     "aggregation variable or your desired minimum value.")
+        tcltk::tkmessageBox(title = "Please change selections", message = msg,
+                            type = "yesno", icon = "info")
+        error <- TRUE
+      }
+
 
       # issues with maximum value 1 ####
       if (agglist$maxval1 != "none") {
@@ -181,17 +182,6 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL) {
       }
       # issues with minimum value 2 ####
       if (agglist$minval2 != "none") {
-        if (agglist$minval2 < min(mapdata[, agglist$var2], na.rm = TRUE)) {
-          msg <- paste("Your selected minimum value of", agglist$minvalue2,
-                       "is lower than the minimum value of", agglist$var2, "(",
-                       min(mapdata[, agglist$var2], na.rm = TRUE), "),",
-                       "so no areas would be merged. Please change either your",
-                       "aggregation variable or your desired minimum value.")
-          tcltk::tkmessageBox(title = "Please change selections", message = msg,
-                              type = "yesno", icon = "info")
-          error <- TRUE
-        }
-
         while (is.na(suppressWarnings(as.numeric(gsub(",", "", agglist$minval2))))) {
           gats <- list(title = paste("Minimum value for", agglist$var2),
                        msg = paste0("Please enter a valid minimum value for ",
@@ -225,7 +215,21 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL) {
             error <- FALSE
           }
         }
+        if (as.numeric(gsub(",", "", agglist$minval2)) <
+            min(mapdata[, agglist$var2], na.rm = TRUE)) {
+          msg <- paste("Your selected minimum value of", agglist$minvalue2,
+                       "is lower than the minimum value of", agglist$var2, "(",
+                       min(mapdata[, agglist$var2], na.rm = TRUE), "),",
+                       "so no areas would be merged. Please change either your",
+                       "aggregation variable or your desired minimum value.")
+          tcltk::tkmessageBox(title = "Please change selections", message = msg,
+                              type = "yesno", icon = "info")
+          error <- TRUE
+        }
+
       }
+
+
       # issues with maximum value 2 ####
       if (agglist$maxval2 != "none") {
         while (is.na(suppressWarnings(as.numeric(gsub(",", "", agglist$maxval2))))) {

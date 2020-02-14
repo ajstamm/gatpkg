@@ -265,18 +265,58 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
     logtext <- c(logtext,
                  "\n  Aggregated shapefile:             ",
                  paste0(filevars$fileout, ".shp"),
-                 "\n    Variables created by GAT:       ",
-                 "GATx, GATy, GATcratio, GATflag,")
+                 "\n    Variables created by GAT:",
+                 "\n        GATx:",
+                 "longitude of the aggregated area", mergevars$centroid,
+                 "centroid",
+                 "\n        GATy:",
+                 "latitude of the aggregated area", mergevars$centroid,
+                 "centroid",
+                 "\n        GATcratio:",
+                 "compactness ratio of the area",
+                 "\n        GATnumIDs:",
+                 "number of original areas that were merged into each",
+                 "aggregated area",
+                 "\n        GATflag:",
+                 "flag of areas that were excluded from aggregation or",
+                 "generated warnings in the log",
+                 "\n            value = 0:", "no flag",
+                 "\n            value = 1:",
+                 "area excluded based on exclusion criteria",
+                 "\n            value = 5:",
+                 "area excluded because value of aggregation variable",
+                 "exceeded maximum value",
+                 "\n            value = 10:",
+                 "value of area's aggregation variable is below minimum",
+                 "value, but there are no eligible",
+                 "\n                        areas for further aggregation")
     if (ratevars$ratename != "no_rate") {
-      logtext <- c(logtext, paste0(ratevars$ratename, ","))
+      logtext <- c(logtext,
+                   paste0("\n        ", ratevars$ratename, ":"),
+                   "your rate, ratio, or density")
     }
     if (gatvars$popwt) {
-      logtext <- c(logtext, "GATpop,")
+      logtext <- c(logtext,
+                   "\n        GATpop:",
+                   "population of the aggregated area, from the population",
+                   "file")
     }
-    logtext <- c(logtext, "GATnumIDs",
+    logtext <- c(logtext,
                  "\n  Original shapefile with crosswalk:",
                  paste0(filevars$fileout, "in.shp"),
-                 "\n    Variables created by GAT:        GATflag, GATid")
+                 "\n    Variables created by GAT:",
+                 "\n        GATflag:",
+                 "flag of areas that were excluded from aggregation or",
+                 "generated warnings in the log",
+                 "\n            value = 0:", "no flag",
+                 "\n            value = 1:",
+                 "area excluded based on exclusion criteria",
+                 "\n            value = 5:",
+                 "area excluded because value of aggregation variable",
+                 "exceeded maximum value",
+                 "\n        GATid:",
+                 "GAT-generated identifier of the aggregated area each",
+                 "original area fell inside when aggregated")
   }
   logtext <- c(logtext,
                "\n  Maps:                             ",

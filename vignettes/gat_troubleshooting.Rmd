@@ -2,7 +2,10 @@
 title: "Geographic Aggregation Tool (GAT) Troubleshooting"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 2
 vignette: >
   %\VignetteIndexEntry{Geographic Aggregation Tool (GAT) Troubleshooting}
   %\VignetteEngine{knitr::rmarkdown}
@@ -15,15 +18,14 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 ```
-# Troubleshooting
 
 *I tried to keep the issues that are still relevant for the package. Some may still need to be revised. I also added package-specific issues. - Abby*
 
 ### There is an issue with the package installation
 
-Usually, the vignettes failed to install. To fix this, uninstall gatpkg, restart R, and reinstall gatpkg.
+Usually, the issue is that vignettes fail to install. To fix this, uninstall gatpkg, restart R, and reinstall gatpkg.
 
-### The variable names in my aggregated dataset are truncated
+### Variable names in my aggregated dataset are truncated
 
 This appears to be an issue with the DBF driver used by the foreign package. The driver identifies at least one variable that it interprets as too long, but truncates several variable names, not just the offender. The data otherwise still write correctly.
 
@@ -39,8 +41,9 @@ Do not end the program before the “NYS Geographic Aggregation Tool is finished
 
 The dialog box may be hidden beneath other windows. Close or minimize extraneous windows or check the taskbar for the dialog box.
 
-### When I click on a region in Google Earth, the data does not appear in the description callout
+### Data do not appear in Google Earth
 
+When I click on a region in Google Earth, the data does not appear in the description callout.
 Use Google Earth 5.0 or greater. The data may not appear in GE 4.x.  Try clicking on the area's link in the left sidebar to see the data.
 
 ### Output files are not saved 
@@ -53,7 +56,7 @@ This message appears in the R console:
 
 Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ”.shp”, “.dbf”, “.prj”) from the directory you are trying to save to.
 
-### Program is very slow
+### GAT is very slow
 
 Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technocal notes](../doc/gat_tech_notes.html)).
 
@@ -74,11 +77,15 @@ This issue occurs if there are too few polygons in the map. If the total number 
 
 *This issue should be fixed in the latest version of GAT.*
 
-### I got a warning for large numbers not writing correctly
+### Warning for large numbers not writing correctly
 
 This issue occurs when there are numeric fields with very large values, such as land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original file against the crosswalk. To avoid this issue, set large number fields to character or remove them from your DBF before running GAT.
 
-### I got a warning for classInt
+### My aggregation log did not write correctly
+
+This appears to occur randomly. Restarting R and rerunning your aggregation should fix it. In the future, the function [writeGATlog()](../html/writeGATlog.html) could be modified to allow the user to read in the settings.Rdata file to recreate incorrectly saved logs if there is user interest.
+
+### Warning for classInt
 
 This message appears in the R console: 
 
@@ -87,7 +94,7 @@ This message appears in the R console:
 
 This warning appears when the number of polygons or individual values matches or is less than the number of categories in the choropleth maps. The maps will still be drawn accurately.
 
-### I got a warning for st_centroid
+### Warning for st_centroid
 
 One or both of these messages appears in the R console: 
 

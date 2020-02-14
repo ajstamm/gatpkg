@@ -734,6 +734,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         #    }
         #  }
         #}
+        if (ratevars$ratename == "back") {
+          step <- step - 1
+        } else if (ratevars$ratename == "cancel") {
+          step <- 20
+        } else {
+          step <- step + 1
+        }
       } else {
         # message: wrong kind of shapefile; repeat dialog
         temp$msg <- "There are not enough numeric variables to calculate a rate."
@@ -1123,6 +1130,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     step <- step + 1
     pb$label = paste("Writing the merged shapfile to", filevars$fileout)
     tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+
+    names(myshps$compact@data) <- substr(names(myshps$compact@data), 1, 10)
+    ratevars$ratename <- substr(ratevars$ratename, 1, 10)
 
     # export the map as a shapefile
     rgdal::writeOGR(myshps$compact, filevars$pathout,

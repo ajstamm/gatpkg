@@ -31,6 +31,7 @@
 #' @param myvar       Variable selected, if pre-defined.
 #' @param check       Boolean denoting the status of the checkbox. If TRUE,
 #'                    the checkbox starts checked.
+#' @param backopt     Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
@@ -76,7 +77,8 @@ inputGATvariable <- function(title = "GAT window",
                              mylist = letters, checkbox = FALSE,
                              helppage = NULL, step = 0,
                              valuebox = FALSE, helptitle = NULL,
-                             value = 0, myvar = "NONE", check = FALSE) {
+                             value = 0, myvar = "NONE", check = FALSE,
+                             backopt = TRUE) {
   tt <- tcltk::tktoplevel()
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
 
@@ -191,23 +193,35 @@ inputGATvariable <- function(title = "GAT window",
   }
 
   # bottom button placements ####
-  tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Next >",
-                                       command = onOk, width = 12,
-                                       default = "active")
-  tt$tfbuts$CancelBut <- tcltk2::tk2button(tt$tfbuts, text = "Cancel",
+  if (backopt) {
+    tt$tfbuts$BackBut <- tcltk2::tk2button(tt$tfbuts, text = "< Back",
+                                           command = onBack, width = 12)
+    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Next >",
+                                         command = onOk, width = 12,
+                                         default = "active")
+  } else {
+    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Confirm",
+                                         command = onOk, width = 12,
+                                         default = "active")
+  }
+
+  tt$tfbuts$CancelBut <- tcltk2::tk2button(tt$tfbuts, text = "Cancel GAT",
                                            command = onCancel, width = 12)
   tt$tfbuts$HelpBut <- tcltk2::tk2button(tt$tfbuts, text = "Help",
                                          command = onHelp, width = 12)
-  tt$tfbuts$BackBut <- tcltk2::tk2button(tt$tfbuts, text = "< Back",
-                                         command = onBack, width = 12)
+
   # add elements to the window
-  tcltk::tkgrid(tt$tfbuts$BackBut, column = 1, row = 1, pady = 5, padx = c(5, 0))
+  if (backopt) {
+    tcltk::tkgrid(tt$tfbuts$BackBut, column = 1, row = 1, pady = 5, padx = c(5, 0))
+  }
   tcltk::tkgrid(tt$tfbuts$OkBut, column = 2, row = 1, pady = 5)
   tcltk::tkgrid(tt$tfbuts$CancelBut, column = 3, row = 1, pady = 5)
   tcltk::tkgrid(tt$tfbuts$HelpBut, column = 4, row = 1, pady = 5, padx = c(0, 5))
 
   # configure elements ####
-  tcltk::tkgrid.configure(tt$tfbuts$BackBut, sticky = "e")
+  if (backopt) {
+    tcltk::tkgrid.configure(tt$tfbuts$BackBut, sticky = "e")
+  }
   tcltk::tkgrid.configure(tt$tfbuts$OkBut, sticky = "w")
 
   tcltk::tkpack(tt$tfbuts, tt$bound, side = "bottom")

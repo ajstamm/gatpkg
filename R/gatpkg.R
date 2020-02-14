@@ -1,12 +1,14 @@
 #' The NYS Geographic Aggregation Tool
 #'
 #'
+#' @description
 #' A method for easily aggregating spatial data using user-defined
 #' parameters with minimal knowledge of or experience using R.
 #'
 #' @name gatpkg
 #' @aliases GAT
 #'
+#' @details
 #'
 #' GAT's goals:
 #' \itemize{
@@ -30,22 +32,23 @@
 #'
 #'
 #'  \bold{Alpha-testers} \cr
-#'  Maxime Fokoua Dongmo, Bureau of Environmental and Occupational
-#'                        Epidemiology, New York State Department of Health \cr
+#'  Neil Muscatiello, Bureau of Environmental and Occupational
+#'                    Epidemiology, New York State Department of Health \cr
 #'  Arjita Rai, Bureau of Environmental and Occupational
 #'              Epidemiology, New York State Department of Health \cr
-#'  Neil Muscatiello, Bureau of Environmental and Occupational
+#'  Catherine Wargo, Bureau of Environmental and Occupational
+#'                   Epidemiology, New York State Department of Health \cr
+#'  Christophe Maxime Fokoua Dongmo, Bureau of Environmental and Occupational
 #'                    Epidemiology, New York State Department of Health \cr
 #'  Marine Nalbandyan, Bureau of Environmental and Occupational
 #'                     Epidemiology, New York State Department of Health \cr
-#'  Catherine Wargo, Bureau of Environmental and Occupational
-#'                   Epidemiology, New York State Department of Health \cr
 #'
 #'
 #'  \bold{Other contributors} \cr
 #'  Douglas Done, Bureau of Environmental and Occupational Epidemiology,
 #'                New York State Department of Health \cr
-#'  Thomas Talbot, \cr
+#'  Thomas Talbot, Bureau of Environmental and Occupational Epidemiology,
+#'                New York State Department of Health (retired) \cr
 #'
 #'
 #'
