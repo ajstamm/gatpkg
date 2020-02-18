@@ -47,6 +47,7 @@
 #' @param limitdenom Boolean denoting whether to force denominators in rates
 #'                   and ratios to contain only non-zero values.
 #' @param mergevars  List of variables created by the function if pre-defined.
+#' @param backopt    Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
@@ -62,7 +63,8 @@
 #' @export
 
 inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
-                             limitdenom = TRUE, mergevars = NULL) {
+                          limitdenom = TRUE, mergevars = NULL,
+                          backopt = TRUE) {
 
   # create variable lists ####
   numlistitems <- checkGATvariabletypes(mapdata, type = "number")
@@ -209,17 +211,26 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
   }
 
   tt$env$tf <- tcltk::tkframe(tt)
-  tt$env$tf$BackBut <- tcltk2::tk2button(tt$env$tf, text="< Back",
-                                         width = 12, command = onBack)
+  if (backopt) {
+    tt$env$tf$BackBut <- tcltk2::tk2button(tt$env$tf, text = "< Back",
+                                           command = onBack, width = 12)
+    tt$env$tf$OkBut <- tcltk2::tk2button(tt$env$tf, text = "Next >",
+                                         command = onOk, width = 12,
+                                         default = "active")
+  } else {
+    tt$env$tf$OkBut <- tcltk2::tk2button(tt$env$tf, text = "Confirm",
+                                         command = onOk, width = 12,
+                                         default = "active")
+  }
+
   tt$env$tf$HelpBut <- tcltk2::tk2button(tt$env$tf, text="Help",
                                          width = 12, command = onHelp)
-  tt$env$tf$OkBut <- tcltk2::tk2button(tt$env$tf, text = "Next >",
-                                       width = 12, command = onOk,
-                                       default = "active")
-  tt$env$tf$CancelBut <- tcltk2::tk2button(tt$env$tf, text = "Cancel",
+  tt$env$tf$CancelBut <- tcltk2::tk2button(tt$env$tf, text = "Cancel GAT",
                                            width = 12, command = onCancel)
 
-  tcltk::tkgrid(tt$env$tf$BackBut, column = 1, row = 1, padx = 10)
+  if (backopt) {
+    tcltk::tkgrid(tt$env$tf$BackBut, column = 1, row = 1, padx = 10)
+  }
   tcltk::tkgrid(tt$env$tf$OkBut, column = 2, row = 1, padx = 10)
   tcltk::tkgrid(tt$env$tf$CancelBut, column = 3, row = 1, padx = 10)
   tcltk::tkgrid(tt$env$tf$HelpBut, column = 4, row = 1, padx = 10)

@@ -11,7 +11,8 @@ inputGATmessage(
   helppage = "inputGATmessage",
   step = 0,
   msg = "Is GAT fun?",
-  buttonopt = "Cancel"
+  buttonopt = "Cancel GAT",
+  backopt = TRUE
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ relevant function (if any) in the help dialog.}
 
 \item{buttonopt}{A string that denotes the display value for the
 no/cancel button.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to confirm the contents

@@ -33,6 +33,7 @@
 #' @param max2    The maximum value for the second aggregation variable.
 #' @param var1    The name of the first aggregation variable.
 #' @param var2    The name of the second aggregation variable.
+#' @param backopt Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
@@ -47,7 +48,8 @@
 
 inputGATaggregators <- function(mapdata, step = 4, min1 = "5,000",
                                 min2 = "none", max1 = "none", max2 = "none",
-                                var1 = "", var2 = "NONE") {
+                                var1 = "", var2 = "NONE",
+                                backopt = TRUE) {
   ## define objects ####
   helppage <- "inputGATaggregators"
   hlp <- paste0("Select your aggregation variables. In the text boxes, \n",
@@ -198,17 +200,26 @@ inputGATaggregators <- function(mapdata, step = 4, min1 = "5,000",
   ## draw buttons ####
 
   tt$tf <- tcltk::tkframe(tt)
-  tt$tf$BackBut <- tcltk2::tk2button(tt$tf, text="< Back",
-                                         width = 12, command = onBack)
+  if (backopt) {
+    tt$tf$BackBut <- tcltk2::tk2button(tt$tf, text = "< Back",
+                                           command = onBack, width = 12)
+    tt$tf$OkBut <- tcltk2::tk2button(tt$tf, text = "Next >",
+                                         command = onOk, width = 12,
+                                         default = "active")
+  } else {
+    tt$tf$OkBut <- tcltk2::tk2button(tt$tf, text = "Confirm",
+                                         command = onOk, width = 12,
+                                         default = "active")
+  }
+
   tt$tf$HelpBut <- tcltk2::tk2button(tt$tf, text="Help",
                                          width = 12, command = onHelp)
-  tt$tf$OkBut <- tcltk2::tk2button(tt$tf, text = "Next >",
-                                       width = 12, command = onOk,
-                                       default = "active")
-  tt$tf$CancelBut <- tcltk2::tk2button(tt$tf, text = "Cancel",
+  tt$tf$CancelBut <- tcltk2::tk2button(tt$tf, text = "Cancel GAT",
                                            width = 12, command = onCancel)
 
-  tcltk::tkgrid(tt$tf$BackBut, column = 1, row = 1, padx = 10)
+  if (backopt) {
+    tcltk::tkgrid(tt$tf$BackBut, column = 1, row = 1, padx = 10)
+  }
   tcltk::tkgrid(tt$tf$OkBut, column = 2, row = 1, padx = 10)
   tcltk::tkgrid(tt$tf$CancelBut, column = 3, row = 1, padx = 10)
   tcltk::tkgrid(tt$tf$HelpBut, column = 4, row = 1, padx = 10)

@@ -5,56 +5,28 @@
 \alias{gatpkg}
 \alias{_PACKAGE}
 \alias{GAT}
-\alias{GAT's}
-\alias{goals:}
-\alias{\itemize{}
-\alias{\item}
-\alias{simplify}
-\alias{geographic}
-\alias{aggregation}
-\alias{be}
-\alias{in}
-\alias{a}
-\alias{format}
-\alias{accessible}
-\alias{to}
-\alias{anyone}
-\alias{not}
-\alias{require}
-\alias{prior}
-\alias{experience}
-\alias{with}
-\alias{R}
-\alias{customizable}
-\alias{for}
-\alias{advanced}
-\alias{users}
-\alias{}}
-\alias{To}
-\alias{run}
-\alias{the}
-\alias{default}
-\alias{version}
-\alias{of}
-\alias{GAT,}
-\alias{follow}
-\alias{user's}
-\alias{manual}
-\alias{vignettes:}
-\alias{`placeholder}
-\alias{-}
-\alias{check}
-\alias{link`.}
-\alias{For}
-\alias{further}
-\alias{information}
-\alias{about}
-\alias{...}
-\alias{`placeholder`}
 \title{The NYS Geographic Aggregation Tool}
 \description{
 A method for easily aggregating spatial data using user-defined
 parameters with minimal knowledge of or experience using R.
+}
+\details{
+GAT's goals:
+\itemize{
+\item simplify geographic aggregation
+\item be in a format accessible to anyone
+\item not require prior experience with R
+\item be customizable for advanced R users
+}
+
+To run the default version of GAT, follow the GAT tutorial
+\href{../doc/gat_tutorial.html}{GAT tutorial} in the vignettes.
+
+For further information about GAT ... \code{placeholder}
+
+GAT was funded by the CDC NEPHT grant #15-0910-03. Its content is solely
+the responsibility of the authors and does not necessarily represent the
+official views of the CDC.
 }
 \author{
 \bold{Authors} \cr
@@ -64,19 +36,20 @@ Gwen Babcock, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
 
 \bold{Alpha-testers} \cr
-Maxime Fokoua Dongmo, Bureau of Environmental and Occupational
+Neil Muscatiello, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
 Arjita Rai, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
-Neil Muscatiello, Bureau of Environmental and Occupational
+Catherine Wargo, Bureau of Environmental and Occupational
+Epidemiology, New York State Department of Health \cr
+Christophe Maxime Fokoua Dongmo, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
 Marine Nalbandyan, Bureau of Environmental and Occupational
-Epidemiology, New York State Department of Health \cr
-Catherine Wargo, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
 
 \bold{Other contributors} \cr
 Douglas Done, Bureau of Environmental and Occupational Epidemiology,
 New York State Department of Health \cr
-Thomas Talbot, \cr
+Thomas Talbot, Bureau of Environmental and Occupational Epidemiology,
+New York State Department of Health (retired) \cr
 }

@@ -7,7 +7,7 @@
 #' creates guide the user to define all parameters. For step by step details
 #' on how this program works, browse the package vignettes, especially the
 #' GAT manual, which you can access via
-#' \href{../doc/gat_step_by_step.html}{
+#' \href{../doc/gat_tutorial.html}{
 #' \code{vignette("gat_step_by_step", package = "gatpkg")}}.
 #'
 #' @param limitdenom Boolean denoting whether to force denominators in rates
@@ -24,7 +24,7 @@
 #'
 #' @details
 #' You can load "BWidget" in advance, which opens a more navigable shapefile
-#' selection window, but it is not necessary to run the function.
+#' selection window, but it is not necessary to run GAT.
 #'
 #' @examples
 #'

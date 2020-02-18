@@ -18,10 +18,14 @@
 #'   \item be customizable for advanced R users
 #' }
 #'
-#' To run the default version of GAT, follow the GAT user's manual in the
-#' vignettes: `placeholder - check link`.
+#' To run the default version of GAT, follow the GAT tutorial
+#' \href{../doc/gat_tutorial.html}{GAT tutorial} in the vignettes.
 #'
 #' For further information about GAT ... `placeholder`
+#'
+#' GAT was funded by the CDC grant NUE1EH001341-03-01. Its content is solely
+#' the responsibility of the authors and does not necessarily represent the
+#' official views of the CDC.
 #'
 #' @author
 #'  \bold{Authors} \cr
@@ -48,7 +52,7 @@
 #'  Douglas Done, Bureau of Environmental and Occupational Epidemiology,
 #'                New York State Department of Health \cr
 #'  Thomas Talbot, Bureau of Environmental and Occupational Epidemiology,
-#'                New York State Department of Health (retired) \cr
+#'                 New York State Department of Health (retired) \cr
 #'
 #'
 #'

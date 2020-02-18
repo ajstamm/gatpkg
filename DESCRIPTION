@@ -22,15 +22,15 @@ Authors@R: c(
       role = c("ctb"), comment = "alpha tester"),
     person("Maxime", "Fokoua Dongmo", 
       role = c("ctb"), comment = "alpha tester"),
-    person("NYSDOH Environmental Public Health Tracking", 
-      email = "epht@health.ny.gov", role = c("cph"))
+    person("New York State Department of Health", role = c("cph")), 
+    person("Centers for Disease Control and Prevention", 
+      role = c("fnd"), comment = "Grant #15-0910-03")
     )
 Maintainer: Abigail Stamm, NYSDOH EPHT <epht@health.ny.gov>
 Description: The purpose of this package is to run the New York State 
-    Department of Health’s Environmental Public Health Tracking (EPHT) 
-    Program's Geographic Aggregation Tool (GAT) in R. GAT takes an input 
-    shapefile and aggregates polygons based on user-defined numeric values, 
-    then returns the new shapefile, the old shapefile with a crosswalk 
+    Department of Health’s Geographic Aggregation Tool (GAT) in R. GAT takes 
+    an input shapefile and aggregates polygons based on user-defined numeric 
+    values, then returns the new shapefile, the old shapefile with a crosswalk 
     attached, and other diagnostic information. See the vignettes and the 
     functions' help documentation for more details on how GAT works.
 License: MIT + file LICENSE

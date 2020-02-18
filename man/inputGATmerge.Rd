@@ -10,7 +10,8 @@ inputGATmerge(
   aggvar2,
   step = 8,
   limitdenom = TRUE,
-  mergevars = NULL
+  mergevars = NULL,
+  backopt = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ variable in the data frame.}
 and ratios to contain only non-zero values.}
 
 \item{mergevars}{List of variables created by the function if pre-defined.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select the desired

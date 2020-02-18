@@ -10,7 +10,8 @@ inputGATrate(
   help = "There is no help for you.",
   limitdenom = TRUE,
   step = 9,
-  ratevars = NULL
+  ratevars = NULL,
+  backopt = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ aggregation.}
 \item{step}{Integer step in the GAT program, for help reference.}
 
 \item{ratevars}{Rate settings, if pre-defined.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select the settings to

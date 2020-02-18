@@ -12,7 +12,8 @@ inputGATaggregators(
   max1 = "none",
   max2 = "none",
   var1 = "",
-  var2 = "NONE"
+  var2 = "NONE",
+  backopt = TRUE
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ inputGATaggregators(
 \item{var1}{The name of the first aggregation variable.}
 
 \item{var2}{The name of the second aggregation variable.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select which variables

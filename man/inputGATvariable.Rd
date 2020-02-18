@@ -18,7 +18,8 @@ inputGATvariable(
   helptitle = NULL,
   value = 0,
   myvar = "NONE",
-  check = FALSE
+  check = FALSE,
+  backopt = TRUE
 )
 }
 \arguments{
@@ -56,6 +57,8 @@ the text box.}
 
 \item{check}{Boolean denoting the status of the checkbox. If TRUE,
 the checkbox starts checked.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function creates a dialog box to ask the user to select an item from

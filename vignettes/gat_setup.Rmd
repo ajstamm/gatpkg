@@ -55,6 +55,8 @@ citation(package = "gatpkg")
 
 ## Acknowledgements
 
-The conversion of GAT to an R package would not have been possible without the support of CDC's National Envoronmental Health Tracking Program and NYS health department staff and interns, including Neil Muscatiello, Arjita Rai, Douglas Done, Catherine Wargo, Maxime Fokoua Dongmo, Marine Nalbandyan, and others.
+The conversion of GAT to an R package would not have been possible without the support of the Centers for Disease Control and Prevention (CDC) National Environmental Health Tracking Program (NEPHT) and NYS health department staff and interns, including Neil Muscatiello, Arjita Rai, Douglas Done, Catherine Wargo, Christophe Maxime Fokoua Dongmo, Marine Nalbandyan, and others.
+
+This project was funded by the CDC grant NUE1EH001341-03-01. Its content is solely the responsibility of the authors and does not necessarily represent the official views of the CDC.
 
 

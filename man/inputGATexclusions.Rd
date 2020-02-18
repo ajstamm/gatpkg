@@ -4,7 +4,7 @@
 \alias{inputGATexclusions}
 \title{Input GAT Exclusions}
 \usage{
-inputGATexclusions(mapdata, step = 0, exclist = NULL)
+inputGATexclusions(mapdata, step = 0, exclist = NULL, backopt = TRUE)
 }
 \arguments{
 \item{mapdata}{The data frame from which to select variables.}
@@ -12,6 +12,8 @@ inputGATexclusions(mapdata, step = 0, exclist = NULL)
 \item{step}{Integer step in the GAT program, for help reference.}
 
 \item{exclist}{The list of exclusion criteria, if pre-defined.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select the variables

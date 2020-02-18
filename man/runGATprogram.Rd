@@ -33,7 +33,7 @@ loading packages. It does not require any inputs, as the popup dialogs it
 creates guide the user to define all parameters. For step by step details
 on how this program works, browse the package vignettes, especially the
 GAT manual, which you can access via
-\href{../doc/gat_step_by_step.html}{
+\href{../doc/gat_tutorial.html}{
 \code{vignette("gat_step_by_step", package = "gatpkg")}}.
 }
 \details{

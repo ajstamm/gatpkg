@@ -2,13 +2,13 @@
 # @importFrom methods as :: # needed, but importing throws an error,
 # so import full library
 
-#' @import methods
+#' @import     methods
 #' @importFrom grDevices dev.control dev.new dev.off recordPlot replayPlot
-#'             pdf graphics.off
-#' @importFrom graphics legend title text par
-#' @importFrom stats dist quantile median
-#' @importFrom utils browseURL choose.files install.packages memory.limit
-#'             write.table packageDescription
+#'                       pdf graphics.off
+#' @importFrom graphics  legend title text par
+#' @importFrom stats     dist quantile median
+#' @importFrom utils     browseURL choose.files install.packages memory.limit
+#'                       write.table packageDescription
 #'
 
 # packages listed as required
@@ -19,20 +19,21 @@
 #   tkwait.window tkpack.propagate tkpack tkwm.title tkfocus
 #   tkselection.set tkselection.from tkselection.to
 
-#' @import tcltk
-#' @importFrom foreign read.dbf
-#' @importFrom rgeos gCentroid gArea gConvexHull
-#' @importFrom tcltk2 tk2label tk2button tk2listbox
+#' @import     tcltk
+#' @importFrom foreign      read.dbf
+#' @importFrom rgeos        gCentroid gArea gConvexHull
+#' @importFrom tcltk2       tk2label tk2button tk2listbox
 #' @importFrom RColorBrewer brewer.pal
-#' @importFrom classInt classIntervals findColours
-#' @importFrom spdep poly2nb aggregate.nb
-#' @importFrom plotKML kml
-#' @importFrom sp proj4string spTransform CRS coordinates plot spDistsN1 bbox
-#' @importFrom maptools spCbind
-#' @importFrom rgdal writeOGR readOGR
-#' @importFrom sf st_as_sf st_area as_Spatial read_sf st_transform
-#'             st_intersection
-#' @importFrom raster intersect
+#' @importFrom classInt     classIntervals findColours
+#' @importFrom spdep        poly2nb aggregate.nb
+#' @importFrom plotKML      kml
+#' @importFrom sp           proj4string spTransform CRS coordinates plot
+#'                          spDistsN1 bbox
+#' @importFrom maptools     spCbind
+#' @importFrom rgdal        writeOGR readOGR
+#' @importFrom sf           st_as_sf st_area as_Spatial read_sf st_transform
+#'                          st_intersection
+#' @importFrom raster       intersect
 
 
 # package suggested, not required, so don't call import

@@ -11,7 +11,8 @@ inputGATvalue(
   defaulttext = "default text",
   helppage = NULL,
   step = 0,
-  helptitle = "this step"
+  helptitle = "this step",
+  backopt = TRUE
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ relevant function (if any) in the help dialog.}
 \item{step}{Integer step in the GAT program, for help reference.}
 
 \item{helptitle}{The step name to display in the title bar.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function creates a dialog box to ask the user for a specific value
