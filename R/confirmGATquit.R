@@ -5,7 +5,7 @@
 #' or continue GAT.
 #'
 #' \if{html}{\figure{confirmGATquit.png}{options: width="405"
-#'                   alt="Figure: Screenshot of dialog to select KML save.png"}}
+#'                   alt="Figure: Screenshot of dialog to confirm that you want to quit GAT"}}
 #'
 #' Click on one of the following buttons.
 #'

@@ -217,7 +217,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                               label = pb$label)
 
       # identify GAT polygon identifier variable
-      gatvars$myidvar <- identifyGATid(mapdata = temp$mapdata, step = step)
+      gatvars$myidvar <- identifyGATid(mapdata = temp$mapdata, step = step,
+                                       backopt = !temp$flagconfirm)
 
       if (gatvars$myidvar == "back"){
         step <- step - 1
@@ -252,7 +253,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       while (is.null(tempbound)) {
         tempbound <- identifyGATboundary(data = temp$mapdata, step = step,
                                          boundary = gatvars$boundary,
-                                         borders = gatvars$rigidbound)
+                                         borders = gatvars$rigidbound,
+                                         backopt = !temp$flagconfirm)
       }
 
       gatvars$rigidbound <- tempbound$check
@@ -297,8 +299,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
 
       # re-call the function as needed
       while (error) {
-        agglist <- identifyGATaggregators(mapdata = temp$mapdata, step = step,
-                                          agglist = agglist)
+        agglist <- identifyGATaggregators(mapdata = temp$mapdata,
+                                          step = step,
+                                          agglist = agglist,
+                                          backopt = !temp$flagconfirm)
         error <- FALSE
         if (is.null(agglist)) {
           x <- confirmGATquit()
@@ -346,7 +350,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
 
       while (temp$error) {
         exclist <- inputGATexclusions(mapdata = temp$mapdata, step = step,
-                                      exclist = exclist)
+                                      exclist = exclist,
+                                      backopt = !temp$flagconfirm)
         temp$error <- FALSE
         if (is.null(exclist)) {
           x <- confirmGATquit()
@@ -377,7 +382,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                        "\nand to quit the program, click 'Cancel'."))
             exclist$val1 <- inputGATvalue(title = gats$title, help = gats$help,
                                           message = gats$msg, defaulttext = "1,000",
-                                          helppage = "inputGATvalue", step = step)
+                                          helppage = "inputGATvalue", step = step,
+                                          backopt = !temp$flagconfirm)
             if (exclist$val1 == "back") {
               exclist$var1 <- "back"
               exclist$val1 <- 0
@@ -404,7 +410,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                        "\nand to quit the program, click 'Cancel'."))
             exclist$val2 <- inputGATvalue(title = gats$title, help = gats$help,
                                           message = gats$msg, defaulttext = "1,000",
-                                          helppage = "inputGATvalue", step = step)
+                                          helppage = "inputGATvalue", step = step,
+                                          backopt = !temp$flagconfirm)
             if (exclist$val2 == "back") {
               exclist$var1 <- "back"
               exclist$val2 <- 0
@@ -431,7 +438,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                        "\nand to quit the program, click 'Cancel'."))
             exclist$val3 <- inputGATvalue(title = gats$title, help = gats$help,
                                           message = gats$msg, defaulttext = "1,000",
-                                          helppage = "inputGATvalue", step = step)
+                                          helppage = "inputGATvalue", step = step,
+                                          backopt = !temp$flagconfirm)
             if (exclist$val3 == "back") {
               exclist$var1 <- "back"
               exclist$val3 <- 0
@@ -524,8 +532,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         mergevars <- inputGATmerge(mapdata = temp$mapflag,
                                    aggvar = gatvars$aggregator1,
                                    aggvar2 = gatvars$aggregator2,
-                                   step = step, limitdenom = limitdenom,
-                                   mergevars = mergevars)
+                                   step = step,
+                                   limitdenom = limitdenom,
+                                   mergevars = mergevars,
+                                   backopt = !temp$flagconfirm)
         error <- FALSE
         if (is.null(mergevars)) {
           x <- confirmGATquit()
@@ -611,7 +621,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
               error <- TRUE
             } else if (!is.null(temp$popnumvars)) {
               gatvars$popvar <- identifyGATpopulation(varlist = temp$popnumvars,
-                                                      step = step, var = gatvars$popvar)
+                                                      step = step,
+                                                      var = gatvars$popvar,
+                                                      backopt = !temp$flagconfirm)
             }
           }
           if (gatvars$popvar == "back") {
@@ -647,7 +659,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         while (error) {
           ratevars <- inputGATrate(mapdata = temp$mapflag,
                                    limitdenom = limitdenom,
-                                   step = step, ratevars = ratevars)
+                                   step = step,
+                                   ratevars = ratevars,
+                                   backopt = !temp$flagconfirm)
           error <- FALSE
 
           # returns list(multiplier, ratename, numerator, denominator, colorscheme)
@@ -678,9 +692,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                            "  \u2022  To continue,  click 'Next >'. \n",
                                            "  \u2022  To return to rate settings, click '< Back'.",
                                            "  \u2022  To quit GAT, click 'Cancel'."))
-                ratevars$multiplier <- inputGATvalue(title = gats$title, help = gats$help,
-                                                     message = gats$msg, defaulttext = "10,000",
-                                                     helppage = "inputGATvalue", step = step)
+                ratevars$multiplier <- inputGATvalue(title = gats$title,
+                                                     help = gats$help,
+                                                     message = gats$msg,
+                                                     defaulttext = "10,000",
+                                                     helppage = "inputGATvalue",
+                                                     step = step,
+                                                     backopt = !temp$flagconfirm)
                 if (ratevars$multiplier == "back") {
                   ratevars$ratename <- "back"
                   ratevars$multiplier <- 1
@@ -738,6 +756,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           step <- step - 1
         } else if (ratevars$ratename == "cancel") {
           step <- 20
+        } else if (temp$flagconfirm) {
+          step <- 11
         } else {
           step <- step + 1
         }
@@ -760,7 +780,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                  label = "Identifying whether to save a KML file.")
       tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
 
-      temp$kml <- saveGATkml(step = step)
+      temp$kml <- saveGATkml(step = step, backopt = !temp$flagconfirm)
 
       if (temp$kml == "Yes") {
         gatvars$savekml <- TRUE # save the kml
@@ -958,17 +978,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                 gatvars$aggregator1)
 
     mapvars$title <- paste(gatvars$aggregator1, "Before Merging")
-    mapvars$colcode1before <- temp$colcode1before
-    mapvars$colcode1after <- temp$colcode1after
-
-    myplots$aggregator1before <- plotGATmaps(area = myshps$original,
-                                             var = gatvars$aggregator1,
-                                             title.main = mapvars$title,
-                                             colcode = mapvars$colcode1before,
-                                             mapstats = TRUE)
-
-    # find the new maximums after aggregation
-    mapvars$titlemain = paste(gatvars$aggregator1, "After Merging")
     mapvars$titlesub = paste("Aggregation values:",
                              numformat(gatvars$minvalue1), "to",
                              numformat(as.numeric(gsub(",", "",
@@ -988,9 +997,18 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                 exclist$var3, exclist$math3,
                         numformat(exclist$val3))
     }
+    mapvars$colcode1before <- temp$colcode1before
+    mapvars$colcode1after <- temp$colcode1after
 
+    myplots$aggregator1before <- plotGATmaps(area = myshps$original,
+                                             var = gatvars$aggregator1,
+                                             title.main = mapvars$title,
+                                             title.sub = mapvars$titlesub,
+                                             colcode = mapvars$colcode1before,
+                                             mapstats = TRUE)
 
-
+    # find the new maximums after aggregation
+    mapvars$titlemain = paste(gatvars$aggregator1, "After Merging")
     myplots$aggregator1after <- plotGATmaps(area = myshps$aggregated,
                                             var = gatvars$aggregator1,
                                             title.main = mapvars$titlemain,
@@ -1009,16 +1027,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                   gatvars$aggregator2)
 
       mapvars$title <- paste(gatvars$aggregator2, "Before Merging")
-      mapvars$colcode2before <- temp$colcode2before
-      mapvars$colcode2after <- temp$colcode2after
-
-      myplots$aggregator2before <- plotGATmaps(area = myshps$original,
-                                               var = gatvars$aggregator2,
-                                               title.main = mapvars$title,
-                                               colcode = mapvars$colcode2before,
-                                               mapstats = TRUE)
-
-      mapvars$titlemain = paste(gatvars$aggregator2, "After Merging")
       mapvars$titlesub = paste("Aggregation values:",
                                numformat(gatvars$minvalue2), "to",
                                numformat(as.numeric(gsub(",", "",
@@ -1037,6 +1045,17 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         mapvars$titlesub <- paste(mapvars$titlesub, ";", exclist$var3, exclist$math3,
                                   numformat(exclist$val3))
       }
+      mapvars$colcode2before <- temp$colcode2before
+      mapvars$colcode2after <- temp$colcode2after
+
+      myplots$aggregator2before <- plotGATmaps(area = myshps$original,
+                                               var = gatvars$aggregator2,
+                                               title.main = mapvars$title,
+                                               title.sub = mapvars$titlesub,
+                                               colcode = mapvars$colcode2before,
+                                               mapstats = TRUE)
+
+      mapvars$titlemain = paste(gatvars$aggregator2, "After Merging")
 
       myplots$aggregator2after <- plotGATmaps(area = myshps$aggregated,
                                               var = gatvars$aggregator2,

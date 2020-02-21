@@ -6,7 +6,6 @@
 ^man.bak$
 ^data_raw$
 ^\.Rproj\.user$
-^NEWS.0$
 ^README\.Rmd$
-^NEWS_old
+^NEWS_old$
 ^my_hftown.log$

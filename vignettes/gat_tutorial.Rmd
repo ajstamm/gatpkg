@@ -268,7 +268,7 @@ gatpkg::inputGATmergepop(mapdata = gatpkg::hftown@data, aggvar = "TOTAL_POP", ag
 ```
 
 ```{r mergepic, fig.cap = 'Dialog: Identify Merge Type', echo = FALSE}
-knitr::include_graphics("images/inputGATmergepop.png")
+knitr::include_graphics("images/inputGATmerge.png")
 ```
 
 In this dialog, select the method you would like to use to aggregate areas. If you select any option other than "closest area by population-weighted centroid", geographic centroid will be used. Drop-downs are ignored for options that are not selected.
@@ -359,14 +359,6 @@ To follow the steps as shown, select "TOTAL_POP" for the numerator, "AREALAND" f
 
 Click `Next >` to move to the next step, `< Back` to move to the previous step (locating the population shapefile), `Cancel` to end the program, or `Help` to get further guidance.
 
-You will get a confirmation message stating either your selections or that you chose not to calculate a rate. 
-
-```{r ratepic2, fig.cap = 'Dialog: Identify Rate Settings', echo = FALSE}
-knitr::include_graphics("images/confirmGATrate.png")
-```
-
-Click "OK" to continue or "Cancel" to retrn to the rate selection dialog.
-
 
 
 ### About this step
@@ -380,11 +372,6 @@ The multiplier box can support numbers, commas, and decimals. If you enter any o
 This step is not required. Check the box beside "Do NOT calculate a rate" if you want to skip rate calculation. 
 
 
-If you choose *not* to calculate a rate, you will see this confirmation dialog. 
-
-```{r idrateno, out.width = '40%', fig.cap = 'Dialog: Confirm No Rate', echo = FALSE}
-knitr::include_graphics("images/identify_ratenone.png")
-```
 
 ## Step 9. Request whether to save KML file
 
@@ -768,7 +755,7 @@ All files are saved to the save folder you selected. The log file contains a par
 
 ```{r, eval = FALSE}
 The following files have been written to the folder 
-C:/Users/ajs11/Documents/GAT: 
+C:/Users/ajs/Documents/GAT: 
   hftown_agg5k15k_popwt.dbf 
   hftown_agg5k15k_popwt.prj 
   hftown_agg5k15k_popwt.shp 

@@ -31,6 +31,7 @@
 #' @param myvar    The boundary variable, if pre-selected.
 #' @param check    The checkbox setting, if pre-selected. Currently does
 #'                 not do anything.
+#' @param backopt  Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
@@ -45,7 +46,8 @@
 
 identifyGATboundary <- function(data, step = 3, boundary = "NONE",
                                 borders = FALSE,
-                                myvar = "NONE", check = FALSE) {
+                                myvar = "NONE", check = FALSE,
+                                backopt = TRUE) {
   # should be at least two choices, because we add "NONE"
   charlistitems <- checkGATvariabletypes(data, type = "character")
   idlist <- c()
@@ -76,7 +78,8 @@ identifyGATboundary <- function(data, step = 3, boundary = "NONE",
                                      title = "Boundary Variable", checkopt = chk,
                                      checkbox = TRUE, help = hlp, step = step,
                                      helppage = "identifyGATboundary",
-                                     myvar = boundary, check = borders)
+                                     myvar = boundary, check = borders,
+                                     backopt = backopt)
       error <- FALSE
       if (is.null(boundaryvars)) {
         x <- confirmGATquit()

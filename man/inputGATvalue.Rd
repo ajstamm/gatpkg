@@ -37,7 +37,7 @@ relevant function (if any) in the help dialog.}
 This function creates a dialog box to ask the user for a specific value
 and provides a link to the relevant help file in the GAT program.
 
-\if{html}{\figure{inputGATvalue.png}{options: width="450px"
+\if{html}{\figure{inputGATvalue.png}{options: width="300px"
                   alt="Figure: Screenshot of dialog to enter an alphanumeric value"}}
 }
 \examples{

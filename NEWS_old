@@ -26,6 +26,8 @@ Changes to add to change log:
 * Added code to change "back"/"next" to "confirm" after final dialog is
   triggered.
 * Updated license/citations to add funder and acknowledgements.
+* Fixed dialog pathing issues.
+* Updated help files.
 
 
 Changes:

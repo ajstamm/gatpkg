@@ -4,10 +4,12 @@
 \alias{saveGATkml}
 \title{Save GAT KML File}
 \usage{
-saveGATkml(step = 0)
+saveGATkml(step = 0, backopt = TRUE)
 }
 \arguments{
 \item{step}{Integer step in the GAT program, for help reference.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select whether or not

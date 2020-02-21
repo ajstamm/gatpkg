@@ -6,7 +6,7 @@
 #' parameters with minimal knowledge of or experience using R.
 #'
 #' @name gatpkg
-#' @aliases GAT
+# @aliases GAT
 #'
 #' @details
 #'
@@ -62,4 +62,4 @@
 # mostly, I copied dplyr at https://github.com/tidyverse/dplyr/blob/master/R/dplyr.r
 # I stole authorship code from https://rdrr.io/cran/TLdating/src/R/TLdating-package.R
 # dplyr and TLdating put namespace code here
-"_PACKAGE"
+NULL

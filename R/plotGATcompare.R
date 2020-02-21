@@ -28,6 +28,7 @@
 #'   aggregator1 = "TOTAL_POP",  # numeric variable
 #'   aggregator2 = "TOTAL_POP",  # numeric variable
 #'   minvalue1 = 5000, minvalue2 = 5000,
+#'   maxvalue1 = 15000, maxvalue2 = 15000,
 #'   boundary = "COUNTY"         # character variable of non-unique values
 #' )
 #'
@@ -86,11 +87,14 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars) {
   }
   mysub <- paste0(mysub, "\nMerged variable")
   if (gatvars$aggregator1 == gatvars$aggregator2) {
-    mysub <- paste0(mysub, ": ", numformat(gatvars$minvalue1), " ", gatvars$aggregator1)
+    mysub <- paste0(mysub, ": ", numformat(gatvars$minvalue1), " to ",
+                    numformat(gatvars$maxvalue1), " ", gatvars$aggregator1)
   } else {
     mysub <- paste0(mysub, "s: ",
-                    numformat(gatvars$minvalue1), " ", gatvars$aggregator1, "; ",
-                    numformat(gatvars$minvalue2), " ", gatvars$aggregator2)
+                    numformat(gatvars$minvalue1), " to ",
+                    numformat(gatvars$maxvalue1), " ", gatvars$aggregator1, "; ",
+                    numformat(gatvars$minvalue2), " to ",
+                    numformat(gatvars$maxvalue2), " ", gatvars$aggregator2)
   }
   title(mytitle, sub = mysub, cex.main = 2)
 

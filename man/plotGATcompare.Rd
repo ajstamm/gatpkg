@@ -38,6 +38,7 @@ gatvars <- list(
   aggregator1 = "TOTAL_POP",  # numeric variable
   aggregator2 = "TOTAL_POP",  # numeric variable
   minvalue1 = 5000, minvalue2 = 5000,
+  maxvalue1 = 15000, maxvalue2 = 15000,
   boundary = "COUNTY"         # character variable of non-unique values
 )
 

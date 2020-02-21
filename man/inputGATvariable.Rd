@@ -65,7 +65,7 @@ This function creates a dialog box to ask the user to select an item from
 a list and provides a link to the relevant help file in the GAT program. It
 includes options to add a check box or text box if desired.
 
-\if{html}{\figure{inputGATvariable.png}{options: width="450px"
+\if{html}{\figure{inputGATvariable.png}{options: width="350px"
                   alt="Figure: Screenshot of dialog to enter several values"}}
 }
 \examples{

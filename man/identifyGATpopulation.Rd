@@ -4,7 +4,7 @@
 \alias{identifyGATpopulation}
 \title{Identify GAT Population Variable}
 \usage{
-identifyGATpopulation(varlist, step = 8, var = "NONE")
+identifyGATpopulation(varlist, step = 8, var = "NONE", backopt = TRUE)
 }
 \arguments{
 \item{varlist}{A vector of names of variables. Within GAT, these variables
@@ -13,13 +13,15 @@ must be numeric, but the function does not require that.}
 \item{step}{Integer step in the GAT program, for help reference.}
 
 \item{var}{Population variable to use for weighting, if pre-selected.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select which variable
 in the population shapefile (if population-weighted centroids are requested)
 should be used to determine area populations.
 
-\if{html}{\figure{identify_population.png}{options: width="340px"
+\if{html}{\figure{identifyGATpopulation.png}{options: width="340px"
                   alt="Figure: Screenshot of dialog to select base population"}}
 
 Select your desired base population variable. Then click on one of the
@@ -36,8 +38,8 @@ following buttons.
 \donttest{
 # identify variable to aggregate
 identifyGATpopulation(
-  varlist = names(hfpop@data),
-  step = 1
+  varlist = c("Pop_tot", "F_tot", "M_tot"),
+  step = 7
 )
 }
 

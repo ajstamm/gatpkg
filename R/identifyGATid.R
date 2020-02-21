@@ -5,7 +5,7 @@
 #' identifying variable in the shapefile should be used to label the polygons
 #' for aggregation. The dialog window looks like this.
 #'
-#' \if{html}{\figure{identify_id.png}{options: width="340px"
+#' \if{html}{\figure{identifyGATid.png}{options: width="340px"
 #'                   alt="Figure: Screenshot of dialog to select your identifier"}}
 #'
 #' Click on your desired identifier in the drop-down list. Then click on one
@@ -23,6 +23,7 @@
 #'
 #' @param mapdata A data frame, intended to be read from a shapefile DBF.
 #' @param step    Integer step in the GAT program, for help reference.
+#' @param backopt Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
@@ -35,7 +36,7 @@
 #'
 #' @export
 
-identifyGATid <- function(mapdata, step = 2) {
+identifyGATid <- function(mapdata, step = 2, backopt = TRUE) {
   iditems <- checkGATvariabletypes(mapdata, type = "character")
   idlist <- c()
   for (i in 1:length(iditems)) {
@@ -55,7 +56,8 @@ identifyGATid <- function(mapdata, step = 2) {
                                 help = hlp, step = step, msg = msg,
                                 helptitle = "inputGATmessage",
                                 helppage = "inputGATmessage",
-                                buttonopt = "Cancel")
+                                buttonopt = "Cancel",
+                                backopt = backopt)
 
     if (is.null(mycancel)) {
       myidvar <- as.character(iditems)
@@ -79,7 +81,8 @@ identifyGATid <- function(mapdata, step = 2) {
                                     title = "Identification Variable",
                                     step = step, help = hlp,
                                     helptitle = "the identification variable",
-                                    helppage = "identifyGATid")
+                                    helppage = "identifyGATid",
+                                    backopt = backopt)
       if (!is.null(myoptions)) {
         if (length(myoptions$myvar) > 0) {
           myidvar <- myoptions$myvar

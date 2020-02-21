@@ -5,7 +5,7 @@
 #' in the population shapefile (if population-weighted centroids are requested)
 #' should be used to determine area populations.
 #'
-#' \if{html}{\figure{identify_population.png}{options: width="340px"
+#' \if{html}{\figure{identifyGATpopulation.png}{options: width="340px"
 #'                   alt="Figure: Screenshot of dialog to select base population"}}
 #'
 #' Select your desired base population variable. Then click on one of the
@@ -22,20 +22,22 @@
 #'                must be numeric, but the function does not require that.
 #' @param step    Integer step in the GAT program, for help reference.
 #' @param var     Population variable to use for weighting, if pre-selected.
+#' @param backopt Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
 #' \donttest{
 #' # identify variable to aggregate
 #' identifyGATpopulation(
-#'   varlist = names(hfpop@data),
-#'   step = 1
+#'   varlist = c("Pop_tot", "F_tot", "M_tot"),
+#'   step = 7
 #' )
 #' }
 #'
 #' @export
 
-identifyGATpopulation <- function(varlist, step = 8, var = "NONE") {
+identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
+                                  backopt = TRUE) {
   noofchoices <- length(varlist)
   if (noofchoices == 1) {
     msg <- paste0("The only numeric variable is ", varlist,
@@ -58,11 +60,11 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE") {
     popvar <- "repeat"
 
     while (popvar == "repeat") {
-      popvar <- inputGATvariable(mylist = varlist,
+      popvar <- inputGATvariable(mylist = varlist, myvar = var,
                                  instruction = msg, valuebox = FALSE,
                                  title = title, help = hlp, step = step,
                                  helppage = "identifyGATpopulation",
-                                 myvar = var)$myvar
+                                 backopt = backopt)$myvar
 
       if (is.null(popvar)) {
         x <- confirmGATquit()

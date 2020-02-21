@@ -19,7 +19,8 @@
 #' Google Earth. GE 5.0 or higher is recommended. KML files were tested on
 #' GE in Chrome v9.2.90.1.
 #'
-#' @param step Integer step in the GAT program, for help reference.
+#' @param step    Integer step in the GAT program, for help reference.
+#' @param backopt Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
@@ -30,7 +31,7 @@
 #'
 #' @export
 
-saveGATkml <- function(step = 0) {
+saveGATkml <- function(step = 0, backopt = TRUE) {
   msg <- paste("Would you like to save a KML file as well as a shapefile?",
                "\n(The KML file may take a while to write.)")
   help <- paste0("To continue, select 'Yes' or 'No',",
@@ -43,7 +44,8 @@ saveGATkml <- function(step = 0) {
   while (myvalue == "repeat") {
     myvalue <- inputGATmessage(help = help, title = title, step = step,
                                helppage = helppage, msg = msg,
-                               buttonopt = "No", helptitle = helppage)
+                               buttonopt = "No", helptitle = helppage,
+                               backopt = backopt)
 
     if (is.null(myvalue)) {
       x <- confirmGATquit()

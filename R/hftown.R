@@ -1,4 +1,4 @@
-#' Hamilton & Fulton counties spatial polygon data frame
+#' Hamilton & Fulton counties town-level spatial polygon data frame
 #'
 #' This object was subsetted from a US census shapefile of towns in Hamilton
 #' and Fulton Counties in New York State.

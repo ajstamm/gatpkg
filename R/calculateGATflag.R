@@ -20,7 +20,7 @@ calculateGATflag <- function(exclist, d) {
   if (exclist$var2 != "NONE") {
     d <- calculateGATexclusions(d, exclist$var2, exclist$math2, exclist$val2)
   }
-  if (exclist$var2 != "NONE") {
+  if (exclist$var3 != "NONE") {
     d <- calculateGATexclusions(d, exclist$var3, exclist$math3, exclist$val3)
   }
   return(d$GATflag)

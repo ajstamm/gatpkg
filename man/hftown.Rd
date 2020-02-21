@@ -3,7 +3,7 @@
 \docType{data}
 \name{hftown}
 \alias{hftown}
-\title{Hamilton & Fulton counties spatial polygon data frame}
+\title{Hamilton & Fulton counties town-level spatial polygon data frame}
 \format{A SpatialPolygonsDataFrame object that includes the following
 11 variables:
 

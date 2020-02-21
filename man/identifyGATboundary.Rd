@@ -10,7 +10,8 @@ identifyGATboundary(
   boundary = "NONE",
   borders = FALSE,
   myvar = "NONE",
-  check = FALSE
+  check = FALSE,
+  backopt = TRUE
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ to FALSE.}
 
 \item{check}{The checkbox setting, if pre-selected. Currently does
 not do anything.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select a character

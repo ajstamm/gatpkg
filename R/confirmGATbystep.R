@@ -263,10 +263,6 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     showGAThelp(help = hlp, helptitle = helppage, helppage = helppage,
                 step = step)
   }
-  onBack <- function() {
-    tcltk::tkdestroy(tt)
-    assign("myvalue", "10", envir=myenv)
-  }
   onOk <- function() {
     Rbval <- tcltk::tclvalue(stepvar)
     tcltk::tkdestroy(tt)
@@ -279,17 +275,14 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
 
   # draw buttons
   tt$tf <- tcltk::tkframe(tt)
-  tt$tf$BackBut <- tcltk2::tk2button(tt$tf, text="< Back",
-                                     width = 12, command = onBack)
   tt$tf$HelpBut <- tcltk2::tk2button(tt$tf, text="Help",
                                      width = 12, command = onHelp)
-  tt$tf$OkBut <- tcltk2::tk2button(tt$tf, text = "Next >",
+  tt$tf$OkBut <- tcltk2::tk2button(tt$tf, text = "Confirm",
                                    width = 12, command = onOk,
                                    default = "active")
-  tt$tf$CancelBut <- tcltk2::tk2button(tt$tf, text = "Cancel",
+  tt$tf$CancelBut <- tcltk2::tk2button(tt$tf, text = "Cancel GAT",
                                        width = 12, command = onCancel)
 
-  tcltk::tkgrid(tt$tf$BackBut, column = 1, row = 1, padx = 5)
   tcltk::tkgrid(tt$tf$OkBut, column = 2, row = 1, padx = 5)
   tcltk::tkgrid(tt$tf$CancelBut, column = 3, row = 1, padx = 5)
   tcltk::tkgrid(tt$tf$HelpBut, column = 4, row = 1, padx = 5)

@@ -4,7 +4,7 @@
 \alias{identifyGATaggregators}
 \title{Identify and Check GAT Aggregation Variables}
 \usage{
-identifyGATaggregators(mapdata, step = 4, agglist = NULL)
+identifyGATaggregators(mapdata, step = 4, agglist = NULL, backopt = TRUE)
 }
 \arguments{
 \item{mapdata}{A data frame.}
@@ -13,6 +13,8 @@ identifyGATaggregators(mapdata, step = 4, agglist = NULL)
 
 \item{agglist}{The list of aggregation variables, with minimum and maximum
 values, if pre-selected.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select which variables

@@ -4,19 +4,21 @@
 \alias{identifyGATid}
 \title{Identify GAT Shapefile Identifier}
 \usage{
-identifyGATid(mapdata, step = 2)
+identifyGATid(mapdata, step = 2, backopt = TRUE)
 }
 \arguments{
 \item{mapdata}{A data frame, intended to be read from a shapefile DBF.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
 }
 \description{
 This function opens a dialog window for the user to select which
 identifying variable in the shapefile should be used to label the polygons
 for aggregation. The dialog window looks like this.
 
-\if{html}{\figure{identify_id.png}{options: width="340px"
+\if{html}{\figure{identifyGATid.png}{options: width="340px"
                   alt="Figure: Screenshot of dialog to select your identifier"}}
 
 Click on your desired identifier in the drop-down list. Then click on one

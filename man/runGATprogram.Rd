@@ -38,7 +38,7 @@ GAT manual, which you can access via
 }
 \details{
 You can load "BWidget" in advance, which opens a more navigable shapefile
-selection window, but it is not necessary to run the function.
+selection window, but it is not necessary to run GAT.
 }
 \examples{
 
