@@ -16,44 +16,69 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GAT v1.41 (2020)
+## GAT v1.45 (Jan 2019 - Mar 2020)
 
 All changes from January 2019 onward by Abigail Stamm.
 
 > Below is a summary of differences between the R script for GAT released in 
 > 2015 and the first release of the R package for GAT.
 
-* Jan 2019 - Jan 2020:
-    * Converted GAT to an R package and created accompanying functions, help
-      files, examples, and vignettes.
-    * Reordered GAT steps by section: user input, aggregation, mapping, and 
-      file saving.
-    * Revised user input dialogs and added function options to allow the 
-      following:
-        * maximum values for up to 2 aggregation variables
-        * enforced boundaries for 1 boundary variable
-        * enforced adjacent areas
-        * population weighting using 2 methods
-        * up to 3 exclusion criteria
-        * optional KML file
-        * saving and rerunning in prior settings
-        * confirmation dialog that allows you to return to previous steps
-    * Replaced statewide and Albany shapefiles with two smaller shapefiles, 
-      hftown and hfblock.
-    * Converted all instances of svdialogs to tcltk and where possible, 
-      upgraded code to tcltk2.
-    * Added help button and instructions to user input dialogs.
-    * Reordered and restructured user input dialogs.
-    * Added aggregation and summary information to maps and saved maps to PDF.
-    * Added all settings and aggregation warnings to the log and a list of 
-      saved files to the console.
-    * Saved GAT settings in an Rdata object to be reread into GAT.
-    * Rewrote KML code to use plotKML(), which sped it up considerably.
-    * Rewrote and expanded quit code to not crash GAT.
-    * Standardized GAT-created variable names.
-    * Made GAT ID length dynamic and consistent.
-    * Removed simulated birth data and references to it.
-    * Expanded error messaging and made it more precise.
+#### Coding changes
+
+* Reordered GAT steps by section: user input, aggregation, mapping, and 
+  file saving.
+* Converted all instances of svdialogs to tcltk and where possible, 
+  upgraded tcltk code to tcltk2.
+* Rewrote KML code to use plotKML(), which sped it up considerably.
+* Rewrote and expanded quit code to not crash GAT.
+* Standardized GAT-created variable names.
+* Made GAT ID length dynamic and consistent.
+* Expanded error messaging and made it more precise.
+* Added dialogs to handle incorrectly entered data on the fly.
+
+
+#### Resource changes
+
+* Created over 20 functions with accompanying help files and examples.
+* Developed several vignettes.
+* Replaced statewide and Albany shapefiles with two smaller shapefiles, 
+  hftown and hfblock.
+* Removed simulated birth data and references to it.
+* Added citation and license information.
+
+
+#### User input changes
+
+* Reordered and restructured user input dialogs.
+* Revised user input dialogs and added function options to allow the 
+  following:
+    * maximum values for up to 2 aggregation variables
+    * enforced boundaries for 1 boundary variable
+    * enforced adjacent areas
+    * population weighting using 2 methods
+    * up to 3 exclusion criteria
+    * KML file optional
+    * saving and rerunning prior settings
+    * comprehensive confirmation dialog that allows user to return to 
+      previous steps
+* Added help button and instructions to user input dialogs.
+
+
+#### Output changes
+
+* Added aggregation and summary information to maps.
+* Added map layers for excluded and problematic areas.
+* Saved all maps to a PDF file.
+* Added all settings, aggregation warnings, and variables and files 
+  created to the log. 
+* Added a list of saved files to the console.
+* Saved GAT settings in an Rdata object to be reread into GAT.
+* Made saving to KML optional.
+
+
+
+
+
 
 
 

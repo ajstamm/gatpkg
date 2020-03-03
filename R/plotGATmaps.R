@@ -163,7 +163,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
   fill = attr(colcode, "palette")
   border = rep("black", length(fill))
 
-  # highlight flagged areas if relevant
+  # highlight flagged areas if relevant ####
   myflags <- subset(area, area@data$GATflag %in% 1:3)
   if (nrow(myflags@data) > 0) {
     sp::plot(myflags, border = "CornflowerBlue", add = TRUE, lwd = 3)
@@ -191,7 +191,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
   legend("topleft", legend = labels, fill = fill, border = border, cex = 1,
          bty = "n", inset = 0, y.intersp = 1.25)
 
-  # calculate summary statistics if mapstats = TRUE
+  # calculate summary statistics if mapstats = TRUE ####
   if (mapstats) {
     statsvar <- area@data[, var]
     statsgood <- statsvar[which(is.finite(statsvar))]
@@ -230,6 +230,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
     # play with "pos" a bit; there has to be a more efficient method
   }
 
+  # add scale and arrow ####
   # only include this last part if prettymapr is installed
   if (requireNamespace("prettymapr", quietly = TRUE)) {
     suppressMessages(
@@ -246,6 +247,8 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
                               label.col = "black", pos = "bottomleft")
     )
   }
+
+  # save map ####
   map <- recordPlot()
 
   graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0)) # default bottom, left, top, right

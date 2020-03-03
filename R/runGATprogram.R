@@ -68,7 +68,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                stringsAsFactors = FALSE)
     temp$mapdata <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
                                       as.is = TRUE)
-    temp$mapflag <- temp$mapdata[temp$mapdata$GATflag == 0, ]
     temp$numerics <- checkGATvariabletypes(temp$mapdata, type = "number")
     temp$old_vars <- c()
     for (i in 1:ncol(temp$mapdata)) {
@@ -102,6 +101,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       tcltk::tkmessageBox(title = "Some variable names changed", type = "ok",
                           icon = "warning", message = temp$msg)
     }
+    if (!"GATflag" %in% names(temp$mapdata)) {
+      temp$mapdata$GATflag <- 0
+    }
+    temp$mapflag <- temp$mapdata[temp$mapdata$GATflag == 0, ]
 
   } else {
     gatvars <- list()
@@ -462,57 +465,69 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         }
       }
 
-      # calculate exclusions now to use them to calculate the
-      # denominator for similar merges and rates
-      temp$mapdata$GATflag <- 0
-      temp$mapdata$GATflag <- calculateGATflag(exclist, temp$mapdata)
-      exclist$flagsum <- sum(temp$mapdata$GATflag != 0)
+      if (!exclist$var1 %in% c("back", "cancel", "repeat")) {
+        # calculate exclusions now to use them to calculate the
+        # denominator for similar merges and rates
+        temp$mapdata$GATflag <- 0
+        temp$mapdata$GATflag <- calculateGATflag(exclist, temp$mapdata)
+        exclist$flagsum <- sum(temp$mapdata$GATflag != 0)
 
-      if (nrow(temp$mapdata) - exclist$flagsum < 2) {
-        temp$msg <- paste("This selection will exclude", exclist$flagsum,
-                          "of", nrow(temp$mapdata), "areas.", "\n",
-                          "GAT requires at least 2 areas to run.", "\n",
-                          "Please select new exclusion criteria.")
-        tcltk::tkmessageBox(title = "Selections invalid", type = "ok",
-                            icon = "error", message = temp$msg)
-        temp$error <- TRUE
-      } else if (exclist$flagsum > 0) {
-        temp$msg <- "You have selected to exclude:"
-        i <- list(var = c(exclist$var1, exclist$var2, exclist$var3),
-                  math = c(exclist$math1, exclist$math2, exclist$math3),
-                  val = c(exclist$val1, exclist$val2, exclist$val3))
-        for (j in 1:3) {
-          if (i$var[j] != "NONE") {
-            temp$msg <- paste(temp$msg, "\n   ", i$var[j], i$math[j], i$val[j])
+        if (nrow(temp$mapdata) - exclist$flagsum < 2) {
+          temp$msg <- paste("This selection will exclude", exclist$flagsum,
+                            "of", nrow(temp$mapdata), "areas.", "\n",
+                            "GAT requires at least 2 areas to run.", "\n",
+                            "Please select new exclusion criteria.")
+          tcltk::tkmessageBox(title = "Selections invalid", type = "ok",
+                              icon = "error", message = temp$msg)
+          temp$error <- TRUE
+        } else if (exclist$var1 != "NONE") {
+          temp$msg <- "You have selected to exclude:"
+          i <- list(var = c(exclist$var1, exclist$var2, exclist$var3),
+                    math = c(exclist$math1, exclist$math2, exclist$math3),
+                    val = c(exclist$val1, exclist$val2, exclist$val3))
+          for (j in 1:3) {
+            if (i$var[j] != "NONE") {
+              temp$msg <- paste(temp$msg, "\n   ", i$var[j], i$math[j], i$val[j])
+            }
+          }
+
+          temp$msg <- paste(temp$msg, "\nThis will exclude", exclist$flagsum,
+                            "of", nrow(temp$mapdata), "areas.")
+          temp$help <- paste0("To continue, select 'Yes',",
+                              "\nto reselect exclusion criteria, select 'Repeat',",
+                              "\nand to return to second aggregation variable selection,",
+                              "click '< Back',")
+
+          temp$cancel <- inputGATmessage(title = "Excluded areas", help = temp$help,
+                                         helptitle = "inputGATmessage",
+                                         helppage = "inputGATmessage", step = 6,
+                                         msg = temp$msg, buttonopt = "Repeat",
+                                         backopt = FALSE)
+          if (temp$cancel == "cancel") {
+            exclist$var1 <- "repeat"
+          } else if (temp$cancel == "back") {
+            exclist$var1 <- "back"
+            step <- step - 1
           }
         }
 
-        temp$msg <- paste(temp$msg, "\nThis will exclude", exclist$flagsum,
-                          "of", nrow(temp$mapdata), "areas.")
-        temp$help <- paste0("To continue, select 'Yes',",
-                            "\nto reselect exclusion criteria, select 'Repeat',",
-                            "\nand to return to second aggregation variable selection,",
-                            "click '< Back',")
-
-        temp$cancel <- inputGATmessage(title = "Excluded areas", help = temp$help,
-                                       helptitle = "inputGATmessage",
-                                       helppage = "inputGATmessage", step = 6,
-                                       msg = temp$msg, buttonopt = "Repeat")
-        if (temp$cancel == "cancel") {
-          exclist$var1 <- "repeat"
-        } else if (temp$cancel == "back") {
-          exclist$var1 <- "back"
-          step <- step - 1
-        }
       }
 
-      if (!exclist$var1 %in% c("back", "cancel") & !temp$error) {
+      if (!exclist$var1 %in% c("back", "cancel", "repeat") & !temp$error) {
         if (temp$flagconfirm) {
           step <- 11
         } else {
           step <- step + 1
         }
+      } else if (exclist$var1 == "back") {
+        step <- step - 1
+      } else if (exclist$var1 == "cancel") {
+        step <- 20
+        mysettings$quit <- TRUE
+      } else if (exclist$var1 == "repeat") {
+        temp$error <- TRUE
       }
+
     } # end request exclusions (exclist)
     while (step == 6) { # radiobutton dialog to get merge type
       pb <- list(title = "NYSDOH GAT: identify merge type",
@@ -825,6 +840,20 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                  label = "Confirming your GAT settings.")
       tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
                               label = pb$label)
+
+      # max value exclusions
+      temp$mapdata$GATflag <- calculateGATflag(exclist, temp$mapdata)
+      temp$mapdata$GATflag <-
+        ifelse(temp$mapdata[, gatvars$aggregator1] > gatvars$maxvalue1 &
+               temp$mapdata$GATflag == 0, 5, temp$mapdata$GATflag)
+      if (!gatvars$aggregator2 == gatvars$aggregator1) {
+        temp$mapdata$GATflag <-
+          ifelse(temp$mapdata[, gatvars$aggregator2] > gatvars$maxvalue2 &
+                 temp$mapdata$GATflag == 0, 5, temp$mapdata$GATflag)
+      }
+      gatvars$exclmaxval <- sum(temp$mapdata$GATflag == 5)
+
+
       temp$flagconfirm <- TRUE
       error <- TRUE
       gatvars$numrow <- nrow(temp$mapdata)
@@ -847,10 +876,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         step <- 20 # done with user input
         myshps$original <- temp$shp
         temp$shp@data <- temp$mapdata
-      } else if (temp$cancel == "back") {
+      } else if (temp$cancel == "back") { # now irrelevant
         step <- step - 1 # go back one
       } else if (temp$cancel == "cancel") {
-        step <- 1 # if no, start again
+        step <- 20
+        mysettings$quit <- TRUE
       } else if (grepl("[0-9]", temp$cancel)) {
         step <- as.numeric(gsub("[^0-9]", "", temp$cancel))
       }

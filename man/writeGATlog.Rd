@@ -66,7 +66,8 @@ gatvars <- list(
   mergeopt1 = "closest",      # method used to merge polygons
   rigidbound = FALSE,         # boolean: were boundaries enforced?,
   savekml = FALSE,
-  popwt = FALSE
+  popwt = FALSE,
+  exclmaxval = 2
 )
 
 mergevars <- list(

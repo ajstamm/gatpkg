@@ -53,7 +53,8 @@
 #'     rigidbound = FALSE,
 #'     popvar = "total_pop",
 #'     savekml = TRUE,
-#'     numrow = 15
+#'     numrow = 15,
+#'     exclmaxval = 2
 #'   )
 #'
 #' mergevars <-
@@ -69,7 +70,8 @@
 #'     ratename = "my_rate",
 #'     numerator = "case",
 #'     denominator = "pop",
-#'     multiplier = 100000
+#'     multiplier = 100000,
+#'     colorname = "Blue-Green"
 #'   )
 #'
 #' exclist <-
@@ -151,20 +153,23 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
 
   ### aggregation variables ####
   mysets <- paste0(mysets, "  ", stepslist[4], ": \n",
-                   paste(rep(" ", 7), collapse = ""),
+                   paste(rep(" ", 17), collapse = ""),
                    format(as.numeric(gsub(",", "", gatvars$minvalue1)),
                           big.mark=",", scientific=FALSE), " to ",
                    format(as.numeric(gsub(",", "", gatvars$maxvalue1)),
                           big.mark=",", scientific=FALSE), " ",
                    gatvars$aggregator1, "\n")
   if (!gatvars$aggregator2 %in% c(gatvars$aggregator1, "NONE")) {
-    mysets <- paste(mysets, paste(rep(" ", 5), collapse = ""),
+    mysets <- paste(mysets, paste(rep(" ", 15), collapse = ""),
                     format(as.numeric(gsub(",", "", gatvars$minvalue2)), big.mark=",",
                            scientific=FALSE), "to",
                     format(as.numeric(gsub(",", "", gatvars$maxvalue2)),
                            big.mark=",", scientific=FALSE),
                     gatvars$aggregator2, "\n")
   }
+  mysets <- paste(mysets, paste(rep(" ", 10), collapse = ""),
+                  "Areas excluded (value over maximum):", gatvars$exclmaxval, "of",
+                  gatvars$numrow, "\n")
 
   ### exclusions ####
   mysets <- paste0(mysets, "  ", stepslist[5], ":")
@@ -181,7 +186,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
       mysets <- paste(mysets, paste(rep(" ", 36), collapse = ""),
                       exclist$var3, exclist$math3, exclist$val3, "\n")
     }
-    mysets <- paste(mysets, paste(rep(" ", 5), collapse = ""),
+    mysets <- paste(mysets, paste(rep(" ", 10), collapse = ""),
                     "Areas excluded:", exclist$flagsum, "of", gatvars$numrow, "\n")
   } else {
     mysets <- paste(mysets, "None selected \n")
@@ -217,7 +222,9 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     mysets <- paste(mysets, ratevars$ratename, "=",
                     format(as.numeric(ratevars$multiplier), big.mark=",",
                            scientific=FALSE),
-                    "*", ratevars$numerator, "/", ratevars$denominator, "\n")
+                    "*", ratevars$numerator, "/", ratevars$denominator, "\n",
+                    paste(rep(" ", 10), collapse = ""),
+                    "Color scheme:", ratevars$colorname, "\n")
   }
 
   ### save kml ####

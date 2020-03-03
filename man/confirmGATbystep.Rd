@@ -75,7 +75,8 @@ gatvars <-
     rigidbound = FALSE,
     popvar = "total_pop",
     savekml = TRUE,
-    numrow = 15
+    numrow = 15,
+    exclmaxval = 2
   )
 
 mergevars <-
@@ -91,7 +92,8 @@ ratevars <-
     ratename = "my_rate",
     numerator = "case",
     denominator = "pop",
-    multiplier = 100000
+    multiplier = 100000,
+    colorname = "Blue-Green"
   )
 
 exclist <-

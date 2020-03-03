@@ -81,10 +81,6 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
                                   settings = list(family = "Segoe UI", size = 10,
                                                   bold = TRUE, italic = FALSE))
 
-
-
-
-
   if (is.null(exclist)) {
     myvar1 <- tcltk::tclVar("NONE")
     myvar2 <- tcltk::tclVar("NONE")
