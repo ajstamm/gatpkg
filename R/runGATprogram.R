@@ -329,7 +329,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         mysettings$quit <- TRUE
       } else if (!error) {
         gatvars$aggregator1 <- agglist$var1
-        gatvars$aggregator2 <- agglist$var2
+        if (agglist$var2 == "NONE") {
+          gatvars$aggregator2 <- agglist$var1
+        } else {
+          gatvars$aggregator2 <- agglist$var2
+        }
         gatvars$minvalue1 <- agglist$minval1
         gatvars$maxvalue1 <- agglist$maxval1
         gatvars$minvalue2 <- agglist$minval2

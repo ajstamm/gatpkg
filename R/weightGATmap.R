@@ -8,6 +8,9 @@
 #' @param idvar    A variable of unique string values to identify the
 #'                 observations.
 #' @param filevars A list of strings denoting file names and paths.
+#' @param crs      A user-defined non-lat/long projection, entered as a
+#'                 string. The default is NULL, in which case the function
+#'                 defines the projection.
 #'
 #' @examples
 #'
@@ -28,11 +31,16 @@
 #'
 #'
 #' @export
-weightGATmap <- function(area, filevars, idvar, popvar) {
+weightGATmap <- function(area, filevars, idvar, popvar, crs = NULL) {
   pop <- sf::read_sf(dsn = filevars$poppath, layer = filevars$popfile)
   pop <- pop[, popvar]
   pop$area_old <- sf::st_area(pop$geometry)
-  mycrs <- convertlatlong2UTM(area, units = "m")
+  if (is.null(crs)) {
+    mycrs <- convertlatlong2UTM(area, units = "m")
+  } else {
+    mycrs <- crs
+  }
+
   pop <- sf::st_transform(pop, mycrs)
 
   # to stop warnings; not accurate for population variables,
@@ -46,6 +54,8 @@ weightGATmap <- function(area, filevars, idvar, popvar) {
   # true for character variables;
   # variables will be unknown and don't matter anyway
   sf::st_agr(areasf) <- "constant"
+
+  # to plot: plot(sf::st_geometry(pop))
 
   # intersect area and pop
   popshp <- sf::st_intersection(pop, areasf)
