@@ -927,6 +927,12 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     if (gatvars$aggregator2 == "NONE") {
       gatvars$aggregator2 <- gatvars$aggregator1
     }
+    myshps$original@data[, gatvars$aggregator1] <-
+      as.numeric(as.character(myshps$original@data[, gatvars$aggregator1]))
+    if (gatvars$aggregator2 != gatvars$aggregator1) {
+      myshps$original@data[, gatvars$aggregator2] <-
+        as.numeric(as.character(myshps$original@data[, gatvars$aggregator2]))
+    }
     rm(error)
     gatvars$maxvalue1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
     gatvars$maxvalue2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
@@ -1008,8 +1014,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     myplots <- list()
 
     # plot first aggregation variable
-    temp <- defineGATmapclasses(myshps$original, myshps$aggregated,
-                                gatvars$aggregator1)
+    temp <- defineGATmapclasses(areaold = myshps$original,
+                                areanew = myshps$aggregated,
+                                aggvar = gatvars$aggregator1)
 
     mapvars$title <- paste(gatvars$aggregator1, "Before Merging")
     mapvars$titlesub = paste("Aggregation values:",

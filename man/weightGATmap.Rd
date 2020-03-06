@@ -4,7 +4,7 @@
 \alias{weightGATmap}
 \title{Find the Weighted Centriods for the Map}
 \usage{
-weightGATmap(area, filevars, idvar, popvar)
+weightGATmap(area, filevars, idvar, popvar, crs = NULL)
 }
 \arguments{
 \item{area}{The original shapefile.}
@@ -15,6 +15,10 @@ weightGATmap(area, filevars, idvar, popvar)
 observations.}
 
 \item{popvar}{The base population variable.}
+
+\item{crs}{A user-defined non-lat/long projection, entered as a
+string. The default is NULL, in which case the function
+defines the projection.}
 }
 \description{
 This function identifies the population weighted centroids for all areas

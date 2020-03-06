@@ -22,8 +22,8 @@
 #' @export
 
 defineGATmapclasses <- function(areaold, areanew, aggvar, breaks = 7) {
-  olddata <- areaold@data[, aggvar]
-  newdata <- areanew@data[, aggvar]
+  olddata <- as.numeric(areaold@data[, aggvar])
+  newdata <- as.numeric(areanew@data[, aggvar])
   combinedata <- c(olddata, newdata)
 
   if (length(table(combinedata)) < breaks) {

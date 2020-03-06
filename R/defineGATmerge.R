@@ -126,262 +126,272 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
 
   # set up temporary variables ####
   if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
+  # for some reason, numeric sometimes switched to character
+  aggvars$allpolydata[, gatvars$aggregator1] <-
+    as.numeric(as.character(aggvars$allpolydata[, gatvars$aggregator1]))
+  aggvars$allpolydata[, gatvars$aggregator2] <-
+    as.numeric(as.character(aggvars$allpolydata[, gatvars$aggregator2]))
+
+
   temp <- list(alldata = aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0), ],
                digits = nchar(nrow(aggvars$allpolydata)),
                index = sapply(aggvars$allpolydata, is.integer),
                rownames = area@data[, gatvars$myidvar])
   if (nrow(temp$alldata) > 0) {
-      temp$minpop1 = min(temp$alldata[, gatvars$aggregator1])
-      temp$minpop2 = min(temp$alldata[, gatvars$aggregator2])
+    temp$minpop1 = min(temp$alldata[, gatvars$aggregator1])
+    temp$minpop2 = min(temp$alldata[, gatvars$aggregator2])
 
-  myids <- as.character(unlist(data.frame(area@data[, gatvars$myidvar])))
-  myids <- myids[grepl("GATid", myids)]
-  myids <- gsub("GATid_", "",  myids)
+    myids <- as.character(unlist(data.frame(area@data[, gatvars$myidvar])))
+    myids <- myids[grepl("GATid", myids)]
+    myids <- gsub("GATid_", "",  myids)
 
-  if (length(myids) == 0) {
-    maxid <- 0
-  } else {
-    maxid <- max(as.numeric(myids))
-    temp$digits <- nchar(myids[1])
-  }
-
-  # set up town variables ####
-
-  # get list of neighbors using poly2nb method from spdep packagetow
-  townvars <- list(oldtownnb = spdep::poly2nb(area, queen = FALSE,
-                                              row.names = temp$rownames),
-                   townnb = spdep::poly2nb(area, queen = FALSE,
-                                           row.names = temp$rownames))
-
-  # convert integers to double (change to convert when I read in file?)
-  aggvars$allpolydata[, temp$index] <-
-    sapply(aggvars$allpolydata[, temp$index], as.numeric)
-
-
-
-
-  # start while loop ####
-  while ((temp$minpop1 < gatvars$minvalue1) |
-         (temp$minpop2 < gatvars$minvalue2)){
-    # start loop ####
-    temp$logmsg <- ""
-    temp$aggdata <- aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0), ]
-
-    # change the merge order low to high
-    temp$tobemerged <- temp$aggdata[which(
-      (temp$aggdata[, gatvars$aggregator1] < gatvars$minvalue1) |
-        (temp$aggdata[, gatvars$aggregator2] < gatvars$minvalue2) ), ]
-
-    if (temp$minpop1 < gatvars$minvalue1) {
-      temp$tobemerged <- temp$tobemerged[order(-temp$tobemerged[, gatvars$aggregator1]), ]
+    if (length(myids) == 0) {
+      maxid <- 0
     } else {
-      temp$tobemerged <- temp$tobemerged[order(-temp$tobemerged[, gatvars$aggregator2]), ]
+      maxid <- max(as.numeric(myids))
+      temp$digits <- nchar(myids[1])
     }
 
-    # incremental progress bar ####
-    mb$label <- paste0("Merge ", aggvars$newregno + maxid, ": ",
-                       nrow(temp$tobemerged), " areas remaining.")
-    step <- nrow(area@data) - nrow(temp$tobemerged)
-    tcltk::setTkProgressBar(tmb, value = step, title = mb$title,
-                            label = mb$label)
+    # set up town variables ####
 
-    # default merge option is the one selected ####
-    mergevars$mergeopt2 <- mergevars$mergeopt1
+    # get list of neighbors using poly2nb method from spdep packagetow
+    townvars <- list(oldtownnb = spdep::poly2nb(area, queen = FALSE,
+                                                row.names = temp$rownames),
+                     townnb = spdep::poly2nb(area, queen = FALSE,
+                                             row.names = temp$rownames))
 
-    temp$first <- identifyGATfirstobs(tobemerged = temp$tobemerged,
-                                      aggvar = gatvars$aggregator1,
-                                      aggvar2 = gatvars$aggregator2,
-                                      minval = gatvars$minvalue1,
-                                      minval2 = gatvars$minvalue2)
+    # convert integers to double (change to convert when I read in file?)
+    aggvars$allpolydata[, temp$index] <-
+      sapply(aggvars$allpolydata[, temp$index], as.numeric)
 
-    if (!is.null(gatvars$maxvalue1)) {
-      temp$aggdata <- temp$aggdata[which(
-        temp$aggdata[, gatvars$aggregator1] + temp$first[, gatvars$aggregator1] <
-        as.numeric(gsub(",", "", gatvars$maxvalue1)) |
-        temp$aggdata[, gatvars$aggregator2] + temp$first[, gatvars$aggregator2] <
-        as.numeric(gsub(",", "", gatvars$maxvalue2))), ]
-    }
 
-    townvars$townnbid <- attr(townvars$townnb, "region.id")
-    if (gatvars$boundary != "NONE") {
-      temp$firstboundary <- as.character(temp$first[, gatvars$boundary])
-    } else {
-      temp$firstboundary <- "NONE"
-    }
-    if (temp$first[, gatvars$myidvar] %in% townvars$townnbid) {
-      townvars$townnbidloc <- which(townvars$townnbid ==
-                                      temp$first[, gatvars$myidvar])
-      # try a different way: result is neighbors as integer ####
-      townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
-      townvars$neighborid <- townvars$townnbid[townvars$neighbors]
-      townvars$nbdata <-
-        temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
-                             townvars$neighborid), ]
-      if (gatvars$boundary != "NONE") { # gatvars$rigidbound?
-        townvars$nbdata <- townvars$nbdata[which(
-          townvars$nbdata[, gatvars$boundary] == temp$firstboundary), ]
-      }
-    }
-    # 7 areas have no neighbors, define nbdata in next if statement
 
-    # get the data about these neighbors ####
-    if (gatvars$boundary != "NONE") {
-      if (temp$firstboundary %in% townvars$nbdata[, gatvars$boundary]) {
-      # index of neighbors in same county
-        temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
-                                 temp$firstboundary)
-        # can't use subset function with variable for variable name
-        temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
-        temp$inco_nbrows <- nrow(temp$inco_nbdata)
+
+    # start while loop ####
+    while ((temp$minpop1 < gatvars$minvalue1) |
+           (temp$minpop2 < gatvars$minvalue2)){
+      # start loop ####
+      temp$logmsg <- ""
+      temp$aggdata <- aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0), ]
+
+      # change the merge order low to high
+      temp$tobemerged <- temp$aggdata[which(
+        (temp$aggdata[, gatvars$aggregator1] < gatvars$minvalue1) |
+          (temp$aggdata[, gatvars$aggregator2] < gatvars$minvalue2) ), ]
+
+      if (temp$minpop1 < gatvars$minvalue1) {
+        temp$tobemerged <-
+          temp$tobemerged[order(-temp$tobemerged[, gatvars$aggregator1]), ]
       } else {
-        temp$inco_nbrows <- 0
+        temp$tobemerged <- temp$tobemerged[order(-temp$tobemerged[, gatvars$aggregator2]), ]
       }
 
-      # use observations in same county if possible, even if not adjacent ####
-      if (temp$inco_nbrows > 0) {
-        townvars$nbdata <- temp$inco_nbdata
+      # incremental progress bar ####
+      mb$label <- paste0("Merge ", aggvars$newregno + maxid, ": ",
+                         nrow(temp$tobemerged), " areas remaining.")
+      step <- nrow(area@data) - nrow(temp$tobemerged)
+      tcltk::setTkProgressBar(tmb, value = step, title = mb$title,
+                              label = mb$label)
+
+      # default merge option is the one selected ####
+      mergevars$mergeopt2 <- mergevars$mergeopt1
+
+      temp$first <- identifyGATfirstobs(tobemerged = temp$tobemerged,
+                                        aggvar = gatvars$aggregator1,
+                                        aggvar2 = gatvars$aggregator2,
+                                        minval = gatvars$minvalue1,
+                                        minval2 = gatvars$minvalue2)
+
+      if (!is.null(gatvars$maxvalue1)) {
+        temp$aggdata <- temp$aggdata[which(
+          temp$aggdata[, gatvars$aggregator1] + temp$first[, gatvars$aggregator1] <
+          as.numeric(gsub(",", "", gatvars$maxvalue1)) |
+          temp$aggdata[, gatvars$aggregator2] + temp$first[, gatvars$aggregator2] <
+          as.numeric(gsub(",", "", gatvars$maxvalue2))), ]
+      }
+
+      townvars$townnbid <- attr(townvars$townnb, "region.id")
+      if (gatvars$boundary != "NONE") {
+        temp$firstboundary <- as.character(temp$first[, gatvars$boundary])
       } else {
+        temp$firstboundary <- "NONE"
+      }
+      if (temp$first[, gatvars$myidvar] %in% townvars$townnbid) {
+        townvars$townnbidloc <- which(townvars$townnbid ==
+                                        temp$first[, gatvars$myidvar])
+        # try a different way: result is neighbors as integer ####
+        townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
+        townvars$neighborid <- townvars$townnbid[townvars$neighbors]
+        townvars$nbdata <-
+          temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
+                               townvars$neighborid), ]
+        if (gatvars$boundary != "NONE") { # gatvars$rigidbound?
+          townvars$nbdata <- townvars$nbdata[which(
+            townvars$nbdata[, gatvars$boundary] == temp$firstboundary), ]
+        }
+      }
+      # 7 areas have no neighbors, define nbdata in next if statement
+
+      # get the data about these neighbors ####
+      if (gatvars$boundary != "NONE") {
+        if (temp$firstboundary %in% townvars$nbdata[, gatvars$boundary]) {
+        # index of neighbors in same county
+          temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
+                                   temp$firstboundary)
+          # can't use subset function with variable for variable name
+          temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
+          temp$inco_nbrows <- nrow(temp$inco_nbdata)
+        } else {
+          temp$inco_nbrows <- 0
+        }
+
+        # use observations in same county if possible, even if not adjacent ####
+        if (temp$inco_nbrows > 0) {
+          townvars$nbdata <- temp$inco_nbdata
+        } else {
+          if (temp$logmsg == "") {
+            temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
+                                  temp$first[, gatvars$myidvar], "):")
+          }
+          temp$logmsg <- paste(temp$logmsg,
+                               "No physically adjacent neighbors",
+                               "found within the same boundary.")
+          if (!adjacent & gatvars$boundary != "NONE") {
+            # get all in same county, first index then the data
+            temp$inco_alldex <- which(temp$aggdata[, gatvars$boundary] ==
+                                        temp$firstboundary &
+                                        temp$aggdata[, gatvars$myidvar] !=
+                                        temp$first[, gatvars$myidvar])
+            temp$inco_alldata <- temp$aggdata[temp$inco_alldex, ]
+            if(nrow(temp$inco_alldata) > 0){
+              townvars$nbdata <- temp$inco_alldata
+              mergevars$mergeopt2 <- "closest"
+              temp$logmsg <- paste(temp$logmsg,
+                                   "Found areas in the same boundary,",
+                                   "but they are not physically adjacent.")
+            }
+          }
+        }
+      } # end if boundarvar is not NONE
+
+      # if no adjacent neighbors found, any area is a candidate for merging ####
+      if(nrow(townvars$nbdata) == 0) {
         if (temp$logmsg == "") {
           temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
                                 temp$first[, gatvars$myidvar], "):")
         }
         temp$logmsg <- paste(temp$logmsg,
-                             "No physically adjacent neighbors",
-                             "found within the same boundary.")
-        if (!adjacent & gatvars$boundary != "NONE") {
-          # get all in same county, first index then the data
-          temp$inco_alldex <- which(temp$aggdata[, gatvars$boundary] ==
-                                      temp$firstboundary &
-                                      temp$aggdata[, gatvars$myidvar] !=
-                                      temp$first[, gatvars$myidvar])
-          temp$inco_alldata <- temp$aggdata[temp$inco_alldex, ]
-          if(nrow(temp$inco_alldata) > 0){
-            townvars$nbdata <- temp$inco_alldata
-            mergevars$mergeopt2 <- "closest"
-            temp$logmsg <- paste(temp$logmsg,
-                                 "Found areas in the same boundary,",
-                                 "but they are not physically adjacent.")
-          }
-        }
-      }
-    } # end if boundarvar is not NONE
-
-    # if no adjacent neighbors found, any area is a candidate for merging ####
-    if(nrow(townvars$nbdata) == 0) {
-      if (temp$logmsg == "") {
-        temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
-                              temp$first[, gatvars$myidvar], "):")
-      }
-      temp$logmsg <- paste(temp$logmsg,
-                           "No physically adjacent neighbors found.")
-      if (!adjacent) {
-        # don't want to use least or similar if no adjacent neighbors
-        mergevars$mergeopt2 <- "closest"
-        townvars$nbdata <-
-          temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
-                               townvars$neighborid), ]
-        if (gatvars$rigidbound) {
-          temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
-                                   temp$firstboundary)
-          # can't use subset function with variable for variable name
-          townvars$nbdata <- townvars$nbdata[temp$inco_dex, ]
-        }
-      }
-    }
-
-    # if no adjacent neighbors in boundary, look elsewhere ####
-    if(nrow(townvars$nbdata) == 0) {
-      if (temp$logmsg == "") {
-        temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
-                              temp$first[, gatvars$myidvar], "):")
-      }
-      temp$logmsg <- paste(temp$logmsg,
-                           "No neighbors found in boundary.")
-      if (adjacent & !gatvars$rigidbound) {
-        townvars$townnbid <- attr(townvars$townnb, "region.id")
-        # don't want to use least or similar if no adjacent neighbors
-        if (temp$first[, gatvars$myidvar] %in% townvars$townnbid) {
-          townvars$townnbidloc <- which(townvars$townnbid ==
-                                          temp$first[, gatvars$myidvar])
-          # try a different way: result is neighbors as integer ####
-          townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
-          townvars$neighborid <- townvars$townnbid[townvars$neighbors]
+                             "No physically adjacent neighbors found.")
+        if (!adjacent) {
+          # don't want to use least or similar if no adjacent neighbors
+          mergevars$mergeopt2 <- "closest"
           townvars$nbdata <-
             temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
                                  townvars$neighborid), ]
+          if (gatvars$rigidbound) {
+            temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
+                                     temp$firstboundary)
+            # can't use subset function with variable for variable name
+            townvars$nbdata <- townvars$nbdata[temp$inco_dex, ]
+          }
         }
       }
-    }
 
-
-    # quit searching for neighbors ####
-    if(nrow(townvars$nbdata) == 0) {
-      # GATflag = "skip me" then at beginning of loop, check for and remove flags ####
-      # (can also remove oversized, etc at that point)
-      # - assign them in previous step
-      aggvars$allpolydata$GATflag[aggvars$allpolydata[, gatvars$myidvar] ==
-                                 temp$first[, gatvars$myidvar]] <- 10
-      if (temp$logmsg == "") {
-        temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
-                              temp$first[, gatvars$myidvar], "):")
+      # if no adjacent neighbors in boundary, look elsewhere ####
+      if(nrow(townvars$nbdata) == 0) {
+        if (temp$logmsg == "") {
+          temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
+                                temp$first[, gatvars$myidvar], "):")
+        }
+        temp$logmsg <- paste(temp$logmsg,
+                             "No neighbors found in boundary.")
+        if (adjacent & !gatvars$rigidbound) {
+          townvars$townnbid <- attr(townvars$townnb, "region.id")
+          # don't want to use least or similar if no adjacent neighbors
+          if (temp$first[, gatvars$myidvar] %in% townvars$townnbid) {
+            townvars$townnbidloc <- which(townvars$townnbid ==
+                                            temp$first[, gatvars$myidvar])
+            # try a different way: result is neighbors as integer ####
+            townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
+            townvars$neighborid <- townvars$townnbid[townvars$neighbors]
+            townvars$nbdata <-
+              temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
+                                   townvars$neighborid), ]
+          }
+        }
       }
-      temp$logmsg <- paste(temp$logmsg, "No remaining neighbors.",
-                           "This area cannot be merged further.")
-    } else {
-      # rank centroid distances ####
-      townvars$nborder <- rankGATdistance(area = area,
-                                          nbdata = townvars$nbdata,
-                                          first = temp$first,
-                                          gatvars = gatvars,
-                                          mergevars = mergevars)
 
-      # data which will be combined to form new region ####
-      townvars$newreg <- rbind(temp$first,
-                               townvars$nbdata[townvars$nborder[1], ])
 
-      # add leading zeroes based on maximum number of areas
-      temp$zero <- paste(rep("0", temp$digits -
-                             nchar(aggvars$newregno + maxid)),
-                         collapse = "")
-      townvars$nrid <- paste0("GATid_", temp$zero,
-                              as.character(aggvars$newregno + maxid))
+      # quit searching for neighbors ####
+      if(nrow(townvars$nbdata) == 0) {
+        # GATflag = "skip me" then at beginning of loop, check for and remove flags ####
+        # (can also remove oversized, etc at that point)
+        # - assign them in previous step
+        aggvars$allpolydata$GATflag[aggvars$allpolydata[, gatvars$myidvar] ==
+                                   temp$first[, gatvars$myidvar]] <- 10
+        if (temp$logmsg == "") {
+          temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
+                                temp$first[, gatvars$myidvar], "):")
+        }
+        temp$logmsg <- paste(temp$logmsg, "No remaining neighbors.",
+                             "This area cannot be merged further.")
+      } else {
+        # rank centroid distances ####
+        townvars$nborder <- rankGATdistance(area = area,
+                                            nbdata = townvars$nbdata,
+                                            first = temp$first,
+                                            gatvars = gatvars,
+                                            mergevars = mergevars)
 
-      temp$IDloc <- which(aggvars$IDlist %in% townvars$newreg[, gatvars$myidvar])
-      aggvars$IDlist[temp$IDloc] <- townvars$nrid
+        # data which will be combined to form new region ####
+        townvars$newreg <- rbind(temp$first,
+                                 townvars$nbdata[townvars$nborder[1], ])
 
-      # calculate new region ####
-      townvars$newregdata <- createGATregion(mydata = aggvars$allpolydata,
-                                             newreg = townvars$newreg,
-                                             myidvar = gatvars$myidvar,
-                                             nrid = townvars$nrid,
-                                             area = area, pop = mapvars$pop,
-                                             IDlist = aggvars$IDlist,
-                                             pwrepeat = pwrepeat,
-                                             popwt = gatvars$popwt)
+        # add leading zeroes based on maximum number of areas
+        temp$zero <- paste(rep("0", temp$digits -
+                               nchar(aggvars$newregno + maxid)),
+                           collapse = "")
+        townvars$nrid <- paste0("GATid_", temp$zero,
+                                as.character(aggvars$newregno + maxid))
 
-      # add the new region to the list of data about the regions ####
-      aggvars$allpolydata <- rbind(aggvars$allpolydata, townvars$newregdata)
+        temp$IDloc <- which(aggvars$IDlist %in% townvars$newreg[, gatvars$myidvar])
+        aggvars$IDlist[temp$IDloc] <- townvars$nrid
 
-      # need to remove the info about the old regions
-      aggvars$allpolydata <-
-        aggvars$allpolydata[which(!aggvars$allpolydata[, gatvars$myidvar] %in%
-                                    townvars$newreg[, gatvars$myidvar]), ]
+        # calculate new region ####
+        townvars$newregdata <- createGATregion(mydata = aggvars$allpolydata,
+                                               newreg = townvars$newreg,
+                                               myidvar = gatvars$myidvar,
+                                               nrid = townvars$nrid,
+                                               area = area, pop = mapvars$pop,
+                                               IDlist = aggvars$IDlist,
+                                               pwrepeat = pwrepeat,
+                                               popwt = gatvars$popwt)
 
-      # use spdep::aggregate.nb to create new object listing neighbors of aggregate
-      townvars$townnb <- spdep::aggregate.nb(townvars$oldtownnb, aggvars$IDlist)
-      aggvars$newregno <- aggvars$newregno + 1
+        # add the new region to the list of data about the regions ####
+        aggvars$allpolydata <- rbind(aggvars$allpolydata, townvars$newregdata)
+
+        # need to remove the info about the old regions
+        aggvars$allpolydata <-
+          aggvars$allpolydata[which(!aggvars$allpolydata[, gatvars$myidvar] %in%
+                                      townvars$newreg[, gatvars$myidvar]), ]
+
+        # use spdep::aggregate.nb to create new object listing neighbors of aggregate
+        townvars$townnb <- spdep::aggregate.nb(townvars$oldtownnb, aggvars$IDlist)
+        aggvars$newregno <- aggvars$newregno + 1
+      }
+
+      # find the minimum population ####
+      temp$minpop1 <- min(aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0),
+                                              gatvars$aggregator1])
+      temp$minpop2 <- min(aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0),
+                                              gatvars$aggregator2])
+
+      if (temp$logmsg != "") {
+        aggvars$logmsg <- paste0(aggvars$logmsg, temp$logmsg, "\n")
+      }
+      # 'garbage collection': free up memory ####
+      gc(verbose = FALSE)
     }
-
-    # find the minimum population ####
-    temp$minpop1 <- min(aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0),
-                                            gatvars$aggregator1])
-    temp$minpop2 <- min(aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0),
-                                            gatvars$aggregator2])
-
-    if (temp$logmsg != "") {
-      aggvars$logmsg <- paste0(aggvars$logmsg, temp$logmsg, "\n")
-    }
-  }
   } else {
     if (gatvars$aggregator1 == gatvars$aggregator2) {
       vars <- gatvars$aggregator1

@@ -37,6 +37,7 @@
 #' @param savekml   A boolean, whether or not to save a KML file.
 #' @param step      Integer step in the GAT program, for help reference.
 #'
+#### examples ####
 #' @examples
 #'
 #' \donttest{
@@ -108,6 +109,7 @@
 #' }
 #'
 #' @export
+#### end roxygen ####
 
 confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                              savekml, step = 0) {

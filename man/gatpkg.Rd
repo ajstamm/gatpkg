@@ -26,7 +26,6 @@ the responsibility of the authors and does not necessarily represent the
 official views of the CDC.
 }
 \author{
-\bold{Authors} \cr
 Abigail Stamm, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
 Gwen Babcock, Bureau of Environmental and Occupational

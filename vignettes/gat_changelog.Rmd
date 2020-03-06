@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GAT v1.45 (Jan 2019 - Mar 2020)
+## GAT v1.46 (Jan 2019 - Mar 2020)
 
 All changes from January 2019 onward by Abigail Stamm.
 
