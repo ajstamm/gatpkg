@@ -1,7 +1,7 @@
 {
     "installOptions" : {
         "installDependencies" : true,
-        "installFromRepository" : false,
+        "installFromRepository" : true,
         "libraryPath" : "C:/Users/ajs11/Documents/R/win-library/3.6"
     }
 }
