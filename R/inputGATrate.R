@@ -339,6 +339,9 @@ inputGATrate <- function(mapdata, defaultopt = 0,
 
   tcltk::tkwait.window(tt)
 
+  if (identical(myenv$reslist$colorscheme, character(0))) {
+    myenv$reslist$colorscheme <- "BuGn"
+  }
   myenv$reslist$colorname <- colorlist[colors == myenv$reslist$colorscheme]
 
   return(myenv$reslist) # ratevars values

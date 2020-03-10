@@ -23,9 +23,15 @@
 #'
 #' For further information about GAT ... `placeholder`
 #'
-#' GAT was funded by the CDC grant NUE1EH001341-03-01. Its content is solely
-#' the responsibility of the authors and does not necessarily represent the
-#' official views of the CDC.
+#' GAT was made possible through funding made available to the New York State
+#' Department of Health / HRI by the CDC through grant # NUE1EH001341-03-01.
+#' Its content is solely the responsibility of the authors and does not
+#' necessarily represent the official views of the CDC.
+#'
+#'
+#'
+#'
+#'
 #'
 #' @author
 #'  Abigail Stamm, Bureau of Environmental and Occupational

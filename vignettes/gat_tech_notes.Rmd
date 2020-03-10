@@ -34,9 +34,9 @@ The package includes embedded map files to use when testing several of the packa
 
 # Technical Notes
 
-*I am putting all of Tom Talbot's notes here, unedited, for now, as a placeholder. - Abby*
+## How GAT identifies areas to merge
 
-## How the program merges
+*Initial draft written by Thomas Talbot. This version revised and converted to Markdown by Abigail Stamm.*
 
 The overall goal of the merging is to create a relatively large number of compact regions which meet the specified criteria. To accomplish this, the areas in the input shapefile are aggregated pairwise until all regions have the minimum values specified. First, all the areas which need to be merged are sorted from the highest values of the aggregation variable(s) to the lowest. If there is only one aggregation variable, the area with the highest value is merged first. If there is more than one aggregation variable, the aggregation variable is divided by the minimum value specified for it, and the area with the highest proportion is selected to be aggregated first. For example, suppose we wish to merge areas until they have a population of 1000 and at least 100 births. An area with 90 births and 200 population will be merged ahead of an area with 50 births and 400 population, because the maximum of 90/100=0.9 and 200/1000=0.2 is 0.9, but the maximum of 50/100=0.5 and 400/100=0.4 is 0.5, which is less.
 
@@ -47,8 +47,9 @@ The new region then becomes a candidate for additional merging, and merging cont
 
 ## Thinning geographic boundaries
 
-The program may merge very slowly if the geographic boundaries are unnecessarily complex. Boundaries can be simplified by a process known as “thinning” (or “simplification” or “integrating” or “generalizing”). Thinning is removing nodes based on how far apart they are and/or their collinearity to decrease the complexity of the maps (see figure below). GIS systems like MapInfo and ArcGIS can be used to thin maps. After thinning, areas should merge much more quickly in the GAT, but the map may appear crude. If high resolution maps are needed for display, the thinned map used for processing data can be linked back to the high resolution boundaries using unique area identifiers.
+*Initial draft written by Thomas Talbot. This version revised and converted to Markdown by Abigail Stamm.*
 
+The program may merge very slowly if the geographic boundaries are unnecessarily complex. Boundaries can be simplified by a process known as “thinning” (or “simplification” or “integrating” or “generalizing”). Thinning is removing nodes based on how far apart they are and/or their collinearity to decrease the complexity of the maps (see figure below). GIS systems like MapInfo and ArcGIS can be used to thin maps. After thinning, areas should merge much more quickly in the GAT, but the map may appear crude. If high resolution maps are needed for display, the thinned map used for processing data can be linked back to the high resolution boundaries using unique area identifiers.
 
 ```{r nodespacing, out.width = '80%', fig.cap = 'Example of decreasing level of detail as nodes are thinned', echo = FALSE}
 knitr::include_graphics("images/node_spacing.png")
@@ -57,4 +58,19 @@ knitr::include_graphics("images/node_spacing.png")
 
 ```
 
+## Compactness ratio
+
+*By Abigail Stamm*
+
+The compactness ratio is a measure used to assess how well areas were aggregated. Ideally, areas should be combined with other areas very close to them under the assumption that people tend to live closer to people with whom they are more similar. A circle is the most compact shape, so an area that is relatively round, like Schoharie County (below right), will be more compact than an area that is long and narrow, like Herkimer County (below left).
+
+To calculate compactness ratio, the perimeter of the shape is calculated, then a circle with a circumference equal to the perimeter of the shape is drawn and its area is calculated. Next, the area of the shape is divided by the area of the circle. A highly compact shape will have a compactness ratio close to 1.
+
+
+
+```{r compactness, out.width = '80%', fig.cap = 'Example of highly compact and less compact areas', echo = FALSE}
+knitr::include_graphics("images/compactness_example.png")
+
+
+```
 

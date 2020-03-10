@@ -22,7 +22,8 @@ Authors@R: c(
       role = c("ctb"), comment = "alpha tester"),
     person("Maxime", "Fokoua Dongmo", 
       role = c("ctb"), comment = "alpha tester"),
-    person("New York State Department of Health", role = c("cph")), 
+    person("New York State Department of Health / Health Research, Inc.", 
+      role = c("cph")), 
     person("Centers for Disease Control and Prevention", 
       role = c("fnd"), comment = "Grant NUE1EH001341-03-01")
     )
