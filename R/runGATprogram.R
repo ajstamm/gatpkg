@@ -8,7 +8,7 @@
 #' on how this program works, browse the package vignettes, especially the
 #' GAT manual, which you can access via
 #' \href{../doc/gat_tutorial.html}{
-#' \code{vignette("gat_step_by_step", package = "gatpkg")}}.
+#' \code{vignette("gat_tutorial", package = "gatpkg")}}.
 #'
 #' @param limitdenom Boolean denoting whether to force denominators in rates
 #'                   and merge ratios to contain only non-zero values.
@@ -1124,7 +1124,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
 
     # create thematic map of compactness ratios
     gats <- list(title.main = "Compactness Ratio After Merging",
-                 title.sub = "1=most compact, 0=least compact")
+                 title.sub = paste("compactness ratio = area of polygon over",
+                                   "area of circle with same perimeter /n",
+                                   "1=most compact, 0=least compact"))
     myplots$compactness <- plotGATmaps(area = myshps$compact,
                                        var = "GATcratio", clr = "YlOrBr",
                                        title.main = gats$title.main,

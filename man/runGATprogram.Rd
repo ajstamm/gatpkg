@@ -34,7 +34,7 @@ creates guide the user to define all parameters. For step by step details
 on how this program works, browse the package vignettes, especially the
 GAT manual, which you can access via
 \href{../doc/gat_tutorial.html}{
-\code{vignette("gat_step_by_step", package = "gatpkg")}}.
+\code{vignette("gat_tutorial", package = "gatpkg")}}.
 }
 \details{
 You can load "BWidget" in advance, which opens a more navigable shapefile

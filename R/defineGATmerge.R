@@ -137,7 +137,11 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
                digits = nchar(nrow(aggvars$allpolydata)),
                index = sapply(aggvars$allpolydata, is.integer),
                rownames = area@data[, gatvars$myidvar])
+
+  # test if loop can be run ####
   if (nrow(temp$alldata) > 0) {
+
+    # set up more temporary variables ####
     temp$minpop1 = min(temp$alldata[, gatvars$aggregator1])
     temp$minpop2 = min(temp$alldata[, gatvars$aggregator2])
 

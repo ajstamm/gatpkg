@@ -26,7 +26,7 @@ To load GAT, run `library(gatpkg)`.
 
 To run the entire GAT program as is, run `runGATprogram()`. For most users, this function alone is probably sufficient. If you would like more detail on what this program does, check out the [GAT tutorial](gat_tutorial.html).
 
-The full default program looks like this:
+The full default program to run GAT looks like this:
 
 ```{r, eval=FALSE}
 # not run
@@ -43,9 +43,9 @@ This version of GAT is provided as is.
 
 GAT was written in R-2.9.2 under Windows XP. It was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. The user needs minimal R programming experience to run GAT. 
 
-Suggestions for improvement and bug reports are welcome. Send feedback to epht@health.ny.gov and include *GAT in R* in the subject line.
-
 # Citation and feedback
+
+Suggestions for improvement and bug reports are welcome. Send feedback to epht@health.ny.gov and include *GAT in R* in the subject line.
 
 If you use any part of the GAT package, please cite it. For the suggested citation, type:
 

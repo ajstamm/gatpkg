@@ -120,10 +120,10 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
                         mergevars, ratevars, exclist) {
   # fill in full list of names below; code will error otherwise
   listitems <- names(area@data)
-  listitems <- listitems[listitems != "flag"]
+  listitems <- listitems[listitems != "GATflag"]
   myvars <- ""
   for (i in 1:(length(listitems)-1)) {
-    myvars <- paste0(myvars, listitems[i],", ")
+    myvars <- paste0(myvars, listitems[i], ", ")
     if (i %% 8 == 0) {
       myvars <- paste0(myvars, "\n", paste(rep(" ", 22), collapse = ""))
     }
@@ -274,7 +274,8 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
                  "latitude of the aggregated area", mergevars$centroid,
                  "centroid",
                  "\n        GATcratio:",
-                 "compactness ratio of the area",
+                 "compactness ratio, or the area of the polygon over the",
+                 "area of a circle with the same perimeter",
                  "\n        GATnumIDs:",
                  "number of original areas that were merged into each",
                  "aggregated area",

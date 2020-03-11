@@ -21,7 +21,8 @@
 #' To run the default version of GAT, follow the GAT tutorial
 #' \href{../doc/gat_tutorial.html}{GAT tutorial} in the vignettes.
 #'
-#' For further information about GAT ... `placeholder`
+#' For information about how GAT works, check out the
+#' \href{../doc/gat_tech_notes.html}{GAT technical notes}.
 #'
 #' GAT was made possible through funding made available to the New York State
 #' Department of Health / HRI by the CDC through grant # NUE1EH001341-03-01.

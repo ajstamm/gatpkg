@@ -54,7 +54,18 @@ createGATregion <- function(mydata, newreg, myidvar, nrid, area = NULL,
   listitems <- unique(names(mydata)) # to handle non-default use
 
   # take character variables from the 2nd region ####
-  newregchars <- newreg[2, !listtypetf]
+  tempvars <- newreg[, !listtypetf]
+  newregchars <- c()
+  for (i in 1:length(names(tempvars))) {
+    x <- unique(unlist(strsplit(paste(tempvars[, names(tempvars)[i]],
+                                      collapse = ", "), ", ")))
+    x <- x[order(x)]
+    newregchars[i] <- paste(x, collapse = ", ")
+  }
+  newregchars <- data.frame(matrix(newregchars, nrow = 1))
+  names(newregchars) <- names(tempvars)
+
+
   # if only one character variable, must be ID but won't have name
   if (length(newregchars) == 1) {
     newregchars <- data.frame(newregchars)
