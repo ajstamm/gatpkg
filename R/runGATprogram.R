@@ -1125,7 +1125,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     # create thematic map of compactness ratios
     gats <- list(title.main = "Compactness Ratio After Merging",
                  title.sub = paste("compactness ratio = area of polygon over",
-                                   "area of circle with same perimeter /n",
+                                   "area of circle with same perimeter \n",
                                    "1=most compact, 0=least compact"))
     myplots$compactness <- plotGATmaps(area = myshps$compact,
                                        var = "GATcratio", clr = "YlOrBr",

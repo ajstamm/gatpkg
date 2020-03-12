@@ -1,5 +1,0 @@
-"0","paste0(tools::getVignetteInfo(""gatpkg"", all = TRUE)[1, ""Dir""], ""/extdata/"")
-"
-"2","Error in tools::getVignetteInfo(""gatpkg"", all = TRUE)[1, ""Dir""] : 
-  subscript out of bounds
-"
