@@ -801,23 +801,20 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
 
       temp$kml <- saveGATkml(step = step, backopt = !temp$flagconfirm)
 
-      if (temp$kml == "Yes") {
-        gatvars$savekml <- TRUE # save the kml
+      if (temp$kml %in% c("Yes", "No")) {
+        if (temp$kml == Yes) {
+          gatvars$savekml <- TRUE # save the kml
+        } else {
+          gatvars$savekml <- FALSE # save the kml
+        }
         if (temp$flagconfirm) {
           step <- 11
         } else {
           step <- step + 1
         }
-      } else if (temp$kml == "No") {
-        gatvars$savekml <- FALSE # do not save the kml
-        if (temp$flagconfirm) {
-          step <- 11
-        } else {
-          step <- step + 1
-        }
-      } else if (temp$kml == "quit") {
+      } else if (temp$kml == "cancel") {
         step <- 20
-      }else {
+      } else {
         step <- step - 1
       }
     } # end request save KML (savekml)

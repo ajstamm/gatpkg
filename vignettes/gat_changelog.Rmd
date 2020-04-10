@@ -50,6 +50,7 @@ All changes from January 2019 onward by Abigail Stamm.
 #### User input changes
 
 * Reordered and restructured user input dialogs.
+* Added help button and instructions to user input dialogs.
 * Revised user input dialogs and added function options to allow the 
   following:
     * maximum values for up to 2 aggregation variables
@@ -61,7 +62,6 @@ All changes from January 2019 onward by Abigail Stamm.
     * saving and rerunning prior settings
     * comprehensive confirmation dialog that allows user to return to 
       previous steps
-* Added help button and instructions to user input dialogs.
 
 
 #### Output changes
