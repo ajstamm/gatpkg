@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 *By Thomas Talbot; revised and converted to Markdown by Abigail Stamm*
 
-This package is maintained by the New York State Department of Health’s Environmental Health Surveillance (EHS) Section. The purpose of this package is to run the Geographic Aggregation Tool (GAT) in R. 
+This package is maintained by the New York State Department of Health’s Environmental Public Health Tracking (EPHT) program. The purpose of this package is to run the Geographic Aggregation Tool (GAT) in R. 
 
 Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases these maps can also inadvertently disclose confidential data. To overcome these limitations EHS developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
     
@@ -39,7 +39,7 @@ The package includes embedded map files to use when testing several of the packa
 
 ## How GAT identifies areas to merge
 
-*By Thomas Talbot; rewritten and converted to Markdown by Abigail Stamm*
+*By Thomas Talbot; rewritten, refrmatted, and converted to Markdown by Abigail Stamm*
 
 The overall goal of the merging is to create a relatively large number of compact regions which meet the specified criteria. To accomplish this, the areas in the input shapefile are aggregated pairwise until all regions have the minimum values specified. 
 
