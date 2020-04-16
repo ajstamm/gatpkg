@@ -185,12 +185,12 @@ inputGATrate <- function(mapdata, defaultopt = 0,
   tt$list$numlbl = tcltk2::tk2label(tt$list, text = "Select the numerator:")
   tt$list$tnum <- tcltk::ttkcombobox(tt$list, values = gatlist1,
                                      state = "readonly",
-                                     textvariable = numvar)
+                                     textvariable = tt$list$numvar)
   tcltk::tkgrid(tt$list$numlbl, tt$list$tnum, sticky = "w", pady = 2)
   tt$list$denlbl = tcltk2::tk2label(tt$list, text = "Select the denominator:")
   tt$list$tden <- tcltk::ttkcombobox(tt$list, values = gatlist2,
                                      state = "readonly",
-                                     textvariable = denvar)
+                                     textvariable = tt$list$denvar)
   tcltk::tkgrid(tt$list$denlbl, tt$list$tden, sticky = "w", pady = 2)
 
   note <- "Note: The numerator and denominator must be different."
@@ -204,7 +204,7 @@ inputGATrate <- function(mapdata, defaultopt = 0,
   tt$list$collbl = tcltk2::tk2label(tt$list, text = "Select the map colors:")
   tt$list$tcol <- tcltk::ttkcombobox(tt$list, values = colorlist,
                                      state = "readonly",
-                                     textvariable = colvar)
+                                     textvariable = tt$list$colvar)
   tcltk::tkgrid(tt$list$collbl, tt$list$tcol, sticky = "w", pady = 2)
 
     # code for textboxes ####

@@ -33,19 +33,66 @@ The user must have an input shapefile (*.shp). The shapefile must have the geogr
 
 GAT outputs a shapefile containing the aggregated regions with associated data, which can be used in GIS programs such as ArcGIS, MapInfo and QGIS. A KML file can also be produced, which can be displayed in Google Earth as well as other Internet-based mapping programs. Last, GAT outputs several before and after plots and a log of all selections and processes.
 
-The package includes embedded map files to use when testing several of the package functions. For details, enter `?hftown` or `?hfblock` into the R console. 
+The package includes embedded map files to use when testing several of the package functions. For details, enter `?hftown` or `?hfpop` into the R console. 
 
 # Technical Notes
 
 ## How GAT identifies areas to merge
 
-*By Thomas Talbot; revised and converted to Markdown by Abigail Stamm*
+*By Thomas Talbot; rewritten and converted to Markdown by Abigail Stamm*
 
-The overall goal of the merging is to create a relatively large number of compact regions which meet the specified criteria. To accomplish this, the areas in the input shapefile are aggregated pairwise until all regions have the minimum values specified. First, all the areas which need to be merged are sorted from the highest values of the aggregation variable(s) to the lowest. If there is only one aggregation variable, the area with the highest value is merged first. If there is more than one aggregation variable, the aggregation variable is divided by the minimum value specified for it, and the area with the highest proportion is selected to be aggregated first. For example, suppose we wish to merge areas until they have a population of 1000 and at least 100 births. An area with 90 births and 200 population will be merged ahead of an area with 50 births and 400 population, because the maximum of 90/100=0.9 and 200/1000=0.2 is 0.9, but the maximum of 50/100=0.5 and 400/100=0.4 is 0.5, which is less.
+The overall goal of the merging is to create a relatively large number of compact regions which meet the specified criteria. To accomplish this, the areas in the input shapefile are aggregated pairwise until all regions have the minimum values specified. 
 
-Next, a list of the neighbors of the selected area is obtained. Areas are considered neighbors if they share at least two points with the selected area. If you specified a boundary variable, and neighbors exist within a boundary, they are the first candidates for merging. If there are no neighbors within the boundary, the closest area outside the boundary will be merged only if boundaries are not enforced. If boundaries are enforced, the area is flagged without being merged further. Only after all areas within a boundary are merged will merging occur across boundaries. If you did not specify a boundary variable or if you specified a non-enforced boundary variable and areas do not exist within the boundary, then all neighbors are considered candidates for merging. 
+### Selecting the target area
 
-If the “closest” option was selected, then the closest area is merged with the previously selected area. Closeness is calculated as the distance between the areas' centroids. If the “least” option is selected, the area with the lowest proportion of aggregation variable to minimum value specified is selected. If the “most similar” option is selected, then the area with the least absolute difference between the ratios of the variables chosen for similarity comparison is merged with the selected area. For example, suppose the variables chosen for similarity comparison are counts of persons under poverty and total population. If the area to be merged has a percent under poverty of 10%, and it has neighbors have 9%, 13%, and 15% under poverty, then then it would be merged with the area with 9% under poverty. If an area has no neighbors, then it is merged with the closest area to form a new region only if non-adjacent merging is allowed. If non-adjacent merging is not allowed, the area is flagged without being merged further.
+First, a subset of areas is selected the meets the following restrictions:
+
+* Flagged areas removed (this includes areas indicated by exclusion criteria, with an aggregation value above the maximum, or with no mergeable neighbors)
+* Areas with the values for both aggregation variables above minimum removed
+
+This results in a subset of areas that all require merging. This subset is reordered from the highest values of the aggregation variable(s) to the lowest. If there is only one aggregation variable, the area with the highest value is merged first. If there is more than one aggregation variable, the process is more complicated. When two aggregation variables are selected, each aggregation variable is divided by the minimum value specified for it. The area with the highest proportion is selected to be aggregated first. 
+
+> For example, given the following:
+>
+> * minimum for first aggregation variable: 1000 population
+> * minimum for second aggregation variable: 100 births
+> * first area: 200 population, 90 births
+> * second area: 400 population, 50 births
+>
+> Calculate proportions of area value over minimum value for the first and second areas as follows: 
+>
+> * first area: $\frac{200 population}{1000 minimum population} = 0.2$, 
+>   $\frac{90 births}{100 minimum births} = 0.9$  
+>   maximum proportion = 0.9
+> * second area: $\frac{400 population}{1000 minimum population} = 0.4$, 
+>   $\frac{50 births}{100 minimum births} = 0.5$  
+>   maximum proportion = 0.5
+>
+> Of these two areas, the first area has a higher maximum proportion, so it will be merged first.
+
+
+### Identifying eligible neighbors
+
+After the target area has been identified, GAT generates a list of its neighbors. Areas are considered neighbors if they share at least two points with the selected area. However, not all of these neighbors may be eligible for merging. GAT considers several criteria when selecting eligible areas.
+
+* Always ineligible: Areas *cannot* be flagged or have values above the maximum. When merged, the resulting areas *cannot* have values above the maximum (target area value + merge area value $\ngtr$ maximum value).
+* Adjacent: The default is for areas to merge only to adjacent areas. To override this, use the option `runGATprogram(adjacent=FALSE)`. This will result in adjacent areas being preferred, but not required. 
+* Inside border: This option is selected in the dialogs. If you select a border, GAT will restrict neighbors only to areas within the border. If there are no eligible neighbors within the border and you used the option `adjacent = FALSE`, GAT will select the closest eligible area within the border, even if it is not adjacent. If you select a border and do not check the box to enforce the border, GAT will consider neighbors outside the border last.
+* Value below minimum: The default is for GAT to ignore whether the values of neighbors are below the minimum aggregation value. If you want to merge areas whose values are below the minimum aggregation value first, use the option `runGATprogram(minfirst=TRUE)`. If there are no neighbors with aggregation values below the minimum value, GAT will recheck for neighbors without this restriction.
+
+When relaxing eligibility restrictions, GAT drops criteria in this order: Value below minimum (if triggered by `minfirst = TRUE`), Adjacent (only if `adjacent = FALSE`), Inside border (only if if border not enforced). If no eligible areas are identified after relaxing restrictions, the target area is flagged as unable to merge further. For each area for which selection criteria were relaxed, a warning is written to the log.
+
+### Selecting the most eligible neighbor
+
+Assuming the area has adjacent neighbors, this is how the neighbor to merge is selected. If the area does not have adjacent neighbors and you used `adjacency = FALSE`, GAT will default to the closest geographic centroid unless you chose population weighting, in which case it will use the closest population-weighted centroid.
+
+**Closest geographic centroid:** The target area is merged with the eligible area with the closest straight-line centroid based on the shape of the area. The new centroid is calculated by averaging the latitudes and longitudes of the two areas. 
+
+**Closest population-weighted centroid:** The population file the user selected is used to determine the area's centroid based on the underlying population. The target area is merged with the eligible area with the closest population-weighted centriod. There are two methods for calculating the population-weighted centroid for the new area. The faster method, which is the default, is to calculate the proportion of the population each area contributes to the merged area, then multiply these proportions by their respective latitudes and longitudes and sum the results. For example, area A contributes 70% of the population and area B contributes 30% of the population. The new longitude would be 0.7 \* longitude$_A$ + 0.3 \* longitude$_B$. The slower method recalculates the centroid of the new area using the underlying populations of both areas in the population file. To access this method, use `runGATprogram(pwrepeat=TRUE)`.
+
+**Least value:** The area with the lowest proportion of aggregation variable to minimum value specified is selected.
+
+**Most similar:** The area with the least absolute difference between the ratios of the variables chosen for similarity comparison is merged with the selected area. For example, suppose the variables chosen for similarity comparison are counts of persons under poverty and total population. If the area to be merged has a percent under poverty of 10%, and it has neighbors have 9%, 13%, and 15% under poverty, then then it would be merged with the area with 9% under poverty. 
 
 The new region then becomes a candidate for additional merging, and merging continues until all regions contain the minimum values of the aggregation variables specified or have been flagged as being unable to merge further.
 

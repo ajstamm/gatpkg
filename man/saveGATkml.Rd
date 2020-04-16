@@ -18,6 +18,8 @@ to save a KML file. The dialog window looks like this.
 \if{html}{\figure{saveGATkml.png}{options: width="405"
                   alt="Figure: Screenshot of dialog to select KML save.png"}}
 
+Select "Yes" if you want to save a KML file. The default selection is "No".
+
 Click on one of the following buttons.
 \itemize{
 \item Click \code{Yes} if you would like to save a KML file.

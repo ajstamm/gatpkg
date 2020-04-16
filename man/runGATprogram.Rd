@@ -8,7 +8,8 @@ runGATprogram(
   limitdenom = FALSE,
   pwrepeat = FALSE,
   settings = NULL,
-  adjacent = TRUE
+  adjacent = TRUE,
+  minfirst = FALSE
 )
 }
 \arguments{
@@ -26,6 +27,12 @@ a polygon shapefile containing population is needed.}
 
 \item{adjacent}{A boolean denoting whether to force GAT to merge only
 adjacent areas.}
+
+\item{minfirst}{A boolean denoting whether or not to select the most
+desirable neighbor only from among the neighbors that
+have values below the desired minimum. If no neighbors
+are below the desired minimum, the most desirable of all
+elligible neighbors is selected.}
 }
 \description{
 This function handles nearly the entire program, except for installing and

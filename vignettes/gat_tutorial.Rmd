@@ -264,7 +264,7 @@ This step requests the merge method from the user using a pop-up dialog.
 
 ```{r mergecode, echo = FALSE, eval = FALSE}
 # code to generate window for inputGATmergepop.png
-gatpkg::inputGATmergepop(mapdata = gatpkg::hftown@data, aggvar = "TOTAL_POP", aggvar2 = "NONE")
+gatpkg::inputGATmerge(mapdata = gatpkg::hftown@data, aggvar = "TOTAL_POP", aggvar2 = "NONE")
 ```
 
 ```{r mergepic, fig.cap = 'Dialog: Identify Merge Type', echo = FALSE}
@@ -396,7 +396,7 @@ In this dialog, select "Yes" or "No".
 
 To follow the steps as shown, select "No". 
 
-Click `Yes` or `No` to move to the next step, `< Back` to move to the previous step (selecting the rate settings), or `Help` to get further guidance.
+Click `Next >` to move to the next step, `< Back` to move to the previous step (selecting the rate settings), `Cancel` to end the program, or `Help` to get further guidance.
 
 ### About this step
 
@@ -408,7 +408,7 @@ The function [saveGATkml()](../html/saveGATkml.html) requests a simple "yes" or 
 knitr::include_graphics("images/pb_picksave.png")
 ```
 
-This step requests where to save the shapefile from the user using a pop-up dialog.
+This step asks the user where to save the shapefile using a pop-up dialog.
 
 ### How this step works
 

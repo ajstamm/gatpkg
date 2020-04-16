@@ -21,6 +21,11 @@
 #' @param settings   The filepath to an Rdata file previously created by GAT.
 #' @param adjacent   A boolean denoting whether to force GAT to merge only
 #'                   adjacent areas.
+#' @param minfirst   A boolean denoting whether or not to select the most
+#'                   desirable neighbor only from among the neighbors that
+#'                   have values below the desired minimum. If no neighbors
+#'                   are below the desired minimum, the most desirable of all
+#'                   elligible neighbors is selected.
 #'
 #' @details
 #' You can load "BWidget" in advance, which opens a more navigable shapefile
@@ -38,7 +43,7 @@
 # this will also incorporate max values
 
 runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
-                          settings = NULL, adjacent = TRUE) {
+                          settings = NULL, adjacent = TRUE, minfirst = FALSE) {
   #  1. start the GAT program ####
   # load the progress bar
   mysettings <- list(version = packageDescription("gatpkg")$Version,
@@ -802,7 +807,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       temp$kml <- saveGATkml(step = step, backopt = !temp$flagconfirm)
 
       if (temp$kml %in% c("Yes", "No")) {
-        if (temp$kml == Yes) {
+        if (temp$kml == "Yes") {
           gatvars$savekml <- TRUE # save the kml
         } else {
           gatvars$savekml <- FALSE # save the kml
@@ -977,7 +982,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     gatvars$popwt <- mergevars$centroid == "population-weighted"
     aggvars <- defineGATmerge(area = myshps$original, gatvars = gatvars,
                               mergevars = mergevars, filevars = filevars,
-                              pwrepeat = pwrepeat, adjacent = adjacent)
+                              pwrepeat = pwrepeat, adjacent = adjacent,
+                              minfirst = minfirst)
 
     #  5. aggregate areas ####
     step <- step + 1
