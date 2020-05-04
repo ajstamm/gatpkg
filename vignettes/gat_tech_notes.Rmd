@@ -39,7 +39,7 @@ The package includes embedded map files to use when testing several of the packa
 
 ## How GAT identifies areas to merge
 
-*By Thomas Talbot; rewritten, refrmatted, and converted to Markdown by Abigail Stamm*
+*By Thomas Talbot; rewritten, reformatted, and converted to Markdown by Abigail Stamm; edited by Gwen Babcock*
 
 The overall goal of the merging is to create a relatively large number of compact regions which meet the specified criteria. To accomplish this, the areas in the input shapefile are aggregated pairwise until all regions have the minimum values specified. 
 
@@ -75,7 +75,7 @@ This results in a subset of areas that all require merging. This subset is reord
 
 After the target area has been identified, GAT generates a list of its neighbors. Areas are considered neighbors if they share at least two points with the selected area. However, not all of these neighbors may be eligible for merging. GAT considers several criteria when selecting eligible areas.
 
-* Always ineligible: Areas *cannot* be flagged or have values above the maximum. When merged, the resulting areas *cannot* have values above the maximum (target area value + merge area value $\ngtr$ maximum value).
+* Always ineligible: Flagged areas, which includes areas indicated by exclusion criteria or with an aggregation value above the maximum. In addition, when merged, the resulting areas *cannot* have values above the maximum (target area value + merge area value $\ngtr$ maximum value).
 * Adjacent: The default is for areas to merge only to adjacent areas. To override this, use the option `runGATprogram(adjacent=FALSE)`. This will result in adjacent areas being preferred, but not required. 
 * Inside border: This option is selected in the dialogs. If you select a border, GAT will restrict neighbors only to areas within the border. If there are no eligible neighbors within the border and you used the option `adjacent = FALSE`, GAT will select the closest eligible area within the border, even if it is not adjacent. If you select a border and do not check the box to enforce the border, GAT will consider neighbors outside the border last.
 * Value below minimum: The default is for GAT to ignore whether the values of neighbors are below the minimum aggregation value. If you want to merge areas whose values are below the minimum aggregation value first, use the option `runGATprogram(minfirst=TRUE)`. If there are no neighbors with aggregation values below the minimum value, GAT will recheck for neighbors without this restriction.
@@ -84,13 +84,15 @@ When relaxing eligibility restrictions, GAT drops criteria in this order: Value 
 
 ### Selecting the most eligible neighbor
 
-Assuming the area has adjacent neighbors, this is how the neighbor to merge is selected. If the area does not have adjacent neighbors and you used `adjacency = FALSE`, GAT will default to the closest geographic centroid unless you chose population weighting, in which case it will use the closest population-weighted centroid.
+If the area does not have adjacent neighbors and you used `adjacency = FALSE`, GAT will default to the closest geographic centroid unless you chose population weighting, in which case it will use the closest population-weighted centroid.
+
+If the area has more than one eligible adjacent neighbor, this is how the neighbor to merge is selected:
 
 **Closest geographic centroid:** The target area is merged with the eligible area with the closest straight-line centroid based on the shape of the area. The new centroid is calculated by averaging the latitudes and longitudes of the two areas. 
 
-**Closest population-weighted centroid:** The population file the user selected is used to determine the area's centroid based on the underlying population. The target area is merged with the eligible area with the closest population-weighted centriod. There are two methods for calculating the population-weighted centroid for the new area. The faster method, which is the default, is to calculate the proportion of the population each area contributes to the merged area, then multiply these proportions by their respective latitudes and longitudes and sum the results. For example, area A contributes 70% of the population and area B contributes 30% of the population. The new longitude would be 0.7 \* longitude$_A$ + 0.3 \* longitude$_B$. The slower method recalculates the centroid of the new area using the underlying populations of both areas in the population file. To access this method, use `runGATprogram(pwrepeat=TRUE)`.
+**Closest population-weighted centroid:** The population file the user selected is used to determine the area's centroid based on the underlying population. The target area is merged with the eligible area with the closest population-weighted centroid. There are two methods for calculating the population-weighted centroid for the new area. The faster method, which is the default, is to calculate the proportion of the population each area contributes to the merged area, then multiply these proportions by their respective latitudes and longitudes and sum the results. For example, area A contributes 70% of the population and area B contributes 30% of the population. The new longitude would be 0.7 \* longitude$_A$ + 0.3 \* longitude$_B$. The slower method recalculates the centroid of the new area using the underlying populations of both areas in the population file. To access this method, use `runGATprogram(pwrepeat=TRUE)`.
 
-**Least value:** The area with the lowest proportion of aggregation variable to minimum value specified is selected.
+**Least value:** If there is only one minimum value specified, the area with lowest value is selected. If there are two minimum values specified, the area with the lowest proportion of aggregation variable to minimum value specified is selected.
 
 **Most similar:** The area with the least absolute difference between the ratios of the variables chosen for similarity comparison is merged with the selected area. For example, suppose the variables chosen for similarity comparison are counts of persons under poverty and total population. If the area to be merged has a percent under poverty of 10%, and it has neighbors have 9%, 13%, and 15% under poverty, then then it would be merged with the area with 9% under poverty. 
 

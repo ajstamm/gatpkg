@@ -28,8 +28,10 @@
 #'                   elligible neighbors is selected.
 #'
 #' @details
-#' You can load "BWidget" in advance, which opens a more navigable shapefile
-#' selection window, but it is not necessary to run GAT.
+#' For more information  on how the different merge options work, see
+#' "How GAT identifies areas to merge" in the
+#' \href{../doc/gat_tech_notes.html}{
+#' \code{vignette("gat_tech_notes", package = "gatpkg")}}.
 #'
 #' @examples
 #'
