@@ -18,8 +18,8 @@
 #'   \item be customizable for advanced R users
 #' }
 #'
-#' To run the default version of GAT, follow the GAT tutorial
-#' \href{../doc/gat_tutorial.html}{GAT tutorial} in the vignettes.
+#' To run the default version of GAT, follow the
+#' \href{../doc/gat_tutorial.html}{GAT walkthrough} in the vignettes.
 #'
 #' For information about how GAT works, check out the
 #' \href{../doc/gat_tech_notes.html}{GAT technical notes}.

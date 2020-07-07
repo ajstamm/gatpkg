@@ -5,9 +5,6 @@
 #' minimum value must be greater than zero, but is only important if there
 #' are two aggregation variables.
 #'
-#' If you would like to include a maximum aggregation value, you will need to
-#' modify either this function or \code{mergeGATpolygons()}.
-#'
 #' @param tobemerged A data frame, intended to be read from a shapefile DBF.
 #' @param aggvar     The first variable by which polygons will be aggregated.
 #' @param aggvar2    The second variable by which polygons will be aggregated.

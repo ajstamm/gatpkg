@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
     toc: true
-    toc_depth: 2
+    toc_depth: 4
 vignette: >
   %\VignetteIndexEntry{Geographic Aggregation Tool (GAT) Technical Notes}
   %\VignetteEngine{knitr::rmarkdown}
@@ -21,11 +21,9 @@ knitr::opts_chunk$set(
 
 # Description
 
-*By Thomas Talbot; revised and converted to Markdown by Abigail Stamm*
-
 This package is maintained by the New York State Department of Health’s Environmental Public Health Tracking (EPHT) program. The purpose of this package is to run the Geographic Aggregation Tool (GAT) in R. 
 
-Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases these maps can also inadvertently disclose confidential data. To overcome these limitations EHS developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
+Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases, these maps can also inadvertently disclose confidential data. To overcome these limitations EHS developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
     
 The input object is a polygon shapefile. The shapefile must contain a character variable that uniquely identifies areas and a numeric variable to sum for aggregation. A series of dialog boxes allows the user to select: a variable to uniquely identify areas, one or more aggregation variables, optionally, a variable of areas within which merging will be preferred (ex. county), the amount (sum) the aggregation variable(s) should be aggregated to, and the preferred aggregation method - closest, least value, or ratio. The output is a shapefile with before and after choropleth maps in R graphics saved to PDF. For output regions, most numeric variables will be summed, except variables with the following names, which will be averaged instead: x, y, GATx, GATy, lat, lon, latitude, longitude, and long. For character variables, the values of the last region merged will be used, with three additional variables added: Sp_id for R row number and GATx, GATy for geographic centroids as determined by the GAT. 
 
@@ -39,13 +37,11 @@ The package includes embedded map files to use when testing several of the packa
 
 ## How GAT identifies areas to merge
 
-*By Thomas Talbot; rewritten, reformatted, and converted to Markdown by Abigail Stamm; edited by Gwen Babcock*
-
 The overall goal of the merging is to create a relatively large number of compact regions which meet the specified criteria. To accomplish this, the areas in the input shapefile are aggregated pairwise until all regions have the minimum values specified. 
 
 ### Selecting the target area
 
-First, a subset of areas is selected the meets the following restrictions:
+First, a subset of areas is selected that meets the following restrictions:
 
 * Flagged areas removed (this includes areas indicated by exclusion criteria, with an aggregation value above the maximum, or with no mergeable neighbors)
 * Areas with the values for both aggregation variables above minimum removed
@@ -84,24 +80,61 @@ When relaxing eligibility restrictions, GAT drops criteria in this order: Value 
 
 ### Selecting the most eligible neighbor
 
-If the area does not have adjacent neighbors and you used `adjacency = FALSE`, GAT will default to the closest geographic centroid unless you chose population weighting, in which case it will use the closest population-weighted centroid.
-
-If the area has more than one eligible adjacent neighbor, this is how the neighbor to merge is selected:
-
-**Closest geographic centroid:** The target area is merged with the eligible area with the closest straight-line centroid based on the shape of the area. The new centroid is calculated by averaging the latitudes and longitudes of the two areas. 
-
-**Closest population-weighted centroid:** The population file the user selected is used to determine the area's centroid based on the underlying population. The target area is merged with the eligible area with the closest population-weighted centroid. There are two methods for calculating the population-weighted centroid for the new area. The faster method, which is the default, is to calculate the proportion of the population each area contributes to the merged area, then multiply these proportions by their respective latitudes and longitudes and sum the results. For example, area A contributes 70% of the population and area B contributes 30% of the population. The new longitude would be 0.7 \* longitude$_A$ + 0.3 \* longitude$_B$. The slower method recalculates the centroid of the new area using the underlying populations of both areas in the population file. To access this method, use `runGATprogram(pwrepeat=TRUE)`.
-
-**Least value:** If there is only one minimum value specified, the area with lowest value is selected. If there are two minimum values specified, the area with the lowest proportion of aggregation variable to minimum value specified is selected.
-
-**Most similar:** The area with the least absolute difference between the ratios of the variables chosen for similarity comparison is merged with the selected area. For example, suppose the variables chosen for similarity comparison are counts of persons under poverty and total population. If the area to be merged has a percent under poverty of 10%, and it has neighbors have 9%, 13%, and 15% under poverty, then then it would be merged with the area with 9% under poverty. 
+If the area does not have adjacent neighbors and you used `adjacency = FALSE`, GAT will default to the closest geographic centroid unless you chose population weighting, in which case it will use the closest population-weighted centroid. If the area has more than one eligible adjacent neighbor, the next few sections cover how the neighbor to merge is selected, depending on the desired merge type.
 
 The new region then becomes a candidate for additional merging, and merging continues until all regions contain the minimum values of the aggregation variables specified or have been flagged as being unable to merge further.
 
 
-## Thinning geographic boundaries
+#### Closest geographic centroid
 
-*By Thomas Talbot; revised and converted to Markdown by Abigail Stamm*
+The target area is merged with the eligible area with the closest straight-line centroid based on the shape of the area. The new centroid is calculated by averaging the latitudes and longitudes of the two areas. This speeds up GAT considerably, but can result in centroids that do not exactly match the area’s center. 
+
+```{r mergegeo, out.width = '50%', fig.cap = 'Animation of merging by closest geographic centroid', echo = FALSE}
+knitr::include_graphics("images/merge_geo_animated.gif")
+```
+
+In the graphic above, the area with the largest value below 5 is E. The closest neighbor to E using geographic centroids is C, so GAT assigns E to merge with C. The next largest value below 5 is in area A, whose closest neighbor is the new area CE, so GAT merges A to CE. The last area below 5 is D, which is closest to B, so GAT merges D with B.
+
+This method provides the most compact areas and can work well for environmental exposures like air pollution and temperature.
+
+#### Closest population-weighted centroid
+
+The population file the user selected is used to determine the area's centroid based on the underlying population. The target area is merged with the eligible area with the closest population-weighted centroid. There are two methods for calculating the population-weighted centroid for the new area. The faster method, which is the default, is to calculate the proportion of the population each area contributes to the merged area, then multiply these proportions by their respective latitudes and longitudes and sum the results. For example, if area A contributes 70% of the population and area B contributes 30% of the population, the new longitude would be $0.7 * longitude_A + 0.3 * longitude_B$. The slower method recalculates the centroid of the new area using the underlying populations of both areas in the population file. To access this method, use `runGATprogram(pwrepeat=TRUE)`.
+
+```{r mergepop, out.width = '50%', fig.cap = 'Animation of merging by closest population-weighted centroid', echo = FALSE}
+knitr::include_graphics("images/merge_pop_animated.gif")
+```
+
+In the graphic above, the area with the largest value below 5 is E. The closest neighbor to E using population-weighted centroids is D, so GAT assigns E to merge with D. The next largest value below 5 is in the new area DE, whose closest neighbor is C, so GAT merges DE to C. The last area below 5 is A, which is closest to B, so GAT merges A with B. 
+
+This method provides areas that may sprawl a bit, but are representative of population centers and can work well for disease rates.
+
+#### Neighbor with the least value
+
+If there is only one minimum value specified, the area with lowest value is selected. If there are two minimum values specified, the area with the lowest proportion of aggregation variable to minimum value specified is selected.
+
+```{r mergeleast, out.width = '50%', fig.cap = 'Animation of merging to neighbor with the least value', echo = FALSE}
+knitr::include_graphics("images/merge_least_animated.gif")
+```
+
+In the graphic above, the area with the largest value below 5 is E. E's neighbor with the smallest value is D, so GAT assigns E to merge with D. The next largest value below 5 is in the new area DE, whose neighbor with the smallest value is A, so GAT merges DE to A.
+
+This method provides the largest number of areas and therefore the greatest granularity. However, it can result in weird snaky shapes and possibly donuts, where a rural area entirely surrounds an urban one.
+
+#### Neighbor with the most similar ratio
+
+The selected area is merged with the area with the least absolute difference between the ratios of the variables chosen for similarity comparison. For example, suppose the variables chosen for similarity comparison are counts of persons under poverty and total population. If the area to be merged has a percent under poverty of 10%, and it has neighbors have 9%, 13%, and 15% under poverty, then then it would be merged with the area with 9% under poverty. 
+
+```{r mergesimilar, out.width = '50%', fig.cap = 'Animation of merging to neighbor with most similar ratio', echo = FALSE}
+knitr::include_graphics("images/merge_similar_animated.gif")
+```
+
+In the graphic above, the area with the largest value below 5 is E. E's neighbor with the closest ratio is D, so GAT assigns E to merge with D. The next largest value below 5 is in the new area DE, whose neighbor with the closest ratio is B, so GAT merges DE to B. The last value below 5 is in A, whose neighbor with the closest ratio is C, so GAT merges A to C.
+
+This method works well if you want to create areas of similar populations to investigate social determinants of health.
+
+
+## Thinning geographic boundaries
 
 The program may merge very slowly if the geographic boundaries are unnecessarily complex. Boundaries can be simplified by a process known as “thinning” (or “simplification” or “integrating” or “generalizing”). Thinning is removing nodes based on how far apart they are and/or their collinearity to decrease the complexity of the maps (see figure below). GIS systems like MapInfo and ArcGIS can be used to thin maps. After thinning, areas should merge much more quickly in the GAT, but the map may appear crude. If high resolution maps are needed for display, the thinned map used for processing data can be linked back to the high resolution boundaries using unique area identifiers.
 
@@ -112,8 +145,6 @@ knitr::include_graphics("images/node_spacing.png")
 ```
 
 ## Compactness ratio
-
-*By Abigail Stamm*
 
 The compactness ratio is a measure used to assess how well areas were aggregated. Ideally, areas should be combined with other areas very close to them under the assumption that people tend to live closer to people with whom they are more similar. A circle is the most compact shape, so an area that is relatively round, like St. Lawrence County, New York (below right; compactness ratio = 0.71), will be more compact than an area that is long and narrow, like Cayuga County, New York (below left; compactness ratio = 0.18).
 
@@ -127,3 +158,8 @@ knitr::include_graphics("images/compactness_example.png")
 
 ```
 
+***
+
+Prepared for the New York State Department of Health by Abigail Stamm, Thomas Talbot, and Gwen Babcock.
+
+For questions or comments, email epht@health.ny.gov.

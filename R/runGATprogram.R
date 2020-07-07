@@ -10,7 +10,7 @@
 #' \href{../doc/gat_tutorial.html}{
 #' \code{vignette("gat_tutorial", package = "gatpkg")}}.
 #'
-#' @param limitdenom Boolean denoting whether to force denominators in rates
+#' @param limitdenom A boolean denoting whether to force denominators in rates
 #'                   and merge ratios to contain only non-zero values.
 #' @param pwrepeat   A boolean denoting whether population weighting (if used)
 #'                   should be recalculated each time two areas are merged

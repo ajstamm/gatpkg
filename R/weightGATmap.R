@@ -6,7 +6,7 @@
 #' @param area     The original shapefile.
 #' @param popvar   The base population variable.
 #' @param idvar    A variable of unique string values to identify the
-#'                 observations.
+#'                 area object's observations.
 #' @param filevars A list of strings denoting file names and paths.
 #' @param crs      A user-defined non-lat/long projection, entered as a
 #'                 string. The default is NULL, in which case the function
@@ -32,6 +32,7 @@
 #'
 #' @export
 weightGATmap <- function(area, filevars, idvar, popvar, crs = NULL) {
+  # load pop file ####
   pop <- sf::read_sf(dsn = filevars$poppath, layer = filevars$popfile)
   pop <- pop[, popvar]
   pop$area_old <- sf::st_area(pop$geometry)
@@ -48,23 +49,32 @@ weightGATmap <- function(area, filevars, idvar, popvar, crs = NULL) {
   # and none of the other variables matter
   sf::st_agr(pop) <- "constant"
 
-  # convert area
+  # convert area ####
   areasf <- sf::st_as_sf(area)
   areasf <- sf::st_transform(areasf, mycrs)
   # true for character variables;
   # variables will be unknown and don't matter anyway
   sf::st_agr(areasf) <- "constant"
 
+  # fix possible issues with the shapefiles ####
+  areasf <- sf::st_set_precision(areasf, 1000000)
+  areasf <- sf::st_buffer(areasf, dist = 0)
+  areasf <- sf::st_make_valid(areasf)
+
+  pop <- sf::st_set_precision(pop, 1000000)
+  pop <- sf::st_buffer(pop, dist = 0)
+  pop <- sf::st_make_valid(pop)
+
   # to plot: plot(sf::st_geometry(pop))
 
-  # intersect area and pop
+  # intersect area and pop ####
   popshp <- sf::st_intersection(pop, areasf)
   popshp$area_new <- sf::st_area(popshp$geometry)
   popshp$area_prop <- popshp$area_new / popshp$area_old
   popshp$mypop <- popshp[[popvar]]
   popshp$pop <- round(popshp$mypop * as.numeric(popshp$area_prop))
 
-  # add centroids - not straightforward in sf
+  # add centroids - not straightforward in sf ####
   # assume all other values constant (they aren't affected anyway)
   sf::st_agr(popshp) <- "constant"
   popshp <- sf::st_centroid(popshp)
@@ -76,7 +86,7 @@ weightGATmap <- function(area, filevars, idvar, popvar, crs = NULL) {
   popshp$x <- pts$x
   popshp$y <- pts$y
 
-  # remove artifacts
+  # remove artifacts ####
   mypop <- popshp[, c(popvar, idvar, "pop", "x", "y")]
 
   myid <- unique(mypop[[idvar]])
@@ -97,7 +107,7 @@ weightGATmap <- function(area, filevars, idvar, popvar, crs = NULL) {
   mycoords <- data.frame(do.call(rbind.data.frame, coords))
   names(mycoords) <- c("GATx", "GATy", "GATpop")
   row.names(mycoords) <- myid
-  # capture missed areas
+  # capture missed areas ####
   missid <- area@data[!area@data[, idvar] %in% myid, idvar]
   if (length(missid) > 0) {
     temp <- area[area@data[, idvar] %in% missid, ]
@@ -107,5 +117,6 @@ weightGATmap <- function(area, filevars, idvar, popvar, crs = NULL) {
   }
 
   mylist <- list(centroids = mycoords, pop = mypop)
+  # end function ####
   return(mylist)
 }

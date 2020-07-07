@@ -1,6 +1,6 @@
 #' Hamilton & Fulton counties aggregated spatial polygon data frame
 #'
-#' This object was aggrgated from a US census shapefile of towns in Hamilton
+#' This object was aggregated from a US census shapefile of towns in Hamilton
 #' and Fulton Counties in New York State. The settings used were aggregate
 #' total population to at least 5,000 and maintain county borders.
 #'

@@ -1,5 +1,6 @@
 #' Define GAT Merge Pattern
 #'
+#' @description
 #' This function reads in the shapefile to be aggregated and the parameters to use.
 #' It returns a list of the following elements:
 #'
@@ -16,6 +17,11 @@
 #' \itemize{\bold{logmsg: }
 #'   A string that includes any warnings generated during the merging.
 #' }
+#'
+#' @details
+#' For details on how merges are assigned, see
+#' \href{../doc/gat_tech_notes.html}{
+#' \code{vignette("gat_tech_notes", package = "gatpkg")}}.
 #'
 #' @param area      A spatial polygons data frame.
 #' @param gatvars   A list of objects created by the GAT tool. It contains

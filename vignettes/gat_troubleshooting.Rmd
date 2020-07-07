@@ -49,7 +49,7 @@ When I click on a region in Google Earth, the data do not appear in the descript
 
 This message appears in the R console: 
 
-`Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :`
+`Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :`  
 `GDAL Error 4: Failed to open shapefile G:/aggtest/output/testin.shp.` 
 `It may be corrupt or read-only file accessed in update mode.`
 
@@ -65,7 +65,7 @@ Using population weighted centroids, merging shapefiles with thousands of polygo
 
 This message appears in the R console: 
 
-`Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :`
+`Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :`  
 `isTRUE(gpclibPermitStatus()) is not TRUE`
 
 This error appears due to a conflict between the packages rgeos and rgdal. Reinstall rgdal after each update of rgeos to fix it.
@@ -78,7 +78,7 @@ This issue occurs if there are too few polygons in the map. If the total number 
 
 ### Warning for large numbers not writing correctly
 
-This issue occurs when there are numeric fields with very large values, such as land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original file against the crosswalk. To avoid this issue, set large number fields to character or remove them from your DBF before running GAT.
+This issue occurs when there are numeric fields with very large values, such as square meters of land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original file against the crosswalk. To avoid this warning, set large number fields to character or remove them from your DBF before running GAT.
 
 ### My aggregation log did not write correctly
 
@@ -88,7 +88,7 @@ This appears to occur randomly. Restarting R and rerunning your aggregation shou
 
 This message appears in the R console: 
 
-`In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :`
+`In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :`  
 `n greater than number of different finite values\nn reset to number of different finite values`
 
 This warning appears when the number of polygons or individual values matches or is less than the number of categories in the choropleth maps. The maps will still be drawn accurately.

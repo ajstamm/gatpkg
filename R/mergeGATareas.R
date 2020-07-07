@@ -1,7 +1,9 @@
 #' Merge GAT Areas
 #'
 #' This function merges the areas based on the merge settings created
-#' in the previous step.
+#' in the previous step. For details on how merges are assigned, see
+#' \href{../doc/gat_tech_notes.html}{
+#' \code{vignette("gat_tech_notes", package = "gatpkg")}}.
 #'
 #' @param ratevars A list of rate-related objects.
 #' @param aggvars A list of objects produced by the merging process.
