@@ -1,21 +1,26 @@
 Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
-Version: 1.51
-Date: 2020-07-07
+Version: 1.52
+Date: 2020-07-14
 Authors@R: c(
     person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 
       role = c("cre", "aut"), comment = "author of R package"),
     person("Gwen", "Babcock", email = "gdb02@health.state.ny.us", 
-      role = c("aut", "trl"), comment = "author of SAS and R scripts, edited technical notes"),
+      role = c("aut", "trl"), comment = "author of SAS and R scripts, 
+                                         edited technical notes"),
     person("Thomas", "Talbot", 
-      role = c("ctb"), comment = "GAT concept creator, wrote part of technical notes"),
+      role = c("ctb"), comment = "GAT concept creator, wrote part of 
+                                  technical notes"),
     person("Neil", "Muscatiello", email = "neil.muscatiello@health.ny.gov", 
-      role = c("ctb"), comment = "alpha tester, provided functionality suggestions"),
+      role = c("ctb"), comment = "alpha tester, provided functionality 
+                                  suggestions"),
     person("Arjita", "Rai", email = "arjita.rai@health.ny.gov", 
-      role = c("ctb"), comment = "alpha tester, provided functionality suggestions"),
+      role = c("ctb"), comment = "alpha tester, provided functionality 
+                                  suggestions"),
     person("Catherine", "Wargo", 
-      role = c("ctb"), comment = "alpha tester for rerunning files through GAT"),
+      role = c("ctb"), comment = "alpha tester, rerunning results files 
+                                  through GAT"),
     person("Douglas", "Done", email = "douglas.done@health.ny.gov", 
       role = c("ctb"), comment = "provided functionality suggestions"),
     person("Marine", "Nalbandyan", 
@@ -64,6 +69,6 @@ Suggests:
     knitr,
     prettymapr (>= 0.2.2),
     rmarkdown,
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)

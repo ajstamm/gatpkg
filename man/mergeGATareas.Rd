@@ -17,7 +17,9 @@ mergeGATareas(ratevars, aggvars, idvar, myshp)
 }
 \description{
 This function merges the areas based on the merge settings created
-in the previous step.
+in the previous step. For details on how merges are assigned, see
+\href{../doc/gat_tech_notes.html}{
+\code{vignette("gat_tech_notes", package = "gatpkg")}}.
 }
 \examples{
 gatvars <- list(

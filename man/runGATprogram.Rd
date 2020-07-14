@@ -13,7 +13,7 @@ runGATprogram(
 )
 }
 \arguments{
-\item{limitdenom}{Boolean denoting whether to force denominators in rates
+\item{limitdenom}{A boolean denoting whether to force denominators in rates
 and merge ratios to contain only non-zero values.}
 
 \item{pwrepeat}{A boolean denoting whether population weighting (if used)
@@ -44,8 +44,10 @@ GAT manual, which you can access via
 \code{vignette("gat_tutorial", package = "gatpkg")}}.
 }
 \details{
-You can load "BWidget" in advance, which opens a more navigable shapefile
-selection window, but it is not necessary to run GAT.
+For more information  on how the different merge options work, see
+"How GAT identifies areas to merge" in the
+\href{../doc/gat_tech_notes.html}{
+\code{vignette("gat_tech_notes", package = "gatpkg")}}.
 }
 \examples{
 

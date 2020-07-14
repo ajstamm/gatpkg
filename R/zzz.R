@@ -46,21 +46,38 @@ hfpop <- importGATweights(
 
 # to create hfagg5k ####
 
-gatvars <- list(myidvar = "ID", aggregator1 = "TOTAL_POP",
-                aggregator2 = "TOTAL_POP", minvalue1 = 5000,
-                minvalue2 = 5000, boundary = "COUNTY",
-                rigidbound = TRUE, popwt = FALSE)
-mergevars <- list(mergeopt1 = "similar", similar1 = "B_TOT",
-                  similar2 = "W_TOT")
+gatvars <- list(
+  myidvar = "ID",             # character variable of unique values
+  aggregator1 = "TOTAL_POP",  # numeric variable
+  aggregator2 = "TOTAL_POP",  # numeric variable
+  minvalue1 = 5000, minvalue2 = 5000,
+  maxvalue1 = 20000, maxvalue2 = 20000,
+  boundary = "COUNTY",        # character variable of non-unique values
+  rigidbound = TRUE,          # boolean to enforce boundary
+  popwt = FALSE,              # boolean for population weighting
+  popvar = "Pop_tot"          # aggregation variable in population laayer
+)
+
+mergevars <- list(
+  mergeopt1 = "similar",    # string can be similar, closest, or least
+  similar1 = "AREAWATR",    # numeric variable
+  similar2 = "AREALAND",    # numeric variable without any zeros
+  centroid = "geographic"
+)
+
 ratevars <- list(ratename = "no_rate") # not calculated
+
 aggvars <- defineGATmerge(area = hftown, gatvars = gatvars,
                           mergevars = mergevars)
 
 hfagg5k <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
                          idvar = gatvars$myidvar, myshp = hftown)
-vars <- c("ID", "NAME_SHORT", "COUNTY", "AREALAND", "AREAWATR", "TOTAL_POP",
-          "W_TOT", "B_TOT", "HISP", "flag", "GATx", "GATy", "num_IDs")
-hfagg5k@data <- hfagg5k@data[, names(hfagg5k@data)[names(hfagg5k@data) %in% vars]]
+
+vars <- c("ID", "TOWN", "COUNTY", "AREALAND", "AREAWATR", "TOTAL_POP",
+          "MY_FLAG", "GATflag", "GATx", "GATy", "GATnumIDs")
+
+hfagg5k@data <- hfagg5k@data[, names(hfagg5k@data)
+                             [names(hfagg5k@data) %in% vars]]
 
 # to create hfcrosswalk ####
 # currently, hfcrosswalk is not exported

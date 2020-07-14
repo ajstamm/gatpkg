@@ -1,5 +1,5 @@
 ---
-title: "GAT Tutorial 1: A walkthrough of GAT"
+title: "Tutorial 1: GAT walkthrough"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: 
@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 2
 vignette: >
-  %\VignetteIndexEntry{GAT Tutorial 1 - A walkthrough of GAT}
+  %\VignetteIndexEntry{Tutorial 1 - GAT walkthrough}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -19,12 +19,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-
 # Introduction
 
 This vignette is designed for a user with no experience in R who just wants to run the default version of the Geographic Aggregation Tool (GAT). This manual breaks down the different parts of GAT and describes what to do and what to expect using 2010 Census shapefiles for Hamilton and Fulton Counties in New York State, which are embedded in the package. These shapefiles will be used in this manual. 
 
-*Note: For users who wish to modify GAT, a developer's manual is in progress. Developer options have been written into several of the package functions. Check the functions' help pages (linked from function names) and the [Technical Notes](../doc/gat-tech-notes.html) for more information. Users interested only in running GAT can ignore these links.*
+*Note: For users who wish to modify GAT, a developer's manual is in progress. Developer options have been written into several of the package functions. Check the functions' help pages (linked from function names) and the [Technical Notes](../doc/gat_tech_notes.html) for more information. Users interested only in running GAT can ignore these links.*
 
 # Objective
 
@@ -205,7 +204,7 @@ gatpkg::identifyGATaggregators(gatpkg::hftown@data)
 knitr::include_graphics("images/identifyGATaggregators.png")
 ```
 
-To follow the steps as shown, select "TOTAL_POP". Leave the minimum value at "5,000". Change the maximum value to "15,000". Leave all options on the second row as "none".
+To follow the steps as shown, select "TOTAL_POP". Change the minimum value to "6,000". Change the maximum value to "15,000". Leave all options on the second row as "none".
 
 Click `Next >` to move to the next step, `< Back` to move to the previous step (selecting the boundary variable), `Cancel` to end the program, or `Help` to get further guidance.
 
@@ -238,13 +237,13 @@ gatpkg::inputGATexclusions(mapdata = gatpkg::hftown@data, step = 5)
 knitr::include_graphics("images/inputGATexclusions.png")
 ```
 
-To follow the steps as shown, select "B_TOT". Leave the condition as "equals" and the value as "0". Leave the other two criteria as "NONE". 
+To follow the steps as shown, select "MY_FLAG". Leave the condition as "equals" and change the value to "1". This will exclude one area to illustrate how excluded areas are displayed on the generated maps and indicated in the generated DBF and log files. Leave the other two criteria as "NONE". 
 
-Click `Next >` to continue, `< Back` to move to the previous step (selecting the second aggregation variable), `Cancel` to end the program, or `Help` to get further guidance.
+Click `Next >` to continue, `< Back` to move to the previous step (selecting the aggregation variables), `Cancel` to end the program, or `Help` to get further guidance.
 
 You will get the following confirmation dialog. 
 
-```{r excludepic2, fig.cap = 'Dialog: Identify Exclusion Criteria', echo = FALSE}
+```{r excludepic2, fig.cap = 'Dialog: Confirm Exclusion Criteria', out.width = '40%', echo = FALSE}
 knitr::include_graphics("images/confirmGATexclusions.png")
 ```
 
@@ -267,7 +266,7 @@ You will get an error message and a request to reselect criteria if:
 
 This step requests the merge method from the user using a pop-up dialog.
 
-```{r pb7, out.width = '60%', fig.cap = 'Progress Bar: Identify Merge Type', echo = FALSE}
+```{r pb7, out.width = '55%', fig.cap = 'Progress Bar: Identify Merge Type', echo = FALSE}
 knitr::include_graphics("images/pb_pickmerge.png")
 ```
 
@@ -281,7 +280,7 @@ In this dialog, select the method you would like to use to aggregate areas. If y
 gatpkg::inputGATmerge(mapdata = gatpkg::hftown@data, aggvar = "TOTAL_POP", aggvar2 = "NONE", step = 6)
 ```
 
-```{r mergepic, fig.cap = 'Dialog: Identify Merge Type', out.width = '60%', echo = FALSE}
+```{r mergepic, out.width = '50%', fig.cap = 'Dialog: Identify Merge Type', out.width = '60%', echo = FALSE}
 knitr::include_graphics("images/inputGATmerge.png")
 # fix this image and pre-select options
 ```
@@ -318,7 +317,7 @@ In this dialog, you can navigate to any shapefile on your computer or network.
 gatpkg::locateGATshapefile(type = "population", myfile = paste0(filepath, "hfblock"))
 ```
 
-```{r poppic, fig.cap = 'Dialog: Identify Population Shapefile', echo = FALSE}
+```{r popdialog, fig.cap = 'Dialog: Identify Population Shapefile', echo = FALSE}
 knitr::include_graphics("images/locatepopulationfile.png")
 ```
 
@@ -328,7 +327,7 @@ Click "Open" to move to the next step or click "Cancel" to go back to the merge 
 
 If there are multiple numeric variables, you will get a dialog requesting that you select one. If there is only one suitable variable, you will get this message:
 
-```{r poppic2, fig.cap = 'Dialog: Identify Population Shapefile', echo = FALSE}
+```{r popconfirm, fig.cap = 'Dialog: Confirm Population Shapefile', echo = FALSE}
 knitr::include_graphics("images/confirmGATpopvar.png")
 ```
 
@@ -367,25 +366,31 @@ gatpkg::inputGATrate(mapdata = gatpkg::hftown@data,
                      limitdenom = FALSE, step = 8)
 ```
 
-```{r ratepic, out.width = '60%', fig.cap = 'Dialog: Identify Rate Settings', echo = FALSE}
+```{r ratepic, out.width = '50%', fig.cap = 'Dialog: Identify Rate Settings', echo = FALSE}
 knitr::include_graphics("images/inputGATrate.png")
 ```
 
-To follow the steps as shown, select "TOTAL_POP" for the numerator, "AREALAND" for the denominator, and "Greens" for the map color scheme. Name your rate variable "pop_dens" and leave the multiplier as "10,000".
+To follow the steps as shown, select "TOTAL_POP" for the numerator, "AREALAND" for the denominator, and "Greens" for the map color scheme. Name your rate variable "pop_dens" (short for "population density") and leave the multiplier as "10,000".
 
-Click `Next >` to move to the next step, `< Back` to move to the previous step (locating the population shapefile), `Cancel` to end the program, or `Help` to get further guidance.
+Click `Next >` to move to the next step, `< Back` to move to the previous step (selecting merge settings), `Cancel` to end the program, or `Help` to get further guidance.
 
 
 
 ### About this step
 
+This step is optional. To skip rate calculation, check the box beside "Click here if you do NOT want to calculate a rate." 
+
 The function [inputGATrate()](../html/inputGATrate.html) lists only numeric variables from the shapefile's DBF for the numerator and denominator drop-downs. The denominator lists all numeric variables, but can be modified to list only numeric variables without zero or missing values, after removing exclusion criteria. 
 
-The rate name uses the same convention as SAS variable naming, which starts with a letter or underscore and allows only letters, underscores, and numbers. All other characters will be removed from the rate name. The rate name "no_rate" is used when rate will not be calculated, so do not use this name. 
+The rate name must:
+
+* start with a letter or underscore, 
+* contain only letters, underscores, and numbers, and 
+* be no longer than 10 characters (the maximum length for DBF variable names; longer names will be truncated). 
+
+All characters that are not letters, underscores, or numbers will be removed from the rate name. Do not use the rate name "no_rate"; it is reserved to designate when the rate will not be calculated. 
 
 The multiplier box can support numbers, commas, and decimals. If you enter any other characters into the multiplier box, you will get an error and a new dialog will appear asking you to re-enter the multiplier. To calculate a ratio, set the multiplier to 1. 
-
-This step is not required. Check the box beside "Do NOT calculate a rate" if you want to skip rate calculation. 
 
 
 
@@ -406,7 +411,7 @@ In this dialog, select "Yes" or "No".
 gatpkg::saveGATkml(step = 9)
 ```
 
-```{r kmlpic, out.width = '60%', fig.cap = 'Dialog: Save KML', echo = FALSE}
+```{r kmlpic, out.width = '45%', fig.cap = 'Dialog: Save KML', echo = FALSE}
 knitr::include_graphics("images/saveGATkml.png")
 # fix this image and pre-select options
 ```
@@ -441,13 +446,13 @@ gatpkg::saveGATfiles()
 knitr::include_graphics("images/saveGATfiles.png")
 ```
 
-To follow the steps as shown, navigate to your documents folder. Enter "hftown_agg5k15k_popwt". 
+To follow the steps as shown, navigate to your documents folder. Enter "hftown_agg6k15k_popwt". 
 
 Click "Save" to move to the next step or click "Cancel" to end GAT. 
 
 ### About this step
 
-The function [saveGATfiles()](../html/saveGATfiles.html) checks if the name you provide already exists. If so, it asks if you want to overwrite. All files created will be saved here, with this filename (including log, plots, and KML, if requested).
+The function [saveGATfiles()](../html/saveGATfiles.html) checks if the name you provide already exists. If so, it asks if you want to overwrite the existing files. All files created will be saved here, with this filename (including log, plots, and KML, if requested).
 
 
 ## Step 11. Request settings confirmation
@@ -480,8 +485,8 @@ exclist <- list(var1 = "B_TOT", var2 = "NONE", var3 = "NONE",
                 val1 = 0, val2 = 0, val3 = 0, flagsum = 6)
 filevars <- list(filein = "hftown", popfile = "hfpop", 
                  fileout = "hftown_agg5k15k_popwt", 
-                 userin = "C:/users/default/shapefiles/hftown",
-                 userout = "C:/users/default/shapefiles/my_saves/hftown_agg5k15k_popwt")
+                 userin = "C:/users/ajs11/Documents/R/win-library/3.6/gatpkg/extdata/hftown",
+                 userout = "C:/Users/ajs11/Documents/hftown_agg5k15k_popwt")
 
 gatpkg::confirmGATbystep(gatvars = gatvars, ratevars = ratevars, 
                        mergevars = mergevars, exclist = exclist, 
@@ -489,11 +494,11 @@ gatpkg::confirmGATbystep(gatvars = gatvars, ratevars = ratevars,
 ```
 
 
-```{r confirmpic, fig.cap = 'Dialog: Confirm GAT Settings', echo = FALSE}
+```{r confirmpic, out.width = '60%', fig.cap = 'Dialog: Confirm GAT Settings', echo = FALSE}
 knitr::include_graphics("images/confirmGATdialog.png")
 ```
 
-If you choose to move on, click `Next >` to move to the next step, `< Back` to move to the previous step (selecting the rate settings), `Start over` to start from the beginning, or `Help` to get further guidance. To follow the steps as shown, click `Next >`.
+If you choose to move on, select an item from the drop-down menu and click `Confirm`. To cancel, click `Cancel GAT`. Click `Help` to get further guidance. To follow the steps as shown, select "None" and click `Confirm`.
 
 
 ### About this step
@@ -571,6 +576,7 @@ This section contains the maps that are created by GAT. The final PDF will conta
 - **Map 6:** Choropleth of the compactness ratio after aggregating.
 - **Map 7:** Choropleth of the rate, ratio, or density defined in the rate selection (optional).
 
+Note: R package documentation allows you to view images, but not link to them. For all maps, view larger images by right clicking on the maps and selecting, "Open image in new tab." 
 
 ## Step 16. Map first aggregation variable
 
@@ -680,10 +686,10 @@ The original shapefile is saved with the following changes:
 
 Files saved to the save folder if you followed the vignette:
 
-- hftown_agg5k15k_popwtin.dbf 
-- hftown_agg5k15k_popwtin.prj 
-- hftown_agg5k15k_popwtin.shp 
-- hftown_agg5k15k_popwtin.shx 
+- hftown_agg6k15k_popwtin.dbf 
+- hftown_agg6k15k_popwtin.prj 
+- hftown_agg6k15k_popwtin.shp 
+- hftown_agg6k15k_popwtin.shx 
 
 ## Step 22. Save aggregated shapefile
 
@@ -710,10 +716,10 @@ Additional variables created as part of the aggregation process and included in 
 
 Files saved to the save folder if you followed the vignette:
 
-- hftown_agg5k15k_popwt.dbf 
-- hftown_agg5k15k_popwt.prj 
-- hftown_agg5k15k_popwt.shp 
-- hftown_agg5k15k_popwt.shx 
+- hftown_agg6k15k_popwt.dbf 
+- hftown_agg6k15k_popwt.prj 
+- hftown_agg6k15k_popwt.shp 
+- hftown_agg6k15k_popwt.shx 
 
 
 ## Step 23. Save maps
@@ -722,11 +728,11 @@ Files saved to the save folder if you followed the vignette:
 knitr::include_graphics("images/pb_savemaps.png")
 ```
 
-In this section, all maps are saved to PDF in the same folder as the aggregated shapefile. The same save filename is used with "plots" at the end.
+In this section, all maps are saved to a PDF file, with one map per page, in the same folder as the aggregated shapefile. The same save filename is used with "plots" at the end.
 
 File saved to the save folder if you followed the vignette:
 
-- hftown_agg5k15k_popwtplots.pdf (containing 5 maps)
+- hftown_agg6k15k_popwtplots.pdf (containing 5 maps)
 
 
 ## Step 24. Save KML file
@@ -737,9 +743,9 @@ knitr::include_graphics("images/pb_savekml.png")
 
 In this step, nothing happens if you are following the vignette and selected no when asked if you wanted to save a KML file. If you had selected yes, a KML file would be created in this step that could then be opened in Google Earth. 
 
-Files saved to the save folder, if "Yes" selected:
+Files saved to the save folder, if "Yes" was selected in Step 9:
 
-- hftown_agg5k15k_popwt.kml 
+- hftown_agg6k15k_popwt.kml 
 
 
 ## Step 25. Save log and settings
@@ -760,8 +766,8 @@ gatpkg::runGATprogram(settings = myfilepath)
 
 Files saved to the save folder if you followed the vignette:
 
-- hftown_agg5k15k_popwt.log
-- hftown_agg5k15k_popwtsettings.Rdata
+- hftown_agg6k15k_popwt.log
+- hftown_agg6k15k_popwtsettings.Rdata
 
 
 # GAT is finished, now what?
@@ -772,18 +778,18 @@ All files are saved to the save folder you selected. The log file contains a par
 
 ```{r, eval = FALSE}
 The following files have been written to the folder 
-C:/Users/ajs/Documents/GAT: 
-  hftown_agg5k15k_popwt.dbf 
-  hftown_agg5k15k_popwt.prj 
-  hftown_agg5k15k_popwt.shp 
-  hftown_agg5k15k_popwt.shx 
-  hftown_agg5k15k_popwtin.dbf 
-  hftown_agg5k15k_popwtin.prj 
-  hftown_agg5k15k_popwtin.shp 
-  hftown_agg5k15k_popwtin.shx 
-  hftown_agg5k15k_popwtplots.pdf 
-  hftown_agg5k15k_popwt.log 
-  hftown_agg5k15k_popwtsettings.Rdata 
+C:/Users/ajs11/Documents/GAT: 
+  hftown_agg6k15k_popwt.dbf 
+  hftown_agg6k15k_popwt.prj 
+  hftown_agg6k15k_popwt.shp 
+  hftown_agg6k15k_popwt.shx 
+  hftown_agg6k15k_popwtin.dbf 
+  hftown_agg6k15k_popwtin.prj 
+  hftown_agg6k15k_popwtin.shp 
+  hftown_agg6k15k_popwtin.shx 
+  hftown_agg6k15k_popwtplots.pdf 
+  hftown_agg6k15k_popwt.log 
+  hftown_agg6k15k_popwtsettings.Rdata 
   
 See the log file for more details.
 ```

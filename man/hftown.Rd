@@ -4,8 +4,9 @@
 \name{hftown}
 \alias{hftown}
 \title{Hamilton & Fulton counties town-level spatial polygon data frame}
-\format{A SpatialPolygonsDataFrame object that includes the following
-11 variables:
+\format{
+A SpatialPolygonsDataFrame object that includes the following
+7 variables:
 
 \describe{
 \item{\code{NAME_SHORT}}{Town name}
@@ -14,12 +15,9 @@
 \item{\code{AREALAND}}{Land area}
 \item{\code{AREAWATR}}{Water area}
 \item{\code{TOTAL_POP}}{Census population for 2010}
-\item{\code{W_TOT}}{Census white population for 2010}
-\item{\code{B_TOT}}{Census black population for 2010}
-\item{\code{HISP}}{Census Hispanic population for 2010}
-\item{\code{LATITUDE}}{Latitude}
-\item{\code{LONGITUDE}}{Longitude}
-}}
+\item{\code{MY_FLAG}}{Arbitrary flag variable to illustrate exclusions}
+}
+}
 \usage{
 hftown
 }

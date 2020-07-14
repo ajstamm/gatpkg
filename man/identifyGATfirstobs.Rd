@@ -25,10 +25,6 @@ value, which will be the next observation merged in the full program. The
 minimum value must be greater than zero, but is only important if there
 are two aggregation variables.
 }
-\details{
-If you would like to include a maximum aggregation value, you will need to
-modify either this function or \code{mergeGATpolygons()}.
-}
 \examples{
 aggvar <- "TOTAL_POP"  # identify the aggregation variable
 minvalue <- 5000       # identify the minimum value

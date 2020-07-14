@@ -89,16 +89,18 @@ hftown@data$GATflag <-
     replace = TRUE,
     prob = c(.8, .1, .1)
   )
+
 # create a rate
-hftown@data$pct_white <- 100 * hftown@data$W_TOT / hftown@data$TOTAL_POP
+hftown@data$pop_dens <- 100 * hftown@data$TOTAL_POP / hftown@data$AREALAND
 # add some random missings to illustrate uncalculated rates
-hftown@data$pct_white[sample(length(hftown@data), 2)] <- NA
+hftown@data$pop_dens[sample(length(hftown@data), 2)] <- NA
+
 # plot the rate
 plotGATmaps(
   area = hftown,
-  var = "pct_white",
+  var = "pop_dens",
   clr = "YlGn",
-  title.main = "Percent of population that is white",
+  title.main = "population density",
   breaks = 3,
   mapstats = TRUE,
   ratemap = TRUE

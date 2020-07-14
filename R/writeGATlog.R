@@ -48,8 +48,8 @@
 #'
 #' mergevars <- list(
 #'   mergeopt1 = "similar",    # can be similar, closest, or least
-#'   similar1 = "B_TOT",       # numeric variable
-#'   similar2 = "W_TOT",       # numeric variable without any zeros
+#'   similar1 = "AREAWATR",    # numeric variable
+#'   similar2 = "AREALAND",    # numeric variable without any zeros
 #'   centroid = "geographic"
 #' )
 #'

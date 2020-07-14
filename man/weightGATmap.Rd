@@ -12,7 +12,7 @@ weightGATmap(area, filevars, idvar, popvar, crs = NULL)
 \item{filevars}{A list of strings denoting file names and paths.}
 
 \item{idvar}{A variable of unique string values to identify the
-observations.}
+area object's observations.}
 
 \item{popvar}{The base population variable.}
 

@@ -4,7 +4,8 @@
 \name{hfpop}
 \alias{hfpop}
 \title{Hamilton & Fulton block-level population spatial polygon data frame}
-\format{A simple feature (sf) object that includes the following
+\format{
+A simple feature (sf) object that includes the following
 5 variables:
 
 \describe{
@@ -13,7 +14,8 @@
 \item{\code{geometry}}{The polygon nodes, bounding box, and projection}
 \item{\code{x}}{The geographic centroid longitude}
 \item{\code{y}}{The geographic centroid latitude}
-}}
+}
+}
 \usage{
 hfpop
 }

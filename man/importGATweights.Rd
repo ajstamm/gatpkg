@@ -27,20 +27,16 @@ area based on the area proportion of the small area that falls in each
 large area. This creates a base layer from which to create population
 weighted centroids.
 }
-\details{
-This function has not yet been incorprated into the default version of
-GAT, but I am including it here for testing. This help file and the
-default settings for variables will need to be fleshed out more,
-with examples provided, later.
-
-I also need to decide if I will include a census block file in the
-package, but I would prefer not to, mostly to keep filesize down.
-}
 \examples{
 
 \donttest{
 pathin <- paste0(find.package("gatpkg"), "/extdata")
-mywtshp <- importGATweights(shp = hftown, filein = "hfblock", pathin)
+mywtshp <- importGATweights(
+  area = hftown,
+  filein = "hfblock",
+  pathin = pathin,
+  popvar = "Pop_tot"
+)
 }
 
 }

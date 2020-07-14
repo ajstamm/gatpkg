@@ -51,8 +51,7 @@ elligible neighbors is selected.}
 \description{
 This function reads in the shapefile to be aggregated and the parameters to use.
 It returns a list of the following elements:
-}
-\details{
+
 \itemize{\bold{IDlist: }
 A character vector in which the old IDs are replaced with the merged IDs,
 for the crosswalk.
@@ -66,6 +65,11 @@ An integer representing the number of merges completed.
 \itemize{\bold{logmsg: }
 A string that includes any warnings generated during the merging.
 }
+}
+\details{
+For details on how merges are assigned, see
+\href{../doc/gat_tech_notes.html}{
+\code{vignette("gat_tech_notes", package = "gatpkg")}}.
 }
 \examples{
 gatvars <- list(
@@ -82,8 +86,8 @@ gatvars <- list(
 
 mergevars <- list(
   mergeopt1 = "similar",    # string can be similar, closest, or least
-  similar1 = "B_TOT",       # numeric variable
-  similar2 = "W_TOT",        # numeric variable without any zeros
+  similar1 = "AREAWATR",    # numeric variable
+  similar2 = "AREALAND",    # numeric variable without any zeros
   centroid = "geographic"
 )
 
