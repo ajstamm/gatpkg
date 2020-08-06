@@ -1174,7 +1174,28 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                   mapstats = TRUE)
     } # end mapping new rate
 
-    # 12. save old shapefile ####
+    # 12. save maps to pdf ####
+    step <- step + 1
+    pb$label = paste0("Writing the plots to ", filevars$fileout, "plots.pdf.")
+    tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
+                            label = pb$label)
+
+    # save the plots to a pdf file
+    pdf(paste0(filevars$userout, "plots.pdf"), onefile=TRUE, width = 10,
+        height = 7)
+    for (myplot in myplots) {
+      if (class(myplot) == "recordedplot") replayPlot(myplot)
+    } # only saves plots that exist
+    dev.off() # need to close pdf file
+
+    rm(myplots)
+
+    # save relevant objects
+    save(file = paste0(filevars$userout, "settings.Rdata"),
+         list = c("gatvars", "aggvars", "filevars", "mergevars", "ratevars",
+                  "exclist"))
+
+    # 13. save old shapefile ####
     step <- step + 1
     pb <- list(title = "NYSDOH GAT: saving files",
                label = paste("Writing the original shapfile to",
@@ -1193,7 +1214,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                     driver = "ESRI Shapefile", verbose = TRUE,
                     overwrite_layer = TRUE)
 
-    # 13. save new shapefile ####
+    # 14. save new shapefile ####
     step <- step + 1
     pb$label = paste("Writing the merged shapfile to", filevars$fileout)
     tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
@@ -1206,22 +1227,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                       filevars$fileout, driver = "ESRI Shapefile",
                       verbose = TRUE, overwrite_layer = TRUE)
     # large areas throw warnings that appear unfounded
-
-    # 14. save maps to pdf ####
-    step <- step + 1
-    pb$label = paste0("Writing the plots to ", filevars$fileout, "plots.pdf.")
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                            label = pb$label)
-
-    # save the plots to a pdf file
-    pdf(paste0(filevars$userout, "plots.pdf"), onefile=TRUE, width = 10,
-        height = 7)
-    for (myplot in myplots) {
-      if (class(myplot) == "recordedplot") replayPlot(myplot)
-    } # only saves plots that exist
-    dev.off() # need to close pdf file
-
-    rm(myplots)
 
     # 15. save kml file ####
     if (gatvars$savekml==TRUE) { # now includes descriptions
@@ -1251,10 +1256,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     pb$label = "GAT is finished."
     tcltk::setTkProgressBar(tpb, value = 27, title = pb$title, label = pb$label)
 
-    # save relevant objects
-    save(file = paste0(filevars$userout, "settings.Rdata"),
-         list = c("gatvars", "aggvars", "filevars", "mergevars", "ratevars",
-                  "exclist"))
 
     if (mysettings$exists) {
       msg <- paste0("NYS GAT is finished. Your files were saved to ",

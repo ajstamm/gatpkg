@@ -9,7 +9,7 @@ A SpatialPolygonsDataFrame object that includes the following
 7 variables:
 
 \describe{
-\item{\code{NAME_SHORT}}{Town name}
+\item{\code{TOWN}}{Town name}
 \item{\code{ID}}{Census county and town FIPS designation}
 \item{\code{COUNTY}}{Census county FIPS designation}
 \item{\code{AREALAND}}{Land area}

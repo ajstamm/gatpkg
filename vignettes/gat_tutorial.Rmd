@@ -666,8 +666,30 @@ This step calls the function [plotGATmaps()](../html/plotGATmaps.html) to draw t
 
 This section contains the file saving steps. 
 
+## Step 21. Save maps and settings
 
-## Step 21. Save original shapefile
+```{r pbmaps, out.width = '60%', fig.cap = 'Progress Bar: Save a PDF of the maps', echo = FALSE}
+knitr::include_graphics("images/pb_savemaps.png")
+```
+
+In this section, all maps are saved to a PDF file, with one map per page, in the same folder as the aggregated shapefile. The same save filename is used with "plots" at the end.
+
+An Rdata file is also saved. This file includes all settings in R format, which can be opened in R or run through GAT a second time. If you want to use the Rdata file to re-run GAT, use this code and change `myfilepath` to the location and name of your Rdata file:
+
+```{r rerun, eval = FALSE}
+myfilepath <- "C:/users/ajs/mygatfilesettings.Rdata"
+gatpkg::runGATprogram(settings = myfilepath)
+
+```
+
+File saved to the save folder if you followed the vignette:
+
+- hftown_agg6k15k_popwtplots.pdf (containing 5 maps)
+- hftown_agg6k15k_popwtsettings.Rdata
+
+
+
+## Step 22. Save original shapefile
 
 ```{r pbold, out.width = '60%', fig.cap = 'Progress Bar: Save the Original Shapefile', echo = FALSE}
 knitr::include_graphics("images/pb_saveold.png")
@@ -691,7 +713,7 @@ Files saved to the save folder if you followed the vignette:
 - hftown_agg6k15k_popwtin.shp 
 - hftown_agg6k15k_popwtin.shx 
 
-## Step 22. Save aggregated shapefile
+## Step 23. Save aggregated shapefile
 
 ```{r pbnew, out.width = '60%', fig.cap = 'Progress Bar: Save the Aggregated Shapefile', echo = FALSE}
 knitr::include_graphics("images/pb_savenew.png")
@@ -722,19 +744,6 @@ Files saved to the save folder if you followed the vignette:
 - hftown_agg6k15k_popwt.shx 
 
 
-## Step 23. Save maps
-
-```{r pbmaps, out.width = '60%', fig.cap = 'Progress Bar: Save a PDF of the maps', echo = FALSE}
-knitr::include_graphics("images/pb_savemaps.png")
-```
-
-In this section, all maps are saved to a PDF file, with one map per page, in the same folder as the aggregated shapefile. The same save filename is used with "plots" at the end.
-
-File saved to the save folder if you followed the vignette:
-
-- hftown_agg6k15k_popwtplots.pdf (containing 5 maps)
-
-
 ## Step 24. Save KML file
 
 ```{r pbkml, out.width = '60%', fig.cap = 'Progress Bar: Save the KML File', echo = FALSE}
@@ -748,7 +757,7 @@ Files saved to the save folder, if "Yes" was selected in Step 9:
 - hftown_agg6k15k_popwt.kml 
 
 
-## Step 25. Save log and settings
+## Step 25. Save log
 
 ```{r pblog, out.width = '60%', fig.cap = 'Progress Bar: Save the Log of Your Run', echo = FALSE}
 knitr::include_graphics("images/pb_log.png")
@@ -756,18 +765,10 @@ knitr::include_graphics("images/pb_log.png")
 
 In this step, a text file is saved that includes all of your settings, basic information on data distributions for the aggregation variable(s), and warnings regarding possible issues with the aggregation. 
 
-An Rdata file is also saved. This file includes all settings in R format, which can be opened in R or run through GAT a second time. If you want to use the Rdata file to re-run GAT, use this code and change `myfilepath` to the location and name of your Rdata file:
-
-```{r rerun, eval = FALSE}
-myfilepath <- "C:/users/ajs/mygatfilesettings.Rdata"
-gatpkg::runGATprogram(settings = myfilepath)
-
-```
 
 Files saved to the save folder if you followed the vignette:
 
 - hftown_agg6k15k_popwt.log
-- hftown_agg6k15k_popwtsettings.Rdata
 
 
 # GAT is finished, now what?

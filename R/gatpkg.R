@@ -1,4 +1,4 @@
-#' The NYS Geographic Aggregation Tool
+#' The NYS Geographic Aggregation Tool (GAT)
 #'
 #'
 #' @description
@@ -16,6 +16,7 @@
 #'   \item be in a format accessible to anyone
 #'   \item not require prior experience with R
 #'   \item be customizable for advanced R users
+#'   \item standardize the aggregation process
 #' }
 #'
 #' To run the default version of GAT, follow the
@@ -53,6 +54,9 @@
 #'  Marine Nalbandyan, Bureau of Environmental and Occupational
 #'                     Epidemiology, New York State Department of Health \cr
 #'
+#'
+#'  \bold{Beta-testers} \cr
+#'  Angela Werner, Centers for Disease Control and Prevention \cr
 #'
 #'  \bold{Other contributors} \cr
 #'  Douglas Done, Bureau of Environmental and Occupational Epidemiology,

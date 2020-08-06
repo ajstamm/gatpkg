@@ -21,6 +21,15 @@ knitr::opts_chunk$set(
 
 *I tried to keep the issues that are still relevant for the package. Some may still need to be revised. I also added package-specific issues. - Abby*
 
+### GAT ran, but my shapefiles wouldn't save and GAT crashed
+
+GAT occasionally has trouble getting permission to write to network drives. Try saving to your local computer, then transferring the files.
+
+
+### I got an error about XML when I tried to install GAT
+
+On Windows, run `install.packages("https://cran.r-project.org/bin/windows/contrib/4.0/XML_3.99-0.5.zip", type = "binary", repos = NULL)` to install the XML package. 3.99-0.5 is the latest XML version as of August 2020.
+
 ### There is an issue with the package installation
 
 Usually, the issue is that vignettes fail to install. To fix this, uninstall gatpkg, restart R, and reinstall gatpkg.

@@ -353,12 +353,31 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
         }
       }
 
+      # if no boundary or minimum enforcement, but must be adjacent
+      if (adjacent & temp$idfail & !gatvars$rigidbound) {
+        # reset town list, just in case
+        townvars$nbdata <-
+          temp$tobemerged[which(temp$tobemerged[, gatvars$myidvar] %in%
+                               townvars$neighborid), ]
+        if (nrow(townvars$nbdata) > 0) {
+          temp$idfail <- FALSE # found neighbor
+        } else {
+          if (temp$logmsg == "") {
+            temp$logmsg <- paste0(temp$logmsg, "Merge ", aggvars$newregno + maxid,
+                                  " (", temp$first[, gatvars$myidvar], "):")
+          }
+          temp$logmsg <- paste(temp$logmsg,
+                               "No physically adjacent neighbors found.")
+          temp$idfail <- TRUE # still failed
+        }
+      }
+
       # if no boundary or minimum enforcement (or none available)
       if (!adjacent & temp$idfail & !gatvars$rigidbound) {
         # reset town list, just in case
         townvars$nbdata <-
-          townvars$nbdata[which(temp$aggdata[, gatvars$myidvar] %in%
-                                  townvars$neighborid), ]
+          temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
+                             townvars$neighborid), ]
         if (nrow(townvars$nbdata) > 0) {
           temp$idfail <- FALSE # found neighbor
         } else {
@@ -387,6 +406,7 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
           }
         }
       }
+
 
       # quit searching for neighbors ####
       if(temp$idfail) {

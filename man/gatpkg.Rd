@@ -2,7 +2,7 @@
 % Please edit documentation in R/gatpkg.R
 \name{gatpkg}
 \alias{gatpkg}
-\title{The NYS Geographic Aggregation Tool}
+\title{The NYS Geographic Aggregation Tool (GAT)}
 \description{
 A method for easily aggregating spatial data using user-defined
 parameters with minimal knowledge of or experience using R.
@@ -14,6 +14,7 @@ GAT's goals:
 \item be in a format accessible to anyone
 \item not require prior experience with R
 \item be customizable for advanced R users
+\item standardize the aggregation process
 }
 
 To run the default version of GAT, follow the
@@ -44,6 +45,9 @@ Christophe Maxime Fokoua Dongmo, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
 Marine Nalbandyan, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
+
+\bold{Beta-testers} \cr
+Angela Werner, Centers for Disease Control and Prevention \cr
 
 \bold{Other contributors} \cr
 Douglas Done, Bureau of Environmental and Occupational Epidemiology,

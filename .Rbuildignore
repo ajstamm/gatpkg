@@ -7,4 +7,5 @@
 ^data_raw$
 ^\.Rproj\.user$
 ^README\.Rmd$
-^my_hftown.log$
+^my_hftown\.log$
+^README\.md$
