@@ -233,8 +233,10 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
       temp$warnkey <- "n" # no warnings
       warnings <- c(
         ab = "No physically adjacent neighbors found within the same boundary.",
-        amb = "No physically adjacent neighbors below the minimum value found within the same boundary.",
-        mb = "Found areas in the same boundary below the minimum value, but they are not physically adjacent.",
+        amb = paste("No physically adjacent neighbors below the minimum value",
+                    "found within the same boundary."),
+        mb = paste("Found areas in the same boundary below the minimum value,",
+                   "but they are not physically adjacent."),
         b = "Found areas in the same boundary, but they are not physically adjacent.",
         f = "No neighbors found. This area cannot be merged further.",
         nb = "No neighbors found in boundary.",
@@ -281,7 +283,7 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
         }
 
         # if no neighbors, find neighbors in boundary, adjacent
-        if (temp$idfail) {
+        if (temp$idfail & adjacent) {
           townvars$nbdata <-
             temp$inboundary[which(temp$inboundary[, gatvars$myidvar] %in%
                                  townvars$neighborid), ]
@@ -299,7 +301,7 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
         }
 
         # if no neighbors, find other area in boundary
-        if (!adjacent & temp$idfail) {
+        if (temp$idfail & !adjacent) {
           # below minimum preferred?
           if (minfirst) {
             temp$inco_nbdata <-
@@ -334,79 +336,77 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
             }
           }
         }
+
+        # if no neighbors, quit loop
         if (temp$idfail) {
           temp$warnkey <- "nb"
         }
       }
 
-      # if no boundary or none in boundary (and boundary not enforced)
-      if (minfirst & temp$idfail & !gatvars$rigidbound) {
-        # reset town list, just in case
-        townvars$nbdata <-
-          temp$tobemerged[which(temp$tobemerged[, gatvars$myidvar] %in%
-                                townvars$neighborid), ]
-        if (nrow(townvars$nbdata) > 0) {
-          temp$idfail <- FALSE # found neighbor
-        } else {
-          temp$warnkey <- "am" # no adjacent below minimum
-          temp$idfail <- TRUE # still failed
-        }
-      }
-
-      # if no boundary or minimum enforcement, but must be adjacent
-      if (adjacent & temp$idfail & !gatvars$rigidbound) {
-        # reset town list, just in case
-        townvars$nbdata <-
-          temp$tobemerged[which(temp$tobemerged[, gatvars$myidvar] %in%
-                               townvars$neighborid), ]
-        if (nrow(townvars$nbdata) > 0) {
-          temp$idfail <- FALSE # found neighbor
-        } else {
-          if (temp$logmsg == "") {
-            temp$logmsg <- paste0(temp$logmsg, "Merge ", aggvars$newregno + maxid,
-                                  " (", temp$first[, gatvars$myidvar], "):")
+      # if boundary not enforced
+      if (temp$idfail & !gatvars$rigidbound) {
+        # if merge below minimum first
+        if (minfirst) {
+          # reset town list, just in case
+          townvars$nbdata <-
+            temp$tobemerged[which(temp$tobemerged[, gatvars$myidvar] %in%
+                                    townvars$neighborid), ]
+          if (nrow(townvars$nbdata) > 0) {
+            temp$idfail <- FALSE # found neighbor
+          } else {
+            temp$warnkey <- "am" # no adjacent below minimum
+            temp$idfail <- TRUE # still failed
           }
-          temp$logmsg <- paste(temp$logmsg,
-                               "No physically adjacent neighbors found.")
-          temp$idfail <- TRUE # still failed
         }
-      }
 
-      # if no boundary or minimum enforcement (or none available)
-      if (!adjacent & temp$idfail & !gatvars$rigidbound) {
-        # reset town list, just in case
-        townvars$nbdata <-
-          temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
-                             townvars$neighborid), ]
-        if (nrow(townvars$nbdata) > 0) {
-          temp$idfail <- FALSE # found neighbor
-        } else {
-          if (temp$logmsg == "") {
-            temp$logmsg <- paste0(temp$logmsg, "Merge ", aggvars$newregno + maxid,
-                                  " (", temp$first[, gatvars$myidvar], "):")
+        # if must be adjacent
+        if (temp$idfail & adjacent) {
+          townvars$nbdata <-
+            temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
+                                    townvars$neighborid), ]
+          if (nrow(townvars$nbdata) > 0) {
+            temp$idfail <- FALSE # found neighbor
+          } else {
+            temp$warnkey <- "ab" # no adjacent within boundary
+            temp$idfail <- TRUE # still failed
           }
-          temp$logmsg <- paste(temp$logmsg,
-                               "No physically adjacent neighbors found.")
-          temp$idfail <- TRUE # still failed
         }
 
-        if (temp$idfail) {
-          mergevars$mergeopt2 <- "closest"
-          townvars$townnbidloc <- which(townvars$townnbid ==
-                                        temp$first[, gatvars$myidvar])
-          townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
-          townvars$neighborid <- townvars$townnbid[townvars$neighbors]
+        # if not adjacent
+        if (temp$idfail & !adjacent) {
+          # reset town list, just in case
           townvars$nbdata <-
             temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
                                  townvars$neighborid), ]
           if (nrow(townvars$nbdata) > 0) {
             temp$idfail <- FALSE # found neighbor
           } else {
+            if (temp$logmsg == "") {
+              temp$logmsg <- paste0(temp$logmsg, "Merge ", aggvars$newregno + maxid,
+                                    " (", temp$first[, gatvars$myidvar], "):")
+            }
+            temp$logmsg <- paste(temp$logmsg,
+                                 "No physically adjacent neighbors found.")
             temp$idfail <- TRUE # still failed
+          }
+
+          if (temp$idfail) {
+            mergevars$mergeopt2 <- "closest"
+            townvars$townnbidloc <- which(townvars$townnbid ==
+                                            temp$first[, gatvars$myidvar])
+            townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
+            townvars$neighborid <- townvars$townnbid[townvars$neighbors]
+            townvars$nbdata <-
+              temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
+                                   townvars$neighborid), ]
+            if (nrow(townvars$nbdata) > 0) {
+              temp$idfail <- FALSE # found neighbor
+            } else {
+              temp$idfail <- TRUE # still failed
+            }
           }
         }
       }
-
 
       # quit searching for neighbors ####
       if(temp$idfail) {
