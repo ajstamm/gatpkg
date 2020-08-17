@@ -246,6 +246,7 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
       # find neighbors ####
       # temporary flag: neighbors found?
       temp$idfail <- TRUE
+      temp$island <- FALSE
 
       townvars$townnbid <- attr(townvars$townnb, "region.id")
       if (temp$first[, gatvars$myidvar] %in% townvars$townnbid) {
@@ -261,42 +262,43 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
       # get the data about these neighbors ####
       # if boundary variable
       if (gatvars$boundary != "NONE") {
-        temp$firstboundary <- as.character(temp$first[, gatvars$boundary])
-        # index of neighbors in same county
-        temp$inboundary <- townvars$nbdata[which(
-            townvars$nbdata[, gatvars$boundary] == temp$firstboundary), ]
-        # find neighbors in boundary, adjacent, below minimum value
-        if (minfirst) {
-          townvars$nbdata <-
-            temp$inboundary[which(temp$inboundary[, gatvars$aggregator1] < min1 |
-                                  temp$inboundary[, gatvars$aggregator2] < min2), ]
-          temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
-                                 temp$firstboundary)
-          temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
-          if (nrow(temp$inco_nbdata) > 0) {
-            townvars$nbdata <- temp$inco_nbdata
-            temp$idfail <- FALSE
-          } else {
-            temp$warnkey <- "amb" # no adjacent below min within boundary
-            temp$idfail <- TRUE
-          }
-        }
-
-        # if no neighbors, find neighbors in boundary, adjacent
-        if (temp$idfail & adjacent) {
-          townvars$nbdata <-
-            temp$inboundary[which(temp$inboundary[, gatvars$myidvar] %in%
-                                 townvars$neighborid), ]
+        if (nrow(townvars$nbdata) > 0) {
+          temp$firstboundary <- as.character(temp$first[, gatvars$boundary])
           # index of neighbors in same county
-          temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
-                                   temp$firstboundary)
-          temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
-          if (nrow(temp$inco_nbdata) > 0) {
-            townvars$nbdata <- temp$inco_nbdata
-            temp$idfail <- FALSE # found neighbor
-          } else {
-            temp$warnkey <- "ab" # no adjacent within boundary
-            temp$idfail <- TRUE # still failed
+          temp$inboundary <- townvars$nbdata[which(
+            townvars$nbdata[, gatvars$boundary] == temp$firstboundary), ]
+          # find neighbors in boundary, adjacent, below minimum value
+          if (minfirst) {
+            townvars$nbdata <-
+              temp$inboundary[which(temp$inboundary[, gatvars$aggregator1] < min1 |
+                                      temp$inboundary[, gatvars$aggregator2] < min2), ]
+            temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
+                                     temp$firstboundary)
+            temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
+            if (nrow(temp$inco_nbdata) > 0) {
+              townvars$nbdata <- temp$inco_nbdata
+              temp$idfail <- FALSE
+            } else {
+              temp$warnkey <- "amb" # no adjacent below min within boundary
+              temp$idfail <- TRUE
+            }
+          }
+          # if no neighbors, find neighbors in boundary, adjacent
+          if (temp$idfail & adjacent) {
+            townvars$nbdata <-
+              temp$inboundary[which(temp$inboundary[, gatvars$myidvar] %in%
+                                      townvars$neighborid), ]
+            # index of neighbors in same county
+            temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
+                                     temp$firstboundary)
+            temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
+            if (nrow(temp$inco_nbdata) > 0) {
+              townvars$nbdata <- temp$inco_nbdata
+              temp$idfail <- FALSE # found neighbor
+            } else {
+              temp$warnkey <- "ab" # no adjacent within boundary
+              temp$idfail <- TRUE # still failed
+            }
           }
         }
 
@@ -336,7 +338,6 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
             }
           }
         }
-
         # if no neighbors, quit loop
         if (temp$idfail) {
           temp$warnkey <- "nb"
@@ -358,7 +359,6 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
             temp$idfail <- TRUE # still failed
           }
         }
-
         # if must be adjacent
         if (temp$idfail & adjacent) {
           townvars$nbdata <-
@@ -391,14 +391,12 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
           }
 
           if (temp$idfail) {
+            # don't want to use least or similar if no adjacent neighbors
+            temp$island <- TRUE
             mergevars$mergeopt2 <- "closest"
-            townvars$townnbidloc <- which(townvars$townnbid ==
-                                            temp$first[, gatvars$myidvar])
-            townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
-            townvars$neighborid <- townvars$townnbid[townvars$neighbors]
-            townvars$nbdata <-
-              temp$aggdata[which(temp$aggdata[, gatvars$myidvar] %in%
-                                   townvars$neighborid), ]
+            townvars$nbdata <- aggvars$allpolydata[which(
+              aggvars$allpolydata[, gatvars$myidvar] !=
+                temp$first[, gatvars$myidvar]), ]
             if (nrow(townvars$nbdata) > 0) {
               temp$idfail <- FALSE # found neighbor
             } else {
@@ -454,12 +452,14 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
           aggvars$allpolydata[which(!aggvars$allpolydata[, gatvars$myidvar] %in%
                                       townvars$newreg[, gatvars$myidvar]), ]
 
-        # use spdep::aggregate.nb to create new object listing neighbors of aggregate
-        townvars$townnb <- spdep::aggregate.nb(townvars$oldtownnb, aggvars$IDlist)
-        aggvars$newregno <- aggvars$newregno + 1
+        # update neighbor listings ####
+        townvars$townnb <- aggregateGATnb(nb = townvars$oldtownnb,
+                                          ids = aggvars$IDlist)
       }
 
       # find the minimum population ####
+      aggvars$newregno <- aggvars$newregno + 1
+
       temp$minpop1 <- min(aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0),
                                               gatvars$aggregator1])
       temp$minpop2 <- min(aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0),

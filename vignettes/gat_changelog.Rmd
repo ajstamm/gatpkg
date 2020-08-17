@@ -16,6 +16,12 @@ knitr::opts_chunk$set(
 )
 ```
 
+## GAT v1.60.2 (August 14, 2020)
+
+* Addressed bug fixes in defineGATmerge.
+* Added function aggregateGATnb, which is used in defineGATmerge.
+
+
 ## GAT v1.60.1 (August 6, 2020)
 
 * Addressed bug fixes in defineGATmerge.
@@ -60,10 +66,10 @@ All changes from January 2019 onward by Abigail Stamm.
 
 * Reordered and restructured user input dialogs.
 * Added help button and instructions to user input dialogs.
-* Added function options to user input dialogs allow the following:
+* Added function options to user input dialogs to allow the following:
     * maximum values for up to 2 aggregation variables
-    * enforced boundaries for 1 boundary variable
-    * enforced adjacent areas
+    * optional enforced boundaries for 1 boundary variable
+    * optional enforced adjacent areas
     * population weighting using 2 methods
     * up to 3 exclusion criteria (numeric only)
     * option not to write KML file
