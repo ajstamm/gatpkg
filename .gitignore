@@ -39,3 +39,4 @@ nbproject
 *.sublime-project
 *.sublime-workspace
 .idea
+.Rproj.user
