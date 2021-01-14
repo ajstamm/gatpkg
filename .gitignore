@@ -1,5 +1,6 @@
-inst/doc
-.Rproj.user
+# folders
+inst/doc/**
+.Rproj.user/**
 .git
 
 # Ignore docs files
