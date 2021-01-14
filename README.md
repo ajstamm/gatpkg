@@ -2,9 +2,9 @@
 
 The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking Program (EPHT) to aggregate, or dissolve, geographic areas based on numeric values for each area, such as case number or population.
 
-To download the most recent compiled version of GAT, click [here]({{site.baseurl}}/compiles/gatpkg_1.60.3.tar.gz). 
+To download the most recent compiled version of GAT, click [here](compiles/gatpkg_1.60.3.tar.gz). 
 
-For instructions on how to install GAT, including a list of required R packages, click [here]({{site.baseurl}}/compiles/gat_install_instructions.pdf).
+For instructions on how to install GAT, including a list of required R packages, click [here](compiles/gat_install_instructions.pdf).
 
 
 
@@ -38,7 +38,7 @@ The package for GAT includes a tutorial to learn the tool and an embedded map fi
 
 ### Disclaimer
 
-This version of GAT is provided as is. Development for GAT was provided by the CDC. GAT is jointly owned by the NYSDOH and Health Research, Inc. It is maintained by Abigail Stamm. For questions, concerns, and suggestions for improvement, email [EPHT](mailto:epht@health.ny.gov?subject=[GAT])
+This version of GAT is provided as is. Development for GAT was provided by the CDC. GAT is jointly owned by the NYSDOH and Health Research, Inc. It is maintained by Abigail Stamm. For questions, concerns, and suggestions for improvement, email [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT]).
 
 GAT was written in R-2.9.2 under Windows XP. It was revised and converted to 
 a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. GAT is designed to be friendly for users with minimal R experience.

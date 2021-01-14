@@ -1,7 +1,7 @@
 # folders
 inst/doc/**
 .Rproj.user/**
-.git
+.git/**
 
 # Ignore docs files
 _gh_pages
@@ -12,6 +12,7 @@ Gemfile.lock
 notes.txt
 gis.txt
 README.Rmd
+.Rbuildignore
 
 # Numerous always-ignore extensions
 *.diff
