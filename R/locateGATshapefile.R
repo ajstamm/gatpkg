@@ -27,10 +27,10 @@
 #' The window may be hidden behind other windows. If so, minimize or close the
 #' other windows or click on it to bring it to the front.
 #'
-#' @param type   String to identify what type of file is being requested.
-#'               Accepted values are "aggregation" and "population".
-#' @param myfile String denoting default file name and location to open.
-#' @param step   Step in GAT to print in title bar.
+#' @param msg      String denoting your message to display in the status bar.
+#' @param myfile   String denoting default file name and location to open.
+#' @param step     Step number to print in title bar. Default is 1.
+#' @param program  String denoting the program name. GAT is the default.
 #'
 #' @examples
 #'
@@ -40,7 +40,7 @@
 #'
 #' # provide a default location to start
 #' locateGATshapefile(
-#'   type = "population",
+#'   msg = "Select your shapefile",
 #'   myfile = getwd()
 #' )
 #'
@@ -48,16 +48,18 @@
 #'
 #' @export
 
-locateGATshapefile <- function(type = "aggregation", myfile = "", step = 0) {
+locateGATshapefile <- function(myfile = "", step = 1, msg = "",
+                               program = "GAT") {
   fil <- cbind("Shapefiles", "*.shp") # creates 1x2 matrix
   checkfile <- 100
-  if (type == "aggregation") {
-    mycaption <- paste0("Step ", step, ": Select the shapefile to aggregate")
-  } else if (type == "population") {
-    mycaption <- paste0("Step ", step, ": Select the population shapefile")
+  if (msg != "") {
+    mycaption <- paste0("Step ", step, ": ", msg)
+  } else {
+    mycaption <- paste0("Step ", step, ": Select your shapefile")
   }
   while (checkfile != 0){
-    userfile <- choose.files(filters = fil, caption = mycaption, default = myfile)
+    userfile <- choose.files(filters = fil, caption = mycaption,
+                             default = myfile)
     if (length(userfile) > 0) {
       userfile <- gsub("\\\\", "/", userfile) # add "if Windows" tag
       # remove extension if present
@@ -66,9 +68,11 @@ locateGATshapefile <- function(type = "aggregation", myfile = "", step = 0) {
       if(periodloc > 0) {
         userfile <- substr(userfile, 1, periodloc[1] - 1)
       }
-      checkfile <- file.access(paste0(userfile, ".shp"), mode = 4) # -1 for bad, 0 for OK
+      checkfile <- file.access(paste0(userfile, ".shp"), mode = 4)
+        # -1 for bad, 0 for OK
       if (checkfile != 0) { # file not found
-        msg <- "Sorry, GAT could not find your shapefile. Please select a new shapefile."
+        msg <- paste("Sorry," program, "could not find your shapefile.",
+                     "Please select a new shapefile.")
         tcltk::tkmessageBox(title = "File error", message = msg,
                             type = "ok", icon = "error")
       }

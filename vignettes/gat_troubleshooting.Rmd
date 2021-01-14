@@ -21,10 +21,13 @@ knitr::opts_chunk$set(
 
 *I tried to keep the issues that are still relevant for the package. Some may still need to be revised. I also added package-specific issues. - Abby*
 
+### On step 3 in the confirm GAT settings dialog, all of my areas are excluded
+
+This is a known bug. If you rerun GAT and read in the settings from this run using the "settings=" option, the correct value will be shown in the gonfirmation dialog.
+
 ### GAT ran, but my shapefiles wouldn't save and GAT crashed
 
 GAT occasionally has trouble getting permission to write to network drives. Try saving to your local computer, then transferring the files.
-
 
 ### I got an error about XML when I tried to install GAT
 
@@ -52,23 +55,24 @@ The dialog boxes may be hidden beneath other windows. Close or minimize extraneo
 
 ### Data do not appear in Google Earth
 
-When I click on a region in Google Earth, the data do not appear in the description callout. The data may not appear in GE 4.x, so use Google Earth 5.0 or greater. Try clicking on the area's link in the left sidebar to see the data.
+When I click on a region in Google Earth, the data do not appear in the description callout. The data may not appear in Google Earth 4.x, so use Google Earth 5.0 or greater. Try clicking on the area's link in the left sidebar to see the data.
 
 ### Output files are not saved 
 
 This message appears in the R console: 
 
 `Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :`  
-`GDAL Error 4: Failed to open shapefile G:/aggtest/output/testin.shp.` 
+`GDAL Error 4: Failed to open shapefile C:/aggtest/output/testin.shp.` 
 `It may be corrupt or read-only file accessed in update mode.`
 
-Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ”.shp”, “.dbf”, “.prj”) from the directory you are trying to save to.
+Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ".shp", ".dbf", ".prj") from the directory you are trying to save to.
 
 ### GAT is very slow
 
-Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technocal notes](../doc/gat_tech_notes.html)).
+Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technocal notes](../doc/gat_tech_notes.html)). 
 
-Using population weighted centroids, merging shapefiles with thousands of polygons, and saving KML files can also cause GAT to run slowly.
+The progress bars were designed to help you determine whether GAT has stalled. Using population weighted centroids, merging shapefiles with thousands of polygons, and saving KML files can also cause GAT to run slowly, so allow a few minutes for each of these steps. For any steps besides saving files and population weighting, if a progress bar is not updating at least once a minute, it is possible GAT has stalled and you will need to restart R. 
+
 
 ### I'm missing library permissions
 
@@ -83,7 +87,7 @@ This error appears due to a conflict between the packages rgeos and rgdal. Reins
 
 This issue occurs if there are too few polygons in the map. If the total number of polygons is less than 2 plus the number of categories (default is 7), the code that assigns the categories will force the scale to be redefined. To fix this issue, use a smaller minimum value, use a map with more polygons, or redefine the number of categories.
 
-*This issue should be fixed in the latest version of GAT.*
+*This issue should be fixed now.*
 
 ### Warning for large numbers not writing correctly
 

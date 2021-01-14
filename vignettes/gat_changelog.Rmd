@@ -16,9 +16,26 @@ knitr::opts_chunk$set(
 )
 ```
 
+## GAT v1.60.4 (?)
+
+* Fixed bugs and typos in confirmGATbystep() and runGATprogram().
+* Added objects "ismax1", "ismin2", and "ismax2" to the gatvars list object
+  to track if minimum and maximum values were defined by the user and added
+  this information to the log.
+* Created a separate section in the technical notes to describe variables
+  created by GAT.
+* Moved citation and acknowledgements from set-up to a separate vignette.
+* Restructured locateGATshapefile() to add a modifiable status bar option.
+
+
+## GAT v1.60.3 (August 31, 2020)
+
+* Added vignette "Preparing your shapefile for GAT".
+
+
 ## GAT v1.60.2 (August 14, 2020)
 
-* Addressed bug fixes in defineGATmerge.
+* Completed bug fixes in defineGATmerge.
 * Added function aggregateGATnb, which is used in defineGATmerge.
 
 

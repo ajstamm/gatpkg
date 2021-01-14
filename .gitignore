@@ -10,6 +10,7 @@ Gemfile.lock
 .Rhistory
 notes.txt
 gis.txt
+README.Rmd
 
 # Numerous always-ignore extensions
 *.diff

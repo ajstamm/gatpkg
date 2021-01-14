@@ -24,7 +24,7 @@ You can install the released version of gatpkg from [CRAN](https://CRAN.R-projec
 
 To load GAT, run `library(gatpkg)`.
 
-To run the entire GAT program as is, run `runGATprogram()`. For most users, this function alone is probably sufficient. If you would like more detail on what this program does, check out the [GAT tutorial](gat_tutorial.html).
+To run the entire GAT program as is, run `runGATprogram()`. For most users, this function alone is probably sufficient. If you would like more detail on what GAT does, check out the [GAT tutorial](gat_tutorial.html) or the [GAT technical notes](gat_tech_notes.html).
 
 The full default program to run GAT looks like this:
 
@@ -35,30 +35,11 @@ library(gatpkg)
 runGATprogram()
 ```
 
-The package contains over 20 additional functions that are used in the function `runGATprogram()`. Feel free to use these to customize GAT to meet your needs. 
+The package contains over 30 additional functions that are used in the function `runGATprogram()`. Feel free to use these to customize GAT to meet your needs. 
 
 ## Disclaimer
 
 This version of GAT is provided as is. 
 
-GAT was written in R-2.9.2 under Windows XP. It was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. The user needs minimal R programming experience to run GAT. 
-
-# Citation and feedback
-
-Suggestions for improvement and bug reports are welcome. Send feedback to epht@health.ny.gov and include *GAT in R* in the subject line.
-
-If you use any part of the GAT package, please cite it. For the suggested citation, type:
-
-```{r}
-citation(package = "gatpkg")
-```
-
-## Acknowledgements
-
-The conversion of GAT to an R package would not have been possible without the support of the Centers for Disease Control and Prevention (CDC) National Environmental Health Tracking Program (NEPHT) and NYS health department staff and interns, including Neil Muscatiello, Arjita Rai, Douglas Done, Catherine Wargo, Christophe Maxime Fokoua Dongmo, Marine Nalbandyan, and others.
-
-GAT was made possible through funding made available to the New York State Department of Health / HRI by the CDC through grant # NUE1EH001341-03-01. Its content is solely the responsibility of the authors and does not necessarily represent the official views of the CDC.
-
-
-
+GAT was written in R-2.9.2 in Windows XP. It was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.2.5019. It has been tested on R version 3.4.x through R version 4.0.x. The user needs minimal R programming experience to run GAT and basic experience in manipulating R functions for some advanced features. 
 

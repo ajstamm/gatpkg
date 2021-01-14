@@ -37,13 +37,16 @@
 #'   aggregator1 = "TOTAL_POP",  # numeric variable
 #'   aggregator2 = "TOTAL_POP",  # numeric variable
 #'   minvalue1 = 5000, minvalue2 = 5000,
-#'   maxvalue1 = 15000, maxvalue2 = 15000,
+#'   maxvalue1 = 16423, maxvalue2 = 15000,
 #'   boundary = "COUNTY",        # character variable of non-unique values
 #'   mergeopt1 = "closest",      # method used to merge polygons
 #'   rigidbound = FALSE,         # boolean: were boundaries enforced?,
 #'   savekml = FALSE,
 #'   popwt = FALSE,
-#'   exclmaxval = 2
+#'   exclmaxval = 2,
+#'   ismax1 = TRUE,       # user selected "NONE" as maximum value
+#'   ismin2 = FALSE,
+#'   ismax2 = FALSE
 #' )
 #'
 #' mergevars <- list(
@@ -118,6 +121,7 @@
 
 writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
                         mergevars, ratevars, exclist) {
+  # set up ####
   # fill in full list of names below; code will error otherwise
   listitems <- names(area@data)
   listitems <- listitems[listitems != "GATflag"]
@@ -133,11 +137,11 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
     gatvars$aggregator2 <- gatvars$aggregator1
   }
 
-  # begin log file
+  # begin log file ####
   endtime <- Sys.time()
   logfile <- paste0(filevars$userout, ".log")
 
-  # GAT settings
+  # GAT settings ####
   logtext <- c("NYSDOH Geographic Aggregation Tool (GAT) Log",
                "\n  Version & date:", mysettings$version, mysettings$pkgdate,
                "\n  Date run:", as.character(Sys.Date()),
@@ -146,7 +150,7 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
                      digits = 2), "minutes", "\n")
   write(logtext, file = logfile, ncolumns = length(logtext), append = FALSE)
 
-  # input file
+  # input file ####
   logtext <- c("\nInput file:          ", filevars$userin,
                "\n  Projection:        ", sp::proj4string(area),
                "\n  Field names:       ", myvars,
@@ -161,21 +165,23 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
   }
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
-  # Output file
+  # Output file ####
   logtext <- c("\nOutput file:", filevars$userout,
                "\n  Number of input areas:    ",
                format(gatvars$numrow, big.mark=",", scientific=FALSE),
                "\n  Number of output areas:   ",
-               format(nrow(aggvars$allpolydata), big.mark=",", scientific=FALSE),
+               format(nrow(aggvars$allpolydata), big.mark=",",
+                      scientific=FALSE),
                # does not take into account aborted aggregations
                "\n  Number of aggregations:   ",
-               format(nrow(area@data) - nrow(aggvars$allpolydata), big.mark=",",
+               format(nrow(area@data) - nrow(aggvars$allpolydata),
+                      big.mark=",",
                       scientific=FALSE),
                "\n  Number of excluded areas: ",
                format(exclist$flagsum, big.mark=",", scientific=FALSE))
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
-  # Merge settings
+  # Merge settings ####
   logtext <- c("\nMerge type:", mergevars$mergeopt1)
   if (mergevars$mergeopt1 == "similar") {
     logtext <- c(logtext, "\n  First similar variable:  ", mergevars$similar1,
@@ -189,7 +195,7 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
   }
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
-  # Exclusion criteria
+  # Exclusion criteria ####
   if (exclist$var1 != "NONE" | exclist$var1 != "NONE" | exclist$var1 != "NONE") {
     logtext <- c("\nExclusion criteria:")
     if (exclist$var1 != "NONE") {
@@ -207,12 +213,13 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
   }
 
-  # First aggregation variable
+  # First aggregation variable ####
+  min1 <- format(gatvars$minvalue1, big.mark=",", scientific=FALSE)
+  max1 <- format(gatvars$maxvalue1, big.mark=",", scientific=FALSE)
+  if (gatvars$ismax1) max1 <- paste(max1, "(no maximum)")
+
   logtext <- c("\nFirst aggregation variable:", gatvars$aggregator1,
-               "\n  Minimum value:", format(gatvars$minvalue1, big.mark=",",
-                                          scientific=FALSE),
-               "\n  Maximum value:", format(gatvars$maxvalue1, big.mark=",",
-                                          scientific=FALSE),
+               "\n  Minimum value:", min1, "\n  Maximum value:", max1,
                "\nPre-aggregation distribution:")
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
   write.table(quantile(area@data[, gatvars$aggregator1]), file = logfile,
@@ -222,15 +229,18 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
   write.table(quantile(aggvars$allpolydata[, gatvars$aggregator1]),
-              file = logfile, row.names = TRUE, col.names = FALSE, append = TRUE)
+              file = logfile, row.names = TRUE, col.names = FALSE,
+              append = TRUE)
 
   # second aggregation variable
   if (gatvars$aggregator1 != gatvars$aggregator2) {
+    min2 <- format(gatvars$minvalue2, big.mark=",", scientific=FALSE)
+    if (gatvars$ismin2) min2 <- paste(min2, "(no minimum)")
+    max2 <- format(gatvars$maxvalue2, big.mark=",", scientific=FALSE)
+    if (gatvars$ismax2) max2 <- paste(max2, "(no maximum)")
+
     logtext <- c("\n\nSecond aggregation variable:", gatvars$aggregator2,
-                 "\n  Minimum value:", format(gatvars$minvalue2, big.mark=",",
-                                              scientific=FALSE),
-                 "\n  Maximum value:", format(gatvars$maxvalue2, big.mark=",",
-                                              scientific=FALSE),
+                 "\n  Minimum value:", min2, "\n  Maximum value:", max2,
                  "\nPre-aggregation distribution:")
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
     write.table(quantile(area@data[, gatvars$aggregator2]), file = logfile,
@@ -241,7 +251,8 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
     logtext <- c("\nPost-aggregation distribution:")
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
     write.table(quantile(aggvars$allpolydata[, gatvars$aggregator2]),
-                file = logfile, row.names = TRUE, col.names = FALSE, append = TRUE)
+                file = logfile, row.names = TRUE, col.names = FALSE,
+                append = TRUE)
   }
 
 # rate calculation if requested

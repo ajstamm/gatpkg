@@ -138,7 +138,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                               label = pb$label)
 
       # identify shapefile
-      filevars <- locateGATshapefile(myfile = filevars$userin, step = step)
+      filevars <- locateGATshapefile(myfile = filevars$userin, step = step,
+                                     msg = "Select the shapefile to aggregate")
 
       if (filevars$userin == "cancel") {
         step <- 20
@@ -351,6 +352,24 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           step <- step + 1
         }
       }
+      if (agglist$maxval1 == sum(temp$mapdata[, agglist$var1], na.rm = TRUE)) {
+        gatvars$ismax1 <- TRUE
+      } else {
+        gatvars$ismax1 <- FALSE
+      }
+      if (!agglist$var2 == "NONE") {
+        if (agglist$maxval2 == sum(temp$mapdata[, agglist$var2], na.rm = TRUE)) {
+          gatvars$ismax2 <- TRUE
+        } else {
+          gatvars$ismax2 <- FALSE
+        }
+        if (agglist$minval2 == min(temp$mapdata[, agglist$var2], na.rm = TRUE)) {
+          gatvars$ismin2 <- TRUE
+        } else {
+          gatvars$ismin2 <- FALSE
+        }
+      }
+
       rm(agglist)
     } # end request aggregation variables (agglist)
     while (step == 5) {
@@ -596,9 +615,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
               temp$check <- is.finite(temp$mapflag[ , mergevars$similar1] /
                                       temp$mapflag[ , mergevars$similar2])
               if (FALSE %in% temp$check){
-                temp$msg <- paste("The variable selected for the denominator cannot have",
-                                  "values of zero. Please try again.")
-                tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
+                temp$msg <- paste("The variable selected for the denominator",
+                                  "cannot have values of zero.",
+                                  "Please try again.")
+                tcltk::tkmessageBox(title = "Please re-check variables",
+                                    message = temp$msg,
                                     type = "ok", icon = "warning")
                 error <- TRUE # re-run step
               } else {
@@ -621,7 +642,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       if (mergevars$centroid == "population-weighted") {
         error <- TRUE
         while (error) {
-          tempfiles <- locateGATshapefile(type = "population",
+          temp$msg <- "Select the population shapefile"
+          tempfiles <- locateGATshapefile(msg = temp$msg,
                                           myfile = filevars$popin, step = step)
           error <- FALSE
           if (tempfiles$userin == "cancel") {
@@ -635,7 +657,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
             temp$popshp <- rgdal::readOGR(dsn = filevars$poppath,
                                        layer = filevars$popfile)
             temp$polys <- class(temp$popshp)
-            temp$popnumvars <- checkGATvariabletypes(temp$popdata, type = "number")
+            temp$popnumvars <- checkGATvariabletypes(temp$popdata,
+                                                     type = "number")
 
             # add dialog specifying each issue
             # add check for shapefile type (if class(shp) )
@@ -850,17 +873,17 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                               label = pb$label)
 
       # max value exclusions
+      temp$mapdata$GATflag <- 0
       temp$mapdata$GATflag <- calculateGATflag(exclist, temp$mapdata)
       temp$mapdata$GATflag <-
-        ifelse(temp$mapdata[, gatvars$aggregator1] > gatvars$maxvalue1 &
+        ifelse(temp$mapdata[, gatvars$aggregator1] > as.numeric(gatvars$maxvalue1) &
                temp$mapdata$GATflag == 0, 5, temp$mapdata$GATflag)
       if (!gatvars$aggregator2 == gatvars$aggregator1) {
         temp$mapdata$GATflag <-
-          ifelse(temp$mapdata[, gatvars$aggregator2] > gatvars$maxvalue2 &
+          ifelse(temp$mapdata[, gatvars$aggregator2] > as.numeric(gatvars$maxvalue2) &
                  temp$mapdata$GATflag == 0, 5, temp$mapdata$GATflag)
       }
       gatvars$exclmaxval <- sum(temp$mapdata$GATflag == 5)
-
 
       temp$flagconfirm <- TRUE
       error <- TRUE

@@ -1,0 +1,63 @@
+---
+title: "Preparing your shapefile for GAT"
+author: "Abigail Stamm"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Preparing your shapefile for GAT}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Shapefile specifications
+
+This vignette provides the requirements for a shapefile that will be processed by GAT and the necessary specifications if you wish to use GAT's various options.
+
+GAT requires an Esri shapefile. If your file is in another format, you will need to convert it to an Esri shapefile using R or your preferred GIS software.
+
+### Minimum requirements
+
+The minimum requirements for your shapefile include:
+
+1. **Polygon geometry**: The layer shapes must be polygons, for example state outlines.
+2. **Identifier variable**: A character or string variable with unique values for each row.
+3. **Aggregation variable**: A numeric variable used for the aggregation. 
+
+These requirements allow you to merge areas using lowest count and closest geographic centroid merge settings. 
+
+
+### Optional specifications
+
+If you want to aggregate within a boundary, you will also need:
+
+4. **Boundary variable**: A character or string variable containing non-unique values.
+
+If you want to use exclusion criteria, you will also need:
+
+5. **Exclusion variables**: Up to three numeric variables. If you have more than three exclusion variables or you need to exclude on character or string variables, create a numeric flag variable (for example 0, 1) to use instead.
+
+If you want to merge on similar variables, you will also need:
+
+6. **Numerator**: A numeric variable to serve as the numerator in the ratio.
+7. **Denominator**: A numeric variable to serve as the denominator in the ratio. If you use the advanced setting `limitdenom=TRUE`, this variable cannot contain any zeroes after removing exclusions.
+
+If you want to include a rate calculation (or ratio or density), you will also need: 
+
+8. **Numerator**: A numeric variable to serve as the numerator in the ratio.
+9. **Denominator**: A numeric variable to serve as the denominator in the ratio. If you use the advanced setting `limitdenom=TRUE`, this variable cannot contain any zeroes after removing exclusions.
+
+
+If you want to merge by the closest population-weighted centroid, you will also need another Esri shapefile, which can be the aggregation shapefile or an entirely different shapefile. It must include:
+
+1. **Polygon geometry**: The layer shapes must be polygons, for example state outlines.
+2. **Population variable**: A numeric variable used for the population counts. 
+
+
+

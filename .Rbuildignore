@@ -9,3 +9,6 @@
 ^README\.Rmd$
 ^my_hftown\.log$
 ^README\.md$
+^compiles$
+^\.github$
+^docs$

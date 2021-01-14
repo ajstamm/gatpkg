@@ -25,15 +25,42 @@ This package is maintained by the New York State Department of Health’s Enviro
 
 Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases, these maps can also inadvertently disclose confidential data. To overcome these limitations EHS developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
     
-The input object is a polygon shapefile. The shapefile must contain a character variable that uniquely identifies areas and a numeric variable to sum for aggregation. A series of dialog boxes allows the user to select: a variable to uniquely identify areas, one or more aggregation variables, optionally, a variable of areas within which merging will be preferred (ex. county), the amount (sum) the aggregation variable(s) should be aggregated to, and the preferred aggregation method - closest, least value, or ratio. The output is a shapefile with before and after choropleth maps in R graphics saved to PDF. For output regions, most numeric variables will be summed, except variables with the following names, which will be averaged instead: x, y, GATx, GATy, lat, lon, latitude, longitude, and long. For character variables, the values of the last region merged will be used, with three additional variables added: Sp_id for R row number and GATx, GATy for geographic centroids as determined by the GAT. 
+The input object is a shapefile (*.shp). For shapefile requirements, see [Preparing your shapefile for GAT](gat_prepare_shapefile.html). At minimum, GAT requires a polygon shapefile with a character variable that uniquely identifies areas and a numeric variable to sum for aggregation. 
 
-The user must have an input shapefile (*.shp). The shapefile must have the geographic boundaries of the areas the user would like to merge, a character variable that uniquely identifies these areas, and a numeric variable to merge by, such as the number of cases of disease or the population.
+A series of dialog boxes allows the user to select: a variable to uniquely identify areas, one or more aggregation variables, optionally, a variable of areas within which merging will be preferred (ex. county), the amount (sum) the aggregation variable(s) should be aggregated to, and the preferred aggregation method - closest, least value, or ratio. 
 
-GAT outputs a shapefile containing the aggregated regions with associated data, which can be used in GIS programs such as ArcGIS, MapInfo and QGIS. A KML file can also be produced, which can be displayed in Google Earth as well as other Internet-based mapping programs. Last, GAT outputs several before and after plots and a log of all selections and processes.
+The output includes: a crosswalk shapefile, an aggregated shapefile with associated data, a PDF with several maps, a comprehensive log, and if requested a KML file. For output regions, most numeric variables will be summed, except variables with the following names, which will be averaged instead: x, y, GATx, GATy, lat, lon, latitude, longitude, and long. Values of character variables will be concatenated. The shapefile can be used in ArcGIS, MapInfo, and QGIS. The KML file can be displayed in Google Earth and other Internet-based mapping programs.
 
-The package includes embedded map files to use when testing several of the package functions. For details, enter `?hftown` or `?hfpop` into the R console. 
+The package includes two embedded shapefiles to use when testing several of the package functions. For details on these shapefiles, enter `?hftown` or `?hfpop` into the R console. 
 
 # Technical Notes
+
+## Variables created by GAT
+
+GAT creates several variables in both the original shapefile, which it resaves as a crosswalk, and the aggregated shapfile. These variables are listed below. For the flag variable, a brief data dictionary is provided both below and in the log produced by GAT, to help identify possible issues in the aggregation.
+
+The crosswalk shapefile will have the following variables added:
+
+- **GATflag:** flag of areas that were excluded from aggregation or generated warnings in the log 
+    - value = 0: no flag 
+    - value = 1: area excluded based on exclusion criteria 
+    - value = 5: area excluded because the value of the aggregation variable exceeds the maximum value 
+- **GATid:** GAT-generated identifier indicating which aggregated area each original area fell inside
+
+The aggregated shapefile will have the following variables added:
+
+- **GATx:** longitude of the aggregated area centroid (population-weighted if using population weighting, otherwise geographic)
+- **GATy:** latitude of the aggregated area centroid (population-weighted if using population weighting, otherwise geographic)
+- **GATcratio:** compactness ratio, or the area of the polygon over the area of a circle with the same perimeter 
+- **GATnumIDs:** number of original areas that were merged into each aggregated area 
+- **GATflag:** flag of areas that were excluded from aggregation or generated warnings in the log 
+    - value = 0: no flag 
+    - value = 1: area excluded based on exclusion criteria 
+    - value = 5: area excluded because the value of the aggregation variable exceeds the maximum value 
+    - value = 10: value of the aggregation variable is below minimum value, but there are no eligible areas for further aggregation 
+- **GATpop:** population of the aggregated area, from the population file (applies only if population weighting is selected)
+- a rate variable with the name the user entered (applies only if rate calculation was requested)
+
 
 ## How GAT identifies areas to merge
 
