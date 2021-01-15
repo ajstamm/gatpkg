@@ -6,8 +6,13 @@ To download the most recent compiled version of GAT, click [here](compiles/gatpk
 
 For instructions on how to install GAT, including a list of required R packages, click [here](compiles/gat_install_instructions.pdf).
 
+### Disclaimer
 
+**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT]).
 
+This version of GAT is provided as is. GAT is jointly owned by the NYSDOH and Health Research, Inc. Funding for GAT was provided by the CDC. GAT is maintained by Abigail Stamm. 
+
+GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. GAT is designed to be friendly for users with minimal R experience.
 
 ### Why we created GAT
 
@@ -21,10 +26,7 @@ resolution practicable.
 
 ### How GAT works
 
-GAT reads in a polygon shapefile. The shapefile must contain at minimum a 
-character variable that uniquely identifies areas 
-and a numeric variable to sum for aggregation. A series of dialog boxes 
-allows the user to select: 
+GAT reads in a polygon shapefile. The shapefile must contain at minimum a character variable that uniquely identifies areas and a numeric variable to sum for aggregation. A series of dialog boxes allows the user to select: 
 
 1. a variable to uniquely identify areas
 2. one or two aggregation variables
@@ -35,12 +37,5 @@ allows the user to select:
 GAT outputs two shapefiles, one containing aggregated areas and one containing a crosswalk between the original areas and the aggregated areas. GAT also outputs a log and several maps to help you identify potential issues in the aggregation process and, optionally, a KML file.
 
 The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
-
-### Disclaimer
-
-This version of GAT is provided as is. Funding for GAT was provided by the CDC. GAT is jointly owned by the NYSDOH and Health Research, Inc. It is maintained by Abigail Stamm. For questions, concerns, and suggestions for improvement, email [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT]).
-
-GAT was written in R-2.9.2 under Windows XP. It was revised and converted to 
-a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. GAT is designed to be friendly for users with minimal R experience.
 
 
