@@ -12,3 +12,4 @@
 ^compiles$
 ^\.github$
 ^docs$
+^my_kml_example.kml$

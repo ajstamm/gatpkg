@@ -499,7 +499,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         # calculate exclusions now to use them to calculate the
         # denominator for similar merges and rates
         temp$mapdata$GATflag <- 0
-        temp$mapdata$GATflag <- calculateGATflag(exclist, temp$mapdata)
+        temp$mapdata$GATflag <- calculateGATflag(exclist, d = temp$mapdata)
         exclist$flagsum <- sum(temp$mapdata$GATflag != 0)
 
         if (nrow(temp$mapdata) - exclist$flagsum < 2) {
@@ -989,7 +989,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     myshps$original@data$GATflag <- 0 # all areas are included in the merge
 
     # exclusions: for merge minimum violated, flag = 10
-    myshps$original@data$GATflag <- calculateGATflag(exclist, myshps$original@data)
+    myshps$original@data$GATflag <-
+      calculateGATflag(exclist, d = myshps$original@data)
     myshps$original@data$GATflag <-
       ifelse(myshps$original@data[, gatvars$aggregator1] > gatvars$maxvalue1, 5,
              myshps$original@data$GATflag)

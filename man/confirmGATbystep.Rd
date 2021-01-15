@@ -16,15 +16,16 @@ confirmGATbystep(
 }
 \arguments{
 \item{gatvars}{A list of objects created by the GAT tool. It contains the
-strings aggregator1, aggregator2, myidvar, and boundary and
-the numbers minvalue1 and minvalue2.}
+strings aggregator1, aggregator2, myidvar, boundary
+variable and setting, and the numbers and booleans for
+the aggragators' minimum and maximum values.}
 
 \item{ratevars}{A list of objects needed to calculate rates. It contains
 the strings ratename, numerator, and denominator and the
 number multiplier.}
 
-\item{mergevars}{A list of string objects needed to aggregate the areas in
-GAT. It contains mergeopt1, similar1, and similar2.}
+\item{mergevars}{A list of string objects denoting aggregation settings.
+It contains the merge option and desired centroids.}
 
 \item{filevars}{The names of shapefiles to read in and the name of the
 shapefile to save to, all without extensions.}
@@ -72,11 +73,14 @@ gatvars <-
     maxvalue1 = 10000,
     maxvalue2 = 15000,
     boundary = "county",
-    rigidbound = FALSE,
-    popvar = "total_pop",
+    rigidbound = FALSE,  # within county preferred, not required
+    popvar = "pop",
     savekml = TRUE,
     numrow = 15,
-    exclmaxval = 2
+    exclmaxval = 2,
+    ismax1 = TRUE,       # user selected "NONE" as maximum value
+    ismin2 = TRUE,       # user selected "NONE" as minimum value
+    ismax2 = FALSE
   )
 
 mergevars <-

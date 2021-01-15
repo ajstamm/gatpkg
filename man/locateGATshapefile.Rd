@@ -4,15 +4,16 @@
 \alias{locateGATshapefile}
 \title{Locate GAT Shapefile}
 \usage{
-locateGATshapefile(type = "aggregation", myfile = "", step = 0)
+locateGATshapefile(myfile = "", step = 1, msg = "", myprogram = "GAT")
 }
 \arguments{
-\item{type}{String to identify what type of file is being requested.
-Accepted values are "aggregation" and "population".}
-
 \item{myfile}{String denoting default file name and location to open.}
 
-\item{step}{Step in GAT to print in title bar.}
+\item{step}{Step number to print in title bar. Default is 1.}
+
+\item{msg}{String denoting your message to display in the status bar.}
+
+\item{myprogram}{String denoting the program name. GAT is the default.}
 }
 \description{
 This function opens a window that asks the user to select a shapefile for
@@ -48,7 +49,7 @@ locateGATshapefile()
 
 # provide a default location to start
 locateGATshapefile(
-  type = "population",
+  msg = "Select your shapefile",
   myfile = getwd()
 )
 

@@ -16,11 +16,11 @@
 
 calculateGATexclusions <- function(d, var, math, val) {
   if (math == "equals") {
-    d$GATflag <- ifelse(d[, var] == val, 1, d$GATflag)
+    d$GATflag <- ifelse(!d$GATflag == 1 & d[, var] == val, 1, d$GATflag)
   } else if (math == "less than") {
-    d$GATflag <- ifelse(d[, var] < val, 1, d$GATflag)
+    d$GATflag <- ifelse(!d$GATflag == 1 & d[, var] < val, 1, d$GATflag)
   } else if (math == "greater than") {
-    d$GATflag <- ifelse(d[, var] > val, 1, d$GATflag)
+    d$GATflag <- ifelse(!d$GATflag == 1 & d[, var] > val, 1, d$GATflag)
   }
   return(d)
 }
