@@ -56,18 +56,22 @@ any warnings that were generated.
 # if you run this example, it saves "my_hftown.log" to your working
 # directory
 
+\donttest{
 gatvars <- list(
   myidvar = "ID",             # character variable of unique values
   aggregator1 = "TOTAL_POP",  # numeric variable
   aggregator2 = "TOTAL_POP",  # numeric variable
   minvalue1 = 5000, minvalue2 = 5000,
-  maxvalue1 = 15000, maxvalue2 = 15000,
+  maxvalue1 = 16423, maxvalue2 = 15000,
   boundary = "COUNTY",        # character variable of non-unique values
   mergeopt1 = "closest",      # method used to merge polygons
   rigidbound = FALSE,         # boolean: were boundaries enforced?,
   savekml = FALSE,
   popwt = FALSE,
-  exclmaxval = 2
+  exclmaxval = 2,
+  ismax1 = TRUE,       # user selected "NONE" as maximum value
+  ismin2 = FALSE,
+  ismax2 = FALSE
 )
 
 mergevars <- list(
@@ -131,5 +135,5 @@ writeGATlog(
   ratevars = ratevars,
   exclist = exclist
 )
-
+}
 }

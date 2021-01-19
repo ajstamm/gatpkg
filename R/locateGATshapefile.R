@@ -27,10 +27,10 @@
 #' The window may be hidden behind other windows. If so, minimize or close the
 #' other windows or click on it to bring it to the front.
 #'
-#' @param msg      String denoting your message to display in the status bar.
-#' @param myfile   String denoting default file name and location to open.
-#' @param step     Step number to print in title bar. Default is 1.
-#' @param program  String denoting the program name. GAT is the default.
+#' @param msg        String denoting your message to display in the status bar.
+#' @param myfile     String denoting default file name and location to open.
+#' @param step       Step number to print in title bar. Default is 1.
+#' @param myprogram  String denoting the program name. GAT is the default.
 #'
 #' @examples
 #'
@@ -49,7 +49,7 @@
 #' @export
 
 locateGATshapefile <- function(myfile = "", step = 1, msg = "",
-                               program = "GAT") {
+                               myprogram = "GAT") {
   fil <- cbind("Shapefiles", "*.shp") # creates 1x2 matrix
   checkfile <- 100
   if (msg != "") {
@@ -71,27 +71,26 @@ locateGATshapefile <- function(myfile = "", step = 1, msg = "",
       checkfile <- file.access(paste0(userfile, ".shp"), mode = 4)
         # -1 for bad, 0 for OK
       if (checkfile != 0) { # file not found
-        msg <- paste("Sorry," program, "could not find your shapefile.",
+        msg <- paste("Sorry,", myprogram, "could not find your shapefile.",
                      "Please select a new shapefile.")
         tcltk::tkmessageBox(title = "File error", message = msg,
                             type = "ok", icon = "error")
+      } else if (length(userfile) > 0) {
+        # make sure file is not too large
+        checkfile <- checkGATshapefilesize(userfile)
+        # find location of last slash, divides path and file name
+        slashloc = max(unlist(gregexpr("/", userfile, fixed = TRUE)))
+
+        # find input file name and path
+        filein = substr(userfile, slashloc + 1, nchar(userfile))
+        pathin = substr(userfile, 1, slashloc - 1)
+
+        myfiles <- list(userin = userfile, filein = filein, pathin = pathin)
       }
     } else {
       myfiles <- list(userin = "cancel", filein = "", pathin = "")
       checkfile <- 0
     }
-  }
-  if (length(userfile) > 0) {
-    # make sure file is not too large
-    checkfile <- checkGATshapefilesize(userfile)
-    # find location of last slash, divides path and file name
-    slashloc = max(unlist(gregexpr("/", userfile, fixed = TRUE)))
-
-    # find input file name and path
-    filein = substr(userfile, slashloc + 1, nchar(userfile))
-    pathin = substr(userfile, 1, slashloc - 1)
-
-    myfiles <- list(userin = userfile, filein = filein, pathin = pathin)
   }
   return(myfiles)
 }

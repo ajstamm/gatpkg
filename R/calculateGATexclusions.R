@@ -4,7 +4,6 @@
 #' This function cleans up the code to flag areas based on exclusion
 #' criteria so that they will not be used in the merge.
 #'
-#' I will need to add an example later.
 #'
 #' @param d    The dataset containing the flag and exclusion variables.
 #' @param var  The variable to use when calculating exclusions.
@@ -16,11 +15,11 @@
 
 calculateGATexclusions <- function(d, var, math, val) {
   if (math == "equals") {
-    d$GATflag <- ifelse(d[, var] == val, 1, d$GATflag)
+    d$GATflag <- ifelse(!d$GATflag == 1 & d[, var] == val, 1, d$GATflag)
   } else if (math == "less than") {
-    d$GATflag <- ifelse(d[, var] < val, 1, d$GATflag)
+    d$GATflag <- ifelse(!d$GATflag == 1 & d[, var] < val, 1, d$GATflag)
   } else if (math == "greater than") {
-    d$GATflag <- ifelse(d[, var] > val, 1, d$GATflag)
+    d$GATflag <- ifelse(!d$GATflag == 1 & d[, var] > val, 1, d$GATflag)
   }
   return(d)
 }

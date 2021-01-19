@@ -16,6 +16,4 @@ calculateGATflag(exclist, d)
 \description{
 This function cleans up the code to update the flag variable based on
 exclusion criteria.
-
-I will need to add an example later.
 }

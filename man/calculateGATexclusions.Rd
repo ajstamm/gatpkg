@@ -19,6 +19,4 @@ conditions include {"equals", "less than", "greater than"}.}
 \description{
 This function cleans up the code to flag areas based on exclusion
 criteria so that they will not be used in the merge.
-
-I will need to add an example later.
 }
