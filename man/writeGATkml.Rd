@@ -21,10 +21,13 @@ This function writes a KML file of the shapefile.
 }
 \examples{
 # creates the kml file in the project root directory
+
+\donttest{
 writeGATkml(
   myshp = hftown,
   filename = "my_kml_example",
   filepath = getwd(),
   myidvar = "ID"
 )
+}
 }

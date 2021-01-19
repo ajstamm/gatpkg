@@ -4,7 +4,6 @@
 #' This function cleans up the code to update the flag variable based on
 #' exclusion criteria.
 #'
-#' I will need to add an example later.
 #'
 #' @param d       The dataset containing the flag and exclusion variables.
 #' @param exclist The vector of settings to use, including variable names

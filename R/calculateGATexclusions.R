@@ -4,7 +4,6 @@
 #' This function cleans up the code to flag areas based on exclusion
 #' criteria so that they will not be used in the merge.
 #'
-#' I will need to add an example later.
 #'
 #' @param d    The dataset containing the flag and exclusion variables.
 #' @param var  The variable to use when calculating exclusions.

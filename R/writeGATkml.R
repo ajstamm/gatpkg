@@ -10,12 +10,15 @@
 #'
 #' @examples
 #' # creates the kml file in the project root directory
+#'
+#' \donttest{
 #' writeGATkml(
 #'   myshp = hftown,
 #'   filename = "my_kml_example",
 #'   filepath = getwd(),
 #'   myidvar = "ID"
 #' )
+#' }
 #' @export
 
 # this function works and is fast, but notes are a mess and kmz may be buggy
