@@ -22,6 +22,7 @@ README.Rmd
 *.rej
 *.swo
 *.swp
+*.tex
 *.zip
 *.vi
 *~
