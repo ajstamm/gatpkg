@@ -1,6 +1,6 @@
 ---
 title: "Geographic Aggregation Tool (GAT) Technical Notes"
-author: "Abigail Stamm"
+author: "Abigail Stamm, Thomas Talbot, and Gwen Babcock"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -82,7 +82,8 @@ This results in a subset of areas that all require merging. This subset is reord
 > * first area: 200 population, 90 births
 > * second area: 400 population, 50 births
 >
-> Calculate proportions of area value over minimum value for the first and second areas as follows: 
+> Calculate proportions of area value over minimum value for the first and
+> second areas as follows: 
 >
 > * first area: $\frac{200 population}{1000 minimum population} = 0.2$, 
 >   $\frac{90 births}{100 minimum births} = 0.9$  
@@ -91,19 +92,20 @@ This results in a subset of areas that all require merging. This subset is reord
 >   $\frac{50 births}{100 minimum births} = 0.5$  
 >   maximum proportion = 0.5
 >
-> Of these two areas, the first area has a higher maximum proportion, so it will be merged first.
+> Of these two areas, the first area has a higher maximum proportion, so it 
+> will be merged first.
 
 
 ### Identifying eligible neighbors
 
 After the target area has been identified, GAT generates a list of its neighbors. Areas are considered neighbors if they share at least two points with the selected area. However, not all of these neighbors may be eligible for merging. GAT considers several criteria when selecting eligible areas.
 
-* Always ineligible: Flagged areas, which includes areas indicated by exclusion criteria or with an aggregation value above the maximum. In addition, when merged, the resulting areas *cannot* have values above the maximum (target area value + merge area value $\ngtr$ maximum value).
-* Adjacent: The default is for areas to merge only to adjacent areas. To override this, use the option `runGATprogram(adjacent = FALSE)`. This will result in adjacent areas being preferred, but not required. 
-* Inside border: This option is selected in the dialogs. If you select a border, GAT will restrict neighbors only to areas within the border. If there are no eligible neighbors within the border and you used the option `adjacent = FALSE`, GAT will select the closest eligible area within the border, even if it is not adjacent. If you select a border and do not check the box to enforce the border, GAT will consider neighbors outside the border last.
-* Value below minimum: The default is for GAT to ignore whether the values of neighbors are below the minimum aggregation value. If you want to merge areas whose values are below the minimum aggregation value first, use the option `runGATprogram(minfirst = TRUE)`. If there are no neighbors with aggregation values below the minimum value, GAT will recheck for neighbors without this restriction.
+* **Always ineligible:** Flagged areas, which includes areas indicated by exclusion criteria or with an aggregation value above the maximum. In addition, when merged, the resulting areas *cannot* have values above the maximum (target area value + merge area value $\ngtr$ maximum value).
+* **Adjacent:** The default is for areas to merge only to adjacent areas. To override this, use the option `runGATprogram(adjacent = FALSE)`. This will result in adjacent areas being preferred, but not required. 
+* **Inside border:** This option is selected in the dialogs. If you select a border, GAT will restrict neighbors only to areas within the border. If there are no eligible neighbors within the border and you used the option `adjacent = FALSE`, GAT will select the closest eligible area within the border, even if it is not adjacent. If you select a border and do not check the box to enforce the border, GAT will consider neighbors outside the border last.
+* **Value below minimum:** The default is for GAT to ignore whether the values of neighbors are below the minimum aggregation value. If you want to merge areas whose values are below the minimum aggregation value first, use the option `runGATprogram(minfirst = TRUE)`. If there are no neighbors with aggregation values below the minimum value, GAT will recheck for neighbors without this restriction.
 
-When relaxing eligibility restrictions, GAT drops criteria in this order: Value below minimum (if triggered by `minfirst = TRUE`), Adjacent (only if `adjacent = FALSE`), Inside border (only if if border not enforced). If no eligible areas are identified after relaxing restrictions, the target area is flagged as unable to merge further. For each area for which selection criteria were relaxed, a warning is written to the log.
+When relaxing eligibility restrictions, GAT drops criteria in this order: Value below minimum (if triggered by `minfirst = TRUE`), Adjacent (only if `adjacent = FALSE`), Inside border (only if border not enforced). If no eligible areas are identified after relaxing restrictions, the target area is flagged as unable to merge further. For each area for which selection criteria were relaxed, a warning is written to the log.
 
 ### Selecting the most eligible neighbor
 

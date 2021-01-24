@@ -11,9 +11,22 @@
 #'             conditions include {"equals", "less than", "greater than"}.
 #' @param val  The value to compare to `var` based on the condition selected.
 #'
+#' @examples
+#'
+#' calculateGATexclusions(
+#'   d = hftown@data,
+#'   var = "TOTAL_POP",
+#'   math = "less than",
+#'   val = 500
+#' )
+#'
 #' @export
 
 calculateGATexclusions <- function(d, var, math, val) {
+  if (!"GATflag" %in% names(d)) {
+    d$GATflag <- 0 # for non-default uses of this function
+  }
+
   if (math == "equals") {
     d$GATflag <- ifelse(!d$GATflag == 1 & d[, var] == val, 1, d$GATflag)
   } else if (math == "less than") {

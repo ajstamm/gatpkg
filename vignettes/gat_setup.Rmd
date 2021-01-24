@@ -18,24 +18,28 @@ knitr::opts_chunk$set(
 
 ## Installing and running GAT
 
-**This is a placeholder. We are not live yet.**
 
-You can install the released version of gatpkg from [CRAN](https://CRAN.R-project.org) with `install.packages("gatpkg")`. 
+```{r, eval = FALSE, echo=FALSE}
+# This is a placeholder. We are not on CRAN yet.
+You can install the released version of gatpkg from 
+[CRAN](https://CRAN.R-project.org) with `install.packages("gatpkg")`. 
+```
+
+The development version of GAT is available on [GitHub](https://github.com/ajstamm/gatpkg).
 
 To load GAT, run `library(gatpkg)`.
 
-To run the entire GAT program as is, run `runGATprogram()`. For most users, this function alone is probably sufficient. If you would like more detail on what GAT does, check out the [GAT tutorial](gat_tutorial.html) or the [GAT technical notes](gat_tech_notes.html).
+To run the entire GAT program with default settings, run `runGATprogram()`. For most users, this function alone is probably sufficient. If you would like more detail on what GAT does, check out the [GAT tutorial](gat_tutorial.html) or the [GAT technical notes](gat_tech_notes.html).
 
 The full default program to run GAT looks like this:
 
 ```{r, eval=FALSE}
-# not run
 install.packages("gatpkg")
 library(gatpkg)
 runGATprogram()
 ```
 
-The package contains over 30 additional functions that are used in the function `runGATprogram()`. Feel free to use these to customize GAT to meet your needs. 
+The package contains over 30 additional functions, most of which are used in the function `runGATprogram()`. Feel free to use these to customize GAT to meet your needs. 
 
 ## Disclaimer
 

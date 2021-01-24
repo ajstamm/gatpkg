@@ -2,12 +2,22 @@
 #'
 #' @description
 #' This function is a clone of spdep::aggregate.nb with one
-#' minor modification - it does not remove areas without neighbors.
+#' minor modification - it does not remove areas without neighbors,
+#' because in GAT, not having neighbors matters.
 #'
 #' @param nb          Neighbors object.
 #' @param ids         Vector of IDs corresponding to the neighbor object's
 #'                    "region.id" attribute.
 #' @param remove.self Boolean denoting whether to remove original areas.
+#'
+#' @examples
+#' nb <- spdep::poly2nb(hftown, queen = FALSE,
+#'                      row.names = rownames(hftown@data))
+#' # neighbors of areas being aggregated
+#' nb[[12]]; nb[[13]]; nb[[20]]
+#' ids <- c(1:12, 12, 14:19, 12, 21)
+#' # neighbors of resulting area
+#' aggregateGATnb(nb, ids)[[12]]
 #'
 #' @export
 
@@ -32,6 +42,8 @@ aggregateGATnb <- function (nb, ids, remove.self = TRUE) {
   nb_short[sapply(nb_short, length) == 0L] <- 0L
   attr(nb_short, "region.id") <- out_reg.ids
   class(nb_short) <- "nb"
+  # remove areas without neighbors
+  # commented out as doing this messes up GAT
   #if (any(spdep::card(nb_short) == 0L) & any(spdep::card(nb_short) > 0L)) {
   #  nb_short <- subset(nb_short, spdep::card(nb_short) > 0L)
   #}

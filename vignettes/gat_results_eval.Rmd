@@ -38,7 +38,7 @@ GAT generates and saves several files in the save folder defined by the user. Ge
 
 ## Figuring out why areas were flagged
 
-If you notice a lot of highlighted areas in places you do not expect, there are a few things you can do. First, review your settings. All settings are written to the log. Note especially aggregation minimum and maximum values, exclusion criteria, and boundary settings. In addition, the advanced setting `adjacent = TRUE` in the function options for `runGATprogram()` may cause unexpected behavior. These will be covered in the next few subsections.
+If you notice highlighted areas in places you do not expect, there are a few things you can do. First, review your settings. Note especially aggregation minimum and maximum values, exclusion criteria, and boundary settings. All basic settings are written to the log. In addition, the advanced setting `adjacent = TRUE` in the function options for `runGATprogram()` may cause unexpected behavior. These will be covered in the next few subsections.
 
 ### Areas excluded by the user
 
@@ -76,6 +76,6 @@ Most of these issues could be addressed in one of four ways. Whether any or all 
 3. Relax boundary restrictions. If you checked the box to enforce boundaries, but your task does not absolutely require that you remain within boundaries, try running the aggregation without checking that box. If you defined a boundary, GAT will still try to merge within that boundary before looking for neighbors outside it.
 4. Increase or remove the restriction for maximum aggregation value. Consider the highest acceptable value or try running the aggregation without defining maximum aggregation values. After aggregation is complete, check the log for the ranges of values for each aggregation variable before and after aggregating.
 
-**Post-processing:** This step is optional. Your goal here is to create the final crosswalk file and address any flagged areas. I often run two levels of aggregation, with areas restricted by town in the first run and by county in the second run. For the first part of my post-processing step, I run the included function `combineGATcrosswalk()`. This function combines tables from the original crosswalk, a first aggregation, and a second aggregation, and assigns the combined table to the original crosswalk. 
+**Post-processing:** This step is optional. Your goal here is to create the final crosswalk file and address any flagged areas. I often run two levels of aggregation, with areas restricted by town in the first run and by county in the second run. For the first part of my post-processing step, I run the included function `combineGATcrosswalk()`. This function combines crosswalk tables from first and second aggregations, and assigns the combined table to the original crosswalk shapefile. 
 
-For the second part, I run project-specific code to handle any areas that were still flagged after settling on the final aggregation settings. This code includes redefining GATid for flagged areas in the original crosswalk and reaggregating all areas based on the revised GATid variable to create two final crosswalk and aggregation shapefiles.
+For the second part, I run project-specific code to handle any areas that were still flagged after selecting the final aggregation settings. This code includes redefining GATid for flagged areas in the original crosswalk and reaggregating all areas based on the revised GATid variable to create final crosswalk and aggregation shapefiles.

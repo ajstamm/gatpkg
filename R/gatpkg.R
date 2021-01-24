@@ -52,7 +52,8 @@
 #'  Christophe Maxime Fokoua Dongmo, Bureau of Environmental and Occupational
 #'                    Epidemiology, New York State Department of Health \cr
 #'  Marine Nalbandyan, Bureau of Environmental and Occupational
-#'                     Epidemiology, New York State Department of Health \cr
+#'                     Epidemiology, New York State Department of Health
+#'                     (former) \cr
 #'
 #'
 #'  \bold{Beta-testers} \cr
@@ -70,6 +71,6 @@
 #'
 
 # mostly, I copied dplyr at https://github.com/tidyverse/dplyr/blob/master/R/dplyr.r
-# I stole authorship code from https://rdrr.io/cran/TLdating/src/R/TLdating-package.R
+# I borrowed authorship code from https://rdrr.io/cran/TLdating/src/R/TLdating-package.R
 # dplyr and TLdating put namespace code here
 NULL

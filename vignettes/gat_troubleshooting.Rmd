@@ -1,6 +1,6 @@
 ---
 title: "Geographic Aggregation Tool (GAT) Troubleshooting"
-author: "Abigail Stamm"
+author: "Abigail Stamm, Thomas Talbot, and Gwen Babcock"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 ### On step 3 in the confirm GAT settings dialog, all of my areas are excluded
 
-This is a known bug. If you rerun GAT and read in the settings from this run using the "settings=" option, the correct value will be shown in the gonfirmation dialog.
+The areas are not excluded, but the incorrect number of areas is displayed. If you rerun GAT and read in the settings from this run using the "settings=" option, the correct value will be shown in the gonfirmation dialog. This should be fixed as of v1.60.4.
 
 ### GAT ran, but my shapefiles wouldn't save and GAT crashed
 
@@ -85,9 +85,7 @@ This error appears due to a conflict between the packages rgeos and rgdal. Reins
 
 ### The legend scales for my before and after maps don't match
 
-This issue occurs if there are too few polygons in the map. If the total number of polygons is less than 2 plus the number of categories (default is 7), the code that assigns the categories will force the scale to be redefined. To fix this issue, use a smaller minimum value, use a map with more polygons, or redefine the number of categories.
-
-*This issue should be fixed now.*
+This issue occurs if there are too few polygons in the map. If the total number of polygons is less than 2 plus the number of categories (default is 7), the code that assigns the categories will force the scale to be redefined. To fix this issue, use a smaller minimum value, use a map with more polygons, or redefine the number of categories. *This issue should be fixed now.*
 
 ### Warning for large numbers not writing correctly
 
@@ -114,6 +112,6 @@ One or both of these messages appears in the R console:
 
 `st_centroid does not give correct centroids for longitude/latitude data`
 
-These warnings appear when you first install the package. They also appear if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using appropriate coordinate systems. They do not appear if you are using geographic centroids.
+These warnings may appear when you first install gatpkg and will appear if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using appropriate coordinate systems. They do not appear if you are using geographic centroids.
 
 

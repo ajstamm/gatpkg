@@ -1,0 +1,10 @@
+To do list
+
+Examples for:
+* combineGATcrosswalks
+
+Fix truncated variable names, especially "old_GATflag"
+Revise writeGATlog to read settings file (when log writes incorrectly)
+Setting to suppress progress bar in defineGATmerge
+Setting to close all maps in runGATprogram
+
