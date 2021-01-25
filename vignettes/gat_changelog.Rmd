@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GAT v1.60.4 (January 16, 2021)
+## GAT v1.60.4 (January 25, 2021)
 
 * Fixed bugs and typos in confirmGATbystep() and runGATprogram().
 * Added objects "ismax1", "ismin2", and "ismax2" to the gatvars list object

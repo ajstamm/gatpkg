@@ -4,6 +4,6 @@ Examples for:
 * combineGATcrosswalks
 
 Fix truncated variable names, especially "old_GATflag"
-
+Streamline warnings
 
 
