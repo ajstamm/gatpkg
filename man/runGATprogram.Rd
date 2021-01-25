@@ -9,7 +9,8 @@ runGATprogram(
   pwrepeat = FALSE,
   settings = NULL,
   adjacent = TRUE,
-  minfirst = FALSE
+  minfirst = FALSE,
+  closemap = FALSE
 )
 }
 \arguments{
@@ -33,6 +34,12 @@ desirable neighbor only from among the neighbors that
 have values below the desired minimum. If no neighbors
 are below the desired minimum, the most desirable of all
 elligible neighbors is selected.}
+
+\item{closemap}{A boolean to denote whether to close the map windows after
+the maps are drawn and saved. The default setting is TRUE
+and will result in maps remaining open after GAT is
+finished running. Maps are saved to PDF irrespective of
+this setting.}
 }
 \description{
 This function handles nearly the entire program, except for installing and

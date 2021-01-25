@@ -31,6 +31,8 @@
 #' @param ratemap    Boolean denoting whether the variable that is to
 #'                   be plotted contains decimal values that require rounding.
 #'                   In GAT, this applies to the GAT-calculated rate.
+#' @param closemap   A boolean to denote whether to close the map window after
+#'                   the map is drawn and saved.
 #'
 #' @examples
 #'
@@ -82,12 +84,14 @@
 
 plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
                         after = FALSE, title.sub = NULL, breaks = 5,
-                        colcode = NULL, mapstats = FALSE, ratemap = FALSE) {
+                        colcode = NULL, mapstats = FALSE, ratemap = FALSE,
+                        closemap = FALSE) {
   # set map size
   dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
   # enable display list
   dev.control('enable')
-  # plot shapefile
+
+  # plot shapefile ####
   graphics::par(mar=c(2.5,0,2,0), mgp = c(0, 0, 0), xpd = TRUE)
     # margins: bottom, left, top, right
     # axes: label, padding, tick (?)
@@ -255,6 +259,8 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
 
   graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0)) # default bottom, left, top, right
 
-  # dev.off()
+  if (closemap) {
+    dev.off()
+  }
   return(map)
 }

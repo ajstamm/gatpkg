@@ -93,7 +93,7 @@ This issue occurs when there are numeric fields with very large values, such as 
 
 ### My aggregation log did not write correctly
 
-This appears to occur randomly. Restarting R and rerunning your aggregation should fix it. In the future, the function [writeGATlog()](../html/writeGATlog.html) could be modified to allow the user to read in the settings.Rdata file to recreate incorrectly saved logs if there is sufficient user interest.
+This appears to occur randomly. Restarting R and rerunning your aggregation should fix it. To recreate an incorrectly written log, rerun the function [writeGATlog()](../html/writeGATlog.html) with the settingsfile option pointing to the *settings.Rdata file produced by GAT. 
 
 ### Warning for classInt
 

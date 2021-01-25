@@ -4,7 +4,7 @@
 \alias{plotGATcompare}
 \title{Plot GAT Comparison Map}
 \usage{
-plotGATcompare(areaold, areanew, mergevars, gatvars)
+plotGATcompare(areaold, areanew, mergevars, gatvars, closemap = FALSE)
 }
 \arguments{
 \item{areaold}{A spatial polygons data frame.}
@@ -20,6 +20,9 @@ to compare, similar1 and similar2.}
 strings aggregator1 and aggregator2, which are numeric
 variables in the area, and the numbers minvalue1 and
 minvalue2.}
+
+\item{closemap}{A boolean to denote whether to close the map window after
+the map is drawn and saved.}
 }
 \description{
 This function draws two maps on top of each other with only the polygon

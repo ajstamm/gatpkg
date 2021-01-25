@@ -20,3 +20,13 @@ conditions include {"equals", "less than", "greater than"}.}
 This function cleans up the code to flag areas based on exclusion
 criteria so that they will not be used in the merge.
 }
+\examples{
+
+calculateGATexclusions(
+  d = hftown@data,
+  var = "TOTAL_POP",
+  math = "less than",
+  val = 500
+)
+
+}

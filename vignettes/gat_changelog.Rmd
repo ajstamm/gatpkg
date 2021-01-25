@@ -27,6 +27,14 @@ knitr::opts_chunk$set(
 * Moved citation and acknowledgements from set-up to a separate vignette.
 * Restructured locateGATshapefile() to add a modifiable status bar option.
 * Created a vignette on evaluating results from GAT.
+* Added and revised several function examples.
+* Added the following function options and corresponding code in runGATprogram:
+    * writeGATlog: added settingsfile option to allow incorrectly written logs 
+      to be regenerated from the settings.Rdata file produced by GAT
+    * defineGATmerge: added progressbar option to suppress the progress bar if
+      desired
+    * plotGATmaps and plotGATcompare: added closemap option to automatically 
+      close map windows if desired
 
 ## GAT v1.60.3 (August 31, 2020)
 

@@ -5,27 +5,41 @@
 #' aggregation variables, map projection, program start and end times, and
 #' any warnings that were generated.
 #'
-#' @param area       A spatial polygons data frame.
-#' @param gatvars    A list of objects created by the GAT tool. It contains
-#'                   the strings myidvar, aggregator1, aggregator2, mergeopt1,
-#'                   and boundary, which are all variables in the area, the
-#'                   numbers minvalue1 and minvalue2, and the boolean
-#'                   rigidbound. Both aggregator1 and aggregator2 must be
-#'                   numeric and myidvar must contain unique values.
-#' @param aggvars    A list of objects created by the aggregation process. See
-#'                   mergeGATpolygons() for the elements created.
-#' @param filevars   A list of file names and paths. Of relevance to this
-#'                   function are the filename, filein, and the combined save
-#'                   path and save name, userout.
-#' @param mysettings A list of system settings, including version, pkgdate,
-#'                   starttime, and the booleans savekml and exists.
-#' @param mergevars  A list of settings for the aggregation, including type of
-#'                   aggregation (mergeopt1) and, if relevant, the variables
-#'                   to compare, similar1 and similar2.
-#' @param ratevars   A list of settings for calculating rate, including
-#'                   ratename, numerator and denominator variable names,
-#'                   multiplier value, and color name and scheme for the map.
-#' @param exclist    A list of exclusion criteria to use when merging.
+#' @param area         A spatial polygons data frame.
+#' @param gatvars      A list of objects created by the GAT tool. It contains
+#'                     the strings myidvar, aggregator1, aggregator2,
+#'                     mergeopt1,and boundary, which are all variables in the
+#'                     area, the numbers minvalue1 and minvalue2, and the
+#'                     boolean rigidbound. Both aggregator1 and aggregator2
+#'                     must be numeric and myidvar must contain unique values.
+#' @param aggvars      A list of objects created by the aggregation process.
+#'                     See mergeGATpolygons() for the elements created.
+#' @param filevars     A list of file names and paths. Of relevance to this
+#'                     function are the filename, filein, and the combined save
+#'                     path and save name, userout.
+#' @param mysettings   A list of system settings, including version, pkgdate,
+#'                     starttime, and the booleans savekml and exists.
+#' @param mergevars    A list of settings for the aggregation, including type
+#'                     of aggregation (mergeopt1) and, if relevant, the
+#'                     variables to compare, similar1 and similar2.
+#' @param ratevars     A list of settings for calculating rate, including
+#'                     ratename, numerator and denominator variable names,
+#'                     multiplier value, and color name and scheme for the map.
+#' @param exclist      A list of exclusion criteria to use when merging.
+#' @param settingsfile An R data file (*.Rdata) produced as part of GAT's
+#'                     output. This file saves all settings for GAT and can be
+#'                     used to reproduce the log. Other options can only be set
+#'                     to NULL if this option is defined.
+#'
+#'
+#' Notes on using the settingsfile option:
+#'
+#' 1. You will get an error if you moved the input shapefile before running
+#'    the function with this option, since the function needs access to the
+#'    input shapefile to recreate the log.
+#' 2. Reading in an *.Rdata file from a previous version of GAT may result in
+#'    incorrect elapsed time and GAT version numbers being written to the log
+#'    due to changes in settings saved to the *.Rdata file as GAT has evolved.
 #'
 #' @examples
 #'
@@ -120,16 +134,31 @@
 # * gatpkg citation?
 # re-order distributions by aggregation variable? - done
 
-writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
-                        mergevars, ratevars, exclist) {
+writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
+                        filevars = NULL, mysettings = NULL,
+                        mergevars = NULL, ratevars = NULL,
+                        exclist = NULL, settingsfile = NULL) {
   # set up ####
+  if (!is.null(settingsfile)) {
+    load(settingsfile)
+    if (is.null(mysettings)) { # rerunning failed log
+      mysettings <- list(version = packageDescription("gatpkg")$Version,
+                         pkgdate = packageDescription("gatpkg")$Date,
+                         starttime = Sys.time()) # needed for the log
+    }
+    mysettings$exists = file.exists(paste0(filevars$userout, ".shp"))
+    area <- rgdal::readOGR(dsn = filevars$pathin,
+                           layer = filevars$filein,
+                           stringsAsFactors = FALSE)
+  }
+
   # fill in full list of names below; code will error otherwise
   listitems <- names(area@data)
   listitems <- listitems[listitems != "GATflag"]
   myvars <- ""
   for (i in 1:(length(listitems)-1)) {
     myvars <- paste0(myvars, listitems[i], ", ")
-    if (i %% 8 == 0) {
+    if (i %% 6 == 0) {
       myvars <- paste0(myvars, "\n", paste(rep(" ", 22), collapse = ""))
     }
   }
@@ -217,7 +246,9 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
   # First aggregation variable ####
   min1 <- format(gatvars$minvalue1, big.mark=",", scientific=FALSE)
   max1 <- format(gatvars$maxvalue1, big.mark=",", scientific=FALSE)
-  if (gatvars$ismax1) max1 <- paste(max1, "(no maximum)")
+  if (!is.null(gatvars$ismax1)) {
+    if (gatvars$ismax1) max1 <- paste(max1, "(no maximum)")
+  }
 
   logtext <- c("\nFirst aggregation variable:", gatvars$aggregator1,
                "\n  Minimum value:", min1, "\n  Maximum value:", max1,
@@ -233,12 +264,16 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
               file = logfile, row.names = TRUE, col.names = FALSE,
               append = TRUE)
 
-  # second aggregation variable
+  # second aggregation variable ####
   if (gatvars$aggregator1 != gatvars$aggregator2) {
     min2 <- format(gatvars$minvalue2, big.mark=",", scientific=FALSE)
-    if (gatvars$ismin2) min2 <- paste(min2, "(no minimum)")
+    if (!is.null(gatvars$ismin2)) {
+      if (gatvars$ismin2) min2 <- paste(min2, "(no minimum)")
+    }
     max2 <- format(gatvars$maxvalue2, big.mark=",", scientific=FALSE)
-    if (gatvars$ismax2) max2 <- paste(max2, "(no maximum)")
+    if (!is.null(gatvars$ismax2)) {
+      if (gatvars$ismax2) max2 <- paste(max2, "(no maximum)")
+    }
 
     logtext <- c("\n\nSecond aggregation variable:", gatvars$aggregator2,
                  "\n  Minimum value:", min2, "\n  Maximum value:", max2,
@@ -256,7 +291,7 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
                 append = TRUE)
   }
 
-# rate calculation if requested
+  # rate calculation if requested ####
   if (ratevars$ratename == "no_rate") {
     logtext <- "\nYou chose not to calculate a rate.\n"
   } else {
@@ -270,7 +305,7 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
   }
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
-  # saved files
+  # saved files ####
   logtext <- c("All files have been saved to ", filevars$pathout)
   if (!mysettings$exists) {
     logtext <- c(logtext, "\n  The shapefiles failed to save. ")
@@ -347,7 +382,7 @@ writeGATlog <- function(area, gatvars, aggvars, filevars, mysettings,
     logtext <- c(logtext, "\n  You chose not to write a KML file.")
   }
 
-  # warnings and errors
+  # warnings and errors ####
   if (aggvars$logmsg != "") logtext <-
     c(logtext, "\n\nThe following warnings were called while aggregating areas:",
       "\n", trimws(aggvars$logmsg))

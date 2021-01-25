@@ -26,6 +26,11 @@
 #'                   have values below the desired minimum. If no neighbors
 #'                   are below the desired minimum, the most desirable of all
 #'                   elligible neighbors is selected.
+#' @param closemap   A boolean to denote whether to close the map windows after
+#'                   the maps are drawn and saved. The default setting is TRUE
+#'                   and will result in maps remaining open after GAT is
+#'                   finished running. Maps are saved to PDF irrespective of
+#'                   this setting.
 #'
 #' @details
 #' For more information  on how the different merge options work, see
@@ -45,7 +50,8 @@
 # this will also incorporate max values
 
 runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
-                          settings = NULL, adjacent = TRUE, minfirst = FALSE) {
+                          settings = NULL, adjacent = TRUE, minfirst = FALSE,
+                          closemap = FALSE) {
   #  1. start the GAT program ####
   # load the progress bar
   mysettings <- list(version = packageDescription("gatpkg")$Version,
@@ -1075,7 +1081,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                              title.main = mapvars$title,
                                              title.sub = mapvars$titlesub,
                                              colcode = mapvars$colcode1before,
-                                             mapstats = TRUE)
+                                             mapstats = TRUE,
+                                             closemap = closemap)
 
     # find the new maximums after aggregation
     mapvars$titlemain = paste(gatvars$aggregator1, "After Merging")
@@ -1084,7 +1091,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                             title.main = mapvars$titlemain,
                                             title.sub = mapvars$titlesub,
                                             colcode = mapvars$colcode1after,
-                                            after = TRUE, mapstats = TRUE)
+                                            after = TRUE, mapstats = TRUE,
+                                            closemap = closemap)
 
     #  8. map second variable: before and after ####
     step <- step + 1
@@ -1123,7 +1131,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                                title.main = mapvars$title,
                                                title.sub = mapvars$titlesub,
                                                colcode = mapvars$colcode2before,
-                                               mapstats = TRUE)
+                                               mapstats = TRUE,
+                                               closemap = closemap)
 
       mapvars$titlemain = paste(gatvars$aggregator2, "After Merging")
 
@@ -1132,7 +1141,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                               title.main = mapvars$titlemain,
                                               title.sub = mapvars$titlesub,
                                               colcode = mapvars$colcode2after,
-                                              after = TRUE, mapstats = TRUE)
+                                              after = TRUE, mapstats = TRUE,
+                                              closemap = closemap)
     }
 
     #  9. map differences between old and new areas ####
@@ -1144,7 +1154,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     myplots$compare <-  plotGATcompare(areaold = myshps$original,
                                        areanew = myshps$aggregated,
                                        mergevars = mergevars,
-                                       gatvars = gatvars)
+                                       gatvars = gatvars,
+                                       closemap = closemap)
 
     # 10. map compactness ratio ####
     step <- step + 1
@@ -1160,7 +1171,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                        var = "GATcratio", clr = "YlOrBr",
                                        title.main = gats$title.main,
                                        title.sub = gats$title.sub,
-                                       ratemap = TRUE)
+                                       ratemap = TRUE,
+                                       closemap = closemap)
 
     # 11. map rates if needed ####
     step <- step + 1
@@ -1191,11 +1203,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                           format(exclist$val3, big.mark=",", scientific=FALSE))
       }
 
-      myplots$rate <- plotGATmaps(area = myshps$aggregated, var = ratevars$ratename,
+      myplots$rate <- plotGATmaps(area = myshps$aggregated,
+                                  var = ratevars$ratename,
                                   clr = ratevars$colorscheme,
                                   title.sub = gats$sub,
                                   title.main = gats$title, ratemap = TRUE,
-                                  mapstats = TRUE)
+                                  mapstats = TRUE,
+                                  closemap = closemap)
     } # end mapping new rate
 
     # 12. save maps to pdf ####
@@ -1217,7 +1231,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     # save relevant objects
     save(file = paste0(filevars$userout, "settings.Rdata"),
          list = c("gatvars", "aggvars", "filevars", "mergevars", "ratevars",
-                  "exclist"))
+                  "exclist", "mysettings"))
 
     # 13. save old shapefile ####
     step <- step + 1

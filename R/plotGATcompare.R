@@ -20,6 +20,8 @@
 #'                  strings aggregator1 and aggregator2, which are numeric
 #'                  variables in the area, and the numbers minvalue1 and
 #'                  minvalue2.
+#' @param closemap  A boolean to denote whether to close the map window after
+#'                  the map is drawn and saved.
 #'
 #' @examples
 #' # define mapping variables
@@ -54,7 +56,8 @@
 # https://cran.r-project.org/web/packages/prettymapr/prettymapr.pdf
 # NAD83 = epsg:4269; WGS84, GRS80 = epsg:42310; NAD83, GRS80 = epsg:7019,
 # but function doesn't recognize them
-plotGATcompare <- function(areaold, areanew, mergevars, gatvars) {
+plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
+                           closemap = FALSE) {
   # function to handle numbers
   numformat <- function(num) {
     format(as.numeric(gsub(",", "", num)), big.mark=",", scientific=FALSE)
@@ -110,9 +113,12 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars) {
                             labelpadin = 0.08, label.cex = 0.8,
                             label.col = "black", pos = "bottomleft")
   }
+  # save map ####
   map <- recordPlot()
 
   graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0)) # default bottom, left, top, right
-  # dev.off()
+  if (closemap) {
+    dev.off()
+  }
   return(map)
 }

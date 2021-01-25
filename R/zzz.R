@@ -68,7 +68,8 @@ mergevars <- list(
 ratevars <- list(ratename = "no_rate") # not calculated
 
 aggvars <- defineGATmerge(area = hftown, gatvars = gatvars,
-                          mergevars = mergevars)
+                          mergevars = mergevars,
+                          progressbar = FALSE)
 
 hfagg5k <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
                          idvar = gatvars$myidvar, myshp = hftown)

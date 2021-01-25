@@ -11,7 +11,8 @@ defineGATmerge(
   filevars,
   pwrepeat = FALSE,
   adjacent = TRUE,
-  minfirst = FALSE
+  minfirst = FALSE,
+  progressbar = TRUE
 )
 }
 \arguments{
@@ -47,6 +48,8 @@ desirable neighbor only from among the neighbors that
 have values below the desired minimum. If no neighbors
 are below the desired minimum, the most desirable of all
 elligible neighbors is selected.}
+
+\item{progressbar}{A boolean denoting whether to display the progress bar.}
 }
 \description{
 This function reads in the shapefile to be aggregated and the parameters to use.

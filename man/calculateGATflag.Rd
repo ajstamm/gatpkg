@@ -17,3 +17,15 @@ calculateGATflag(exclist, d)
 This function cleans up the code to update the flag variable based on
 exclusion criteria.
 }
+\examples{
+exclist <- list(
+  var1 = "TOTAL_POP",
+  math1 = "less than",
+  val1 = 500,
+  var2 = "NONE", # if not "NONE", define math2 & val2
+  var3 = "NONE"  # if not "NONE", define math3 & val3
+)
+
+calculateGATflag(exclist = exclist, d = hftown@data)
+
+}

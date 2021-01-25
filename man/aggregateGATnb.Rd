@@ -16,5 +16,16 @@ aggregateGATnb(nb, ids, remove.self = TRUE)
 }
 \description{
 This function is a clone of spdep::aggregate.nb with one
-minor modification - it does not remove areas without neighbors.
+minor modification - it does not remove areas without neighbors,
+because in GAT, not having neighbors matters.
+}
+\examples{
+nb <- spdep::poly2nb(hftown, queen = FALSE,
+                     row.names = rownames(hftown@data))
+# neighbors of areas being aggregated
+nb[[12]]; nb[[13]]; nb[[20]]
+ids <- c(1:12, 12, 14:19, 12, 21)
+# neighbors of resulting area
+aggregateGATnb(nb, ids)[[12]]
+
 }

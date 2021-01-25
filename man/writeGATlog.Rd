@@ -5,28 +5,29 @@
 \title{Write GAT Log}
 \usage{
 writeGATlog(
-  area,
-  gatvars,
-  aggvars,
-  filevars,
-  mysettings,
-  mergevars,
-  ratevars,
-  exclist
+  area = NULL,
+  gatvars = NULL,
+  aggvars = NULL,
+  filevars = NULL,
+  mysettings = NULL,
+  mergevars = NULL,
+  ratevars = NULL,
+  exclist = NULL,
+  settingsfile = NULL
 )
 }
 \arguments{
 \item{area}{A spatial polygons data frame.}
 
 \item{gatvars}{A list of objects created by the GAT tool. It contains
-the strings myidvar, aggregator1, aggregator2, mergeopt1,
-and boundary, which are all variables in the area, the
-numbers minvalue1 and minvalue2, and the boolean
-rigidbound. Both aggregator1 and aggregator2 must be
-numeric and myidvar must contain unique values.}
+the strings myidvar, aggregator1, aggregator2,
+mergeopt1,and boundary, which are all variables in the
+area, the numbers minvalue1 and minvalue2, and the
+boolean rigidbound. Both aggregator1 and aggregator2
+must be numeric and myidvar must contain unique values.}
 
-\item{aggvars}{A list of objects created by the aggregation process. See
-mergeGATpolygons() for the elements created.}
+\item{aggvars}{A list of objects created by the aggregation process.
+See mergeGATpolygons() for the elements created.}
 
 \item{filevars}{A list of file names and paths. Of relevance to this
 function are the filename, filein, and the combined save
@@ -35,15 +36,30 @@ path and save name, userout.}
 \item{mysettings}{A list of system settings, including version, pkgdate,
 starttime, and the booleans savekml and exists.}
 
-\item{mergevars}{A list of settings for the aggregation, including type of
-aggregation (mergeopt1) and, if relevant, the variables
-to compare, similar1 and similar2.}
+\item{mergevars}{A list of settings for the aggregation, including type
+of aggregation (mergeopt1) and, if relevant, the
+variables to compare, similar1 and similar2.}
 
 \item{ratevars}{A list of settings for calculating rate, including
 ratename, numerator and denominator variable names,
 multiplier value, and color name and scheme for the map.}
 
 \item{exclist}{A list of exclusion criteria to use when merging.}
+
+\item{settingsfile}{An R data file (*.Rdata) produced as part of GAT's
+output. This file saves all settings for GAT and can be
+used to reproduce the log. Other options can only be set
+to NULL if this option is defined.
+
+Notes on using the settingsfile option:
+\enumerate{
+\item You will get an error if you moved the input shapefile before running
+the function with this option, since the function needs access to the
+input shapefile to recreate the log.
+\item Reading in an *.Rdata file from a previous version of GAT may result in
+incorrect elapsed time and GAT version numbers being written to the log
+due to changes in settings saved to the *.Rdata file as GAT has evolved.
+}}
 }
 \description{
 This function writes a log of the aggregation process. It reports the

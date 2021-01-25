@@ -23,32 +23,33 @@
 #' \href{../doc/gat_tech_notes.html}{
 #' \code{vignette("gat_tech_notes", package = "gatpkg")}}.
 #'
-#' @param area      A spatial polygons data frame.
-#' @param gatvars   A list of objects created by the GAT tool. It contains
-#'                  the strings myidvar, aggregator1, aggregator2, and
-#'                  boundary, which are all variables in the area, the
-#'                  boolean popwt, and the numbers minvalue1 and minvalue2.
-#'                  Both aggregator1 and aggregator2 must be numeric and
-#'                  myidvar must contain unique values.
-#' @param mergevars A list of string objects needed to aggregate the areas
-#'                  in the GAT tool. It contains mergeopt1, similar1, and
-#'                  similar2. The valid options for mergeopt1 are "closest",
-#'                  "least", and "similar". If "similar" is selected, similar1
-#'                  and similar2 must be numeric variables in the area and
-#'                  similar2 cannot equal zero.
-#' @param filevars  A list of string objects that list file names and paths.
-#' @param pwrepeat  A boolean denoting whether population weighting (if used)
-#'                  should be recalculated each time two areas are merged
-#'                  (TRUE) or if area centroids should be weighted with area
-#'                  populations (FALSE). If population weighting is not used,
-#'                  this option is ignored.
-#' @param adjacent  A boolean denoting whether to force GAT to merge only
-#'                  adjacent areas.
-#' @param minfirst  A boolean denoting whether or not to select the most
-#'                  desirable neighbor only from among the neighbors that
-#'                  have values below the desired minimum. If no neighbors
-#'                  are below the desired minimum, the most desirable of all
-#'                  elligible neighbors is selected.
+#' @param area        A spatial polygons data frame.
+#' @param gatvars     A list of objects created by the GAT tool. It contains
+#'                    the strings myidvar, aggregator1, aggregator2, and
+#'                    boundary, which are all variables in the area, the
+#'                    boolean popwt, and the numbers minvalue1 and minvalue2.
+#'                    Both aggregator1 and aggregator2 must be numeric and
+#'                    myidvar must contain unique values.
+#' @param mergevars   A list of string objects needed to aggregate the areas
+#'                    in the GAT tool. It contains mergeopt1, similar1, and
+#'                    similar2. The valid options for mergeopt1 are "closest",
+#'                    "least", and "similar". If "similar" is selected, similar1
+#'                    and similar2 must be numeric variables in the area and
+#'                    similar2 cannot equal zero.
+#' @param filevars    A list of string objects that list file names and paths.
+#' @param pwrepeat    A boolean denoting whether population weighting (if used)
+#'                    should be recalculated each time two areas are merged
+#'                    (TRUE) or if area centroids should be weighted with area
+#'                    populations (FALSE). If population weighting is not used,
+#'                    this option is ignored.
+#' @param adjacent    A boolean denoting whether to force GAT to merge only
+#'                    adjacent areas.
+#' @param minfirst    A boolean denoting whether or not to select the most
+#'                    desirable neighbor only from among the neighbors that
+#'                    have values below the desired minimum. If no neighbors
+#'                    are below the desired minimum, the most desirable of all
+#'                    elligible neighbors is selected.
+#' @param progressbar A boolean denoting whether to display the progress bar.
 #'
 #' @examples
 #' gatvars <- list(
@@ -86,8 +87,9 @@
 #'
 #' @export
 
-defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
-                           adjacent = TRUE, minfirst = FALSE) {
+defineGATmerge <- function(area, gatvars, mergevars, filevars,
+                           pwrepeat = FALSE, adjacent = TRUE,
+                           minfirst = FALSE, progressbar = TRUE) {
   # temp until it's programmed in ####
   if (!"GATflag" %in% names(area@data)) {
     area@data$GATflag <- 0 # for non-default uses of this function
@@ -101,10 +103,12 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
   min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
 
   # draw progress bar ####
-  mb <- list(label = "Preparing merge files. Please wait.",
-             title = "NYSDOH GAT: merging")
-  tmb <- tcltk::tkProgressBar(title = mb$title, label = mb$label, min = 0,
-                              max = nrow(area@data), initial = 0, width = 400)
+  if (progressbar) {
+    mb <- list(label = "Preparing merge files. Please wait.",
+               title = "NYSDOH GAT: merging")
+    tmb <- tcltk::tkProgressBar(title = mb$title, label = mb$label, min = 0,
+                                max = nrow(area@data), initial = 0, width = 400)
+  }
 
   # if projection is lat/lon, projection = TRUE, otherwise FALSE
   mapvars <- list(projection = grepl("longlat",
@@ -206,11 +210,13 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
       mergevars$mergeopt2 <- mergevars$mergeopt1
 
       # incremental progress bar ####
-      mb$label <- paste0("Merge ", aggvars$newregno + maxid, ": ",
-                         nrow(temp$tobemerged), " areas remaining.")
       step <- nrow(area@data) - nrow(temp$tobemerged)
-      tcltk::setTkProgressBar(tmb, value = step, title = mb$title,
-                              label = mb$label)
+      if (progressbar) {
+        mb$label <- paste0("Merge ", aggvars$newregno + maxid, ": ",
+                           nrow(temp$tobemerged), " areas remaining.")
+        tcltk::setTkProgressBar(tmb, value = step, title = mb$title,
+                                label = mb$label)
+      }
 
       # identify the area to merge this loop ####
       temp$first <- identifyGATfirstobs(tobemerged = temp$tobemerged,
@@ -485,7 +491,9 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, pwrepeat = FALSE,
                         type = "yesno", icon = "info")
   }
   # if function is isolated, close progress bar that monitors the aggregation
-  close(tmb)
+  if (progressbar) {
+    close(tmb)
+  }
   return(aggvars)
 }
 

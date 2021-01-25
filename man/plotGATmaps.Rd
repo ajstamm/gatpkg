@@ -15,7 +15,8 @@ plotGATmaps(
   breaks = 5,
   colcode = NULL,
   mapstats = FALSE,
-  ratemap = FALSE
+  ratemap = FALSE,
+  closemap = FALSE
 )
 }
 \arguments{
@@ -46,6 +47,9 @@ statistics: min, median, and max.}
 \item{ratemap}{Boolean denoting whether the variable that is to
 be plotted contains decimal values that require rounding.
 In GAT, this applies to the GAT-calculated rate.}
+
+\item{closemap}{A boolean to denote whether to close the map window after
+the map is drawn and saved.}
 }
 \description{
 This function draws a choropleth map of a numeric variable. It includes

@@ -44,7 +44,8 @@ Epidemiology, New York State Department of Health \cr
 Christophe Maxime Fokoua Dongmo, Bureau of Environmental and Occupational
 Epidemiology, New York State Department of Health \cr
 Marine Nalbandyan, Bureau of Environmental and Occupational
-Epidemiology, New York State Department of Health \cr
+Epidemiology, New York State Department of Health
+(former) \cr
 
 \bold{Beta-testers} \cr
 Angela Werner, Centers for Disease Control and Prevention \cr
