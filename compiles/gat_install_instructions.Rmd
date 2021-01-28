@@ -4,7 +4,6 @@ author: "Abigail Stamm, New York State Department of Health"
 output: 
   pdf_document:
     toc: TRUE
-    keep_tex: TRUE
 header-includes:
   - \usepackage{fancyhdr}
   - \pagestyle{fancy}
@@ -93,7 +92,7 @@ The other vignettes embedded in the package include:
 * **Troubleshooting**: How to handle issues that arise in GAT
 * **Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package
 
-To run the default version of GAT, you only need one line of code, 
+To run GAT with default settings, you only need one line of code, 
 
 ```{r, eval = FALSE}
 gatpkg::runGATprogram()

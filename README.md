@@ -33,3 +33,13 @@ GAT outputs two shapefiles, one containing aggregated areas and one containing a
 The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
 
 
+### Documentation available within gatpkg
+
+**Technical Notes**: How each merge type works, compactness ratio, thinning
+**Setting up GAT**: How to install R and GAT (variant of [GAT installation instructions](compiles/gat_install_instructions.pdf))
+**Shapefile specifications**: Requirements for a shapefile you plan to process with GAT
+**Tutorial**: A basic runthrough of GAT
+**Evaluating results**: Ways to identify and address issues with your aggregated areas
+**Troubleshooting**: How to handle issues that arise in GAT
+**Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package
+
