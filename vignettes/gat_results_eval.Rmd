@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# GAT outputs
+# GAT outputs 
 
 GAT generates and saves several files in the save folder defined by the user. Generated files fall into these categories:
 

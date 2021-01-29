@@ -15,7 +15,7 @@ vignette: >
 
 # Installation
 
-These errors and warnings are related to GAT installation.
+These errors and warnings are related to GAT installation. 
 
 ## I got an error about XML when I tried to install GAT
 

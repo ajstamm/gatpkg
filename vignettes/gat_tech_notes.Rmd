@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# GAT overview
+# GAT overview 
 
 This package is maintained by the New York State Department of Health’s Environmental Public Health Tracking (EPHT) program. The purpose of this package is to run the Geographic Aggregation Tool (GAT) in R. 
 
