@@ -1,8 +1,8 @@
 Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
-Version: 1.60.4
-Date: 2021-01-25
+Version: 1.61.0
+Date: 2021-02-08
 Authors@R: c(
     person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 
       role = c("cre", "aut"), comment = "author of R package"),
