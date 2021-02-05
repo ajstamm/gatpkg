@@ -1,6 +1,6 @@
 # Geographic Aggregation Tool (GAT)
 
-The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH)Environmental Public Health Tracking (EPHT) Program with funding administered through Health Research Incorporated. GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
+The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding administered through Health Research Incorporated. GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
 
 To download the most recent compiled version of GAT, click [here](compiles/gatpkg_1.60.3.tar.gz?raw=TRUE). 
 
