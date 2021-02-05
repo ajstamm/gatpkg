@@ -1,6 +1,6 @@
 # Geographic Aggregation Tool (GAT)
 
-The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program to aggregate, or dissolve, geographic areas based on numeric values for each area, such as case or population numbers.
+The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding administered through Health Research Incorporated. GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
 
 To download the most recent compiled version of GAT, click [here](compiles/gatpkg_1.60.3.tar.gz?raw=TRUE). 
 
@@ -10,7 +10,7 @@ For instructions on how to install GAT, including a list of required R packages,
 
 **GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT]).
 
-This version of GAT is provided as is. GAT is jointly owned by the NYSDOH and Health Research, Inc. GAT is maintained by Abigail Stamm through funding from the CDC. 
+This version of GAT is provided as is. GAT is maintained by Abigail Stamm through funding from the CDC. 
 
 GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. GAT is designed to be friendly for users with minimal R experience.
 
@@ -35,11 +35,11 @@ The package for GAT includes a tutorial to learn the tool, an embedded map file 
 
 ### Documentation available within gatpkg
 
-**Technical Notes**: How each merge type works, compactness ratio, thinning
-**Setting up GAT**: How to install R and GAT (variant of [GAT installation instructions](compiles/gat_install_instructions.pdf))
-**Shapefile specifications**: Requirements for a shapefile you plan to process with GAT
-**Tutorial**: A basic runthrough of GAT
-**Evaluating results**: Ways to identify and address issues with your aggregated areas
-**Troubleshooting**: How to handle issues that arise in GAT
-**Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package
+**Technical Notes**: How each merge type works, compactness ratio, thinning  
+**Setting up GAT**: How to install R and GAT (variant of [GAT installation instructions](compiles/gat_install_instructions.pdf))  
+**Shapefile specifications**: Requirements for a shapefile you plan to process with GAT  
+**Tutorial**: A basic runthrough of GAT  
+**Evaluating results**: Ways to identify and address issues with your aggregated areas  
+**Troubleshooting**: How to handle issues that arise in GAT  
+**Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package  
 
