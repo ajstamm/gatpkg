@@ -12,7 +12,7 @@ For instructions on how to install GAT, including a list of required R packages,
 
 This version of GAT is provided as is. GAT is designed to be friendly for users with minimal R experience. GAT is maintained by Abigail Stamm at the NYSDOH through funding from the CDC. 
 
-GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.2.5019 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.0.3. 
+GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.0.3. 
 
 ### Why GAT was created
 
