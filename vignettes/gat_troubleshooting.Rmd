@@ -41,7 +41,7 @@ These errors and warnings are related to the user input portion of GAT.
 
 ## On step 3 in the confirm GAT settings dialog, all of my areas are excluded
 
-The areas are not excluded, but an incorrect number of areas is displayed. If you rerun GAT and read in the settings from this run using the "settings=" option, the correct value will be shown in the confirmation dialog. This should be fixed as of v1.60.4.
+The areas are not excluded, but an incorrect number of areas is displayed. If you rerun GAT and read in the settings from this run using the "settings=" option, the correct value will be shown in the confirmation dialog. This should be fixed as of v1.61.0.
 
 ## I'm not seeing the dialog boxes
 

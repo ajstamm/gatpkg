@@ -2,19 +2,19 @@
 
 The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding administered through Health Research Incorporated. GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
 
-To download the most recent compiled version of GAT, click [here](compiles/gatpkg_1.60.3.tar.gz?raw=TRUE). 
+To download the most recently compiled version of GAT, click [here](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE). To download prior versions of GAT, check the [compiles](compiles) folder.
 
 For instructions on how to install GAT, including a list of required R packages, click [here](compiles/gat_install_instructions.pdf).
 
 ### Disclaimer
 
-**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT]).
+**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
 
-This version of GAT is provided as is. GAT is maintained by Abigail Stamm through funding from the CDC. 
+This version of GAT is provided as is. GAT is designed to be friendly for users with minimal R experience. GAT is maintained by Abigail Stamm at the NYSDOH through funding from the CDC. 
 
-GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.1.442. GAT is designed to be friendly for users with minimal R experience.
+GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.2.5019 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.0.3. 
 
-### Why we created GAT
+### Why GAT was created
 
 Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases these maps can also inadvertently disclose confidential data. To overcome these limitations we developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
 

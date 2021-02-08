@@ -22,9 +22,9 @@ knitr::opts_chunk$set(
 
 # GAT overview 
 
-This package is maintained by the New York State Department of Health’s Environmental Public Health Tracking (EPHT) program. The purpose of this package is to run the Geographic Aggregation Tool (GAT) in R. 
+This package is maintained by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) program. The purpose of this package is to run the Geographic Aggregation Tool (GAT) in R. 
 
-Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases, these maps can also inadvertently disclose confidential data. To overcome these limitations EHS developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
+Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases, these maps can also inadvertently disclose confidential data. To overcome these limitations NYSDOH EPHT developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
     
 The input object is a shapefile (*.shp). For shapefile requirements, see [Preparing your shapefile for GAT](gat_prepare_shapefile.html). At minimum, GAT requires a polygon shapefile with a character variable that uniquely identifies areas and a numeric variable to sum for aggregation. 
 

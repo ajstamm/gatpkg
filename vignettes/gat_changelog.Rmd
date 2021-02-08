@@ -18,7 +18,9 @@ knitr::opts_chunk$set(
 
 ## GAT v1.61.0 (February 8, 2021)
 
-* Fixed bugs and typos in confirmGATbystep() and runGATprogram().
+* Added vignette "Assessing GAT Results".
+* Fixed bugs and typos in confirmGATbystep() and runGATprogram(), notably the 
+  bug that incorrectly displayed number of excluded areas over maximum.
 * Added objects "ismax1", "ismin2", and "ismax2" to the gatvars list object
   to track if minimum and maximum values were defined by the user and added
   this information to the log.
@@ -26,26 +28,24 @@ knitr::opts_chunk$set(
   created by GAT.
 * Moved citation and acknowledgements from set-up to a separate vignette.
 * Restructured locateGATshapefile() to add a modifiable status bar option.
-* Created a vignette on evaluating results from GAT.
 * Added and revised several function examples.
-* Added the following function options and corresponding code in runGATprogram:
+* Added the following function options (and corresponding code in runGATprogram):
     * writeGATlog: added settingsfile option to allow incorrectly written logs 
       to be regenerated from the settings.Rdata file produced by GAT
     * defineGATmerge: added progressbar option to suppress the progress bar if
       desired
     * plotGATmaps and plotGATcompare: added closemap option to automatically 
       close map windows if desired
+* Dropped compatibility for R-3.4.0.
 
 ## GAT v1.60.3 (August 31, 2020)
 
 * Added vignette "Preparing your shapefile for GAT".
 
-
 ## GAT v1.60.2 (August 14, 2020)
 
 * Completed bug fixes in defineGATmerge.
 * Added function aggregateGATnb, which is used in defineGATmerge.
-
 
 ## GAT v1.60.1 (August 6, 2020)
 

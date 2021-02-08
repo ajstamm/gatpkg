@@ -32,6 +32,8 @@ GAT generates and saves several files in the save folder defined by the user. Ge
 * Below the minimum aggregation value
 * Above the maximum aggregation value
 
+In addition, the compactness ratio plot will display a lighter color for areas with low compactness ratios. 
+
 **Crosswalk shapefile and associated DBF:** The crosswalk shapefile, which ends with "*in.shp", is identical to your input file with a few variables added to the table by GAT. These variables are noted in the log. Note the variable GATflag, which identifies any areas excluded by the aggregation process.
 
 **Aggregated shapefile and associated DBF:** The aggregated shapefile is your final product. The variable GATid links the crosswalk and aggregated shapefiles. Again, note the variable GATflag.
@@ -84,9 +86,11 @@ Most of these issues could be addressed in one of four ways. Whether any or all 
 3. Relax boundary restrictions. If you checked the box to enforce boundaries, but your task does not absolutely require that you remain within boundaries, try running the aggregation without checking that box. If you defined a boundary, GAT will still try to merge within that boundary before looking for neighbors outside it.
 4. Increase or remove the restriction for maximum aggregation value. Consider the highest acceptable value or try running the aggregation without defining maximum aggregation values. After aggregation is complete, check the log for the ranges of values for each aggregation variable before and after aggregating.
 
-## Undesirably shaped areas
+## Areas with low compactness ratio
 
-These areas may include long, narrow shapes or windy shapes that look like spiders or snakes. They can be identified using the compactness ratio map. In this map, areas with a low compactness ratio (longer or stringier, or sometimes donut loops) will be a lighter color than areas with a high compactness ratio (rounder or more square). For a description of compactness, review the section on compactness ratio in the [Technical Notes](../doc/gat_tech_notes.html). Aggregating to geographic centroids using `adjacent = TRUE` is the most likely merge method to result in highly compact areas.  
+These areas may include long, narrow shapes or windy shapes that look like spiders or snakes. They can be identified using the compactness ratio map. In this map, areas with a low compactness ratio (longer or stringier, or sometimes donut loops) will be a lighter color than areas with a high compactness ratio (rounder or more square). For a description of compactness ratio, review the final section in the [Technical Notes](../doc/gat_tech_notes.html).
+
+Compactness ratio may be important for your project. If so, aggregating to geographic centroids using the function option `adjacent = TRUE` is the most likely merge method to result in highly compact areas.  
 
 # Post-processing
 

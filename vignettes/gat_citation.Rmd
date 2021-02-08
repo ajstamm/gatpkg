@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 # Citation and feedback
 
-Suggestions for improvement and bug reports are welcome. Send feedback to epht@health.ny.gov and include *GAT in R* in the subject line.
+Suggestions for improvement and bug reports are welcome. Send feedback to [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]) and include *GAT in R* in the subject line.
 
 If you use any part of the GAT package, please cite it. For the suggested citation, type:
 

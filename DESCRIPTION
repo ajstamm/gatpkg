@@ -27,7 +27,7 @@ Description: The purpose of this package is to run the New York State
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.4.0)
+Depends: R (>= 3.5.0)
 Imports: 
     classInt (>= 0.3.1),
     foreign (>= 0.8.69),
