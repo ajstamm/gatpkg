@@ -100,7 +100,7 @@ In this dialog, you can navigate to any shapefile on your computer or network. T
 gatpkg::locateGATshapefile()
 ```
 
-```{r shppic, fig.cap = 'Dialog: Identify Shapefile', echo = FALSE}
+```{r shppic, out.width = '100%', fig.cap = 'Dialog: Identify Shapefile', echo = FALSE}
 knitr::include_graphics("images/locateGATshapefile.png")
 ```
 
@@ -138,7 +138,7 @@ In this dialog, select the variable you would like to use from the drop-down lis
 gatpkg::identifyGATid(gatpkg::hftown@data)
 ```
 
-```{r idpic, fig.cap = 'Dialog: Identify Identifier', echo = FALSE}
+```{r idpic, out.width = '100%', fig.cap = 'Dialog: Identify Identifier', echo = FALSE}
 knitr::include_graphics("images/identifyGATid.png")
 ```
 
@@ -167,7 +167,7 @@ In this dialog, select the variable you would like to use from the drop-down lis
 gatpkg::identifyGATboundary(data = gatpkg::hftown@data)
 ```
 
-```{r boundarypic, fig.cap = 'Dialog: Identify Boundary', echo = FALSE}
+```{r boundarypic, out.width = '100%', fig.cap = 'Dialog: Identify Boundary', echo = FALSE}
 knitr::include_graphics("images/identifyGATboundary.png")
 ```
 
@@ -200,7 +200,7 @@ In this dialog, select the variables you would like to aggregate from the drop-d
 gatpkg::identifyGATaggregators(gatpkg::hftown@data)
 ```
 
-```{r agg1pic, fig.cap = 'Dialog: Identify First Aggregator', echo = FALSE}
+```{r agg1pic, out.width = '100%', fig.cap = 'Dialog: Identify First Aggregator', echo = FALSE}
 knitr::include_graphics("images/identifyGATaggregators.png")
 ```
 
@@ -317,7 +317,7 @@ In this dialog, you can navigate to any shapefile on your computer or network.
 gatpkg::locateGATshapefile(type = "population", myfile = paste0(filepath, "hfblock"))
 ```
 
-```{r popdialog, fig.cap = 'Dialog: Identify Population Shapefile', echo = FALSE}
+```{r popdialog, out.width = '100%', fig.cap = 'Dialog: Identify Population Shapefile', echo = FALSE}
 knitr::include_graphics("images/locatepopulationfile.png")
 ```
 
@@ -327,7 +327,7 @@ Click "Open" to move to the next step or click "Cancel" to go back to the merge 
 
 If there are multiple numeric variables, you will get a dialog requesting that you select one. If there is only one suitable variable, you will get this message:
 
-```{r popconfirm, fig.cap = 'Dialog: Confirm Population Shapefile', echo = FALSE}
+```{r popconfirm, out.width = '100%', fig.cap = 'Dialog: Confirm Population Shapefile', echo = FALSE}
 knitr::include_graphics("images/confirmGATpopvar.png")
 ```
 
@@ -442,7 +442,7 @@ gatpkg::saveGATfiles()
 ```
 
 
-```{r savepic, fig.cap = 'Dialog: Save File', echo = FALSE}
+```{r savepic, out.width = '100%', fig.cap = 'Dialog: Save File', echo = FALSE}
 knitr::include_graphics("images/saveGATfiles.png")
 ```
 
