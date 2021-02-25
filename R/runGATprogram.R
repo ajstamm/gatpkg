@@ -1,4 +1,4 @@
-#' Run GAT Program with one dialog for aggregators
+#' Run the Geographic Aggregation Tool (GAT)
 #'
 #' @description
 #'
