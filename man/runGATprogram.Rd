@@ -2,7 +2,7 @@
 % Please edit documentation in R/runGATprogram.R
 \name{runGATprogram}
 \alias{runGATprogram}
-\title{Run GAT Program with one dialog for aggregators}
+\title{Run the Geographic Aggregation Tool (GAT)}
 \usage{
 runGATprogram(
   limitdenom = FALSE,
@@ -42,11 +42,10 @@ finished running. Maps are saved to PDF irrespective of
 this setting.}
 }
 \description{
-This function handles nearly the entire program, except for installing and
-loading packages. It does not require any inputs, as the popup dialogs it
-creates guide the user to define all parameters. For step by step details
-on how this program works, browse the package vignettes, especially the
-GAT manual, which you can access via
+This function runs GAT and does not require any inputs. The pop-up dialogs
+it creates guide the user to define all parameters. For step by step details
+on how GAT works, browse the package vignettes, especially the GAT manual,
+which you can access via
 \href{../doc/gat_tutorial.html}{
 \code{vignette("gat_tutorial", package = "gatpkg")}}.
 }
