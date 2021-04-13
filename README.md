@@ -32,6 +32,7 @@ GAT outputs two shapefiles, one containing aggregated areas and one containing a
 
 The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
 
+View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at the 2020 NAHDO conference.
 
 ### Documentation available within gatpkg
 
