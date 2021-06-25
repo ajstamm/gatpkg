@@ -6,14 +6,6 @@ To download the most recently compiled version of GAT, click [here](compiles/gat
 
 For instructions on how to install GAT, including a list of required R packages, click [here](compiles/gat_install_instructions.pdf).
 
-### Disclaimer
-
-**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
-
-This version of GAT is provided as is. GAT is designed to be friendly for users with minimal R experience. GAT is maintained by Abigail Stamm at the NYSDOH through funding from the CDC. 
-
-GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.0.3. 
-
 ### Why GAT was created
 
 Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases these maps can also inadvertently disclose confidential data. To overcome these limitations we developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
@@ -32,7 +24,11 @@ GAT outputs two shapefiles, one containing aggregated areas and one containing a
 
 The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
 
-View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at the 2020 NAHDO conference.
+### Learn more about GAT
+
+View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at the 2020 NAHDO conference. Download the [NAHDO conference slides](compiles/NYS_GAT_NAHDO_ajs.pdf).
+
+We will be presenting on GAT's development at the 2021 useR! conference. Download the [slides in PDF](compiles/NYS_GAT_useR_ajs.pdf) or [slides in PPT](compiles/NYS_GAT_useR_ajs.ppt). A video link will be added when it becomes available after the conference.
 
 ### Documentation available within gatpkg
 
@@ -43,4 +39,13 @@ View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at 
 **Evaluating results**: Ways to identify and address issues with your aggregated areas  
 **Troubleshooting**: How to handle issues that arise in GAT  
 **Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package  
+
+### Disclaimer
+
+**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
+
+This version of GAT is provided as is. GAT is designed to be friendly for users with minimal R experience. GAT is maintained by Abigail Stamm at the NYSDOH through funding from the CDC. 
+
+GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.0.3. 
+
 
