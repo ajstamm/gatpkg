@@ -13,3 +13,5 @@
 ^\.github$
 ^docs$
 ^my_kml_example\.kml$
+^_pkgdown\.yml$
+^pkgdown$
