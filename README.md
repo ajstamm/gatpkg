@@ -4,7 +4,7 @@ The geographic aggregation tool (GAT) was developed by the New York State Depart
 
 To download the most recently compiled version of GAT, click [here](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE). To download prior versions of GAT, check the [compiles](compiles) folder.
 
-For instructions on how to install GAT, including a list of required R packages, click [here](compiles/gat_install_instructions.pdf).
+For instructions on how to install GAT, including a list of required R packages, click [here](presentations/gat_install_instructions.pdf).
 
 ### Why GAT was created
 
@@ -26,16 +26,16 @@ The package for GAT includes a tutorial to learn the tool, an embedded map file 
 
 ### Learn more about GAT
 
-View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at the 2020 NAHDO conference. Download the [NAHDO conference slides](compiles/NYS_GAT_NAHDO_ajs.pdf).
+View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at the 2020 NAHDO conference. Download the [NAHDO conference slides](presentations/NYS_GAT_NAHDO_ajs.pdf).
 
-We will be presenting on GAT's development at the 2021 useR! conference. Download the [slides in PDF](compiles/NYS_GAT_useR_ajs.pdf) or [slides in PPT](compiles/NYS_GAT_useR_ajs.ppt). A video link will be added when it becomes available after the conference.
+We will be presenting on GAT's development at the 2021 useR! conference. Download the [slides in PDF](presentations/NYS_GAT_useR_ajs.pdf) or [slides in PPT](presentations/NYS_GAT_useR_ajs.ppt). A video link will be added when it becomes available after the conference.
 
 ### Documentation available within gatpkg
 
 **Technical Notes**: How each merge type works, compactness ratio, thinning  
-**Setting up GAT**: How to install R and GAT (variant of [GAT installation instructions](compiles/gat_install_instructions.pdf))  
+**Setting up GAT**: How to install R and GAT (variant of [GAT installation instructions](presentations/gat_install_instructions.pdf))  
 **Shapefile specifications**: Requirements for a shapefile you plan to process with GAT  
-**Tutorial**: A basic runthrough of GAT  
+**Tutorial**: A basic run-through of GAT  
 **Evaluating results**: Ways to identify and address issues with your aggregated areas  
 **Troubleshooting**: How to handle issues that arise in GAT  
 **Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package  

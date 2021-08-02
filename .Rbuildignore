@@ -10,6 +10,7 @@
 ^my_hftown\.log$
 ^README\.md$
 ^compiles$
+^presentations$
 ^\.github$
 ^docs$
 ^my_kml_example\.kml$
