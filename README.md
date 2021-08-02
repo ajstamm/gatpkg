@@ -1,6 +1,8 @@
 # Geographic Aggregation Tool (GAT)
 
-The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding administered through Health Research Incorporated. GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
+The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding from the CDC administered through Health Research Incorporated. GAT is maintained by Abigail Stamm at the NYSDOH. 
+
+GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
 
 To download the most recently compiled version of GAT, click [here](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE). To download prior versions of GAT, check the [compiles](compiles) folder.
 
@@ -42,9 +44,9 @@ We will be presenting on GAT's development at the 2021 useR! conference. Downloa
 
 ### Disclaimer
 
-**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
+GAT is provided as is. 
 
-This version of GAT is provided as is. GAT is designed to be friendly for users with minimal R experience. GAT is maintained by Abigail Stamm at the NYSDOH through funding from the CDC. 
+**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
 
 GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.0.3. 
 
