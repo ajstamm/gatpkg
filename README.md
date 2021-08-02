@@ -4,9 +4,9 @@ The geographic aggregation tool (GAT) was developed by the New York State Depart
 
 To download the most recently compiled version of GAT, click [here](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE). To download prior versions of GAT, check the [compiles](compiles) folder.
 
-For instructions on how to install GAT, including a list of required R packages, click [here](presentations/gat_install_instructions.pdf).
+Click for [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages.
 
-### Why GAT was created
+### Why create GAT
 
 Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases these maps can also inadvertently disclose confidential data. To overcome these limitations we developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
 
