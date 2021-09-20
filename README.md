@@ -30,7 +30,7 @@ The package for GAT includes a tutorial to learn the tool, an embedded map file 
 
 View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at the 2020 NAHDO conference. Download the [NAHDO conference slides](presentations/NYS_GAT_NAHDO_2020.pdf).
 
-We will be presenting on GAT's development at the 2021 useR! conference. Download the [slides in PDF](presentations/NYS_GAT_useR_2021.pdf) or [slides in PPT](presentations/NYS_GAT_useR_2021.ppt). A video link will be added when it becomes available after the conference.
+View an elevator pitch on the [development of GAT](https://www.youtube.com/watch?v=r_wRMpqZcE8&list=PL4IzsxWztPdnviiir8c5GaarXd9vZ2TIP&index=24) presented at the 2021 useR! conference. Download the [slides in PDF](presentations/NYS_GAT_useR_2021.pdf) or [slides in PPT](presentations/NYS_GAT_useR_2021.ppt). 
 
 ### Documentation available within gatpkg
 
@@ -40,7 +40,7 @@ We will be presenting on GAT's development at the 2021 useR! conference. Downloa
 **Tutorial**: A basic run-through of GAT  
 **Evaluating results**: Ways to identify and address issues with your aggregated areas  
 **Troubleshooting**: How to handle issues that arise in GAT  
-**Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package  
+**Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package 
 
 ### Disclaimer
 
@@ -49,5 +49,7 @@ GAT is provided as is.
 **GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
 
 GAT was written in R-2.9.2 under Windows XP and was revised and converted to a package in R-3.4.3 under Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.0.3. 
+
+If you are interested in GAT's history, including the original SAS and R scripts, visit the [archive](archive/). 
 
 

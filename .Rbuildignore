@@ -1,7 +1,5 @@
 ^.*\.Rproj$
 ^.Rproj\.user$
-^testdata$
-^notes$
 ^.Rhistory$
 ^man.bak$
 ^data_raw$
@@ -11,8 +9,9 @@
 ^README\.md$
 ^compiles$
 ^presentations$
+^archive$
+^notes$
 ^\.github$
 ^docs$
-^my_kml_example\.kml$
 ^_pkgdown\.yml$
 ^pkgdown$

@@ -25,6 +25,7 @@ README.Rmd
 *.tex
 *.zip
 *.vi
+*.db
 *~
 
 # OS or Editor folders
