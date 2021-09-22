@@ -35,17 +35,21 @@ Download [GAT for SAS v4.1](NYS_GAT_SAS-4-1.zip)
 
 ## Publications that have used or cited GAT
 
-* Sherman RL, Henry KA, Tannenbaum SL, Feaster DJ, Kobetz E, Lee DJ. Prev Chronic Dis.
-DOI: http://dx.doi.org/10.5888/pcd11.130264 (referenced R v1.2) 
-* Werner AK, Strosnider HM. Spatial and Spatio-temporal Epidemiology 2020;33. DOI: 
-https://doi.org/10.1016/i.sste.2020.100339 (used SAS v1.31) 
-* Werner AK, Strosnider H, Kassinger C, Shin M. J Public Health Manag Pract. 
-DOI: https://doi.org/10.1097/PHH.0000000000000686 (used SAS v1.31) 
-* Boscoe FP, Talbot TO, Kulldorff M. Geospat Health. Published 2016 Apr 18. 
-DOI: https://doi.org/10.4081/gh.2016.304 (used SAS v1.31) 
-* Boothe VL, Fierro LA, Laurent A, Shih M. Global Diaspora News. Published 3/28/2020. 
-https://www.globaldiasporanews.com/a-tool-to-improve-communitv-health-and-advance- 
-health-equity/ (used R v1.33) 
+* Sherman RL, Henry KA, Tannenbaum SL, Feaster DJ, Kobetz E, Lee DJ. Prev Chronic Dis.   
+    DOI: http://dx.doi.org/10.5888/pcd11.130264   
+    Referenced R v1.2
+* Werner AK, Strosnider HM. Spatial and Spatio-temporal Epidemiology 2020;33.   
+    DOI: https://doi.org/10.1016/i.sste.2020.100339   
+    Used SAS v1.31
+* Werner AK, Strosnider H, Kassinger C, Shin M. J Public Health Manag Pract.   
+    DOI: https://doi.org/10.1097/PHH.0000000000000686   
+    Used SAS v1.31
+* Boscoe FP, Talbot TO, Kulldorff M. Geospat Health. Published 2016 Apr 18.   
+    DOI: https://doi.org/10.4081/gh.2016.304   
+    Used SAS v1.31
+* Boothe VL, Fierro LA, Laurent A, Shih M. Global Diaspora News. Published 3/28/2020.   
+    https://www.globaldiasporanews.com/a-tool-to-improve-communitv-health-and-advance-health-equity/   
+    Used R v1.33 
 
 
 
@@ -53,5 +57,5 @@ health-equity/ (used R v1.33)
 
 In 2019, Abigail Stamm began transitioning GAT to an R package. For a full list of authors and acknowledgements, please see the package documentation. The first public version was 1.61.0, released in August 2020 when this repository went live. Versioning for the package began with 1.35, to remain consistent with the original R script. To see how the package differs from the previous versions of GAT listed above, please see the package change log.
 
-All publicly released versions of the R package can be found in the [compiles](link) folder.
+All publicly released versions of the R package can be found in the [compiles](../compiles/) folder.
 
