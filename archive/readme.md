@@ -37,15 +37,14 @@ Download [GAT for SAS v4.1](NYS_GAT_SAS-4-1.zip)
 
 * Sherman RL, Henry KA, Tannenbaum SL, Feaster DJ, Kobetz E, Lee DJ. Prev Chronic Dis.
 DOI: http://dx.doi.org/10.5888/pcd11.130264 (referenced R v1.2) 
-* Werner AK, Strosnider HM. Spatial and Spatio-temporal Epidemiology 2020;33. DOI: 
-https://doi.org/10.1016/i.sste.2020.100339 (used SAS v1.31) 
+* Werner AK, Strosnider HM. Spatial and Spatio-temporal Epidemiology 2020;33. 
+DOI: https://doi.org/10.1016/i.sste.2020.100339 (used SAS v1.31) 
 * Werner AK, Strosnider H, Kassinger C, Shin M. J Public Health Manag Pract. 
 DOI: https://doi.org/10.1097/PHH.0000000000000686 (used SAS v1.31) 
 * Boscoe FP, Talbot TO, Kulldorff M. Geospat Health. Published 2016 Apr 18. 
 DOI: https://doi.org/10.4081/gh.2016.304 (used SAS v1.31) 
 * Boothe VL, Fierro LA, Laurent A, Shih M. Global Diaspora News. Published 3/28/2020. 
-https://www.globaldiasporanews.com/a-tool-to-improve-communitv-health-and-advance- 
-health-equity/ (used R v1.33) 
+https://www.globaldiasporanews.com/a-tool-to-improve-communitv-health-and-advance-health-equity/ (used R v1.33) 
 
 
 
