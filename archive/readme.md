@@ -52,5 +52,5 @@ https://www.globaldiasporanews.com/a-tool-to-improve-communitv-health-and-advanc
 
 In 2019, Abigail Stamm began transitioning GAT to an R package. For a full list of authors and acknowledgements, please see the package documentation. The first public version was 1.61.0, released in August 2020 when this repository went live. Versioning for the package began with 1.35, to remain consistent with the original R script. To see how the package differs from the previous versions of GAT listed above, please see the package change log.
 
-All publicly released versions of the R package can be found in the [compiles](link) folder.
+All publicly released versions of the R package can be found in the [compiles](compiles/) folder.
 
