@@ -7,8 +7,10 @@ steps:
         
 on:
   schedule: 
+    # runs daily
+    - cron: "0 23 * * *"
     # runs once a week on sunday
-    - cron: "55 23 * * 0"
+    # - cron: "55 23 * * 0"
     
 jobs:
   # This workflow contains a single job called "traffic"
