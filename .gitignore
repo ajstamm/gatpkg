@@ -43,3 +43,4 @@ nbproject
 .idea
 .Rproj.user
 docs
+*.db
