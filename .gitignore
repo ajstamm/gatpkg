@@ -43,3 +43,6 @@ nbproject
 .idea
 .Rproj.user
 docs
+*.db
+*.db
+vignettes/images/Thumbs.db

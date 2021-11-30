@@ -38,6 +38,8 @@ View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at 
 
 View an elevator pitch on the [development of GAT](https://www.youtube.com/watch?v=r_wRMpqZcE8&list=PL4IzsxWztPdnviiir8c5GaarXd9vZ2TIP&index=24) presented at the 2021 useR! conference. Download the [slides in PDF](presentations/NYS_GAT_useR_2021.pdf) or [slides in PPT](presentations/NYS_GAT_useR_2021.ppt). 
 
+Download a [poster comparing two aggregation methods](presentations/NYS_GAT_PHC_2021.pdf) presented at the 2021 CDC Place & Health Conference.
+
 ### Documentation available within gatpkg
 
 **Technical Notes**: How each merge type works, compactness ratio, thinning  
