@@ -50,6 +50,12 @@ Download [GAT for SAS v4.1](NYS_GAT_SAS-4-1.zip)
 * Boothe VL, Fierro LA, Laurent A, Shih M. Global Diaspora News. Published 3/28/2020.   
     https://www.globaldiasporanews.com/a-tool-to-improve-communitv-health-and-advance-health-equity/   
     Used R v1.33 
+    
+## Presentations about legacy versions of GAT
+
+* Talbot, T & LaSelva, G. "GIS Tools for Sharing Health Data and Protecting Patient Confidentiality." NYGeoCon, Saratoga Springs, NY, November 12-13, 2013.  
+    https://www.nysgis.net/Docs/NYGeoCon2013/Slides/Wed_0245_0415/Sharing4_HealthData.pdf   
+    Used R v1.2
 
 
 
