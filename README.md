@@ -58,7 +58,7 @@ Download a [poster comparing two aggregation methods](presentations/NYS_GAT_PHC_
 **Tutorial**: A basic run-through of GAT  
 **Evaluating results**: Ways to identify and address issues with your aggregated areas  
 **Troubleshooting**: How to handle issues that arise in GAT  
-**Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package (see the [archive](archive/)
+**Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package (see the [archive](archive/))
 
 ### Disclaimer
 
