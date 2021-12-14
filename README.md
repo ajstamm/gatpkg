@@ -17,11 +17,11 @@ Run the code below in R to install GAT directly from GitHub.
 ``` r
 # install devtools if you don't already have it
 install.packages("devtools")
-# install the development version from Github
+# install the development version of GAT from Github with all required packages from CRAN
 devtools::install_github("ajstamm/gatpkg", dependencies = TRUE)
 ```
 
-If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT. Download [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages.
+If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT. Download [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages on CRAN.
 
 
 ### Why create GAT
