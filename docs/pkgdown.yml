@@ -1,0 +1,14 @@
+pandoc: '2.12'
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  gat_changelog: gat_changelog.html
+  gat_citation: gat_citation.html
+  gat_prepare_shapefile: gat_prepare_shapefile.html
+  gat_results_eval: gat_results_eval.html
+  gat_setup: gat_setup.html
+  gat_tech_notes: gat_tech_notes.html
+  gat_troubleshooting: gat_troubleshooting.html
+  gat_tutorial: gat_tutorial.html
+last_built: 2021-12-22T20:31Z
+

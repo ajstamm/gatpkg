@@ -42,7 +42,6 @@ nbproject
 *.sublime-workspace
 .idea
 .Rproj.user
-docs
 *.db
 *.db
 vignettes/images/Thumbs.db
