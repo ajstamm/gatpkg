@@ -1,8 +1,8 @@
 Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
-Version: 1.61.0
-Date: 2021-02-08
+Version: 1.61.1
+Date: 2022-01-04
 Authors@R: c(
     person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 
       role = c("cre", "aut"), comment = "author of R package"),
@@ -55,6 +55,8 @@ Suggests:
     prettymapr (>= 0.2.2),
     qpdf,
     rmarkdown,
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
+URL: https://github.com/ajstamm/gatpkg
+BugReports: https://github.com/ajstamm/gatpkg/issues
