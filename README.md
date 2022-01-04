@@ -45,22 +45,14 @@ GAT outputs two shapefiles, one containing aggregated areas and one containing a
 
 The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
 
-### Learn more about GAT
-
-View an [introduction to GAT](https://youtu.be/BRxhay4FhGI?t=1096) presented at the 2020 NAHDO conference. Download the [NAHDO conference slides](https://github.com/ajstamm/gatpkg/blob/master/presentations/NYS_GAT_NAHDO_2020.pdf).
-
-View an elevator pitch on the [development of GAT](https://www.youtube.com/watch?v=r_wRMpqZcE8&list=PL4IzsxWztPdnviiir8c5GaarXd9vZ2TIP&index=24) presented at the 2021 useR! conference. Download the [slides in PDF](https://github.com/ajstamm/gatpkg/blob/master/presentations/NYS_GAT_useR_2021.pdf) or [slides in PPT](https://github.com/ajstamm/gatpkg/blob/master/presentations/NYS_GAT_useR_2021.ppt). 
-
-Download a [poster comparing two aggregation methods](https://github.com/ajstamm/gatpkg/blob/master/presentations/NYS_GAT_PHC_2021.pdf) presented at the 2021 CDC Place & Health Conference.
+To learn more about GAT, view our [presentations](https://github.com/ajstamm/gatpkg/blob/master/presentations).
 
 
 ### Disclaimer
 
-GAT is provided as is. 
+GAT is provided as is. We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
 
-**GAT is still in beta testing.** We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
-
-GAT was written in R-2.9.2 in Windows XP and was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.1.1. 
+GAT was written in R-2.9.2 in Windows XP and was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5 through R-4.1. 
 
 If you are interested in GAT's history, including the original SAS and R scripts, visit the [archive](https://github.com/ajstamm/gatpkg/blob/master/archive/). 
 
