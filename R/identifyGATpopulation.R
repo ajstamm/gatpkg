@@ -5,8 +5,9 @@
 #' in the population shapefile (if population-weighted centroids are requested)
 #' should be used to determine area populations.
 #'
-#' \if{html}{\figure{identifyGATpopulation.png}{options: width="340px"
-#'                   alt="Figure: Screenshot of dialog to select base population"}}
+#' \figure{identifyGATpopulation.png}
+#'
+#' *Figure: Dialog to select base population*
 #'
 #' Select your desired base population variable. Then click on one of the
 #' following buttons.
@@ -26,7 +27,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # identify variable to aggregate
 #' identifyGATpopulation(
 #'   varlist = c("Pop_tot", "F_tot", "M_tot"),

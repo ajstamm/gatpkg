@@ -5,8 +5,9 @@
 #' in the shapefile should be aggregated and to what minimum and maximum values.
 #' The dialog window looks like this.
 #'
-#' \if{html}{\figure{inputGATaggregators.png}{options: width="340px"
-#'                   alt="Figure: Screenshot of dialog to select your aggregators"}}
+#' \figure{inputGATaggregators.png}
+#'
+#' *Figure: Dialog to select your aggregators*
 #'
 #' Select your desired aggregation variables. If you do not want to include a
 #' second aggregation variable, select "NONE". Enter your desired minimum and
@@ -37,7 +38,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # identify variable to aggregate
 #' inputGATaggregators(
 #'   mapdata = hftown@data

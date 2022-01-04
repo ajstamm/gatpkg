@@ -4,8 +4,9 @@
 #' This function opens a dialog window for the user to select whether or not
 #' to save a KML file. The dialog window looks like this.
 #'
-#' \if{html}{\figure{saveGATkml.png}{options: width="405"
-#'                   alt="Figure: Screenshot of dialog to select KML save.png"}}
+#' \figure{saveGATkml.png}
+#'
+#' *Figure: Screenshot of dialog to select KML save.png*
 #'
 #' Select "Yes" if you want to save a KML file. The default selection is "No".
 #'
@@ -26,7 +27,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # choose yes or no
 #' saveGATkml()
 #' }

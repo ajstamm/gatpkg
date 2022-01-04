@@ -18,7 +18,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # identify variable to aggregate
 #' identifyGATaggregators(
 #'   mapdata = hftown@data

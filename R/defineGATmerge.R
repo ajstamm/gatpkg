@@ -52,6 +52,8 @@
 #' @param progressbar A boolean denoting whether to display the progress bar.
 #'
 #' @examples
+#'
+#' if (interactive()) {
 #' gatvars <- list(
 #'   myidvar = "ID",             # character variable of unique values
 #'   aggregator1 = "TOTAL_POP",  # numeric variable
@@ -84,6 +86,7 @@
 #'     filevars = filevars,
 #'     pwrepeat = FALSE # don't need pwrepeat if popwt = FALSE
 #'   )
+#' }
 #'
 #' @export
 

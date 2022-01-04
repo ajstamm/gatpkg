@@ -29,7 +29,7 @@ weighted centroids.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 pathin <- paste0(find.package("gatpkg"), "/extdata")
 mywtshp <- importGATweights(
   area = hftown,

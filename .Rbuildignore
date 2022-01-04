@@ -1,12 +1,14 @@
 ^.*\.Rproj$
+^\.Rproj\.user$
 ^.Rproj\.user$
 ^.Rhistory$
+^\.Rhistory$
 ^man.bak$
 ^data_raw$
-^\.Rproj\.user$
 ^README\.Rmd$
-^my_hftown\.log$
 ^README\.md$
+my_hftown\.log
+my_kml_example\.kml
 ^compiles$
 ^presentations$
 ^archive$
@@ -15,3 +17,4 @@
 ^docs$
 ^_pkgdown\.yml$
 ^pkgdown$
+^pkgdown_setup\.R$

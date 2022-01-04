@@ -57,7 +57,7 @@ For more information  on how the different merge options work, see
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # this code will run the default version of GAT
 runGATprogram() # uses defaults
 }

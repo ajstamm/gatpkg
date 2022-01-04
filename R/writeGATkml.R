@@ -11,7 +11,7 @@
 #' @examples
 #' # creates the kml file in the project root directory
 #'
-#' \donttest{
+#' if (interactive()) {
 #' writeGATkml(
 #'   myshp = hftown,
 #'   filename = "my_kml_example",

@@ -37,12 +37,13 @@ relevant function (if any) in the help dialog.}
 This function creates a dialog box to ask the user for a specific value
 and provides a link to the relevant help file in the GAT program.
 
-\if{html}{\figure{inputGATvalue.png}{options: width="300px"
-                  alt="Figure: Screenshot of dialog to enter an alphanumeric value"}}
+\figure{inputGATvalue.png}
+
+\emph{Figure: Dialog to enter an alphanumeric value}
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 hlp <-
   paste0(
     "To continue, select an option and click 'Next >',",

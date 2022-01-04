@@ -4,8 +4,9 @@
 #' This function opens a dialog window for the user to select the desired
 #' merge method. The dialog window looks like this.
 #'
-#' \if{html}{\figure{inputGATmerge.png}{options: width="340px"
-#'                   alt="Figure: Screenshot of dialog to select your merge type"}}
+#' \figure{inputGATmerge.png}
+#'
+#' *Figure: Dialog to select your merge type*
 #'
 #' Select your desired merge type. If you select "similar ratio", you will also
 #' need to supply two variables. Then click on one of the following buttons.
@@ -51,7 +52,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # make your selections and click "OK"
 #' inputGATmerge(
 #'   mapdata = hftown@data,

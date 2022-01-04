@@ -5,8 +5,9 @@
 #' variable to prioritize larger geographic areas such as counties in
 #' which to aggregate. The dialog window looks like this.
 #'
-#' \if{html}{\figure{identifyGATboundary.png}{options: width="340px"
-#'                   alt="Figure: Screenshot of dialog to select your boundary"}}
+#' \figure{identifyGATboundary.png}
+#'
+#' *Figure: Dialog to select your boundary variable*
 #'
 #' Select your desired boundary variable. If you do not want to include a
 #' boundary, select "NONE". If you want to enforce the boundary, check the box
@@ -35,7 +36,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # select boundary variable
 #' identifyGATboundary(
 #'   data = hftown@data,

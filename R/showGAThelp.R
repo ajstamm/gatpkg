@@ -13,12 +13,12 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # create the help message
-#' # "\u2022" creates a bullet for lists
+# "\u2022" creates a bullet for lists
 #' hlp <- paste0("Instructions: \n",
 #'               "  \u2022  To continue,  click 'Next >'. \n",
-#'               "  \u2022  To return to the previous option, click '< Back'. \n",
+#'               "  \u2022  To return to the last option, click '< Back'. \n",
 #'               "  \u2022  To quit GAT, click 'Cancel'.")
 #'
 #' # create the dialog box
@@ -81,9 +81,10 @@ showGAThelp <- function(help = "Find help here.",
   }
 
   hlp$env$button <- tcltk::tkframe(hlp, width = 200, height = 40)
-  hlp$env$button$Manual <- tcltk2::tk2button(hlp$env$button,
-                                             text = paste("GAT manual: \n   Step", step),
-                                             command = onManual, width = 15)
+  hlp$env$button$Manual <-
+    tcltk2::tk2button(hlp$env$button,
+                      text = paste("GAT manual: \n   Step", step),
+                      command = onManual, width = 15)
   tcltk::tkgrid(hlp$env$button$Manual, column = 2, row = 1, pady = 5, padx = 5)
 
   if (!is.null(helppage)) {
@@ -91,10 +92,12 @@ showGAThelp <- function(help = "Find help here.",
       # help(helppage, package = "gatpkg")
       browseURL(paste0(path, "/html/", helppage, ".html"))
     }
-    hlp$env$button$Helppage <- tcltk2::tk2button(hlp$env$button,
-                                                 text = paste("Function help: \n   ", helppage),
-                                                 command = onHelppage, width = 25)
-    tcltk::tkgrid(hlp$env$button$Helppage, column = 3, row = 1, pady = 5, padx = 5)
+    hlp$env$button$Helppage <-
+      tcltk2::tk2button(hlp$env$button,
+                        text = paste("Function help: \n   ", helppage),
+                        command = onHelppage, width = 25)
+    tcltk::tkgrid(hlp$env$button$Helppage, column = 3, row = 1, pady = 5,
+                  padx = 5)
   }
 
   hlp$env$button$Done <- tcltk2::tk2button(hlp$env$button, text = "Ok \n",

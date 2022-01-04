@@ -31,12 +31,11 @@ assistance in using GAT, including instructions and links to help pages.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # create the help message
-# "\u2022" creates a bullet for lists
 hlp <- paste0("Instructions: \n",
               "  \u2022  To continue,  click 'Next >'. \n",
-              "  \u2022  To return to the previous option, click '< Back'. \n",
+              "  \u2022  To return to the last option, click '< Back'. \n",
               "  \u2022  To quit GAT, click 'Cancel'.")
 
 # create the dialog box

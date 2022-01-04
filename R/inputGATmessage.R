@@ -4,8 +4,9 @@
 #' This function opens a dialog window for the user to confirm the contents
 #' of the provided message.
 #'
-#' \if{html}{\figure{inputGATmessage.png}{options: width="300px"
-#'                   alt="Figure: Screenshot of message dialog"}}
+#' \figure{inputGATmessage.png}
+#'
+#' *Figure: Message dialog*
 #'
 #' Select your desired variables and the exclusion criterion for each.
 #'

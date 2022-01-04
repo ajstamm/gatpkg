@@ -16,6 +16,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+## GAT v1.61.1 (January 4, 2021)
+
+* Added structure for pkgdown.
+* Fixed typos and formatting issues in documentation.
+
 ## GAT v1.61.0 (February 8, 2021)
 
 * Added vignette "Assessing GAT Results".

@@ -19,8 +19,9 @@ inputGATexclusions(mapdata, step = 0, exclist = NULL, backopt = TRUE)
 This function opens a dialog window for the user to select the variables
 to be used when identifying exclusions.
 
-\if{html}{\figure{inputGATexclusions.png}{options: width="450px"
-                  alt="Figure: Screenshot of dialog to select your rate settings"}}
+\figure{inputGATexclusions.png}
+
+\emph{Figure: Dialog to select your rate settings}
 
 Select your desired variables and the exclusion criterion for each.
 \itemize{
@@ -57,7 +58,7 @@ The values to use in the exclusion calculations.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # define exclusion criteria
 inputGATexclusions(
   mapdata = hftown@data,

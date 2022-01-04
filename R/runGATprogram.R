@@ -39,7 +39,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # this code will run the default version of GAT
 #' runGATprogram() # uses defaults
 #' }

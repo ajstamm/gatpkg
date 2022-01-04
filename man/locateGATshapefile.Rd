@@ -19,8 +19,9 @@ locateGATshapefile(myfile = "", step = 1, msg = "", myprogram = "GAT")
 This function opens a window that asks the user to select a shapefile for
 aggregation. The file selection window looks like this.
 
-\if{html}{\figure{locateGATshapefile.png}{options: width="500px"
-                  alt="Figure: Screenshot of dialog to select your shapefile"}}
+\figure{locateGATshapefile.png}
+
+\emph{Figure: Dialog to select your shapefile}
 
 Select your folder and file and click \code{Open}. Clicking \code{Cancel}
 on this window will trigger a flag to cancel GAT.
@@ -43,7 +44,7 @@ other windows or click on it to bring it to the front.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # navigate to and select a shapefile
 locateGATshapefile()
 

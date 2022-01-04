@@ -1,3 +1,4 @@
+title: NYS EPHT GAT
 url: https://ajstamm.github.io/gatpkg/docs/
 
 template:
@@ -13,3 +14,58 @@ repo:
     source: https://github.com/ajstamm/gatpkg/blob/master/
     issue: https://github.com/ajstamm/gatpkg/issues/
     user: https://github.com/ajstamm/
+
+navbar:
+  type: inverse
+
+reference:
+- title: "Overarching functions"
+  desc: "Functions that handle standalone tasks"
+- contents:
+  - combineGATcrosswalks
+  - runGATprogram
+- title: "GUI functions"
+  desc: "Functions to create and display pop-ups for the graphic user interface"
+- contents:
+  - starts_with("confirm")
+  - identifyGATaggregators
+  - identifyGATboundary
+  - identifyGATid
+  - identifyGATpopulation
+  - starts_with("input")
+  - locateGATshapefile
+  - starts_with("save")
+  - showGAThelp
+- title: "Aggregation functions"
+  desc: "Functions used in the aggregation process"
+- contents:
+  - aggregateGATnb
+  - createGATregion
+  - defineGATmerge
+  - identifyGATfirstobs
+  - importGATweights
+  - mergeGATareas
+  - rankGATdistance
+  - starts_with("weight")
+- title: Calculation functions
+  desc: Functions that perform various checks and calculations
+- contents:
+  - starts_with("calculate")
+  - starts_with("check")
+  - convertlatlong2UTM
+  - defineGATmapclasses
+- title: Output functions
+  desc: Functions that write output files
+- contents:
+  - starts_with("write")
+- title: Plot functions
+  desc: Functions that create maps
+- contents:
+  - starts_with("plot")
+- title: Objects
+  desc: Embedded objects
+- contents:
+  - gatpkg
+  - hfagg5k
+  - hfpop
+  - hftown

@@ -5,8 +5,9 @@
 #' calculate the rate for a map, if so desired. The dialog window looks like
 #' this.
 #'
-#' \if{html}{\figure{inputGATrate.png}{options: width="450px"
-#'                   alt="Figure: Screenshot of dialog to select your rate settings"}}
+#' \figure{inputGATrate.png}
+#'
+#' *Figure: Dialog to select your rate settings*
 #'
 #' Select your desired rate settings. If you do not want to calculate a rate,
 #' check the box at the top. If you do want to calculate a rate, sselect the
@@ -63,7 +64,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' hlp <- paste0("To continue, select an option and click 'Next >',",
 #'               "\nto return to the previous step, click '< Back',",
 #'               "\nand to quit the program, click 'Cancel'.")

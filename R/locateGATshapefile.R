@@ -4,9 +4,9 @@
 #' This function opens a window that asks the user to select a shapefile for
 #' aggregation. The file selection window looks like this.
 #'
-#' \if{html}{\figure{locateGATshapefile.png}{options: width="500px"
-#'                   alt="Figure: Screenshot of dialog to select your shapefile"}}
-# \if{latex}{\figure{locateshapefile.pdf}{options: width=7in}} # for reference
+#' \figure{locateGATshapefile.png}
+#'
+#' *Figure: Dialog to select your shapefile*
 #'
 #' Select your folder and file and click \code{Open}. Clicking \code{Cancel}
 #' on this window will trigger a flag to cancel GAT.
@@ -34,7 +34,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # navigate to and select a shapefile
 #' locateGATshapefile()
 #'

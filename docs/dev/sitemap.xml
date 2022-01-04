@@ -1,159 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/index.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/404.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/aggregateGATnb.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_changelog.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/calculateGATcompactness.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_citation.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/calculateGATexclusions.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_prepare_shapefile.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/calculateGATflag.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_results_eval.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/checkGATshapefilesize.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_setup.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/checkGATvariabletypes.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_tech_notes.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/combineGATcrosswalks.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_troubleshooting.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/confirmGATbystep.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/gat_tutorial.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/confirmGATquit.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/convertlatlong2UTM.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/authors.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/createGATregion.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/index.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/defineGATmapclasses.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/defineGATmerge.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/aggregateGATnb.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/gatpkg.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/calculateGATcompactness.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/hfagg5k.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/calculateGATexclusions.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/hfpop.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/calculateGATflag.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/hftown.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/checkGATshapefilesize.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/identifyGATaggregators.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/checkGATvariabletypes.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/identifyGATboundary.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/combineGATcrosswalks.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/identifyGATfirstobs.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/confirmGATbystep.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/identifyGATid.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/confirmGATquit.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/identifyGATpopulation.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/convertlatlong2UTM.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/importGATweights.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/createGATregion.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/inputGATaggregators.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/defineGATmapclasses.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/inputGATexclusions.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/defineGATmerge.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/inputGATmerge.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/gatpkg.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/inputGATmessage.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfagg5k.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/inputGATrate.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfpop.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/inputGATvalue.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hftown.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/inputGATvariable.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/identifyGATaggregators.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/locateGATshapefile.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/identifyGATboundary.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/mergeGATareas.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/identifyGATfirstobs.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/plotGATcompare.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/identifyGATid.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/plotGATmaps.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/identifyGATpopulation.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/rankGATdistance.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/importGATweights.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/runGATprogram.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/saveGATfiles.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/inputGATaggregators.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/saveGATkml.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/inputGATexclusions.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/showGAThelp.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/inputGATmerge.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/weightGATmap.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/inputGATmessage.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/weightGATregion.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/inputGATrate.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/writeGATkml.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/inputGATvalue.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/reference/writeGATlog.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/inputGATvariable.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_changelog.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/locateGATshapefile.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_citation.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/mergeGATareas.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_prepare_shapefile.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/plotGATcompare.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_results_eval.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/plotGATmaps.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_setup.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/rankGATdistance.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_tech_notes.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/runGATprogram.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_troubleshooting.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/saveGATfiles.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/articles/gat_tutorial.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/saveGATkml.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/showGAThelp.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/weightGATmap.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/weightGATregion.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/writeGATkml.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/writeGATlog.html</loc>
   </url>
 </urlset>

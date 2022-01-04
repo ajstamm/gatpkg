@@ -5,8 +5,9 @@
 #' identifying variable in the shapefile should be used to label the polygons
 #' for aggregation. The dialog window looks like this.
 #'
-#' \if{html}{\figure{identifyGATid.png}{options: width="340px"
-#'                   alt="Figure: Screenshot of dialog to select your identifier"}}
+#' \figure{identifyGATid.png}
+#'
+#' *Figure: Dialog to select your identifier variable*
 #'
 #' Click on your desired identifier in the drop-down list. Then click on one
 #' of the following buttons.
@@ -27,7 +28,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # identify the character variable to use as the ID
 #' identifyGATid(
 #'   mapdata = hftown@data

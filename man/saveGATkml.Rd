@@ -15,8 +15,9 @@ saveGATkml(step = 0, backopt = TRUE)
 This function opens a dialog window for the user to select whether or not
 to save a KML file. The dialog window looks like this.
 
-\if{html}{\figure{saveGATkml.png}{options: width="405"
-                  alt="Figure: Screenshot of dialog to select KML save.png"}}
+\figure{saveGATkml.png}
+
+\emph{Figure: Screenshot of dialog to select KML save.png}
 
 Select "Yes" if you want to save a KML file. The default selection is "No".
 
@@ -35,7 +36,7 @@ GE in Chrome v9.2.90.1.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # choose yes or no
 saveGATkml()
 }

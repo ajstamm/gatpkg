@@ -5,8 +5,9 @@
 #' selected settings for GAT are correct. It provides the settings in list
 #' format. The dialog window looks like this.
 #'
-#' \if{html}{\figure{confirmGATdialog.png}{options: width="395px"
-#'                   alt="Figure: Screenshot of dialog to confirm your settings"}}
+#' \figure{confirmGATdialog.png}
+#'
+#' *Figure: Dialog to confirm your settings*
 #'
 #' Review your settings. Then click on one of the following buttons.
 #'
@@ -41,7 +42,7 @@
 #### examples ####
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' gatvars <-
 #'   list(
 #'     aggregator1 = "agg1",
@@ -192,8 +193,8 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                     min2, "to", max2, gatvars$aggregator2, "\n")
   }
   mysets <- paste(mysets, paste(rep(" ", 10), collapse = ""),
-                  "Areas excluded (value over maximum):", gatvars$exclmaxval, "of",
-                  gatvars$numrow, "\n")
+                  "Areas excluded (value over maximum):", gatvars$exclmaxval,
+                  "of", gatvars$numrow, "\n")
 
   ### exclusions ####
   mysets <- paste0(mysets, "  ", stepslist[5], ":")

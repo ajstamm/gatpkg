@@ -10,8 +10,9 @@ confirmGATquit()
 This function opens a dialog window for the user to select whether to quit
 or continue GAT.
 
-\if{html}{\figure{confirmGATquit.png}{options: width="405"
-                  alt="Figure: Screenshot of dialog to confirm that you want to quit GAT"}}
+\figure{confirmGATquit.png}
+
+\emph{Figure: Dialog to confirm quitting GAT}
 
 Click on one of the following buttons.
 \itemize{
@@ -21,7 +22,7 @@ Click on one of the following buttons.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # choose yes or no
 confirmGATquit()
 }

@@ -72,7 +72,7 @@ any warnings that were generated.
 # if you run this example, it saves "my_hftown.log" to your working
 # directory
 
-\donttest{
+if (interactive()) {
 gatvars <- list(
   myidvar = "ID",             # character variable of unique values
   aggregator1 = "TOTAL_POP",  # numeric variable

@@ -5,8 +5,9 @@
 #' filename to use when saving the files to be processed. The dialog window
 #' looks like this.
 #'
-#' \if{html}{\figure{saveGATfiles.png}{options: width="500px"
-#'                   alt="Figure: Screenshot of dialog to select your save location"}}
+#' \figure{saveGATfiles.png}
+#'
+#' *Figure: Dialog to select your save location*
 #'
 #' Select the folder in which to save your file, then type a file name without
 #' the extension (extensions are removed anyway). Then click on one of the
@@ -31,7 +32,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # navigate to the folder and type a filename
 #' saveGATfiles()
 #' }

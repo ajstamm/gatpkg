@@ -75,6 +75,8 @@ For details on how merges are assigned, see
 \code{vignette("gat_tech_notes", package = "gatpkg")}}.
 }
 \examples{
+
+if (interactive()) {
 gatvars <- list(
   myidvar = "ID",             # character variable of unique values
   aggregator1 = "TOTAL_POP",  # numeric variable
@@ -107,5 +109,6 @@ my_merge <-
     filevars = filevars,
     pwrepeat = FALSE # don't need pwrepeat if popwt = FALSE
   )
+}
 
 }

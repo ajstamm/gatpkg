@@ -37,8 +37,9 @@ This function opens a dialog window for the user to select the settings to
 calculate the rate for a map, if so desired. The dialog window looks like
 this.
 
-\if{html}{\figure{inputGATrate.png}{options: width="450px"
-                  alt="Figure: Screenshot of dialog to select your rate settings"}}
+\figure{inputGATrate.png}
+
+\emph{Figure: Dialog to select your rate settings}
 
 Select your desired rate settings. If you do not want to calculate a rate,
 check the box at the top. If you do want to calculate a rate, sselect the
@@ -84,7 +85,7 @@ The formal name of the selected ColorBrewer color scheme.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 hlp <- paste0("To continue, select an option and click 'Next >',",
               "\nto return to the previous step, click '< Back',",
               "\nand to quit the program, click 'Cancel'.")
