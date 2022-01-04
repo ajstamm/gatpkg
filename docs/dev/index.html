@@ -81,6 +81,9 @@
     </li>
   </ul>
 </li>
+<li>
+  <a href="news/index.html">Changelog</a>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -108,6 +111,7 @@
 </h1></div>
 <p>The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding from the CDC administered through Health Research Incorporated. GAT is maintained by Abigail Stamm at the NYSDOH.</p>
 <p>GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.</p>
+<p>View <a href="https://ajstamm.github.io/gatpkg/docs/dev/index.html">GAT’s webpage</a>.</p>
 <div class="section level3">
 <h3 id="installing-gat">Installing GAT<a class="anchor" aria-label="anchor" href="#installing-gat"></a>
 </h3>
@@ -118,7 +122,7 @@
 <span class="co"># install the development version of GAT from Github with all </span>
 <span class="co"># required packages from CRAN</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://devtools.r-lib.org/reference/remote-reexports.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ajstamm/gatpkg"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>If running the code above doesn’t work, you can also install GAT manually. Download the <a href="compiles/gatpkg_1.61.0.tar.gz?raw=TRUE">most recently compiled version of GAT</a> or check the <a href="compiles">compiles</a> folder for earlier versions of GAT, then download and follow <a href="presentations/gat_install_instructions.pdf">instructions on how to install GAT</a>, including a list of required R packages on CRAN.</p>
+<p>If running the code above doesn’t work, you can also install GAT manually. Download the <a href="https://github.com/ajstamm/gatpkg/blob/master/compiles/gatpkg_1.61.0.tar.gz?raw=TRUE" class="external-link">most recently compiled version of GAT</a> or check the <a href="https://github.com/ajstamm/gatpkg/blob/master/compiles" class="external-link">compiles</a> folder for earlier versions of GAT, then download and follow <a href="https://github.com/ajstamm/gatpkg/blob/master/presentations/gat_install_instructions.pdf" class="external-link">instructions on how to install GAT</a>, including a list of required R packages on CRAN.</p>
 </div>
 <div class="section level3">
 <h3 id="why-create-gat">Why create GAT<a class="anchor" aria-label="anchor" href="#why-create-gat"></a>
@@ -138,26 +142,14 @@
 </ol>
 <p>GAT outputs two shapefiles, one containing aggregated areas and one containing a crosswalk between the original areas and the aggregated areas. GAT also outputs a log, several maps to help you identify potential issues in the aggregation process, and, optionally, a KML file.</p>
 <p>The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.</p>
-</div>
-<div class="section level3">
-<h3 id="learn-more-about-gat">Learn more about GAT<a class="anchor" aria-label="anchor" href="#learn-more-about-gat"></a>
-</h3>
-<p>View an <a href="https://youtu.be/BRxhay4FhGI?t=1096" class="external-link">introduction to GAT</a> presented at the 2020 NAHDO conference. Download the <a href="presentations/NYS_GAT_NAHDO_2020.pdf">NAHDO conference slides</a>.</p>
-<p>View an elevator pitch on the <a href="https://www.youtube.com/watch?v=r_wRMpqZcE8&amp;list=PL4IzsxWztPdnviiir8c5GaarXd9vZ2TIP&amp;index=24" class="external-link">development of GAT</a> presented at the 2021 useR! conference. Download the <a href="presentations/NYS_GAT_useR_2021.pdf">slides in PDF</a> or <a href="presentations/NYS_GAT_useR_2021.ppt">slides in PPT</a>.</p>
-<p>Download a <a href="presentations/NYS_GAT_PHC_2021.pdf">poster comparing two aggregation methods</a> presented at the 2021 CDC Place &amp; Health Conference.</p>
-</div>
-<div class="section level3">
-<h3 id="documentation-available-within-gatpkg">Documentation available within gatpkg<a class="anchor" aria-label="anchor" href="#documentation-available-within-gatpkg"></a>
-</h3>
-<p><strong>Technical Notes</strong>: How each merge type works, compactness ratio, thinning<br><strong>Setting up GAT</strong>: How to install R and GAT (variant of <a href="presentations/gat_install_instructions.pdf">GAT installation instructions</a>)<br><strong>Shapefile specifications</strong>: Requirements for a shapefile you plan to process with GAT<br><strong>Tutorial</strong>: A basic run-through of GAT<br><strong>Evaluating results</strong>: Ways to identify and address issues with your aggregated areas<br><strong>Troubleshooting</strong>: How to handle issues that arise in GAT<br><strong>Change Log</strong>: Changes across GAT versions, notably from the 2015 script to the 2020 package (see the <a href="archive/">archive</a>)</p>
+<p>To learn more about GAT, view our <a href="https://github.com/ajstamm/gatpkg/blob/master/presentations" class="external-link">presentations</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="disclaimer">Disclaimer<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
 </h3>
-<p>GAT is provided as is.</p>
-<p><strong>GAT is still in beta testing.</strong> We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the “Issues” tab or by emailing <a href="mailto:epht@health.ny.gov?subject=%5BGAT%20in%20R%5D">NYSDOH EPHT</a>.</p>
-<p>GAT was written in R-2.9.2 in Windows XP and was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5.3 through R-4.1.1.</p>
-<p>If you are interested in GAT’s history, including the original SAS and R scripts, visit the <a href="archive/">archive</a>.</p>
+<p>GAT is provided as is. We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the “Issues” tab or by emailing <a href="mailto:epht@health.ny.gov?subject=%5BGAT%20in%20R%5D">NYSDOH EPHT</a>.</p>
+<p>GAT was written in R-2.9.2 in Windows XP and was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5 through R-4.1.</p>
+<p>If you are interested in GAT’s history, including the original SAS and R scripts, visit the <a href="https://github.com/ajstamm/gatpkg/blob/master/archive/" class="external-link">archive</a>.</p>
 </div>
 </div>
 
