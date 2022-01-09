@@ -48,9 +48,8 @@ The areas are not excluded, but an incorrect number of areas is displayed. If yo
 The dialog boxes may be hidden beneath other windows. Close or minimize extraneous windows or check the taskbar for an icon that looks like a thin quill/feather.
 
 
-Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technocal notes](../doc/gat_tech_notes.html)). 
+Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technical notes](../doc/gat_tech_notes.html)). 
 
-The progress bars were designed to help you determine whether GAT has stalled. Using population weighted centroids, merging shapefiles with thousands of polygons, and saving KML files can also cause GAT to run slowly, so allow a few minutes for each of these steps. For any steps besides saving files and population weighting, if a progress bar is not updating at least once a minute, it is possible GAT has stalled and you will need to restart R. 
 
 
 
@@ -74,6 +73,10 @@ This message appears in the R console:
 Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ".shp", ".dbf", ".prj") from the directory you are trying to save to.
 
 ## GAT is very slow
+
+The progress bars were designed to help you determine whether GAT has stalled. Using population weighted centroids, merging shapefiles with thousands of polygons, and saving KML files can also cause GAT to run slowly, so allow a few minutes for each of these steps. For any steps besides saving files and population weighting, if a progress bar is not updating at least once a minute, it is possible GAT has stalled and you will need to restart R. 
+
+
 ## Warning for classInt
 
 This message appears in the R console: 

@@ -37,7 +37,7 @@ The package includes two embedded shapefiles to use when testing several of the 
 
 # Variables created by GAT
 
-GAT creates several variables in both the original shapefile, which it resaves as a crosswalk, and the aggregated shapfile. These variables are listed below. For the flag variable, a brief data dictionary is provided both below and in the log produced by GAT, to help identify possible issues in the aggregation.
+GAT creates several variables in both the original shapefile, which it resaves as a crosswalk, and the aggregated shapefile. These variables are listed below. For the flag variable, a brief data dictionary is provided both below and in the log produced by GAT, to help identify possible issues in the aggregation.
 
 The crosswalk shapefile will have the following variables added:
 
@@ -101,7 +101,7 @@ This results in a subset of areas that all require merging. This subset is reord
 After the target area has been identified, GAT generates a list of its neighbors. Areas are considered neighbors if they share at least two points with the selected area. However, not all of these neighbors may be eligible for merging. GAT considers several criteria when selecting eligible areas.
 
 * **Always ineligible:** Flagged areas, which include areas indicated by exclusion criteria or with an aggregation value above the maximum. In addition, when merged, the resulting areas *cannot* have values above the maximum (target area value + merge area value $\ngtr$ maximum value).
-* **Adjacent:** The default is for areas to merge only to adjacent areas. To override this, use the option `runGATprogram(adjacent = FALSE), which will result in adjacent areas being preferred, but not required. 
+* **Adjacent:** The default is for areas to merge only to adjacent areas. To override this, use the option `runGATprogram(adjacent = FALSE)`, which will result in adjacent areas being preferred, but not required. 
 * **Inside border:** This option is selected in the dialogs. If you select a border, GAT will restrict neighbors only to areas within the border. If there are no eligible neighbors within the border and you used the option `adjacent = FALSE`, GAT will select the closest eligible area within the border, even if it is not adjacent. If you select a border and do not check the box to enforce the border, GAT will consider neighbors outside the border last.
 * **Value below minimum:** The default is for GAT to ignore whether the values of neighbors are below the minimum aggregation value. If you want to merge areas whose values are below the minimum aggregation value first, use the option `runGATprogram(minfirst = TRUE)`. If there are no neighbors with aggregation values below the minimum value, GAT will recheck for neighbors without this restriction.
 
@@ -169,8 +169,6 @@ The program may merge very slowly if the geographic boundaries are unnecessarily
 
 ```{r nodespacing, out.width = '80%', fig.cap = 'Example of decreasing level of detail as nodes are thinned', echo = FALSE}
 knitr::include_graphics("images/node_spacing.png")
-
-
 ```
 
 # Compactness ratio
@@ -185,8 +183,3 @@ To calculate compactness ratio, the perimeter of the shape is calculated, then a
 knitr::include_graphics("images/compactness_example.png")
 ```
 
-***
-
-Prepared for the New York State Department of Health by Abigail Stamm, Thomas Talbot, and Gwen Babcock.
-
-For questions or comments, email epht@health.ny.gov.

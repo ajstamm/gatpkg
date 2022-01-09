@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GAT v1.61.1 (January 4, 2021)
+## GAT v1.61.1 (January 4, 2022)
 
 * Added structure for pkgdown.
 * Fixed typos and formatting issues in documentation.
@@ -24,7 +24,7 @@ knitr::opts_chunk$set(
 ## GAT v1.61.0 (February 8, 2021)
 
 * Added vignette "Assessing GAT Results".
-* Fixed bugs and typos in confirmGATbystep() and runGATprogram(), notably the 
+* Fixed bugs and typos in `confirmGATbystep()` and `runGATprogram()`, notably the 
   bug that incorrectly displayed number of excluded areas over maximum.
 * Added objects "ismax1", "ismin2", and "ismax2" to the gatvars list object
   to track if minimum and maximum values were defined by the user and added
@@ -32,29 +32,29 @@ knitr::opts_chunk$set(
 * Created a separate section in the technical notes to describe variables
   created by GAT.
 * Moved citation and acknowledgements from set-up to a separate vignette.
-* Restructured locateGATshapefile() to add a modifiable status bar option.
+* Restructured `locateGATshapefile()` to add a modifiable status bar option.
 * Added and revised several function examples.
 * Added the following function options (and corresponding code in runGATprogram):
-    * writeGATlog: added settingsfile option to allow incorrectly written logs 
-      to be regenerated from the settings.Rdata file produced by GAT
-    * defineGATmerge: added progressbar option to suppress the progress bar if
-      desired
-    * plotGATmaps and plotGATcompare: added closemap option to automatically 
-      close map windows if desired
+    * `writeGATlog()`: added settingsfile option to allow incorrectly written 
+      logs to be regenerated from the settings.Rdata file produced by GAT
+    * `defineGATmerge()`: added progressbar option to suppress the progress bar
+      if desired
+    * `plotGATmaps()` and `plotGATcompare()`: added closemap option to 
+      automatically close map windows if desired
 * Dropped compatibility for R-3.4.0.
 
 ## GAT v1.60.3 (August 31, 2020)
 
-* Added vignette "Preparing your shapefile for GAT".
+* Added vignette [Preparing your shapefile for GAT](gat_prepare_shapefile.html).
 
 ## GAT v1.60.2 (August 14, 2020)
 
-* Completed bug fixes in defineGATmerge.
-* Added function aggregateGATnb, which is used in defineGATmerge.
+* Completed bug fixes in `defineGATmerge()`.
+* Added function `aggregateGATnb()`, which is used in `defineGATmerge()`.
 
 ## GAT v1.60.1 (August 6, 2020)
 
-* Addressed bug fixes in defineGATmerge.
+* Patched bugs in `defineGATmerge()`.
 * Added XML and network saving issues to the troubleshooting document.
 
 ## GAT v1.60.0 (Jan 2019 - Jul 2020)
@@ -70,7 +70,7 @@ All changes from January 2019 onward by Abigail Stamm.
   file saving.
 * Converted all instances of svdialogs to tcltk and where possible, 
   upgraded tcltk code to tcltk2.
-* Rewrote KML code to use plotKML(), which sped it up considerably.
+* Rewrote KML code to use `plotKML()`, which sped it up considerably.
 * Rewrote and expanded quit code to request quit confirmation and not 
   crash GAT.
 * Standardized GAT-created variable names.
