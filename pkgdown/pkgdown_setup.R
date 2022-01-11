@@ -6,11 +6,11 @@
 # deactivate internet check - will sync later
 options(pkgdown.internet = F)
 
-# Run to build the website
-pkgdown::build_site(new_process = FALSE, devel = TRUE)
-
 # after everything is working, rerun
 pkgdown::build_site(new_process = TRUE, devel = TRUE)
+
+# Run to build the website
+pkgdown::build_site(new_process = FALSE, devel = TRUE)
 
 # fix reference list
 pkgdown::build_reference_index()
