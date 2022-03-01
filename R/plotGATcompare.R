@@ -43,12 +43,8 @@
 #' )
 #'
 #' # draw the map
-#' plotGATcompare(
-#'   areaold = hftown,
-#'   areanew = hfagg5k,
-#'   mergevars = mergevars,
-#'   gatvars = gatvars
-#' )
+#' plotGATcompare(areaold = hftown, areanew = hfagg5k,
+#'   mergevars = mergevars, gatvars = gatvars)
 #'
 #' @export
 
@@ -58,6 +54,10 @@
 # but function doesn't recognize them
 plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
                            closemap = FALSE) {
+  # temporary sf conversion
+  areaold <- sf::st_as_sf(areaold)
+  areanew <- sf::st_as_sf(areanew)
+
   # function to handle numbers
   numformat <- function(num) {
     format(as.numeric(gsub(",", "", num)), big.mark=",", scientific=FALSE)
@@ -70,9 +70,9 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
   # plot shapefiles ####
   graphics::par(mar = c(3.5,0,2,0), mgp = c(0,0,0)) # bottom, left, top, right
 
-  sp::plot(areaold, border = "red", col = "transparent",
+  plot(areaold$geometry, border = "red", col = "transparent",
            lty = "solid", lwd = 1)
-  sp::plot(areanew, border = "black", col = "transparent",
+  plot(areanew$geometry, border = "black", col = "transparent",
            lty = "solid", lwd = 2, add = TRUE)
 
   legend("topleft", legend = c("Original areas", "Aggregated areas"),

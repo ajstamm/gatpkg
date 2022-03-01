@@ -30,22 +30,26 @@
 #'
 #' @export
 weightGATregion <- function(area, pop, IDlist, idvar, nrid) {
-  # isolate polygons of interest
-  area@data <- cbind(area@data, IDlist)
-  area <- area[area@data$IDlist == nrid, ]
+  # temporary sf conversion ----
+  area <- sf::st_as_sf(area)
+  # old_crs <- sf::st_crs(area)
 
-  # convert polygons to sf
-  areasf <- sf::st_as_sf(area)
+  # isolate polygons of interest ----
+  area <- cbind(area, IDlist)
+  area <- area[area$IDlist == nrid, ]
 
-  # assign consistent CRS
-  mycrs <- convertlatlong2UTM(area, units = "m")
-  areasf <- sf::st_transform(areasf, mycrs)
-  sf::st_agr(areasf) <- "constant"
-  pop <- sf::st_transform(pop, mycrs)
+  # assign consistent CRS ----
+  # mycrs <- convertlatlong2UTM(area, units = "m")
+  # area <- sf::st_transform(area, mycrs)
+  # sf::st_agr(area) <- "constant"
+  # pop <- sf::st_transform(pop, mycrs)
+  # sf::st_agr(pop) <- "constant"
+  pop <- sf::st_transform(pop, sf::st_crs(area))
   sf::st_agr(pop) <- "constant"
 
-  # intersect layers
-  popshp <- sf::st_intersection(pop, areasf)
+  # intersect layers ----
+  popshp <- sf::st_intersection(pop, area)
+
   coords <- data.frame(
     # lat/long not necessary
     # LATITUDE = areasf$LATITUDE[IDlist==nrid][1],

@@ -37,48 +37,30 @@
 #' @examples
 #'
 #' ## plot population
-#' # create a randomized flag variable (will not match label)
-#' hftown@data$GATflag <-
-#'   sample(
-#'     c(0, 10), nrow(hftown@data),
-#'     replace = TRUE,
-#'     prob = c(.9, .1)
-#'   )
-#' # plot the variable
-#' plotGATmaps(
-#'   area = hftown,
-#'   var = "TOTAL_POP",
-#'   clr = "YlGn",
-#'   title.main = "Population",
-#'   breaks = 3,
-#'   mapstats = TRUE
-#' )
+#' # create a flag variable (used to check for and map exceptions)
+#' hftown$GATflag <- 0
 #'
-#' ## plot a rate
-#' # create a randomized flag variable (will not match labels)
-#' # 0 = no flag, 1-3 = excluded by user, 10 = below minimum aggregation value
-#' hftown@data$GATflag <-
-#'   sample(
-#'     c(0, 1, 10), nrow(hftown@data),
-#'     replace = TRUE,
-#'     prob = c(.8, .1, .1)
-#'   )
+#' # plot the population
+#' plotGATmaps(area = hftown, var = "TOTAL_POP", clr = "YlGn",
+#'   title.main = "Population", breaks = 3, mapstats = TRUE)
+#'
+#' ## to plot a rate
+#' # create a randomized flag variable (data will not match labels here)
+#' # 0 = no flag, 1-3 = excluded by user, 5 = above maximum aggregation value,
+#' # 10 = below minimum aggregation value
+#' hftown$GATflag <-
+#'   sample(c(0, 1, 5, 10), nrow(hftown), replace = TRUE,
+#'   prob = c(.8, .1, .05, .05))
 #'
 #' # create a rate
-#' hftown@data$pop_dens <- 100 * hftown@data$TOTAL_POP / hftown@data$AREALAND
-#' # add some random missings to illustrate uncalculated rates
-#' hftown@data$pop_dens[sample(length(hftown@data), 2)] <- NA
+#' hftown$pop_dens <- 10000 * hftown$TOTAL_POP / hftown$AREALAND
+#' # add a couple random missings to illustrate uncalculated rates
+#' hftown$pop_dens[sample(length(hftown), 2)] <- NA
 #'
 #' # plot the rate
-#' plotGATmaps(
-#'   area = hftown,
-#'   var = "pop_dens",
-#'   clr = "YlGn",
-#'   title.main = "population density",
-#'   breaks = 3,
-#'   mapstats = TRUE,
-#'   ratemap = TRUE
-#' )
+#' plotGATmaps(area = hftown, var = "pop_dens", clr = "YlGn",
+#'   title.main = "population density", breaks = 3,
+#'   mapstats = TRUE, ratemap = TRUE)
 #'
 #' @export
 
@@ -86,31 +68,41 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
                         after = FALSE, title.sub = NULL, breaks = 5,
                         colcode = NULL, mapstats = FALSE, ratemap = FALSE,
                         closemap = FALSE) {
+  # temporary sf conversion
+  area <- sf::st_as_sf(area)
+
   # set map size
   dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
   # enable display list
   dev.control('enable')
 
   # plot shapefile ####
+  # calling dev.off at the end will reset par()
   graphics::par(mar=c(2.5,0,2,0), mgp = c(0, 0, 0), xpd = TRUE)
     # margins: bottom, left, top, right
     # axes: label, padding, tick (?)
     # xpd: draw outside margins?
 
-  sp::plot(area, lwd=.5)
+  # sp::plot(area, lwd=.5)
+  plot(area$geometry, lwd=.5)
   title(main = title.main, sub = title.sub, cex.main = 2)
 
   if (is.null(colcode)) {
     if (!ratemap) {
       if (is.null(class)) {
-        plotvar <- area@data[, var]
+        # plotvar <- area@data[, var]
+        plotvar <- data.frame(area)[, var]
         plotvargood <- plotvar[which(is.finite(plotvar))]
         if (length(table(plotvargood)) < breaks) {
           breaks = length(table(plotvargood))
-          myclass <- classInt::classIntervals(area@data[, var], breaks,
-                                              style = "fixed",
-                                              fixedBreaks = names(table(plotvargood)),
-                                              warnSmallN = FALSE)
+          # myclass <- classInt::classIntervals(area@data[, var], breaks,
+          #                                     style = "fixed",
+          #                                     fixedBreaks = names(table(plotvargood)),
+          #                                     warnSmallN = FALSE)
+          myclass <- classInt::classIntervals(
+                       plotvar, breaks, style = "fixed",
+                       fixedBreaks = as.numeric(names(table(plotvargood))),
+                       warnSmallN = FALSE)
 
         } else {
           myclass <- classInt::classIntervals(plotvargood, breaks,
@@ -118,13 +110,17 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
                                               warnSmallN = FALSE)
         }
       } else if (after == TRUE) {
-        maxpop <- max(area@data[, var])
+        # maxpop <- max(area@data[, var])
+        maxpop <- max(data.frame(area)[, var])
         mybreaks <- c(class$brks, maxpop)
         # set upper limits for maps accordingly, so all data is within some range
-        myclass <- classInt::classIntervals(area@data[, var], breaks,
-                                            style = "fixed",
-                                            fixedBreaks = mybreaks,
-                                            warnSmallN = FALSE)
+        # myclass <- classInt::classIntervals(area@data[, var], breaks,
+        #                                     style = "fixed",
+        #                                     fixedBreaks = mybreaks,
+        #                                     warnSmallN = FALSE)
+        myclass <- classInt::classIntervals(
+                     data.frame(area)[, var], breaks, style = "fixed",
+                     fixedBreaks = mybreaks, warnSmallN = FALSE)
       } else {
         myclass <- class
       }
@@ -132,10 +128,13 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
       plotclr <- RColorBrewer::brewer.pal(breaks, clr)
       colcode <- classInt::findColours(myclass, plotclr)
     } else if (ratemap) {
-      plotvar <- area@data[, var]
+      # plotvar <- area@data[, var]
+      plotvar <- data.frame(area)[, var]
       plotgood <- plotvar[which(is.finite(plotvar))] # removes missings
       missingtag <- 10*max(plotgood)
-      area@data$rateplot <- ifelse(!is.finite(plotvar) | is.na(plotvar),
+      # area@data$rateplot <- ifelse(!is.finite(plotvar) | is.na(plotvar),
+      #                              missingtag, plotvar)
+      area$rateplot <- ifelse(!is.finite(plotvar) | is.na(plotvar),
                                    missingtag, plotvar)
 
       myclass <- classInt::classIntervals(plotgood, breaks,
@@ -150,7 +149,9 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
         plotclr <- c(plotclr, "Lavender")
       }
 
-      myclass <- classInt::classIntervals(area@data$rateplot, style = "fixed",
+      # myclass <- classInt::classIntervals(area@data$rateplot, style = "fixed",
+      #                                     fixedBreaks = mybreaks)
+      myclass <- classInt::classIntervals(area$rateplot, style = "fixed",
                                           fixedBreaks = mybreaks)
       colcode <- classInt::findColours(myclass, plotclr)
 
@@ -163,32 +164,42 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
     }
   }
 
-  sp::plot(area, col = colcode, add = TRUE, lwd=.5)
+  # sp::plot(area, col = colcode, add = TRUE, lwd=.5)
+  plot(area$geometry, col = colcode, add = TRUE, lwd=.5)
 
   labels = names(attr(colcode, "table"))
   fill = attr(colcode, "palette")
   border = rep("black", length(fill))
 
-  # highlight flagged areas if relevant ####
-  myflags <- subset(area, area@data$GATflag %in% 1:3)
-  if (nrow(myflags@data) > 0) {
-    sp::plot(myflags, border = "CornflowerBlue", add = TRUE, lwd = 3)
+  # highlight flagged areas if relevant ----
+  # myflags <- subset(area, area@data$GATflag %in% 1:3)
+  myflags <- area[area$GATflag %in% 1:3, ]
+  if (nrow(myflags) > 0) {
+    # sp::plot(myflags, border = "CornflowerBlue", add = TRUE, lwd = 3)
+    plot(myflags$geometry, border = "CornflowerBlue", col = "transparent",
+         add = TRUE, lwd = 2)
     labels = c(labels, "Excluded by user")
     fill = c(fill, "white")
     border = c(border, "CornflowerBlue")
   }
 
-  myflags <- subset(area, area@data$GATflag == 10)
-  if (nrow(myflags@data) > 0) {
-    sp::plot(myflags, border = "cyan", add = TRUE, lwd = 3)
+  # myflags <- subset(area, area@data$GATflag == 10)
+  myflags <- area[area$GATflag == 10, ]
+  if (nrow(myflags) > 0) {
+    # sp::plot(myflags, border = "cyan", add = TRUE, lwd = 3)
+    plot(myflags$geometry, border = "cyan", col = "transparent",
+         add = TRUE, lwd = 2)
     labels = c(labels, "Below minimum aggregation value")
     fill = c(fill, "white")
     border = c(border, "cyan")
   }
 
-  myflags <- subset(area, area@data$GATflag == 5)
-  if (nrow(myflags@data) > 0) {
-    sp::plot(myflags, border = "magenta", add = TRUE, lwd = 3)
+  # myflags <- subset(area, area@data$GATflag == 5)
+  myflags <- area[area$GATflag == 5, ]
+  if (nrow(myflags) > 0) {
+    # sp::plot(myflags, border = "magenta", add = TRUE, lwd = 3)
+    plot(myflags$geometry, border = "magenta", col = "transparent",
+         add = TRUE, lwd = 2)
     labels = c(labels, "Above maximum aggregation value")
     fill = c(fill, "white")
     border = c(border, "magenta")
@@ -199,7 +210,8 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
 
   # calculate summary statistics if mapstats = TRUE ####
   if (mapstats) {
-    statsvar <- area@data[, var]
+    # statsvar <- area@data[, var]
+    statsvar <- data.frame(area)[, var]
     statsgood <- statsvar[which(is.finite(statsvar))]
     if (ratemap) {
       min <- round(min(statsgood), digits = 2)
@@ -220,19 +232,27 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
                    "Maximum:", numformat(max), "\n")
 
     # get latitude/longitude limits from shapefile
-    extent <- sp::bbox(area)
-    if (extent["x", "max"] - extent["x", "min"] <
-        (extent["y", "max"] - extent["y", "min"])) {
-      xbuffer <- extent["x", "max"] + (extent["x", "max"] - extent["x", "min"]) / 2
-    } else if (extent["x", "max"] - extent["x", "min"] <
-               (extent["y", "max"] - extent["y", "min"]) * 3/2) {
-      xbuffer <- extent["x", "max"] + (extent["x", "max"] - extent["x", "min"]) / 4
+    # extent <- sp::bbox(area)
+    extent <- sf::st_bbox(area)
+    # if (extent["x", "max"] - extent["x", "min"] <
+    #     (extent["y", "max"] - extent["y", "min"])) {
+    #   xbuffer <- extent["x", "max"] + (extent["x", "max"] - extent["x", "min"]) / 2
+    # } else if (extent["x", "max"] - extent["x", "min"] <
+    #            (extent["y", "max"] - extent["y", "min"]) * 3/2) {
+    #   xbuffer <- extent["x", "max"] + (extent["x", "max"] - extent["x", "min"]) / 4
+    # } else {
+    #   xbuffer <- extent["x", "max"]
+    # }
+    if (extent$xmax - extent$xmin < (extent$ymax - extent$ymin)) {
+      xbuffer <- extent$xmax + (extent$xmax - extent$xmin) / 2
+    } else if (extent$xmax - extent$xmin < (extent$ymax - extent$ymin) * 3/2) {
+      xbuffer <- extent$xmax + (extent$xmax - extent$xmin) / 4
     } else {
-      xbuffer <- extent["x", "max"]
+      xbuffer <- extent$xmax
     }
 
-
-    graphics::text(xbuffer, extent["y", "max"], labels = stats, adj = c(1, 1))
+    # graphics::text(xbuffer, extent["y", "max"], labels = stats, adj = c(1, 1))
+    graphics::text(xbuffer, extent$ymax, labels = stats, adj = c(1, 1))
     # play with "pos" a bit; there has to be a more efficient method
   }
 
@@ -257,8 +277,10 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
   # save map ####
   map <- recordPlot()
 
-  graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0)) # default bottom, left, top, right
+  graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0))
+    # default bottom, left, top, right
 
+  # reset
   if (closemap) {
     dev.off()
   }

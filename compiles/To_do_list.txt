@@ -13,4 +13,59 @@ Fixes and improvements to address:
 * For all vignettes and help files, check image alt/descriptions
 * Opening any help dialog changes all background colors to white
 * convert all instances of rgdal/rgeos and if possible sp to sf, which is faster and better maintained
+	note:   spdep works with sf
+			not sure if spdep and maptools need to be phased out, so ignore for now
+	* runGATprogram (rgdal, sp, maptools) 
+		- last (convert function by function and test, then combine everything here) 
+		- updated to reflect option changes in defineGATmerge()
+	* mergeGATareas (sp, maptools)
+	* writeGATlog (rgdal)
+	* writeGATkml (sp - will sf work?)
+	* calculateGATcompactness (sp, rgeos)
+	
+	
+Started, but buggy
+	* createGATregion (sp) 
+		- inconsistent results, seems to work now
+	* defineGATmerge (sp, spdep) 
+		- works fully, but buggy 
+		- why flagging so many areas?
+		- also, may have accidentally killed the crosswalk
+	* combineGATcrosswalks (rgdal) 
+		- started, but untested; rethought exported datasets to use as examples 
+		- or create datasets as part of examples?
+	* zzz - hftown & hfpop converted, then everything else breaks
 
+Completed - need to fix before final integration?
+	* rankGATdistance (sp) - function finished; test spdep in example
+	* weightGATmap (sp structure) 
+		- issue with createGATregion?
+
+Completed - these output layers - wait to copy
+	* identifyGATfirstobs (sp structure)
+	* importGATweights (sp)
+	* calculateGATexclusions (sf structure)
+	* convertlatlong2UTM (sp)
+
+Skippable?
+	* aggregateGATnb - find sf equivalent? (spdep)
+
+Completed - none of these output layers - should be able to copy now
+	* weightGATregion (sp structure)
+	* convertlatlong2UTM (sp)
+	* plotGATmaps (sp)
+	* plotGATcompare (sp)
+	* checkGATvariablestypes
+
+
+--------------------
+  unrelated to GAT
+--------------------
+
+rename code for batch files in command line
+ren "*.*" "cat_*.*"
+
+alternately, name file do(1000).* in explorer, then run
+ren *.* dog_???.*
+
+or use free https://www.bulkrenameutility.co.uk/

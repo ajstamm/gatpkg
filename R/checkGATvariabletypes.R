@@ -21,16 +21,14 @@
 checkGATvariabletypes <- function(mapdata, type = "number") {
   # once read in, get variable names and classes
   # note "count" option gives a vector instead of a logical
-  listitems <- names(mapdata) # need to limit this to numeric variables
-  listtype <- sapply(mapdata, class) # get data classes for all columns
-  listtype[listtype %in% c("factor", "character")] <- FALSE
-  listtype[listtype %in% c("integer", "numeric")] <- TRUE
+  items <- names(mapdata) # need to limit this to numeric variables
+  types <- sapply(mapdata, class) # get data classes for all columns
   if (type == "number") {
-    vars <- listitems[listtype == TRUE]
-    msg = "Sorry, Your shapefile has no numeric data and won't work in the GAT."
+    vars <- items[grepl("integer|numeric", types)]
+    msg = "Sorry, Your shapefile has no numeric fields and won't work in GAT."
   } else if (type == "character") {
-    vars <- listitems[listtype == FALSE]
-    msg = "Sorry, Your shapefile has no character data and won't work in the GAT."
+    vars <- items[grepl("factor|character", types)]
+    msg = "Sorry, Your shapefile has no character fields and won't work in GAT."
   }
   if (length(vars) < 1) {
     tcltk::tkmessageBox(title = "File data problem", message = msg,
