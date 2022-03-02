@@ -57,15 +57,3 @@ Completed - none of these output layers - should be able to copy now
 	* plotGATcompare (sp)
 	* checkGATvariablestypes
 
-
---------------------
-  unrelated to GAT
---------------------
-
-rename code for batch files in command line
-ren "*.*" "cat_*.*"
-
-alternately, name file do(1000).* in explorer, then run
-ren *.* dog_???.*
-
-or use free https://www.bulkrenameutility.co.uk/
