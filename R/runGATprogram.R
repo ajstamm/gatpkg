@@ -64,7 +64,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
   tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
                               max = 26, initial = 0, width = 400)
 
-  # pre-load lists
+  # pre-load lists ----
   step <- 1 # start at step 1
   temp <- list(flagconfirm = FALSE, msg = "")
   myshps <- list()
@@ -75,21 +75,18 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     temp$flagconfirm <- TRUE
     filevars$userout <- paste0(filevars$userout, "_2")
     filevars$fileout <- paste0(filevars$fileout, "_2")
-    temp$shp <- rgdal::readOGR(dsn = filevars$pathin,
-                               layer = filevars$filein,
-                               stringsAsFactors = FALSE)
-    temp$mapdata <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
-                                      as.is = TRUE)
-    temp$numerics <- checkGATvariabletypes(temp$mapdata, type = "number")
+    temp$shp <- sf::st_read(dsn = filevars$pathin,
+                            layer = filevars$filein)
+    temp$numerics <- checkGATvariabletypes(temp$shp, type = "number")
     temp$old_vars <- c()
-    for (i in 1:ncol(temp$mapdata)) {
+    for (i in 1:ncol(temp$shp)) {
       # possibly these can be removed entirely, but need to verify
       # if removing, inform user with warning dialog
       # not sure how to handle flag variable - rename it?
       if (names(temp$mapdata)[i] %in%
           c("old_GATx", "old_GATy", "old_GATnumIDs", "old_GATcratio",
             "old_flag", "old_GATpop")) {
-        temp$old_vars <- c(temp$old_vars, names(temp$mapdata)[i])
+        temp$old_vars <- c(temp$old_vars, names(temp$shp)[i])
       }
     }
     if (length(temp$old_vars) > 0) {
@@ -97,27 +94,24 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                         paste(temp$old_vars, collapse = ", "),
                         "were removed from the data frame.")
     }
-    temp$mapdata <- temp$mapdata[,
-                                 names(temp$mapdata)[!names(temp$mapdata) %in%
-                                                       temp$old_vars]]
-    for (i in 1:ncol(temp$mapdata)) {
-      if (names(temp$mapdata)[i] %in%
+    temp$shp <- temp$shp[,names(temp$shp)[!names(temp$shp) %in% temp$old_vars]]
+    for (i in 1:ncol(temp$shp)) {
+      if (names(temp$shp)[i] %in%
           c("GATx", "GATy", "GATnumIDs", "GATcratio", "GATflag", "GATpop")) {
         temp$msg <- paste(temp$msg,
-                          "\n", names(temp$mapdata)[i], "has been changed to",
-                          paste0("old_", names(temp$mapdata)[i], "."))
-        names(temp$mapdata)[i] <- paste0("old_", names(temp$mapdata)[i])
+                          "\n", names(temp$shp)[i], "has been changed to",
+                          paste0("old_", names(temp$shp)[i], "."))
+        names(temp$shp)[i] <- paste0("old_", names(temp$shp)[i])
       }
     }
     if (!temp$msg == "") {
       tcltk::tkmessageBox(title = "Some variable names changed", type = "ok",
                           icon = "warning", message = temp$msg)
     }
-    if (!"GATflag" %in% names(temp$mapdata)) {
-      temp$mapdata$GATflag <- 0
+    if (!"GATflag" %in% names(temp$shp)) {
+      temp$shp$GATflag <- 0
     }
-    temp$mapflag <- temp$mapdata[temp$mapdata$GATflag == 0, ]
-
+    temp$mapflag <- temp$shp[temp$shp$GATflag == 0, ]
   } else {
     gatvars <- list()
     filevars <- list(userin = "")
@@ -127,7 +121,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     aggvars <- NULL
   }
 
-  # pre-load number function
+  # pre-load number function ----
   numformat <- function(num) {
     format(as.numeric(gsub(",", "", num)), big.mark=",", scientific=FALSE)
   }
@@ -1014,7 +1008,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     aggvars <- defineGATmerge(area = myshps$original, gatvars = gatvars,
                               mergevars = mergevars, filevars = filevars,
                               pwrepeat = pwrepeat, adjacent = adjacent,
-                              minfirst = minfirst)
+                              exclist = exclist, minfirst = minfirst)
 
     #  5. aggregate areas ####
     step <- step + 1

@@ -18,23 +18,25 @@ Fixes and improvements to address:
 	* runGATprogram (rgdal, sp, maptools) 
 		- last (convert function by function and test, then combine everything here) 
 		- updated to reflect option changes in defineGATmerge()
-	* mergeGATareas (sp, maptools)
+		- should run through defineGATmerge()
 	* writeGATlog (rgdal)
 	* writeGATkml (sp - will sf work?)
 	* calculateGATcompactness (sp, rgeos)
+
 	
 	
 Started, but buggy
+	* mergeGATareas (sp, maptools)
+		- barely started
 	* createGATregion (sp) 
-		- inconsistent results, seems to work now
+		- seems to work for pop weighting - test all options
 	* defineGATmerge (sp, spdep) 
-		- works fully, but buggy 
-		- why flagging so many areas?
-		- also, may have accidentally killed the crosswalk
+		- works fully for pop weighting, but test all options
+		- may have fixed the crosswalk
 	* combineGATcrosswalks (rgdal) 
 		- started, but untested; rethought exported datasets to use as examples 
 		- or create datasets as part of examples?
-	* zzz - hftown & hfpop converted, then everything else breaks
+	* zzz - hftown & hfpop converted, then updated through line 85
 
 Completed - need to fix before final integration?
 	* rankGATdistance (sp) - function finished; test spdep in example
@@ -55,7 +57,7 @@ Completed - none of these output layers - should be able to copy now
 	* convertlatlong2UTM (sp)
 	* plotGATmaps (sp)
 	* plotGATcompare (sp)
-	* checkGATvariablestypes
+	* checkGATvariabletypes
 
 
 --------------------
