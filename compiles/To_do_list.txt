@@ -14,11 +14,7 @@ Fixes and improvements to address:
 * Opening any help dialog changes all background colors to white
 * convert all instances of rgdal/rgeos and if possible sp to sf, which is faster and better maintained
 	note:   spdep works with sf
-			not sure if spdep and maptools need to be phased out, so ignore for now
-	* runGATprogram (rgdal, sp, maptools) 
-		- last (convert function by function and test, then combine everything here) 
-		- updated to reflect option changes in defineGATmerge()
-		- should run through defineGATmerge()
+			will spdep and maptools will be phased out? ignore for now
 	* writeGATlog (rgdal)
 	* writeGATkml (sp - will sf work?)
 	* calculateGATcompactness (sp, rgeos)
@@ -26,6 +22,11 @@ Fixes and improvements to address:
 	
 	
 Started, but buggy
+	* runGATprogram (rgdal, sp, maptools) 
+		- last (convert & test all functions, then combine everything here) 
+		- updated to reflect option changes in defineGATmerge()
+		- should run through defineGATmerge()
+	* zzz - hftown & hfpop converted, then updated through line 85
 	* mergeGATareas (sp, maptools)
 		- barely started
 	* createGATregion (sp) 
@@ -34,23 +35,22 @@ Started, but buggy
 		- works fully for pop weighting, but test all options
 		- may have fixed the crosswalk
 	* combineGATcrosswalks (rgdal) 
-		- started, but untested; rethought exported datasets to use as examples 
+		- untested; rethought exported datasets to use as examples 
 		- or create datasets as part of examples?
-	* zzz - hftown & hfpop converted, then updated through line 85
-
-Completed - need to fix before final integration?
-	* rankGATdistance (sp) - function finished; test spdep in example
 	* weightGATmap (sp structure) 
 		- issue with createGATregion?
+
+Completed - need to fix before final integration?
+	* rankGATdistance (sp) - function finished; test example
+
+Skippable?
+	* aggregateGATnb - find sf equivalent? (spdep)
 
 Completed - these output layers - wait to copy
 	* identifyGATfirstobs (sp structure)
 	* importGATweights (sp)
 	* calculateGATexclusions (sf structure)
 	* convertlatlong2UTM (sp)
-
-Skippable?
-	* aggregateGATnb - find sf equivalent? (spdep)
 
 Completed - none of these output layers - should be able to copy now
 	* weightGATregion (sp structure)
