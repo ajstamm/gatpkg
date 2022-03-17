@@ -2,21 +2,31 @@
 
 
 # revised functions ----
-source("R/identifyGATfirstobs.R")
-source("R/weightGATregion.R")
-source("R/weightGATmap.R")
-source("R/convertlatlong2UTM.R")
+  # complete (except maybe examples)
 source("R/checkGATvariabletypes.R")
+source("R/convertlatlong2UTM.R")
+source("R/weightGATregion.R")
 source("R/aggregateGATnb.R")
-source("R/calculateGATexclusions.R")
-source("R/importGATweights.R")
 source("R/rankGATdistance.R")
+source("R/importGATweights.R")
+source("R/identifyGATfirstobs.R")
+source("R/calculateGATexclusions.R")
+source("R/calculateGATflag.R")
+  # need testing
+source("R/weightGATmap.R")
 source("R/createGATregion.R")
 source("R/defineGATmerge.R")
-source("R/calculateGATflag.R")
 
 # unrevised functions ----
+  # under revision
 source("R/mergeGATareas.R")
+
+  # still to do
+source("R/runGATprogram.R")
+source("R/combineGATcrosswalks.R")
+source("R/writeGATlog.R")
+source("R/writeGATkml.R")
+source("R/calculateGATcompactness.R")
 
 # source("R/.R")
 
