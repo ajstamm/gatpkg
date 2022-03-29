@@ -41,14 +41,14 @@
 #'
 #'
 #'
-#'
+#' @export
 #'
 
 # for testing
 # path <- "P:/.../tract_mcd"
 # file1 <- "gat_step1_newmcdin.dbf"
 # file2 <- "gat_step2_newmcdin.dbf"
-# idvar <- "tract10"
+# idvar <- "tract10" key
 
 combineGATcrosswalks <- function(path, file1, file2, idvar) {
   # clean filepath and filenames ####
@@ -91,17 +91,17 @@ combineGATcrosswalks <- function(path, file1, file2, idvar) {
                   overwrite_layer = TRUE)
 
   # add correct area numbers ####
-  num_areas <- data.frame(table(key$GATid))
+  num_areas <- data.frame(table(old$GATid))
   names(num_areas) <- c(idvar, "GATnumIDs")
 
   new <- sf::st_read(dsn = path, layer = gsub("in$", "", file2))
 
   l <- names(new)[names(new) != "GATnumIDs"]
-  n <- new@data[, l]
-  n <- merge(n, num_areas, by = idvar)
-  new <- n
+  n <- new[, l]
+  new <- merge(n, num_areas, by = idvar)
 
   sf::st_write(new, path, paste0(gsub("in$", "", file2), "_combined"),
                   driver = "ESRI Shapefile", verbose = TRUE,
                   overwrite_layer = TRUE)
 }
+
