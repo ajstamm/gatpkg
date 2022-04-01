@@ -16,6 +16,12 @@ knitr::opts_chunk$set(
 )
 ```
 
+## GAT v2.0.0 
+
+* Converted all instances requiring sp, rgeos, and rgdal to sf.
+* Added advanced options to the settings file and log.
+
+
 ## GAT v1.61.1 (January 4, 2022)
 
 * Added structure for pkgdown.

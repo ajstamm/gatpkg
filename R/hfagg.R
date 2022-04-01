@@ -25,7 +25,7 @@
 #' \item{\code{TOWN}}{Town name}
 #' \item{\code{COUNTY}}{Census county FIPS designation}
 #' \item{\code{TOTAL_POP}}{Census population for 2010}
-#' \item{\code{GATflag}}{Placeholder for excluded areas, if any}
+#' \item{\code{GATflag}}{Flag values for excluded and problematic areas, if any}
 #' \item{\code{GATx}}{Recalculated longitude}
 #' \item{\code{GATy}}{Recalculated latitude}
 #' \item{\code{GATnumIDs}}{number of towns aggregated to the area}
@@ -38,7 +38,7 @@
 #' \item{\code{TOWN}}{Town name}
 #' \item{\code{COUNTY}}{Census county FIPS designation}
 #' \item{\code{TOTAL_POP}}{Census population for 2010}
-#' \item{\code{GATflag}}{Placeholder for excluded areas, if any}
+#' \item{\code{GATflag}}{Flag values for excluded areas, if any}
 #' \item{\code{GATid}}{GAT-generated ID of assigned aggregated area}
 #' }
 #'

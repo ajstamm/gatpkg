@@ -46,9 +46,9 @@
 
 # for testing
 # path <- "P:/.../tract_mcd"
-# file1 <- "gat_step1_newmcdin.dbf"
-# file2 <- "gat_step2_newmcdin.dbf"
-# idvar <- "tract10" key
+# file1 <- "gat_step1_newmcdin"
+# file2 <- "gat_step2_newmcdin"
+# idvar <- "tract10" # key
 
 combineGATcrosswalks <- function(path, file1, file2, idvar) {
   # clean filepath and filenames ####
@@ -87,8 +87,8 @@ combineGATcrosswalks <- function(path, file1, file2, idvar) {
   old <- merge(old, key2, by = "tempid")
 
   sf::st_write(old, path, paste0(file1, "_combined"),
-                  driver = "ESRI Shapefile", verbose = TRUE,
-                  overwrite_layer = TRUE)
+               driver = "ESRI Shapefile", verbose = TRUE,
+               overwrite_layer = TRUE)
 
   # add correct area numbers ####
   num_areas <- data.frame(table(old$GATid))
@@ -101,7 +101,7 @@ combineGATcrosswalks <- function(path, file1, file2, idvar) {
   new <- merge(n, num_areas, by = idvar)
 
   sf::st_write(new, path, paste0(gsub("in$", "", file2), "_combined"),
-                  driver = "ESRI Shapefile", verbose = TRUE,
-                  overwrite_layer = TRUE)
+               driver = "ESRI Shapefile", verbose = TRUE,
+               overwrite_layer = TRUE)
 }
 

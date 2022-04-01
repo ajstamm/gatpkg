@@ -71,13 +71,11 @@ mergeGATareas <- function(ratevars, aggvars, idvar, myshp) {
   numpolys <- as.data.frame(table(IDlist = aggvars$IDlist))
   d <- aggvars$allpolydata
   d <- merge(d, numpolys, by.x = idvar, by.y = "IDlist")
+  names(d)[names(d) == "Freq"] <- "GATnumIDs"
 
   # merge doesn't preserve row names like cbind - so restore row names,
   # but ensure they are not more than 10 characters
-  row.names(d) <- d[, idvar]
-  names(d)[names(d) == "Freq"] <- "GATnumIDs"
-
-  aggregated <- maptools::unionSpatialPolygons(myshp, aggvars$IDlist)
+  row.names(d) <- substr(data.frame(d)[, idvar], 1, 10)
 
   if (ratevars$ratename != "no_rate") { # if should calculate rate
     m <- as.numeric(ratevars$multiplier)
@@ -86,7 +84,5 @@ mergeGATareas <- function(ratevars, aggvars, idvar, myshp) {
     names(d)[names(d) == "myrate"] <- ratevars$ratename
   } # end if should calculate rate
 
-  aggregated <- sp::SpatialPolygonsDataFrame(aggregated, d, match.ID = TRUE)
-  # return the completed shapefile
-  return(aggregated)
+  return(d)
 }

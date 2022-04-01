@@ -12,21 +12,20 @@ source("R/importGATweights.R")
 source("R/identifyGATfirstobs.R")
 source("R/calculateGATexclusions.R")
 source("R/calculateGATflag.R")
+source("R/combineGATcrosswalks.R")
+source("R/calculateGATcompactness.R")
   # need testing
 source("R/weightGATmap.R")
 source("R/createGATregion.R")
 source("R/defineGATmerge.R")
+source("R/mergeGATareas.R")
+source("R/writeGATkml.R")
+source("R/writeGATlog.R")
 
 # unrevised functions ----
   # under revision
-source("R/mergeGATareas.R")
+source("R/runGATprogram.R") # revised to input step 5
 
-  # still to do
-source("R/runGATprogram.R")
-source("R/combineGATcrosswalks.R")
-source("R/writeGATlog.R")
-source("R/writeGATkml.R")
-source("R/calculateGATcompactness.R")
 
 # source("R/.R")
 

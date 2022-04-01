@@ -45,3 +45,4 @@ nbproject
 *.db
 *.db
 vignettes/images/Thumbs.db
+*.kml

@@ -39,11 +39,6 @@ weightGATregion <- function(area, pop, IDlist, idvar, nrid) {
   area <- area[area$IDlist == nrid, ]
 
   # assign consistent CRS ----
-  # mycrs <- convertlatlong2UTM(area, units = "m")
-  # area <- sf::st_transform(area, mycrs)
-  # sf::st_agr(area) <- "constant"
-  # pop <- sf::st_transform(pop, mycrs)
-  # sf::st_agr(pop) <- "constant"
   pop <- sf::st_transform(pop, sf::st_crs(area))
   sf::st_agr(pop) <- "constant"
 
@@ -51,9 +46,6 @@ weightGATregion <- function(area, pop, IDlist, idvar, nrid) {
   popshp <- sf::st_intersection(pop, area)
 
   coords <- data.frame(
-    # lat/long not necessary
-    # LATITUDE = areasf$LATITUDE[IDlist==nrid][1],
-    # LONGITUDE = areasf$LONGITUDE[IDlist==nrid][1],
     GATy = sum(popshp$y * popshp$pop) / sum(popshp$pop),
     GATx = sum(popshp$x * popshp$pop) / sum(popshp$pop)
   )

@@ -83,24 +83,23 @@ aggvars <- defineGATmerge(area = hftown, gatvars = gatvars,
                           exclist = exclist, progressbar = FALSE)
 
 
-  # not fixed below this point ----
 hfagg610k <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
                          idvar = gatvars$myidvar, myshp = hftown)
 
 vars <- c("ID", "TOWN", "COUNTY", "TOTAL_POP", "GATflag", "GATx", "GATy",
-          "GATnumIDs")
+          "GATnumIDs", "geometry")
 
-hfagg610k@data <- hfagg610k@data[, names(hfagg610k@data)
-                             [names(hfagg610k@data) %in% vars]]
+hfagg610k <- hfagg610k[, names(hfagg610k) %in% vars]
 
   # to create hfcrosswalk ----
-hfcw610k <- hftown
-hfcw610k@data <- cbind(hftown@data, data.frame(GATid = aggvars$IDlist))
+hfcw610k <- cbind(hftown, data.frame(GATid = aggvars$IDlist))
+hfcw610k$GATflag <- 0
+row.names(hfcw610k) <- substr(data.frame(hfcw610k)[, gatvars$myidvar], 1, 10)
 
-vars <- c("ID", "TOWN", "COUNTY", "TOTAL_POP", "GATflag", "GATid")
+vars <- c("ID", "TOWN", "COUNTY", "TOTAL_POP", "GATflag", "GATid",
+          "geometry")
 
-hfcw610k@data <- hfcw610k@data[, names(hfcw610k@data)
-                                 [names(hfcw610k@data) %in% vars]]
+hfcw610k <- hfcw610k[, names(hfcw610k) %in% vars]
 
   # settings for second aggregation ----
 gatvars <- list(
@@ -116,8 +115,8 @@ gatvars <- list(
 )
 
 temp <-
-  ifelse(data.frame(hfagg610k[, gatvars$aggregator1]) > gatvars$maxvalue1 |
-           data.frame(hfagg610k[, gatvars$aggregator2]) > gatvars$maxvalue2, 5, 0)
+  ifelse(data.frame(hfagg610k)[, gatvars$aggregator1] > gatvars$maxvalue1 |
+           data.frame(hfagg610k)[, gatvars$aggregator2] > gatvars$maxvalue2, 5, 0)
 colnames(temp) <- NULL
 hfagg610k$GATflag <- temp
 rm(temp)
@@ -131,19 +130,17 @@ hfagg615k <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
                          idvar = gatvars$myidvar, myshp = hfagg610k)
 
 vars <- c("ID", "TOWN", "COUNTY", "TOTAL_POP", "GATflag", "GATx", "GATy",
-          "GATnumIDs")
+          "GATnumIDs", "geometry")
 
-hfagg615k@data <- hfagg615k@data[, names(hfagg615k@data)
-                             [names(hfagg615k@data) %in% vars]]
+hfagg615k <- hfagg615k[, names(hfagg615k) %in% vars]
 
   # to create hfcrosswalk ----
-hfcw615k <- hfagg610k
-hfcw615k@data <- cbind(hfcw615k@data, data.frame(GATid = aggvars$IDlist))
+hfcw615k <- cbind(hfagg610k, data.frame(GATid = aggvars$IDlist))
 
-vars <- c("ID", "TOWN", "COUNTY", "TOTAL_POP", "GATflag", "GATid")
+vars <- c("ID", "TOWN", "COUNTY", "TOTAL_POP", "GATflag", "GATid",
+          "geometry")
 
-hfcw615k@data <- hfcw615k@data[, names(hfcw615k@data)
-                                 [names(hfcw615k@data) %in% vars]]
+hfcw615k <- hfcw615k[, names(hfcw615k) %in% vars]
 
 
 # ----

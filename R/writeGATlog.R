@@ -98,6 +98,9 @@
 #'   starttime = Sys.time(),
 #'   version = "1.0",
 #'   pkgdate = format(Sys.Date(), "%m-%d-%Y"),
+#'   adjacent = TRUE,
+#'   pwrepeat = FALSE,
+#'   minfirst = TRUE,
 #'   exists = FALSE
 #' )
 #'
@@ -144,16 +147,19 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
     if (is.null(mysettings)) { # rerunning failed log
       mysettings <- list(version = packageDescription("gatpkg")$Version,
                          pkgdate = packageDescription("gatpkg")$Date,
+                         adjacent = "unknown",
+                         pwrepeat = "unknown",
+                         minfirst = "unknown",
+                         limitdenom = "unknown",
                          starttime = Sys.time()) # needed for the log
     }
     mysettings$exists = file.exists(paste0(filevars$userout, ".shp"))
-    area <- rgdal::readOGR(dsn = filevars$pathin,
-                           layer = filevars$filein,
-                           stringsAsFactors = FALSE)
+    area <- sf::st_read(dsn = filevars$pathin,
+                        layer = filevars$filein)
   }
 
   # fill in full list of names below; code will error otherwise
-  listitems <- names(area@data)
+  listitems <- names(area)
   listitems <- listitems[listitems != "GATflag"]
   myvars <- ""
   for (i in 1:(length(listitems)-1)) {
@@ -185,6 +191,7 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                "\n  Projection:        ", sp::proj4string(area),
                "\n  Field names:       ", myvars,
                "\n  Identifier:        ", gatvars$myidvar,
+               "\n  Adjacency required?", mysettings$adjacent,
                "\n  Boundary variable: ", gatvars$boundary)
   if (!gatvars$rigidbound & gatvars$boundary != "NONE") {
     logtext <- c(logtext, "\n    You did not require the aggregation to",
@@ -212,7 +219,9 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
   # Merge settings ####
-  logtext <- c("\nMerge type:", mergevars$mergeopt1)
+  logtext <- c("\nMerge type:", mergevars$mergeopt1,
+               "\n  Prefer aggregating to areas below minimum value first?",
+               mysettings$minfirst)
   if (mergevars$mergeopt1 == "similar") {
     logtext <- c(logtext, "\n  First similar variable:  ", mergevars$similar1,
                  "\n  Second similar variable: ", mergevars$similar2)
@@ -220,7 +229,9 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
     logtext <- c(logtext, mergevars$centroid, "centroid")
     if (mergevars$centroid == "population-weighted") {
       logtext <- c(logtext, "\n  Population file:", filevars$popin,
-                   "\n  Population variable:", gatvars$popvar)
+                   "\n  Population variable:", gatvars$popvar,
+                   "\n  Recalculate centroid after each merge?",
+                   mysettings$pwrepeat)
     }
   }
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
@@ -254,13 +265,13 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                "\n  Minimum value:", min1, "\n  Maximum value:", max1,
                "\nPre-aggregation distribution:")
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
-  write.table(quantile(area@data[, gatvars$aggregator1]), file = logfile,
+  write.table(quantile(data.frame(area)[, gatvars$aggregator1]), file = logfile,
               row.names = TRUE, col.names = FALSE, append = TRUE)
 
   logtext <- c("\nPost-aggregation distribution:")
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
-  write.table(quantile(aggvars$allpolydata[, gatvars$aggregator1]),
+  write.table(quantile(data.frame(aggvars$allpolydata)[, gatvars$aggregator1]),
               file = logfile, row.names = TRUE, col.names = FALSE,
               append = TRUE)
 
@@ -279,14 +290,14 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                  "\n  Minimum value:", min2, "\n  Maximum value:", max2,
                  "\nPre-aggregation distribution:")
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
-    write.table(quantile(area@data[, gatvars$aggregator2]), file = logfile,
+    write.table(quantile(data.frame(area)[, gatvars$aggregator2]), file = logfile,
                 row.names = TRUE, col.names = FALSE, append = TRUE)
   }
 
   if (gatvars$aggregator1 != gatvars$aggregator2) {
     logtext <- c("\nPost-aggregation distribution:")
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
-    write.table(quantile(aggvars$allpolydata[, gatvars$aggregator2]),
+    write.table(quantile(data.frame(aggvars$allpolydata)[, gatvars$aggregator2]),
                 file = logfile, row.names = TRUE, col.names = FALSE,
                 append = TRUE)
   }

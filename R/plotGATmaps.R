@@ -41,7 +41,7 @@
 #' hftown$GATflag <- 0
 #'
 #' # plot the population
-#' plotGATmaps(area = hftown, var = "TOTAL_POP", clr = "YlGn",
+#' plotGATmaps(area = hfcw610k, var = "TOTAL_POP", clr = "YlGn",
 #'   title.main = "Population", breaks = 3, mapstats = TRUE)
 #'
 #' ## to plot a rate

@@ -43,7 +43,7 @@
 #' )
 #'
 #' # draw the map
-#' plotGATcompare(areaold = hftown, areanew = hfagg5k,
+#' plotGATcompare(areaold = hftown, areanew = hfagg610k,
 #'   mergevars = mergevars, gatvars = gatvars)
 #'
 #' @export
