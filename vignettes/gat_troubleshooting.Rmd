@@ -29,8 +29,8 @@ Usually, the issue is that vignettes fail to install. To fix this, uninstall gat
 
 This message appears in the R console: 
 
-`Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :`  
-`isTRUE(gpclibPermitStatus()) is not TRUE`
+> Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :  
+> isTRUE(gpclibPermitStatus()) is not TRUE
 
 This error appears due to a conflict between the packages rgeos and rgdal. Reinstall rgdal after each update of rgeos to fix it.
 
@@ -66,9 +66,9 @@ GAT occasionally has trouble getting permission to write to network drives. Try 
 
 This message appears in the R console: 
 
-`Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :`  
-`GDAL Error 4: Failed to open shapefile C:/aggtest/output/testin.shp.` 
-`It may be corrupt or read-only file accessed in update mode.`
+> Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :  
+> GDAL Error 4: Failed to open shapefile C:/aggtest/output/testin.shp.  
+> It may be corrupt or read-only file accessed in update mode.
 
 Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ".shp", ".dbf", ".prj") from the directory you are trying to save to.
 
@@ -81,8 +81,8 @@ The progress bars were designed to help you determine whether GAT has stalled. U
 
 This message appears in the R console: 
 
-`In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :`  
-`n greater than number of different finite values\nn reset to number of different finite values`
+> In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :  
+> n greater than number of different finite values\nn reset to number of different finite values
 
 This warning appears when the number of polygons or individual values matches or is less than the number of categories in the choropleth maps. The maps will still be drawn accurately.
 
@@ -90,9 +90,9 @@ This warning appears when the number of polygons or individual values matches or
 
 One or both of these messages appears in the R console: 
 
-`st_centroid assumes attributes are constant over geometries of x`
+> st_centroid assumes attributes are constant over geometries of x
 
-`st_centroid does not give correct centroids for longitude/latitude data`
+> st_centroid does not give correct centroids for longitude/latitude data
 
 These warnings may appear when you first install gatpkg and will appear if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using appropriate coordinate systems. They do not appear if you are using geographic centroids.
 
