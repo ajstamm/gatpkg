@@ -106,7 +106,7 @@ inputGATrate <- function(mapdata, defaultopt = 0,
   gatlist1 <- checkGATvariabletypes(mapdata, type = "number")
   idlist <- c()
   for (i in 1:length(gatlist1)) {
-    x <- mapdata[, gatlist1[i]]
+    x <- data.frame(mapdata)[, gatlist1[i]]
     t <- table(x==0 | !is.finite(x))
     idlist[i] <- grepl("TRUE", paste(names(t), collapse = " "))
   }

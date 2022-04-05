@@ -55,9 +55,14 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
   # load the progress bar
   mysettings <- list(version = packageDescription("gatpkg")$Version,
                      pkgdate = packageDescription("gatpkg")$Date,
+                     adjacent = adjacent,
+                     pwrepeat = pwrepeat,
+                     minfirst = minfirst,
+                     limitdenom = limitdenom,
                      starttime = Sys.time(), # needed for the log
                      quit = FALSE)
 
+  # note https://stackoverflow.com/questions/8436045/double-r-tcltk-progress-bar
   pb <- list(title = paste("NYSDOH Geographic Aggregation Tool (GAT)",
                            mysettings$version, mysettings$date),
              label = "GAT is running. Please wait for dialogs.")
@@ -133,8 +138,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 1) { # ask user to identify shapefile; check its usability
       pb <- list(title = "NYSDOH GAT: identify shapefile",
                  label = "Identifying and selecting the shapefile.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       # identify shapefile
       filevars <- locateGATshapefile(myfile = filevars$userin, step = step,
@@ -144,26 +151,23 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         step <- 20
         mysettings$quit <- TRUE
       } else {
-        # read in map data only from the shapefile's dbf
-        temp$mapdata <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
-                                          as.is = TRUE)
-        temp$shp <- rgdal::readOGR(dsn = filevars$pathin,
-                                   layer = filevars$filein,
-                                   stringsAsFactors = FALSE)
+        temp$shp <- sf::st_read(dsn = filevars$pathin,
+                                layer = filevars$filein)
 
         # check for both numeric and character data
-        temp$numerics <- checkGATvariabletypes(temp$mapdata, type = "number")
-        temp$alphas <- checkGATvariabletypes(temp$mapdata, type = "character")
-        temp$polys <- class(temp$shp)
+        temp$numerics <- checkGATvariabletypes(temp$shp, type = "number")
+        temp$alphas <- checkGATvariabletypes(temp$shp, type = "character")
+        temp$polys <- sum(grepl("POLYGON", class(temp$shp$geometry),
+                                fixed = TRUE)) > 0
 
         # add dialog specifying each issue
         # add check for shapefile type (if class(shp) )
         temp$msg <- ""
         temp$error <- FALSE
-        if (nrow(temp$shp@data) < 2) {
+        if (nrow(temp$shp) < 2) {
           temp$issue <- "at least 2 areas."
           temp$error <- TRUE
-        } else if (temp$polys != "SpatialPolygonsDataFrame") {
+        } else if (!temp$polys) {
           # message: wrong kind of shapefile; repeat dialog
           temp$issue <- "polygons."
           temp$error <- TRUE
@@ -177,14 +181,14 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           temp$error <- TRUE
         } else {
           temp$old_vars <- c()
-          for (i in 1:ncol(temp$mapdata)) {
+          for (i in 1:ncol(temp$shp)) {
             # possibly these can be removed entirely, but need to verify
             # if removing, inform user with warning dialog
             # not sure how to handle flag variable - rename it?
-            if (names(temp$mapdata)[i] %in%
+            if (names(temp$shp)[i] %in%
                 c("old_GATx", "old_GATy", "old_GATnumIDs", "old_GATcratio",
                   "old_flag", "old_GATpop")) {
-              temp$old_vars <- c(temp$old_vars, names(temp$mapdata)[i])
+              temp$old_vars <- c(temp$old_vars, names(temp$shp)[i])
             }
           }
           if (length(temp$old_vars) > 0) {
@@ -192,20 +196,21 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                               paste(temp$old_vars, collapse = ", "),
                               "were removed from the data frame.")
           }
-          temp$mapdata <- temp$mapdata[,
-            names(temp$mapdata)[!names(temp$mapdata) %in% temp$old_vars]]
-          for (i in 1:ncol(temp$mapdata)) {
-            if (names(temp$mapdata)[i] %in%
-                c("GATx", "GATy", "GATnumIDs", "GATcratio", "GATflag", "GATpop")) {
-              temp$msg <- paste(temp$msg,
-                                "\n", names(temp$mapdata)[i], "has been changed to",
-                                paste0("old_", names(temp$mapdata)[i], "."))
-              names(temp$mapdata)[i] <- paste0("old_", names(temp$mapdata)[i])
+          temp$shp <- temp$shp[, !names(temp$shp) %in% temp$old_vars]
+          for (i in 1:ncol(temp$shp)) {
+            if (names(temp$shp)[i] %in% c("GATx", "GATy", "GATnumIDs",
+                                          "GATcratio", "GATflag", "GATpop")) {
+              temp$msg <- paste(temp$msg, "\n", names(temp$shp)[i],
+                                "has been changed to", paste0("old_",
+                                substr(names(temp$shp)[i], 1, 6), "."))
+              names(temp$shp)[i] <- paste0("old_", substr(names(temp$shp)[i],
+                                                          1, 6))
             }
           }
           if (temp$msg != "") {
-            tcltk::tkmessageBox(title = "Some variable names changed", type = "ok",
-                                icon = "warning", message = temp$msg)
+            tcltk::tkmessageBox(title = "Some variable names changed",
+                                type = "ok", icon = "warning",
+                                message = temp$msg)
           }
           step <- step + 1
         }
@@ -223,11 +228,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                         # identifies areas to be merged
       pb <- list(title = "NYSDOH GAT: identify identifier",
                  label = "Selecting the unique identifier.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       # identify GAT polygon identifier variable
-      gatvars$myidvar <- identifyGATid(mapdata = temp$mapdata, step = step,
+      gatvars$myidvar <- identifyGATid(mapdata = temp$shp, step = step,
                                        backopt = !temp$flagconfirm)
 
       if (gatvars$myidvar == "back"){
@@ -251,8 +258,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 3) { #ask user to select boundary variable, if present
       pb <- list(title = "NYSDOH GAT: identify boundary",
                  label = "Selecting the boundary variable.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
+
       if (is.null(gatvars$boundary)) {
         gatvars$boundary <- "NONE"
         gatvars$rigidbound <- FALSE
@@ -261,7 +271,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       tempbound <- NULL
 
       while (is.null(tempbound)) {
-        tempbound <- identifyGATboundary(data = temp$mapdata, step = step,
+        tempbound <- identifyGATboundary(data = temp$shp, step = step,
                                          boundary = gatvars$boundary,
                                          borders = gatvars$rigidbound,
                                          backopt = !temp$flagconfirm)
@@ -292,8 +302,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 4) { # ask for aggregation variables
       pb <- list(title = "NYSDOH GAT: identify aggregators",
                  label = "Selecting the aggregation variables.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       if (is.null(gatvars$aggregator1)) {
         agglist <- NULL
@@ -305,26 +317,25 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                         minval2 = gatvars$minvalue2,
                         maxval2 = gatvars$maxvalue2)
       }
-      error <- TRUE
+      temp$error <- TRUE
 
       # re-call the function as needed
-      while (error) {
-        agglist <- identifyGATaggregators(mapdata = temp$mapdata,
-                                          step = step,
+      while (temp$error) {
+        agglist <- identifyGATaggregators(mapdata = temp$shp, step = step,
                                           agglist = agglist,
                                           backopt = !temp$flagconfirm)
-        error <- FALSE
+        temp$error <- FALSE
         if (is.null(agglist)) {
           x <- confirmGATquit()
           if (x == "quit") {
             agglist <- list(var1 = "cancel")
           } else {
-            error <- TRUE
+            temp$error <- TRUE
             agglist <- list(var1 = "")
 
           }
         } else if (length(agglist$var1) == 0) {
-          error <- TRUE
+          temp$error <- TRUE
           agglist <- NULL
         }
       }
@@ -334,7 +345,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       } else if (agglist$var1 == "cancel") {
         step <- 20
         mysettings$quit <- TRUE
-      } else if (!error) {
+      } else if (!temp$error) {
         gatvars$aggregator1 <- agglist$var1
         if (agglist$var2 == "NONE") {
           gatvars$aggregator2 <- agglist$var1
@@ -351,18 +362,21 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           step <- step + 1
         }
       }
-      if (agglist$maxval1 == sum(temp$mapdata[, agglist$var1], na.rm = TRUE)) {
+      if (agglist$maxval1 == sum(data.frame(temp$shp)[, agglist$var1],
+                                 na.rm = TRUE)) {
         gatvars$ismax1 <- TRUE
       } else {
         gatvars$ismax1 <- FALSE
       }
       if (!agglist$var2 == "NONE") {
-        if (agglist$maxval2 == sum(temp$mapdata[, agglist$var2], na.rm = TRUE)) {
+        if (agglist$maxval2 == sum(data.frame(temp$shp)[, agglist$var2],
+                                   na.rm = TRUE)) {
           gatvars$ismax2 <- TRUE
         } else {
           gatvars$ismax2 <- FALSE
         }
-        if (agglist$minval2 == min(temp$mapdata[, agglist$var2], na.rm = TRUE)) {
+        if (agglist$minval2 == min(data.frame(temp$shp)[, agglist$var2],
+                                   na.rm = TRUE)) {
           gatvars$ismin2 <- TRUE
         } else {
           gatvars$ismin2 <- FALSE
@@ -374,14 +388,16 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 5) {
       pb <- list(title = "NYSDOH GAT: Enter exclusions",
                  label = "Identifying your exclusion criteria.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       if (!exists("exclist")) exclist <- NULL
       temp$error <- TRUE
 
       while (temp$error) {
-        exclist <- inputGATexclusions(mapdata = temp$mapdata, step = step,
+        exclist <- inputGATexclusions(mapdata = temp$shp, step = step,
                                       exclist = exclist,
                                       backopt = !temp$flagconfirm)
         temp$error <- FALSE
@@ -497,13 +513,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       if (!exclist$var1 %in% c("back", "cancel", "repeat")) {
         # calculate exclusions now to use them to calculate the
         # denominator for similar merges and rates
-        temp$mapdata$GATflag <- 0
-        temp$mapdata$GATflag <- calculateGATflag(exclist, d = temp$mapdata)
-        exclist$flagsum <- sum(temp$mapdata$GATflag != 0)
+        temp$shp$GATflag <- 0
+        temp$shp$GATflag <- calculateGATflag(exclist, d = temp$shp)
+        exclist$flagsum <- sum(temp$shp$GATflag != 0)
 
-        if (nrow(temp$mapdata) - exclist$flagsum < 2) {
+        if (nrow(temp$shp) - exclist$flagsum < 2) {
           temp$msg <- paste("This selection will exclude", exclist$flagsum,
-                            "of", nrow(temp$mapdata), "areas.", "\n",
+                            "of", nrow(temp$shp), "areas.", "\n",
                             "GAT requires at least 2 areas to run.", "\n",
                             "Please select new exclusion criteria.")
           tcltk::tkmessageBox(title = "Selections invalid", type = "ok",
@@ -521,7 +537,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           }
 
           temp$msg <- paste(temp$msg, "\nThis will exclude", exclist$flagsum,
-                            "of", nrow(temp$mapdata), "areas.")
+                            "of", nrow(temp$shp), "areas.")
           temp$help <- paste0("To continue, select 'Yes',",
                               "\nto reselect exclusion criteria, select 'Repeat',",
                               "\nand to return to second aggregation variable selection,",
@@ -561,18 +577,20 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 6) { # radiobutton dialog to get merge type
       pb <- list(title = "NYSDOH GAT: identify merge type",
                  label = "Selecting the merge type.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       # create a non-flagged subset of the main dataset to determine denominators
-      temp$mapflag <- temp$mapdata[temp$mapdata$GATflag == 0, ]
+      temp$mapflag <- temp$shp[temp$shp$GATflag == 0, ]
 
       if (!exists("mergevars")) mergevars <- NULL
       if (is.null(mergevars$centroid)) mergevars <- NULL
       if (!exists("limitdenom")) limitdenom <- FALSE
-      error <- TRUE
+      temp$error <- TRUE
 
-      while (error) {
+      while (temp$error) {
         mergevars <- inputGATmerge(mapdata = temp$mapflag,
                                    aggvar = gatvars$aggregator1,
                                    aggvar2 = gatvars$aggregator2,
@@ -580,14 +598,14 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                    limitdenom = limitdenom,
                                    mergevars = mergevars,
                                    backopt = !temp$flagconfirm)
-        error <- FALSE
+        temp$error <- FALSE
         if (is.null(mergevars)) {
           x <- confirmGATquit()
           if (x == "quit") {
             mergevars <- list(similar1 = "cancel")
           } else {
             mergevars <- list(similar1 = "repeat", mergeopt1 = 0)
-            error <- TRUE
+            temp$error <- TRUE
           }
         }
 
@@ -606,13 +624,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
               temp$msg <- "Please select different variables for numerator and denominator."
               tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
                                   type = "ok", icon = "warning")
-              error <- TRUE # re-run step
+              temp$error <- TRUE # re-run step
             } else {
               temp$go <- TRUE # passed first check
               # if similarvar2 has zero in denominator, require user to pick again
               # this should no longer be an issue
-              temp$check <- is.finite(temp$mapflag[ , mergevars$similar1] /
-                                      temp$mapflag[ , mergevars$similar2])
+              temp$check <- is.finite(data.frame(temp$mapflag)[ , mergevars$similar1] /
+                                      data.frame(temp$mapflag)[ , mergevars$similar2])
               if (FALSE %in% temp$check){
                 temp$msg <- paste("The variable selected for the denominator",
                                   "cannot have values of zero.",
@@ -620,7 +638,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                 tcltk::tkmessageBox(title = "Please re-check variables",
                                     message = temp$msg,
                                     type = "ok", icon = "warning")
-                error <- TRUE # re-run step
+                temp$error <- TRUE # re-run step
               } else {
                 step <- step + 1
               }
@@ -632,19 +650,21 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 7) {
       pb <- list(title = "NYSDOH GAT: identify base population",
                  label = "Selecting the population file.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       if (is.null(gatvars$popvar)) gatvars$popvar <- "NONE"
       if (is.null(filevars$popin)) filevars$popin <- filevars$userin
 
       if (mergevars$centroid == "population-weighted") {
-        error <- TRUE
-        while (error) {
+        temp$error <- TRUE
+        while (temp$error) {
           temp$msg <- "Select the population shapefile"
           tempfiles <- locateGATshapefile(msg = temp$msg,
                                           myfile = filevars$popin, step = step)
-          error <- FALSE
+          temp$error <- FALSE
           if (tempfiles$userin == "cancel") {
             gatvars$popvar <- "back"
           } else {
@@ -666,7 +686,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
               temp$msg <- "The shapefile must contain polygons to be used."
               tcltk::tkmessageBox(title = "Shapefile invalid", type = "ok",
                                   icon = "error", message = temp$msg)
-              error <- TRUE
+              temp$error <- TRUE
             } else if (!is.null(temp$popnumvars)) {
               gatvars$popvar <- identifyGATpopulation(varlist = temp$popnumvars,
                                                       step = step,
@@ -696,21 +716,23 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 8) { # step 9: get rate settings
       pb <- list(title = "NYSDOH GAT: identify rate",
                  label = "Selecting the rate details.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       if (length(temp$numerics) > 1) {
-        error <- TRUE
+        temp$error <- TRUE
 
         if (!exists("ratevars")) ratevars <- list()
 
-        while (error) {
+        while (temp$error) {
           ratevars <- inputGATrate(mapdata = temp$mapflag,
                                    limitdenom = limitdenom,
                                    step = step,
                                    ratevars = ratevars,
                                    backopt = !temp$flagconfirm)
-          error <- FALSE
+          temp$error <- FALSE
 
           # returns list(multiplier, ratename, numerator, denominator, colorscheme)
           if (!exists("ratename", ratevars)) {
@@ -718,7 +740,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
             if (x == "quit") {
               ratevars <- list(ratename = "cancel")
             } else {
-              error <- TRUE
+              temp$error <- TRUE
               ratevars <- list(ratename = "gat_rate")
             }
           }
@@ -731,6 +753,16 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
             if (ratevars$ratename == "no_rate") {
               #temp$msg <- "You have chosen not to calculate a rate."
             } else {
+              if (nchar(ratevars$ratename) > 10) {
+                # include message stating name will be shortened to 10 chars
+                temp$msg <- paste("The rate name must be 10 characters or less.",
+                                  "\n", ratevars$ratename, "has been shortened to",
+                                  substr(ratevars$ratename, 1, 10))
+                tcltk::tkmessageBox(title = "Rate name too long",
+                                    message = temp$msg,
+                                    type = "ok", icon = "warning")
+                ratevars$ratename <- substr(ratevars$ratename, 1, 10)
+              }
               # quality control - force numeric
               while (grepl("[^0-9.,-]", ratevars$multiplier)) {
                 gats <- list(title = paste("Multiplier for", ratevars$ratename),
@@ -767,13 +799,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                 tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
                                     type = "ok", icon = "warning")
                 ratevars$ratename <- "gat_rate"
-                error <- TRUE
+                temp$error <- TRUE
               } else if (ratevars$numerator == ratevars$denominator) {
                 temp$msg <- "Please reselect the numerator and denominator"
                 tcltk::tkmessageBox(title = "Please re-check variables", message = temp$msg,
                                     type = "ok", icon = "warning")
                 ratevars$ratename <- "gat_rate"
-                error <- TRUE
+                temp$error <- TRUE
               }
               #temp$msg <- paste0("You have chosen to calculate the rate ",
               #                   ratevars$ratename, " from ", ratevars$numerator,
@@ -826,7 +858,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       # add an option to save the KML file
       pb <- list(title = "NYSDOH GAT: save KML?",
                  label = "Identifying whether to save a KML file.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       temp$kml <- saveGATkml(step = step, backopt = !temp$flagconfirm)
 
@@ -851,7 +886,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       # identify the save files' name and location
       pb <- list(title = "NYSDOH GAT: identify save file",
                  label = "Identifying the name and location of your save file.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       saves <- saveGATfiles()
       filevars$userout <- saves$userout
@@ -868,44 +906,46 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     while (step == 11) { # add dialog to confirm merge settings
       pb <- list(title = "NYSDOH GAT: confirm settings",
                  label = "Confirming your GAT settings.")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       # max value exclusions
-      temp$mapdata$GATflag <- 0
-      temp$mapdata$GATflag <- calculateGATflag(exclist, temp$mapdata)
-      temp$mapdata$GATflag <-
-        ifelse(temp$mapdata[, gatvars$aggregator1] > as.numeric(gatvars$maxvalue1) &
-               temp$mapdata$GATflag == 0, 5, temp$mapdata$GATflag)
+      temp$shp$GATflag <- 0
+      temp$shp$GATflag <- calculateGATflag(exclist, temp$shp)
+      temp$shp$GATflag <-
+        ifelse(data.frame(temp$shp)[, gatvars$aggregator1] > as.numeric(gatvars$maxvalue1) &
+               temp$shp$GATflag == 0, 5, temp$shp$GATflag)
       if (!gatvars$aggregator2 == gatvars$aggregator1) {
         temp$mapdata$GATflag <-
-          ifelse(temp$mapdata[, gatvars$aggregator2] > as.numeric(gatvars$maxvalue2) &
-                 temp$mapdata$GATflag == 0, 5, temp$mapdata$GATflag)
+          ifelse(data.frame(temp$shp)[, gatvars$aggregator2] > as.numeric(gatvars$maxvalue2) &
+                 temp$shp$GATflag == 0, 5, temp$shp$GATflag)
       }
-      gatvars$exclmaxval <- sum(temp$mapdata$GATflag == 5)
+      gatvars$exclmaxval <- sum(temp$shp$GATflag == 5)
 
       temp$flagconfirm <- TRUE
-      error <- TRUE
-      gatvars$numrow <- nrow(temp$mapdata)
-      while (error) {
+      temp$error <- TRUE
+      gatvars$numrow <- nrow(temp$shp)
+      while (temp$error) {
         temp$cancel <- confirmGATbystep(gatvars = gatvars, ratevars = ratevars,
                                         exclist = exclist, mergevars = mergevars,
                                         filevars = filevars, step = step)
-        error <- FALSE
+        temp$error <- FALSE
         if (is.null(temp$cancel)) {
           x <- confirmGATquit()
           if (x == "quit") {
             temp$cancel <- "Yes"
             mysettings$quit <- TRUE
           } else {
-            error <- TRUE
+            temp$error <- TRUE
           }
         }
       }
       if (temp$cancel %in% c("Yes", "None")) {
         step <- 20 # done with user input
         myshps$original <- temp$shp
-        temp$shp@data <- temp$mapdata
+        # add population file
       } else if (temp$cancel == "back") { # now irrelevant
         step <- step - 1 # go back one
       } else if (temp$cancel == "cancel") {
@@ -916,7 +956,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       }
     } # end request settings confirmation (filein)
   } # end while (step < 20)
-  rm(temp)
+  # rm(temp)
   #     end user input ####
 
   if (!mysettings$quit) { # everything from here onward is automated
@@ -924,59 +964,59 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     step <- 14 # reset after the while loop
     pb <- list(title = "NYSDOH GAT: processing the shapefile",
                label = paste0("Reading in map from ", filevars$filein, "."))
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
-    # reads map in as spatialpolygonsdataframe with projection information
-    # myshps$original <- rgdal::readOGR(dsn = filevars$pathin,
-    #                                   layer = filevars$filein,
-    #                                   stringsAsFactors = FALSE)
-    # myshps$original@data <- foreign::read.dbf(paste0(filevars$userin, ".dbf"),
-    #                                           as.is = TRUE) # maintains numerics
-    if ("GATy" %in% names(myshps$original@data)) {
-      myshps$original@data <- myshps$original@data[,
-        names(myshps$original@data)[!names(myshps$original@data) %in%
-          c("old_GATx", "old_GATy", "old_GATnumIDs", "old_GATcratio",
-            "old_GATflag")]]
-      for (i in 1: ncol(myshps$original@data)) {
-        # possibly these can be removed entirely, but need to verify
-        # if removing, inform user with warning dialog
-        # not sure how to handle flag variable - rename it?
-
-        if (names(myshps$original@data)[i] %in%
-            c("GATx", "GATy", "GATnumIDs", "GATcratio", "GATflag")) {
-          names(myshps$original@data)[i] <-
-            paste0("old_", names(myshps$original@data)[i])
-        }
-      }
-    }
+    # Is this redundant? Need to test part 2 file
+    # if ("GATy" %in% names(myshps$original@data)) {
+    #   myshps$original@data <- myshps$original@data[,
+    #     names(myshps$original@data)[!names(myshps$original@data) %in%
+    #       c("old_GATx", "old_GATy", "old_GATnumIDs", "old_GATcratio",
+    #         "old_GATflag")]]
+    #   for (i in 1: ncol(myshps$original@data)) {
+    #     # possibly these can be removed entirely, but need to verify
+    #     # if removing, inform user with warning dialog
+    #     # not sure how to handle flag variable - rename it?
+    #
+    #     if (names(myshps$original@data)[i] %in%
+    #         c("GATx", "GATy", "GATnumIDs", "GATcratio", "GATflag")) {
+    #       names(myshps$original@data)[i] <-
+    #         paste0("old_", names(myshps$original@data)[i])
+    #     }
+    #   }
+    # }
     # housekeeping
     if (gatvars$aggregator2 == "NONE") {
       gatvars$aggregator2 <- gatvars$aggregator1
     }
-    myshps$original@data[, gatvars$aggregator1] <-
-      as.numeric(as.character(myshps$original@data[, gatvars$aggregator1]))
-    if (gatvars$aggregator2 != gatvars$aggregator1) {
-      myshps$original@data[, gatvars$aggregator2] <-
-        as.numeric(as.character(myshps$original@data[, gatvars$aggregator2]))
-    }
-    rm(error)
+
+    # not relevant? should already be handled
+    # data.frame(myshps$original)[, gatvars$aggregator1] <-
+    #   as.numeric(as.character(data.frame(myshps$original)[, gatvars$aggregator1]))
+    # if (gatvars$aggregator2 != gatvars$aggregator1) {
+    #   data.frame(myshps$original)[, gatvars$aggregator2] <-
+    #     as.numeric(as.character(data.frame(myshps$original)[, gatvars$aggregator2]))
+    # }
+    # call this at read-in and use format to print in confirmation box?
     gatvars$maxvalue1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
     gatvars$maxvalue2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
     gatvars$minvalue1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
     gatvars$minvalue2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
 
     if (gatvars$myidvar == "missing") {
-      myshps$original@data$temp_id <- paste0("ID_", 1:nrow(myshps$original@data))
+      myshps$original$temp_id <- paste0("ID_", 1:nrow(myshps$original))
       gatvars$myidvar <- "temp_id"
     }
-    myshps$original <- sp::spChFIDs(myshps$original,
-                                    myshps$original@data[, gatvars$myidvar])
 
-    # proj4string(myshp) # find if this map is lat/long or not (input projection)
+    # what to do at this point? need to convert to sf
+    myshps$original <- sp::spChFIDs(myshps$original,
+                                    myshps$original[, gatvars$myidvar])
+
     mapvars <- list(projection = grepl("longlat",
                                        sp::proj4string(myshps$original),
                                        fixed = TRUE),  # returns logical vector
-                    # suggested to avoid get.Pcent.
                     centroids = sp::coordinates(myshps$original))
     colnames(mapvars$centroids) <- c("GATx", "GATy")
 
@@ -985,24 +1025,26 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     if (is.na(mapvars$projection)) mapvars$projection <- FALSE
 
     # create a flag variable
-    myshps$original@data$GATflag <- 0 # all areas are included in the merge
-
-    # exclusions: for merge minimum violated, flag = 10
-    myshps$original@data$GATflag <-
-      calculateGATflag(exclist, d = myshps$original@data)
-    myshps$original@data$GATflag <-
-      ifelse(myshps$original@data[, gatvars$aggregator1] > gatvars$maxvalue1, 5,
-             myshps$original@data$GATflag)
-    if (!gatvars$aggregator2 == gatvars$aggregator1) {
-      myshps$original@data$GATflag <-
-        ifelse(myshps$original@data[, gatvars$aggregator2] > gatvars$maxvalue2, 5,
-               myshps$original@data$GATflag)
-    }
+    # myshps$original$GATflag <- 0 # all areas are included in the merge
+    # exclusions: for merge minimum violated, flag = 5
+    # myshps$original$GATflag <-
+    #   calculateGATflag(exclist, d = myshps$original)
+    # myshps$original$GATflag <-
+    #   ifelse(myshps$original[, gatvars$aggregator1] > gatvars$maxvalue1, 5,
+    #          myshps$original$GATflag)
+    # if (!gatvars$aggregator2 == gatvars$aggregator1) {
+    #   myshps$original$GATflag <-
+    #     ifelse(myshps$original[, gatvars$aggregator2] > gatvars$maxvalue2, 5,
+    #            myshps$original$GATflag)
+    # }
 
     #  4. run aggregation loop ####
     step <- step + 1
     pb$label = paste0("Aggregating ", filevars$filein, ".")
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     gatvars$popwt <- mergevars$centroid == "population-weighted"
     aggvars <- defineGATmerge(area = myshps$original, gatvars = gatvars,
@@ -1013,7 +1055,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     #  5. aggregate areas ####
     step <- step + 1
     pb$label = paste("Completed", aggvars$newregno, "mergings.")
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     myshps$aggregated <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
                                        idvar = gatvars$myidvar,
@@ -1023,7 +1068,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     #  6. calculate compactness ratio ####
     step <- step + 1
     pb$label = "Checking compactness ratio."
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     # to get maximum distance (diameter of circle): max(dist(test1))
     temp <- list(cratio = calculateGATcompactness(myshps$aggregated),
@@ -1036,7 +1084,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     step <- step + 1
     pb <- list(title = "NYSDOH GAT: mapping variables",
                label = paste0("Mapping ", gatvars$aggregator1, ". Please wait."))
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     # create a list to record plots to be saved to pdf at the end.
     myplots <- list()
@@ -1141,7 +1192,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     #  9. map differences between old and new areas ####
     step <- step + 1
     pb$label = "Mapping differences before and after merging."
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     # plot new and old on same map
     myplots$compare <-  plotGATcompare(areaold = myshps$original,
@@ -1153,7 +1207,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     # 10. map compactness ratio ####
     step <- step + 1
     pb$label = "Mapping compactness ratio after merging."
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     # create thematic map of compactness ratios
     gats <- list(title.main = "Compactness Ratio After Merging",
@@ -1171,8 +1228,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     step <- step + 1
     if (ratevars$ratename != "no_rate") { # map the rate, choropleth map
       pb$label = paste0("Mapping rate variable ", ratevars$ratename, ".")
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       gats <- list(title = paste(ratevars$ratename, "per",
                                  format(as.numeric(ratevars$multiplier),
@@ -1208,8 +1267,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     # 12. save maps to pdf ####
     step <- step + 1
     pb$label = paste0("Writing the plots to ", filevars$fileout, "plots.pdf.")
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                            label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     # save the plots to a pdf file
     pdf(paste0(filevars$userout, "plots.pdf"), onefile=TRUE, width = 10,
@@ -1231,27 +1292,31 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     pb <- list(title = "NYSDOH GAT: saving files",
                label = paste("Writing the original shapfile to",
                              paste0(filevars$fileout, "in")))
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     # create crosswalk of old and new ids
-    myshps$crosswalk <- myshps$original
-    myshps$crosswalk@data <- cbind(myshps$original@data,
-                                   data.frame(GATid = aggvars$IDlist))
+    myshps$crosswalk <- cbind(myshps$original,
+                              data.frame(GATid = aggvars$IDlist))
 
     # warnings don't make sense; they say data not written successfully,
     # but shapefile is fine and data match original file
-    rgdal::writeOGR(myshps$crosswalk, filevars$pathout,
-                    paste0(filevars$fileout, "in"),
-                    driver = "ESRI Shapefile", verbose = TRUE,
-                    overwrite_layer = TRUE)
+    sf::st_write(myshps$crosswalk, filevars$pathout,
+                 paste0(filevars$fileout, "in"),
+                 driver = "ESRI Shapefile", # verbose = TRUE,
+                 overwrite_layer = TRUE)
 
     # 14. save new shapefile ####
     step <- step + 1
     pb$label = paste("Writing the merged shapfile to", filevars$fileout)
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
-    names(myshps$compact@data) <- substr(names(myshps$compact@data), 1, 10)
-    ratevars$ratename <- substr(ratevars$ratename, 1, 10)
+    names(myshps$compact) <- substr(names(myshps$compact), 1, 10)
 
     # export the map as a shapefile
     rgdal::writeOGR(myshps$compact, filevars$pathout,
@@ -1263,8 +1328,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     if (gatvars$savekml==TRUE) { # now includes descriptions
       step <- step + 1
       pb$label = "Writing the KML file."
-      tcltk::setTkProgressBar(tpb, value = step, title = pb$title,
-                              label = pb$label)
+      close(tpb)
+      tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                  max = 26, initial = 0, width = 400)
+      tcltk::setTkProgressBar(tpb, value = step)
 
       writeGATkml(myshp = myshps$compact, filename = filevars$fileout,
                   filepath = filevars$pathout, myidvar = gatvars$myidvar)
@@ -1273,7 +1340,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     step <- step + 1
     pb$label = paste0("Writing the log to ",
                       paste0(filevars$fileout, ".log"), ".")
-    tcltk::setTkProgressBar(tpb, value = step, title = pb$title, label = pb$label)
+    close(tpb)
+    tpb <- tcltk::tkProgressBar(title = pb$title, label = pb$label, min = 0,
+                                max = 26, initial = 0, width = 400)
+    tcltk::setTkProgressBar(tpb, value = step)
 
     mysettings$exists = file.exists(paste0(filevars$userout, ".shp"))
 

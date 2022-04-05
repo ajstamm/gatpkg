@@ -73,7 +73,7 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
 
   idlist <- c()
   for (i in 1:length(numlistitems)) {
-    x <- mapdata[, numlistitems[i]]
+    x <- data.frame(mapdata)[, numlistitems[i]]
     t <- table(x==0 | !is.finite(x))
     idlist[i] <- grepl("TRUE", paste(names(t), collapse = " "))
   }

@@ -22,10 +22,18 @@ Fixes and improvements to address:
 Started, but buggy
 	* runGATprogram (rgdal, sp, maptools)
 		- last (convert & test all functions, then combine everything here)
-		- updated to reflect option changes in defineGATmerge()
-		- should run through defineGATmerge()
-		- left off on step 1.5 (input step 5)
-		- revise to avoid reading in population data multiple times
+		- to test:
+		  - population weighting
+		  - writing kml
+		  - error triggers
+		  - randomly deleting progress bar
+		- revise step 1.11 to save temporary population file
+		  - create null value if population weighting is not selected
+		- left off on step 3
+		  - I think the flagging & variable naming codes are redundant
+		  - set up temporary copy of ID that duplicates myidvar
+		    - want ID to concatenate like other variables
+		    - do that in defineGATmerge (step 4)?
 
 Completed - to test
 	* writeGATkml (sp)

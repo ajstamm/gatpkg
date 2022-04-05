@@ -41,7 +41,7 @@ identifyGATid <- function(mapdata, step = 2, backopt = TRUE) {
   iditems <- checkGATvariabletypes(mapdata, type = "character")
   idlist <- c()
   for (i in 1:length(iditems)) {
-    t <- table(mapdata[, iditems[i]])
+    t <- table(data.frame(mapdata)[, iditems[i]])
     idlist[i] <- length(t) == nrow(mapdata)
   }
 

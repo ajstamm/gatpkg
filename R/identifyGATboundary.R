@@ -53,7 +53,7 @@ identifyGATboundary <- function(data, step = 3, boundary = "NONE",
   charlistitems <- checkGATvariabletypes(data, type = "character")
   idlist <- c()
   for (i in 1:length(charlistitems)) {
-    t <- table(data[, charlistitems[i]])
+    t <- table(data.frame(data)[, charlistitems[i]])
     idlist[i] <- length(t) == nrow(data)
   }
 

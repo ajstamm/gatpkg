@@ -21,13 +21,28 @@ source("R/defineGATmerge.R")
 source("R/mergeGATareas.R")
 source("R/writeGATkml.R")
 source("R/writeGATlog.R")
+source("R/identifyGATid.R")
+source("R/identifyGATboundary.R")
+source("R/identifyGATaggregators.R") # check that I caught all error revisions
+source("R/inputGATmerge.R")
+source("R/inputGATrate.R")
+  # unrevised; needed to test runGATprogram
+source("R/locateGATshapefile.R")
+source("R/checkGATshapefilesize.R")
+source("R/inputGATvariable.R")
+source("R/inputGATaggregators.R")
+source("R/inputGATexclusions.R")
+source("R/inputGATmessage.R")
+source("R/saveGATkml.R")
+source("R/saveGATfiles.R")
+source("R/confirmGATbystep.R")
 
 # unrevised functions ----
   # under revision
 source("R/runGATprogram.R") # revised to input step 5
 
 
-# source("R/.R")
+#
 
 
 

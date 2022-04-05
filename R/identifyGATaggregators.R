@@ -52,11 +52,11 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
         if (agglist$minval2 == min(mapdata[, agglist$var2])) {
           agglist$minval2 <- "none"
         }
-        if (agglist$maxval2 == sum(mapdata[, agglist$var2])) {
+        if (agglist$maxval2 == sum(data.frame(mapdata)[, agglist$var2])) {
           agglist$maxval2 <- "none"
         }
       }
-      if (agglist$maxval1 == sum(mapdata[, agglist$var1])) {
+      if (agglist$maxval1 == sum(data.frame(mapdata)[, agglist$var1])) {
         agglist$maxval1 <- "none"
       }
 
@@ -106,7 +106,7 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
                                      "  \u2022  To continue,  click 'Next >'. \n",
                                      "  \u2022  To return to boundary selection, click '< Back'.",
                                      "  \u2022  To quit GAT, click 'Cancel'."),
-                       minvalue = min(mapdata[, agglist$var1], na.rm = TRUE))
+                       minvalue = min(data.frame(mapdata)[, agglist$var1], na.rm = TRUE))
           gats$msg = paste0("Please enter a valid minimum value for ",
                             agglist$var1, "\n", "that is at least ", gats$minvalue, ".")
           agglist$minval1 <- inputGATvalue(title = gats$title, help = gats$help,
@@ -135,10 +135,10 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
           }
         }
         if (as.numeric(gsub(",", "", agglist$minval1)) <
-            min(mapdata[, agglist$var1], na.rm = TRUE)) {
+            min(data.frame(mapdata)[, agglist$var1], na.rm = TRUE)) {
           msg <- paste("Your selected minimum value of", agglist$minval1,
                        "is lower than the minimum value of", agglist$var1, "(",
-                       min(mapdata[, agglist$var1], na.rm = TRUE), "),",
+                       min(data.frame(mapdata)[, agglist$var1], na.rm = TRUE), "),",
                        "so no areas would be merged. Please change either your",
                        "aggregation variable or your desired minimum value.")
           tcltk::tkmessageBox(title = "Please change selections", message = msg,
@@ -159,7 +159,7 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
                                        "  \u2022  To continue,  click 'Next >'. \n",
                                        "  \u2022  To return to boundary selection, click '< Back'.",
                                        "  \u2022  To quit GAT, click 'Cancel'."),
-                         maxvalue = sum(mapdata[, agglist$var1], na.rm = TRUE))
+                         maxvalue = sum(data.frame(mapdata)[, agglist$var1], na.rm = TRUE))
             agglist$maxval1 <- inputGATvalue(title = gats$title, help = gats$help,
                                              message = gats$msg,
                                              defaulttext = gats$maxvalue,
@@ -201,7 +201,7 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
                                        "  \u2022  To continue,  click 'Next >'. \n",
                                        "  \u2022  To return to boundary selection, click '< Back'.",
                                        "  \u2022  To quit GAT, click 'Cancel'."),
-                         minvalue = min(mapdata[, agglist$var2], na.rm = TRUE))
+                         minvalue = min(data.frame(mapdata)[, agglist$var2], na.rm = TRUE))
             gats$msg = paste0("Please enter a valid minimum value for ",
                               agglist$var2, "\n", "that is at least ", gats$minvalue, ".")
             agglist$minval2 <- inputGATvalue(title = gats$title, help = gats$help,
@@ -230,10 +230,10 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
             }
           }
           if (as.numeric(gsub(",", "", agglist$minval2)) <
-              min(mapdata[, agglist$var2], na.rm = TRUE)) {
+              min(data.frame(mapdata)[, agglist$var2], na.rm = TRUE)) {
             msg <- paste("Your selected minimum value of", agglist$minvalue2,
                          "is lower than the minimum value of", agglist$var2, "(",
-                         min(mapdata[, agglist$var2], na.rm = TRUE), "),",
+                         min(data.frame(mapdata)[, agglist$var2], na.rm = TRUE), "),",
                          "so no areas would be merged. Please change either your",
                          "aggregation variable or your desired minimum value.")
             tcltk::tkmessageBox(title = "Please change selections", message = msg,
@@ -253,8 +253,8 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
                                        "  \u2022  To continue,  click 'Next >'. \n",
                                        "  \u2022  To return to boundary selection, click '< Back'.",
                                        "  \u2022  To quit GAT, click 'Cancel'."),
-                         maxvalue = sum(mapdata[, agglist$var2], na.rm = TRUE),
-                         minvalue = min(mapdata[, agglist$var2], na.rm = TRUE))
+                         maxvalue = sum(data.frame(mapdata)[, agglist$var2], na.rm = TRUE),
+                         minvalue = min(data.frame(mapdata)[, agglist$var2], na.rm = TRUE))
             if (agglist$minval2 != "none") {
               gats$msg <- paste0("Please enter a valid maximum value for ",
                                  agglist$var2, "\n", "that is greater than ",
