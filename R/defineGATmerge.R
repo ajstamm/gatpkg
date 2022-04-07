@@ -241,8 +241,10 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, exclist = NULL,
       if (progressbar) {
         mb$label <- paste0("Merge ", aggvars$newregno + maxid, ": ",
                            nrow(temp$tobemerged), " areas remaining.")
-        tcltk::setTkProgressBar(tmb, value = step, title = mb$title,
-                                label = mb$label)
+        close(tmb)
+        tmb <- tcltk::tkProgressBar(title = mb$title, label = mb$label, min = 0,
+                                    max = nrow(area), initial = 0, width = 400)
+        tcltk::setTkProgressBar(tmb, value = step)
       }
 
       # identify the area to merge this loop ----

@@ -68,7 +68,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
                         after = FALSE, title.sub = NULL, breaks = 5,
                         colcode = NULL, mapstats = FALSE, ratemap = FALSE,
                         closemap = FALSE) {
-  # temporary sf conversion
+  # temporary sf conversion ----
   area <- sf::st_as_sf(area)
 
   # set map size

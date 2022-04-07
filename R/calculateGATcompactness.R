@@ -15,16 +15,18 @@
 #'
 #' @export
 
-calculateGATcompactness <- function(shp) {
+calculateGATcompactness <- function(myshp) {
   # sf conversion ----
-  area <- sf::st_as_sf(shp)
+  area <- sf::st_as_sf(myshp)
 
   # get areas of layer, but first check for planar coordinates
-  proj <- sum(grepl("longlat", sf::st_crs(area), fixed = TRUE)) > 0
+  proj <- sum(grepl("longlat", sf::st_crs(area), fixed = TRUE),
+              sf::st_crs(area, parameters=TRUE)$units_gdal %in%
+                c("Degree", "degree", "DEGREE")) > 0
 
   if (!proj | is.na(proj)) {
     # if not lat/lon, can use directly to calculate compactness ratio
-    map <- shp
+    map <- area
   } else if (proj) { # write function to capture pstring?
     # need to find approx longitude of map to pick an appropriate utm zone
     # utms only for use between 80°S and 84°N latitude
@@ -33,11 +35,11 @@ calculateGATcompactness <- function(shp) {
     map <- sf::st_transform(area, mycrs)
   } # if lat/long, need to reproject
 
-  # calculate compactness ratio
-  myareas <- sf::st_area(map, byid = TRUE)
+  # calculate compactness ratio ----
+  myareas <- sf::st_area(map)
   hulldists <- lapply(map$geometry, dist)
   diams <- sapply(hulldists, max)
   # to get maximum distance (diameter of circle): max(dist(test1))
-  cratio <- myareas / (pi * ((diams / 2) ** 2))
+  cratio <- as.numeric(myareas / (pi * ((diams / 2) ** 2)))
   return(cratio)
 }

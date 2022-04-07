@@ -987,56 +987,31 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     #     }
     #   }
     # }
+
     # housekeeping
     if (gatvars$aggregator2 == "NONE") {
       gatvars$aggregator2 <- gatvars$aggregator1
     }
-
-    # not relevant? should already be handled
-    # data.frame(myshps$original)[, gatvars$aggregator1] <-
-    #   as.numeric(as.character(data.frame(myshps$original)[, gatvars$aggregator1]))
-    # if (gatvars$aggregator2 != gatvars$aggregator1) {
-    #   data.frame(myshps$original)[, gatvars$aggregator2] <-
-    #     as.numeric(as.character(data.frame(myshps$original)[, gatvars$aggregator2]))
-    # }
-    # call this at read-in and use format to print in confirmation box?
-    gatvars$maxvalue1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
-    gatvars$maxvalue2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
-    gatvars$minvalue1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
-    gatvars$minvalue2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
 
     if (gatvars$myidvar == "missing") {
       myshps$original$temp_id <- paste0("ID_", 1:nrow(myshps$original))
       gatvars$myidvar <- "temp_id"
     }
 
-    # what to do at this point? need to convert to sf
-    myshps$original <- sp::spChFIDs(myshps$original,
-                                    myshps$original[, gatvars$myidvar])
+    # use sf::st_centroid, then extract geometry
+    temp$pts <- sf::st_centroid(myshps$original)
+    sf::st_geometry(temp$pts) <- sf::st_centroid(temp$pts$geometry)
+    temp$pts <- data.frame(do.call(rbind, sf::st_geometry(temp$pts)))
+    colnames(temp$pts) <- c("GATx", "GATy")
 
-    mapvars <- list(projection = grepl("longlat",
-                                       sp::proj4string(myshps$original),
-                                       fixed = TRUE),  # returns logical vector
-                    centroids = sp::coordinates(myshps$original))
-    colnames(mapvars$centroids) <- c("GATx", "GATy")
+    mapvars <- list(projection = sum(grepl("longlat", sf::st_crs(area), fixed = TRUE),
+                                     sf::st_crs(area, parameters=TRUE)$units_gdal %in%
+                                         c("Degree", "degree", "DEGREE")) > 0,  # returns boolean
+                    centroids = temp$pts[, c("GATx", "GATy")])
 
     # if projection is lat/lon, projection = TRUE, otherwise FALSE
     # default to not lat/long if something goes wrong
     if (is.na(mapvars$projection)) mapvars$projection <- FALSE
-
-    # create a flag variable
-    # myshps$original$GATflag <- 0 # all areas are included in the merge
-    # exclusions: for merge minimum violated, flag = 5
-    # myshps$original$GATflag <-
-    #   calculateGATflag(exclist, d = myshps$original)
-    # myshps$original$GATflag <-
-    #   ifelse(myshps$original[, gatvars$aggregator1] > gatvars$maxvalue1, 5,
-    #          myshps$original$GATflag)
-    # if (!gatvars$aggregator2 == gatvars$aggregator1) {
-    #   myshps$original$GATflag <-
-    #     ifelse(myshps$original[, gatvars$aggregator2] > gatvars$maxvalue2, 5,
-    #            myshps$original$GATflag)
-    # }
 
     #  4. run aggregation loop ####
     step <- step + 1
@@ -1047,6 +1022,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     tcltk::setTkProgressBar(tpb, value = step)
 
     gatvars$popwt <- mergevars$centroid == "population-weighted"
+
+    # defineGATmerge failed :(
+    # check geographic weighting and similar ratio options
     aggvars <- defineGATmerge(area = myshps$original, gatvars = gatvars,
                               mergevars = mergevars, filevars = filevars,
                               pwrepeat = pwrepeat, adjacent = adjacent,
@@ -1074,11 +1052,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     tcltk::setTkProgressBar(tpb, value = step)
 
     # to get maximum distance (diameter of circle): max(dist(test1))
-    temp <- list(cratio = calculateGATcompactness(myshps$aggregated),
-                 ncol = ncol(myshps$aggregated))
-
-    myshps$compact <- maptools::spCbind(myshps$aggregated, temp$cratio)
-    names(myshps$compact)[temp$ncol+1] <- "GATcratio"
+    myshps$aggregated$GATcratio <- calculateGATcompactness(myshp = myshps$aggregated)
 
     #  7. map first variable: before and after ####
     step <- step + 1
@@ -1129,7 +1103,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                              closemap = closemap)
 
     # find the new maximums after aggregation
-    mapvars$titlemain = paste(gatvars$aggregator1, "After Merging")
+    mapvars$titlemain <- paste(gatvars$aggregator1, "After Merging")
     myplots$aggregator1after <- plotGATmaps(area = myshps$aggregated,
                                             var = gatvars$aggregator1,
                                             title.main = mapvars$titlemain,
@@ -1217,7 +1191,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                  title.sub = paste("compactness ratio = area of polygon over",
                                    "area of circle with same perimeter \n",
                                    "1=most compact, 0=least compact"))
-    myplots$compactness <- plotGATmaps(area = myshps$compact,
+    myplots$compactness <- plotGATmaps(area = myshps$aggregated,
                                        var = "GATcratio", clr = "YlOrBr",
                                        title.main = gats$title.main,
                                        title.sub = gats$title.sub,
@@ -1316,12 +1290,12 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                 max = 26, initial = 0, width = 400)
     tcltk::setTkProgressBar(tpb, value = step)
 
-    names(myshps$compact) <- substr(names(myshps$compact), 1, 10)
+    names(myshps$aggregated) <- substr(names(myshps$aggregated), 1, 10)
 
     # export the map as a shapefile
-    rgdal::writeOGR(myshps$compact, filevars$pathout,
-                      filevars$fileout, driver = "ESRI Shapefile",
-                      verbose = TRUE, overwrite_layer = TRUE)
+    sf::st_write(myshps$aggregated, filevars$pathout,
+                 filevars$fileout, driver = "ESRI Shapefile",
+                 verbose = TRUE, overwrite_layer = TRUE)
     # large areas throw warnings that appear unfounded
 
     # 15. save kml file ####

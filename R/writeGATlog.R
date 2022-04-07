@@ -188,7 +188,8 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
 
   # input file ####
   logtext <- c("\nInput file:          ", filevars$userin,
-               "\n  Projection:        ", sp::proj4string(area),
+               "\n  Projection:        ",
+               sf::st_crs(area, parameters = TRUE)$proj4string,
                "\n  Field names:       ", myvars,
                "\n  Identifier:        ", gatvars$myidvar,
                "\n  Adjacency required?", mysettings$adjacent,
@@ -211,7 +212,7 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                       scientific=FALSE),
                # does not take into account aborted aggregations
                "\n  Number of aggregations:   ",
-               format(nrow(area@data) - nrow(aggvars$allpolydata),
+               format(nrow(area) - nrow(aggvars$allpolydata),
                       big.mark=",",
                       scientific=FALSE),
                "\n  Number of excluded areas: ",

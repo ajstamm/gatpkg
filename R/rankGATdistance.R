@@ -72,13 +72,15 @@ rankGATdistance <- function(area, nbdata, first, gatvars, mergevars) {
 
   # order according to aggregation variable (i.e. cases or population)
   if (mergevars$mergeopt2 == "least" & gatvars$aggregator2 == "NONE"){
-    nborder<-order(nbdata[, gatvars$aggregator1])
+    nborder <- order(data.frame(nbdata)[, gatvars$aggregator1])
   } else if (mergevars$mergeopt2 == "least" & gatvars$aggregator2 != "NONE"){
-    nborder1<-order(nbdata[, gatvars$aggregator1])
-    nborder2<-order(nbdata[, gatvars$aggregator2])
-    if (nbdata[nborder1[1], gatvars$aggregator1] / gatvars$minvalue1 <=
-        nbdata[nborder2[1], gatvars$aggregator2] / gatvars$minvalue2) {
-      nborder<-nborder1
+    nborder1 <- order(data.frame(nbdata)[, gatvars$aggregator1])
+    nborder2 <- order(data.frame(nbdata)[, gatvars$aggregator2])
+    if (data.frame(nbdata)[nborder1[1], gatvars$aggregator1] /
+        gatvars$minvalue1 <=
+        data.frame(nbdata)[nborder2[1], gatvars$aggregator2] /
+        gatvars$minvalue2) {
+      nborder <- nborder1
     } else {
       nborder <- nborder2
     }
@@ -86,8 +88,10 @@ rankGATdistance <- function(area, nbdata, first, gatvars, mergevars) {
 
   # order according to similarity
   if (mergevars$mergeopt2 == "similar") {
-    nborder <- order(abs(nbdata[, mergevars$similar1] / nbdata[, mergevars$similar2] -
-                         first[, mergevars$similar1] / first[, mergevars$similar2]))
+    nborder <- order(abs(data.frame(nbdata)[, mergevars$similar1] /
+                           data.frame(nbdata)[, mergevars$similar2] -
+                           data.frame(first)[, mergevars$similar1] /
+                           data.frame(first)[, mergevars$similar2]))
   }
   return(nborder)
 }

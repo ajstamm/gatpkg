@@ -69,20 +69,20 @@
 mergeGATareas <- function(ratevars, aggvars, idvar, myshp) {
   # get the number of polygons per region, and add; has IDlist + Freq
   numpolys <- as.data.frame(table(IDlist = aggvars$IDlist))
-  d <- aggvars$allpolydata
-  d <- merge(d, numpolys, by.x = idvar, by.y = "IDlist")
+  d <- merge(aggvars$allpolydata, numpolys, by.x = idvar, by.y = "IDlist")
   names(d)[names(d) == "Freq"] <- "GATnumIDs"
 
   # merge doesn't preserve row names like cbind - so restore row names,
   # but ensure they are not more than 10 characters
+  # still not sure if row names matter with sf - delete?
   row.names(d) <- substr(data.frame(d)[, idvar], 1, 10)
 
-  if (ratevars$ratename != "no_rate") { # if should calculate rate
-    m <- as.numeric(ratevars$multiplier)
-    myrate <- m * d[, ratevars$numerator] / d[, ratevars$denominator]
-    d <- cbind(d, myrate)
+  # if should calculate rate
+  if (ratevars$ratename != "no_rate") {
+    d$myrate <- as.numeric(ratevars$multiplier) *
+                data.frame(d)[, ratevars$numerator] /
+                data.frame(d)[, ratevars$denominator]
     names(d)[names(d) == "myrate"] <- ratevars$ratename
-  } # end if should calculate rate
-
+  }
   return(d)
 }

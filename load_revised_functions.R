@@ -36,13 +36,15 @@ source("R/inputGATmessage.R")
 source("R/saveGATkml.R")
 source("R/saveGATfiles.R")
 source("R/confirmGATbystep.R")
+source("R/defineGATmapclasses.R")
+source("R/plotGATmaps.R")
+source("R/plotGATcompare.R")
 
 # unrevised functions ----
   # under revision
 source("R/runGATprogram.R") # revised to input step 5
 
 
-#
 
 
 
