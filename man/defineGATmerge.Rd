@@ -9,6 +9,7 @@ defineGATmerge(
   gatvars,
   mergevars,
   filevars,
+  exclist = NULL,
   pwrepeat = FALSE,
   adjacent = TRUE,
   minfirst = FALSE,
@@ -34,6 +35,8 @@ similar2 cannot equal zero.}
 
 \item{filevars}{A list of string objects that list file names and paths.}
 
+\item{exclist}{The settings to define areas to be excluded.}
+
 \item{pwrepeat}{A boolean denoting whether population weighting (if used)
 should be recalculated each time two areas are merged
 (TRUE) or if area centroids should be weighted with area
@@ -47,7 +50,7 @@ adjacent areas.}
 desirable neighbor only from among the neighbors that
 have values below the desired minimum. If no neighbors
 are below the desired minimum, the most desirable of all
-elligible neighbors is selected.}
+eligible neighbors is selected.}
 
 \item{progressbar}{A boolean denoting whether to display the progress bar.}
 }
@@ -101,12 +104,18 @@ filevars <- list(
   poppath = paste0(find.package("gatpkg"), "/extdata")
 )
 
+exclist <- list(
+  var1 = "TOTAL_POP", math1 = "less than", val1 = 500,
+  var2 = "NONE", # if not "NONE", define math2 & val2
+  var3 = "NONE"  # if not "NONE", define math3 & val3
+)
 my_merge <-
   defineGATmerge(
     area = hftown,
     gatvars = gatvars,
     mergevars = mergevars,
     filevars = filevars,
+    exclist = exclist,
     pwrepeat = FALSE # don't need pwrepeat if popwt = FALSE
   )
 }

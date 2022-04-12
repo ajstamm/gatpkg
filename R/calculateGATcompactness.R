@@ -8,10 +8,10 @@
 #' an alternate projection. The spatial polygons data frame is then used
 #' to calculate compactness ratio. The function returns a vector of ratios.
 #'
-#' @param shp A spatial layer.
+#' @param myshp A spatial layer.
 #'
 #' @examples
-#' calculateGATcompactness(shp = hftown)
+#' calculateGATcompactness(myshp = hftown)
 #'
 #' @export
 

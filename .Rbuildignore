@@ -18,3 +18,5 @@ my_kml_example\.kml
 ^_pkgdown\.yml$
 ^pkgdown$
 ^pkgdown_setup\.R$
+load_revised_functions\.R
+^extdata$

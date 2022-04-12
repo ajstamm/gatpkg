@@ -40,9 +40,7 @@
 #'
 #' if (interactive()) {
 #' # identify variable to aggregate
-#' inputGATaggregators(
-#'   mapdata = hftown@data
-#' )
+#' inputGATaggregators(mapdata = hftown)
 #' }
 #'
 #' @export

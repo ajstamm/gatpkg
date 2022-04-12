@@ -21,7 +21,7 @@ variables in the data frame.
 # identify numeric variables
 my_numericvars <-
   checkGATvariabletypes(
-    mapdata = hftown@data,
+    mapdata = hftown,
     type = "number"
   )
 

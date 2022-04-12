@@ -124,6 +124,9 @@ mysettings <- list(
   starttime = Sys.time(),
   version = "1.0",
   pkgdate = format(Sys.Date(), "\%m-\%d-\%Y"),
+  adjacent = TRUE,
+  pwrepeat = FALSE,
+  minfirst = TRUE,
   exists = FALSE
 )
 

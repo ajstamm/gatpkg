@@ -7,7 +7,7 @@
 identifyGATaggregators(mapdata, step = 4, agglist = NULL, backopt = TRUE)
 }
 \arguments{
-\item{mapdata}{A data frame.}
+\item{mapdata}{A data frame or simple features layer.}
 
 \item{step}{An integer step in the GAT program, for help reference.}
 
@@ -29,9 +29,7 @@ aggregation variable.
 
 if (interactive()) {
 # identify variable to aggregate
-identifyGATaggregators(
-  mapdata = hftown@data
-)
+identifyGATaggregators(mapdata = hftown)
 }
 
 }

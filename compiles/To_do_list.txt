@@ -18,7 +18,8 @@ Fixes and improvements to address:
 			    will spdep and maptools will be phased out? ignore for now
 	* calculateGATcompactness (sp, rgeos)
 * drop sp, rgdal, rgeos, lwgeom from imports; shift several others to suggests
-  * in progress
+  * lwgeom dropped
+  * rgeos, rgdal, sp still showing up in namespace with functions I no longer use
 
 
 

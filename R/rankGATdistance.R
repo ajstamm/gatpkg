@@ -60,6 +60,10 @@ rankGATdistance <- function(area, nbdata, first, gatvars, mergevars) {
   nbdata <- sf::st_as_sf(nbdata)
   first <- sf::st_as_sf(first)
 
+  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
+  min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
+
+
   # distance for lat/long, in kilometers
   # if projection is lat/lon, projection = TRUE, otherwise FALSE
   projection <- sum(grepl("longlat", sf::st_crs(area), fixed = TRUE)) > 0
@@ -71,15 +75,15 @@ rankGATdistance <- function(area, nbdata, first, gatvars, mergevars) {
   nborder <- order(mydist) # order according to distance, this will be default
 
   # order according to aggregation variable (i.e. cases or population)
-  if (mergevars$mergeopt2 == "least" & gatvars$aggregator2 == "NONE"){
+  if (mergevars$mergeopt2 == "least" &
+      gatvars$aggregator2 %in% c("NONE", gatvars$aggregator1)) {
     nborder <- order(data.frame(nbdata)[, gatvars$aggregator1])
-  } else if (mergevars$mergeopt2 == "least" & gatvars$aggregator2 != "NONE"){
+  } else if (mergevars$mergeopt2 == "least" &
+             !gatvars$aggregator2 %in% c("NONE", gatvars$aggregator1)) {
     nborder1 <- order(data.frame(nbdata)[, gatvars$aggregator1])
     nborder2 <- order(data.frame(nbdata)[, gatvars$aggregator2])
-    if (data.frame(nbdata)[nborder1[1], gatvars$aggregator1] /
-        gatvars$minvalue1 <=
-        data.frame(nbdata)[nborder2[1], gatvars$aggregator2] /
-        gatvars$minvalue2) {
+    if (data.frame(nbdata)[nborder1[1], gatvars$aggregator1] / min1 <=
+        data.frame(nbdata)[nborder2[1], gatvars$aggregator2] / min2) {
       nborder <- nborder1
     } else {
       nborder <- nborder2

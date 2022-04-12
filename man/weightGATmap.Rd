@@ -26,19 +26,15 @@ in your original map.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 filevars <- list(
   poppath = paste0(find.package("gatpkg"), "/extdata"),
-  popfile = "hfblock"
-)
+  popfile = "hfblock")
 
 mycentroids <-
   weightGATmap(
-    area = hftown,
-    filevars = filevars,
-    idvar = "ID",
-    popvar = "Pop_tot"
-  )
+    area = hftown, filevars = filevars,
+    idvar = "ID", popvar = "Pop_tot")
 }
 
 

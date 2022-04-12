@@ -64,9 +64,9 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
   }
 
   # set map size
-  dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
+  grDevices::dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
   # enable display list
-  dev.control('enable')
+  grDevices::dev.control('enable')
   # plot shapefiles ####
   graphics::par(mar = c(3.5,0,2,0), mgp = c(0,0,0)) # bottom, left, top, right
 
@@ -99,7 +99,7 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
                     numformat(gatvars$minvalue2), " to ",
                     numformat(gatvars$maxvalue2), " ", gatvars$aggregator2)
   }
-  title(mytitle, sub = mysub, cex.main = 2)
+  graphics::title(mytitle, sub = mysub, cex.main = 2)
 
   # draw arrow and scale bar ####
   if (requireNamespace("prettymapr", quietly = TRUE)) {
@@ -114,11 +114,11 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
                             label.col = "black", pos = "bottomleft")
   }
   # save map ####
-  map <- recordPlot()
+  map <- grDevices::recordPlot()
 
   graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0)) # default bottom, left, top, right
   if (closemap) {
-    dev.off()
+    grDevices::dev.off()
   }
   return(map)
 }

@@ -21,7 +21,7 @@ because in GAT, not having neighbors matters.
 }
 \examples{
 nb <- spdep::poly2nb(hftown, queen = FALSE,
-                     row.names = rownames(hftown@data))
+                     row.names = rownames(hftown))
 # neighbors of areas being aggregated
 nb[[12]]; nb[[13]]; nb[[20]]
 ids <- c(1:12, 12, 14:19, 12, 21)

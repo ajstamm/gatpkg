@@ -38,9 +38,7 @@
 #'
 #' if (interactive()) {
 #' # select boundary variable
-#' identifyGATboundary(
-#'   data = hftown@data,
-#' )
+#' identifyGATboundary(data = hftown)
 #' }
 #'
 #' @export

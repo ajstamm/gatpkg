@@ -72,9 +72,9 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
   area <- sf::st_as_sf(area)
 
   # set map size
-  dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
+  grDevices::dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
   # enable display list
-  dev.control('enable')
+  grDevices::dev.control('enable')
 
   # plot shapefile ####
   # calling dev.off at the end will reset par()
@@ -275,14 +275,14 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
   }
 
   # save map ####
-  map <- recordPlot()
+  map <- grDevices::recordPlot()
 
   graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0))
     # default bottom, left, top, right
 
   # reset
   if (closemap) {
-    dev.off()
+    grDevices::dev.off()
   }
   return(map)
 }

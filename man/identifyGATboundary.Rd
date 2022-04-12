@@ -60,9 +60,7 @@ suitable for defining larger geographic areas in GAT.
 
 if (interactive()) {
 # select boundary variable
-identifyGATboundary(
-  data = hftown@data,
-)
+identifyGATboundary(data = hftown)
 }
 
 }

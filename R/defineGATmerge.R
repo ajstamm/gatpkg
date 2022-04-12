@@ -48,8 +48,9 @@
 #'                    desirable neighbor only from among the neighbors that
 #'                    have values below the desired minimum. If no neighbors
 #'                    are below the desired minimum, the most desirable of all
-#'                    elligible neighbors is selected.
+#'                    eligible neighbors is selected.
 #' @param progressbar A boolean denoting whether to display the progress bar.
+#' @param exclist     The settings to define areas to be excluded.
 #'
 #' @examples
 #'
@@ -102,26 +103,34 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, exclist = NULL,
   # sf conversion ----
   area <- sf::st_as_sf(area)
   row.names(area) <- data.frame(area)[, gatvars$myidvar]
+  max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
+  if (length(max1) == 0) {
+    max1 <- max(data.frame(area)[, gatvars$aggregator1])
+  }
+  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
+  max2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
+  if (length(max2) == 0) {
+    max2 <- max(data.frame(area)[, gatvars$aggregator2])
+  }
+  min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
 
   # define GATflag if necessary ----
   if (!"GATflag" %in% names(area)) {
     if (!is.null(exclist)) {
       area$GATflag <- calculateGATflag(exclist, d = area)
+    } else {
+      area$GATflag <- 0
     }
-    area$GATflag <-
-      ifelse(data.frame(area)[, gatvars$aggregator1] > gatvars$maxvalue1, 5, area$GATflag)
+    area$GATflag <- ifelse(data.frame(area)[, gatvars$aggregator1] > max1, 5,
+                             area$GATflag)
     if (!gatvars$aggregator2 == gatvars$aggregator1) {
-      area$GATflag <- ifelse(data.frame(area)[, gatvars$aggregator2] >
-                               gatvars$maxvalue2, 5, area$GATflag)
+      area$GATflag <- ifelse(data.frame(area)[, gatvars$aggregator2] > max2, 5,
+                               area$GATflag)
     }
   }
   if (gatvars$aggregator2 == "NONE") {
     gatvars$aggregator2 <- gatvars$aggregator1
   }
-  max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
-  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
-  max2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
-  min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
 
   # draw progress bar ----
   if (progressbar) {
@@ -175,10 +184,11 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, exclist = NULL,
     as.numeric(as.character(data.frame(aggvars$allpolydata)[, gatvars$aggregator2]))
 
   # add explicit row.names call because assigning row names in spdep is failing
+  # are row names needed?
   row.names(area) <- data.frame(area)[, gatvars$myidvar]
   temp <- list(alldata = aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0), ],
                digits = nchar(nrow(aggvars$allpolydata)),
-               index = sapply(aggvars$allpolydata, is.integer),
+               index = sapply(data.frame(aggvars$allpolydata), is.integer),
                rownames = data.frame(area)[, gatvars$myidvar])
 
   # test if loop can run ----

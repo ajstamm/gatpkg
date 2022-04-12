@@ -50,10 +50,7 @@
 #'
 #' if (interactive()) {
 #' # define exclusion criteria
-#' inputGATexclusions(
-#'   mapdata = hftown@data,
-#'   step = 10
-#' )
+#' inputGATexclusions(mapdata = hftown, step = 10)
 #' }
 #'
 #' @export

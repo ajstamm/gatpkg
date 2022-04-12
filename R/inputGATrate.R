@@ -70,11 +70,7 @@
 #'               "\nand to quit the program, click 'Cancel'.")
 #'
 #' # define rate settings
-#' inputGATrate(
-#'   mapdata = hftown@data,
-#'   help = hlp,
-#'   limitdenom = FALSE
-#' )
+#' inputGATrate(mapdata = hftown, help = hlp, limitdenom = FALSE)
 #' }
 #'
 #' @export

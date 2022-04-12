@@ -54,11 +54,7 @@
 #'
 #' if (interactive()) {
 #' # make your selections and click "OK"
-#' inputGATmerge(
-#'   mapdata = hftown@data,
-#'   aggvar = "TOTAL_POP",
-#'   aggvar2 = "W_TOT"
-#' )
+#' inputGATmerge(mapdata = hftown, aggvar = "TOTAL_POP", aggvar2 = "W_TOT")
 #' }
 #'
 #' @export

@@ -14,7 +14,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' filevars <- list(
 #'   poppath = paste0(find.package("gatpkg"), "/extdata"),
 #'   popfile = "hfblock")

@@ -40,9 +40,7 @@ retain their original identifiers.
 
 if (interactive()) {
 # identify the character variable to use as the ID
-identifyGATid(
-  mapdata = hftown@data
-)
+identifyGATid(mapdata = hftown)
 }
 
 }

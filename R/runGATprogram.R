@@ -24,7 +24,7 @@
 #'                   desirable neighbor only from among the neighbors that
 #'                   have values below the desired minimum. If no neighbors
 #'                   are below the desired minimum, the most desirable of all
-#'                   elligible neighbors is selected.
+#'                   eligible neighbors is selected.
 #' @param closemap   A boolean to denote whether to close the map windows after
 #'                   the maps are drawn and saved. The default setting is TRUE
 #'                   and will result in maps remaining open after GAT is
@@ -41,7 +41,7 @@
 #'
 #' if (interactive()) {
 #' # this code will run the default version of GAT
-#' runGATprogram() # uses defaults
+#' runGATprogram()
 #' }
 #'
 #' @export
@@ -749,7 +749,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
             step <- 20
           } else if (ratevars$ratename == "back") {
             step <- step - 1
-          } else if (!error) {
+          } else if (!temp$error) {
             if (ratevars$ratename == "no_rate") {
               #temp$msg <- "You have chosen not to calculate a rate."
             } else {
@@ -1004,8 +1004,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     temp$pts <- data.frame(do.call(rbind, sf::st_geometry(temp$pts)))
     colnames(temp$pts) <- c("GATx", "GATy")
 
-    mapvars <- list(projection = sum(grepl("longlat", sf::st_crs(area), fixed = TRUE),
-                                     sf::st_crs(area, parameters=TRUE)$units_gdal %in%
+    mapvars <- list(projection = sum(grepl("longlat", sf::st_crs(myshps$original), fixed = TRUE),
+                                     sf::st_crs(myshps$original, parameters = TRUE)$units_gdal %in%
                                          c("Degree", "degree", "DEGREE")) > 0,  # returns boolean
                     centroids = temp$pts[, c("GATx", "GATy")])
 
@@ -1247,12 +1247,12 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     tcltk::setTkProgressBar(tpb, value = step)
 
     # save the plots to a pdf file
-    pdf(paste0(filevars$userout, "plots.pdf"), onefile=TRUE, width = 10,
-        height = 7)
+    grDevices::pdf(paste0(filevars$userout, "plots.pdf"), onefile=TRUE,
+                   width = 10, height = 7)
     for (myplot in myplots) {
-      if (class(myplot) == "recordedplot") replayPlot(myplot)
+      if (class(myplot) == "recordedplot") grDevices::replayPlot(myplot)
     } # only saves plots that exist
-    dev.off() # need to close pdf file
+    grDevices::dev.off() # need to close pdf file
 
     rm(myplots)
 
@@ -1307,7 +1307,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                   max = 26, initial = 0, width = 400)
       tcltk::setTkProgressBar(tpb, value = step)
 
-      writeGATkml(myshp = myshps$compact, filename = filevars$fileout,
+      writeGATkml(myshp = myshps$aggregated, filename = filevars$fileout,
                   filepath = filevars$pathout, myidvar = gatvars$myidvar)
     }
     # 16. save log file ####

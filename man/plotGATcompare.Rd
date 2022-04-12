@@ -54,11 +54,7 @@ mergevars <- list(
 )
 
 # draw the map
-plotGATcompare(
-  areaold = hftown,
-  areanew = hfagg5k,
-  mergevars = mergevars,
-  gatvars = gatvars
-)
+plotGATcompare(areaold = hftown, areanew = hfagg610k,
+  mergevars = mergevars, gatvars = gatvars)
 
 }

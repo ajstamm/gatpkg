@@ -10,7 +10,7 @@
 #' aggregation variable.
 #'
 #'
-#' @param mapdata A data frame.
+#' @param mapdata A data frame or simple features layer.
 #' @param step    An integer step in the GAT program, for help reference.
 #' @param agglist The list of aggregation variables, with minimum and maximum
 #'                values, if pre-selected.
@@ -20,9 +20,7 @@
 #'
 #' if (interactive()) {
 #' # identify variable to aggregate
-#' identifyGATaggregators(
-#'   mapdata = hftown@data
-#' )
+#' identifyGATaggregators(mapdata = hftown)
 #' }
 #'
 #' @export
@@ -310,17 +308,17 @@ identifyGATaggregators <- function(mapdata, step = 4, agglist = NULL,
     # vector should include only relevant var and not ignored
     # if ignored, assign min or total of var
     if (agglist$maxval1 == "none") {
-      agglist$maxval1 <- sum(mapdata[, agglist$var1], na.rm = TRUE)
+      agglist$maxval1 <- sum(data.frame(mapdata)[, agglist$var1], na.rm = TRUE)
     }
     if (agglist$var2 == "NONE") {
       agglist$maxval2 <- agglist$maxval1
       agglist$minval2 <- agglist$minval1
     } else {
       if (agglist$minval2 == "none") {
-        agglist$minval2 = min(mapdata[, agglist$var2], na.rm = TRUE)
+        agglist$minval2 = min(data.frame(mapdata)[, agglist$var2], na.rm = TRUE)
       }
       if (agglist$maxval2 == "none") {
-        agglist$maxval2 = sum(mapdata[, agglist$var2], na.rm = TRUE)
+        agglist$maxval2 = sum(data.frame(mapdata)[, agglist$var2], na.rm = TRUE)
       }
     }
   }

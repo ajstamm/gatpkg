@@ -30,29 +30,29 @@ LazyData: true
 Depends: R (>= 3.5.0)
 Imports: 
     classInt (>= 0.3.1),
-    foreign (>= 0.8.69),
-    graphics, 
-    maptools (>= 0.9.5),
+    grDevices,
+    methods,
     plotKML (>= 0.5.9),
     RColorBrewer (>= 1.1.2),
-    raster,
     sf, 
     spdep (>= 1.0-2),
+    tcltk,
     tcltk2 (>= 1.2.11),
+    utils,
+    rgdal,
+    foreign
 Suggests: 
-    grDevices,
+    graphics, 
     knitr,
-    methods,
     prettymapr (>= 0.2.2),
     qpdf,
     rmarkdown,
     stats, 
-    tcltk,
     tibble,
     tools,
-    utils,
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/ajstamm/gatpkg
 BugReports: https://github.com/ajstamm/gatpkg/issues
+StagedInstall: no

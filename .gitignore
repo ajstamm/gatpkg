@@ -2,6 +2,7 @@
 inst/doc/**
 .Rproj.user/**
 .git/**
+^extdata/**
 
 # Ignore docs files
 _gh_pages
@@ -46,3 +47,11 @@ nbproject
 *.db
 vignettes/images/Thumbs.db
 *.kml
+extdata/hfblock.dbf
+extdata/hfblock.prj
+extdata/hfblock.shp
+extdata/hfblock.shx
+extdata/hftown.dbf
+extdata/hftown.prj
+extdata/hftown.shp
+extdata/hftown.shx

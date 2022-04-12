@@ -31,9 +31,7 @@
 #'
 #' \donttest{
 #' # define your message
-#' inputGATmessage(
-#'   title = "Random message window"
-#' )
+#' inputGATmessage(title = "Random message window")
 #' }
 #'
 #' @export

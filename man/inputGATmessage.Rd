@@ -54,9 +54,7 @@ Select your desired variables and the exclusion criterion for each.
 
 \donttest{
 # define your message
-inputGATmessage(
-  title = "Random message window"
-)
+inputGATmessage(title = "Random message window")
 }
 
 }

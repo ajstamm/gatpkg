@@ -26,6 +26,6 @@ exclist <- list(
   var3 = "NONE"  # if not "NONE", define math3 & val3
 )
 
-calculateGATflag(exclist = exclist, d = hftown@data)
+calculateGATflag(exclist = exclist, d = hftown)
 
 }

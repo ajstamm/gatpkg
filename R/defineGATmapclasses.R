@@ -14,7 +14,7 @@
 #' # prepare the classes for the choropleth maps
 #' defineGATmapclasses(
 #'   areaold = hftown,
-#'   areanew = hfagg5k,
+#'   areanew = hfagg610k,
 #'   aggvar = "TOTAL_POP",
 #'   breaks = 4
 #' )

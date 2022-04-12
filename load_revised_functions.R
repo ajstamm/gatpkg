@@ -42,7 +42,7 @@ source("R/plotGATcompare.R")
 
 # unrevised functions ----
   # under revision
-source("R/runGATprogram.R") # revised to input step 5
+source("R/runGATprogram.R") # revised and testing
 
 
 
