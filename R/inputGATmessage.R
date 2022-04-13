@@ -29,7 +29,7 @@
 #'
 #' @examples
 #'
-#' \donttest{
+#' if (interactive()) {
 #' # define your message
 #' inputGATmessage(title = "Random message window")
 #' }
