@@ -84,7 +84,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
     # xpd: draw outside margins?
 
   # sp::plot(area, lwd=.5)
-  plot(area$geometry, lwd=.5)
+  plot(sf::st_geometry(area), lwd=.5)
   title(main = title.main, sub = title.sub, cex.main = 2)
 
   if (is.null(colcode)) {
@@ -112,7 +112,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
       } else if (after == TRUE) {
         # maxpop <- max(area@data[, var])
         maxpop <- max(data.frame(area)[, var])
-        mybreaks <- c(class$brks, maxpop)
+        mybreaks <- c(class$brks, maxpop+1)
         # set upper limits for maps accordingly, so all data is within some range
         # myclass <- classInt::classIntervals(area@data[, var], breaks,
         #                                     style = "fixed",
@@ -165,7 +165,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
   }
 
   # sp::plot(area, col = colcode, add = TRUE, lwd=.5)
-  plot(area$geometry, col = colcode, add = TRUE, lwd=.5)
+  plot(sf::st_geometry(area), col = colcode, add = TRUE, lwd=.5)
 
   labels = names(attr(colcode, "table"))
   fill = attr(colcode, "palette")
