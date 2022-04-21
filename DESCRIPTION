@@ -1,8 +1,8 @@
 Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
-Version: 1.61.1
-Date: 2022-01-04
+Version: 1.61.2
+Date: 2022-04-21
 Authors@R: c(
     person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 
       role = c("cre", "aut"), comment = "author of R package"),
@@ -36,7 +36,6 @@ Imports:
     lwgeom,
     maptools (>= 0.9.5),
     methods,
-    plotKML (>= 0.5.9),
     RColorBrewer (>= 1.1.2),
     raster,
     rgdal,
