@@ -2,11 +2,10 @@
 #'
 #' This function writes a KML file of the shapefile.
 #'
-#' @param myshp A spatial polygons data frame.
+#' @param myshp    A spatial layer.
 #' @param filename The desired name for the KML file.
 #' @param filepath The desired location for the KML file.
-#' @param myidvar A variable of unique values for the spatial polygons
-#'                data frame.
+#' @param myidvar  A variable of unique values for the spatial layer.
 #'
 #' @examples
 #' # creates the kml file in the project root directory
