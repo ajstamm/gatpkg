@@ -52,7 +52,7 @@ Select your desired variables and the exclusion criterion for each.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # define your message
 inputGATmessage(title = "Random message window")
 }

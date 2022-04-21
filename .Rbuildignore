@@ -7,8 +7,8 @@
 ^data_raw$
 ^README\.Rmd$
 ^README\.md$
-my_hftown\.log
-my_kml_example\.kml
+^.*\.log
+^.*\.kml
 ^compiles$
 ^presentations$
 ^archive$

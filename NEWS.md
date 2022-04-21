@@ -1,3 +1,9 @@
+# gatpkg v2.0.0
+
+* Converted all instances of rgeos, rgdal, and sp to sf. Dependencies on rgeos, lwgeom, and sp entirely removed.
+* Revised writeGATkml() to use sf and removed dependency on plotKML.
+
+
 # gatpkg v1.61.1
 
 * Added structure for pkgdown.

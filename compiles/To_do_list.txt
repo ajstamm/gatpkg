@@ -41,11 +41,10 @@ Started, but buggy
 		    - do that in defineGATmerge (step 4)?
 
 Completed - to test
-	* writeGATkml (sp)
-	  - throws warnings - need to look into it
 
 
 Completed - check examples
+	* writeGATkml (sp)
 	* mergeGATareas (sp, maptools)
 	* writeGATlog (rgdal)
 	* createGATregion (sp)
@@ -54,14 +53,13 @@ Completed - check examples
 		- works for pop weighting - test all options
 	* weightGATmap (sp structure)
 	* rankGATdistance (sp)
-	  - function finished; test example
 	* combineGATcrosswalks (rgdal)
 		- rethought exported datasets to use as examples
 		- or create datasets as part of examples?
 
 
 Completed - these output layers - wait to copy
-	* aggregateGATnb - find sf equivalent? (spdep)
+	* aggregateGATnb (spdep) - find sf equivalent?
 	* identifyGATfirstobs (sp structure)
 	* importGATweights (sp)
 	* calculateGATexclusions (sf structure)

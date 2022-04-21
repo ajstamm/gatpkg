@@ -10,7 +10,6 @@
 #'
 #' @examples
 #' # creates the kml file in the project root directory
-#'
 #' if (interactive()) {
 #' writeGATkml(myshp = hftown, filename = "my_kml_example",
 #'             filepath = getwd(), myidvar = "ID")
@@ -22,7 +21,7 @@
 
 writeGATkml <- function(myshp, filename, filepath, myidvar = "GEOID10") {
   # temporary sf conversion ----
-  area <- sf::st_as_sf(area)
+  myshp <- sf::st_as_sf(myshp)
   # reproject for KML
   # output kml (must be in lat/lon)
   crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
@@ -31,13 +30,13 @@ writeGATkml <- function(myshp, filename, filepath, myidvar = "GEOID10") {
 
   # create the description tables for the kml file
   # modified from the description section of Gwen's code
-  mycolnames <- names(kml)
+  mycolnames <- names(kml)[1:(ncol(kml)-1)]
 
   # this is giving warnings, but working. needs debugging later
   desctemp <- character(nrow(kml))
   for (i in 1:nrow(kml)) {
     temp <- c()
-    for (j in 1:ncol(kml)) {
+    for (j in 1:length(mycolnames)) {
       temp <- paste(temp, "<tr>",
                           "<td>", mycolnames[j], "</td>",
                           "<td>", kml[i, j], "</td>",
@@ -45,17 +44,10 @@ writeGATkml <- function(myshp, filename, filepath, myidvar = "GEOID10") {
     }
     desctemp[i] <- paste("<table border = 1>", temp, "</table>")
   }
-  kml$desc <- desctemp
+  kml$description <- desctemp
   labels <- data.frame(kml)[, myidvar]
 
-  kml_sp <- sf::as_Spatial(kml)
-
-  oldpath <- getwd()
-  setwd(filepath)
-  plotKML::kml(obj = kml_sp, folder.name = filepath,
-               file.name = paste0(filename, ".kml"), kmz = FALSE,
-               colour = NULL, labels = labels, alpha = 1, size = 1,
-               html.table = data.frame(kml)$desc) # , metadata =,
-  setwd(oldpath)
+  file <- paste0(filepath, "/", filename, ".kml")
+  sf::st_write(kml, file, driver = "KML", delete_dsn = TRUE)
 }
 
