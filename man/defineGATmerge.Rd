@@ -8,21 +8,21 @@ defineGATmerge(
   area,
   gatvars,
   mergevars,
-  filevars,
   exclist = NULL,
   pwrepeat = FALSE,
   adjacent = TRUE,
+  pop = NULL,
   minfirst = FALSE,
   progressbar = TRUE
 )
 }
 \arguments{
-\item{area}{A spatial polygons data frame.}
+\item{area}{A spatial layer representing areas to be aggregated.}
 
-\item{gatvars}{A list of objects created by the GAT tool. It contains
-the strings myidvar, aggregator1, aggregator2, and
-boundary, which are all variables in the area, the
-boolean popwt, and the numbers minvalue1 and minvalue2.
+\item{gatvars}{A list of objects created by GAT. It contains the
+strings myidvar, aggregator1, aggregator2, and boundary,
+which are all variables in the area, the boolean popwt,
+and the numbers minvalue1 and minvalue2.
 Both aggregator1 and aggregator2 must be numeric and
 myidvar must contain unique values.}
 
@@ -32,8 +32,6 @@ similar2. The valid options for mergeopt1 are "closest",
 "least", and "similar". If "similar" is selected, similar1
 and similar2 must be numeric variables in the area and
 similar2 cannot equal zero.}
-
-\item{filevars}{A list of string objects that list file names and paths.}
 
 \item{exclist}{The settings to define areas to be excluded.}
 
@@ -45,6 +43,8 @@ this option is ignored.}
 
 \item{adjacent}{A boolean denoting whether to force GAT to merge only
 adjacent areas.}
+
+\item{pop}{A spatial layer containing underlying population values.}
 
 \item{minfirst}{A boolean denoting whether or not to select the most
 desirable neighbor only from among the neighbors that
@@ -99,11 +99,6 @@ mergevars <- list(
   centroid = "geographic"
 )
 
-filevars <- list(
-  popfile = "hfblock",
-  poppath = paste0(find.package("gatpkg"), "/extdata")
-)
-
 exclist <- list(
   var1 = "TOTAL_POP", math1 = "less than", val1 = 500,
   var2 = "NONE", # if not "NONE", define math2 & val2
@@ -111,10 +106,9 @@ exclist <- list(
 )
 my_merge <-
   defineGATmerge(
-    area = hftown,
+    area = hftown, pop = hfpop,
     gatvars = gatvars,
     mergevars = mergevars,
-    filevars = filevars,
     exclist = exclist,
     pwrepeat = FALSE # don't need pwrepeat if popwt = FALSE
   )

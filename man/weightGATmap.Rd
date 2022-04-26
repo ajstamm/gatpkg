@@ -4,15 +4,15 @@
 \alias{weightGATmap}
 \title{Find the Weighted Centriods for the Map}
 \usage{
-weightGATmap(area, filevars, idvar, popvar, crs = NULL)
+weightGATmap(area, pop, idvar, popvar, crs = NULL)
 }
 \arguments{
-\item{area}{The original shapefile.}
+\item{area}{A spatial layer representing areas to be aggregated.}
 
-\item{filevars}{A list of strings denoting file names and paths.}
+\item{pop}{A spatial layer containing underlying population values.}
 
-\item{idvar}{A variable of unique string values to identify the
-area object's observations.}
+\item{idvar}{A variable of unique string values to identify the area
+layer's observations.}
 
 \item{popvar}{The base population variable.}
 
@@ -27,13 +27,9 @@ in your original map.
 \examples{
 
 if (interactive()) {
-filevars <- list(
-  poppath = paste0(find.package("gatpkg"), "/extdata"),
-  popfile = "hfblock")
-
 mycentroids <-
   weightGATmap(
-    area = hftown, filevars = filevars,
+    area = hftown, pop = hfpop,
     idvar = "ID", popvar = "Pop_tot")
 }
 

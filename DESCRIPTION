@@ -37,9 +37,7 @@ Imports:
     spdep (>= 1.0-2),
     tcltk,
     tcltk2 (>= 1.2.11),
-    utils,
-    rgdal,
-    foreign
+    utils
 Suggests: 
     graphics, 
     knitr,

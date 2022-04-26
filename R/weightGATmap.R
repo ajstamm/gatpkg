@@ -3,11 +3,11 @@
 #' This function identifies the population weighted centroids for all areas
 #' in your original map.
 #'
-#' @param area     The original shapefile.
+#' @param area     A spatial layer representing areas to be aggregated.
+#' @param pop      A spatial layer containing underlying population values.
 #' @param popvar   The base population variable.
-#' @param idvar    A variable of unique string values to identify the
-#'                 area object's observations.
-#' @param filevars A list of strings denoting file names and paths.
+#' @param idvar    A variable of unique string values to identify the area
+#'                 layer's observations.
 #' @param crs      A user-defined non-lat/long projection, entered as a
 #'                 string. The default is NULL, in which case the function
 #'                 defines the projection.
@@ -15,25 +15,21 @@
 #' @examples
 #'
 #' if (interactive()) {
-#' filevars <- list(
-#'   poppath = paste0(find.package("gatpkg"), "/extdata"),
-#'   popfile = "hfblock")
-#'
 #' mycentroids <-
 #'   weightGATmap(
-#'     area = hftown, filevars = filevars,
+#'     area = hftown, pop = hfpop,
 #'     idvar = "ID", popvar = "Pop_tot")
 #' }
 #'
 #'
 #' @export
-weightGATmap <- function(area, filevars, idvar, popvar, crs = NULL) {
+weightGATmap <- function(area, pop, idvar, popvar, crs = NULL) {
   # temporary sf conversion ----
   area <- sf::st_as_sf(area)
+  pop <- sf::st_as_sf(pop)
   old_crs <- sf::st_crs(area)
 
   # load pop file ####
-  pop <- sf::read_sf(dsn = filevars$poppath, layer = filevars$popfile)
   pop <- pop[, popvar]
   pop$area_old <- sf::st_area(pop$geometry)
   if (is.null(crs)) {

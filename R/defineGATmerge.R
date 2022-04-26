@@ -23,11 +23,12 @@
 #' \href{../doc/gat_tech_notes.html}{
 #' \code{vignette("gat_tech_notes", package = "gatpkg")}}.
 #'
-#' @param area        A spatial polygons data frame.
-#' @param gatvars     A list of objects created by the GAT tool. It contains
-#'                    the strings myidvar, aggregator1, aggregator2, and
-#'                    boundary, which are all variables in the area, the
-#'                    boolean popwt, and the numbers minvalue1 and minvalue2.
+#' @param area        A spatial layer representing areas to be aggregated.
+#' @param pop         A spatial layer containing underlying population values.
+#' @param gatvars     A list of objects created by GAT. It contains the
+#'                    strings myidvar, aggregator1, aggregator2, and boundary,
+#'                    which are all variables in the area, the boolean popwt,
+#'                    and the numbers minvalue1 and minvalue2.
 #'                    Both aggregator1 and aggregator2 must be numeric and
 #'                    myidvar must contain unique values.
 #' @param mergevars   A list of string objects needed to aggregate the areas
@@ -36,7 +37,6 @@
 #'                    "least", and "similar". If "similar" is selected, similar1
 #'                    and similar2 must be numeric variables in the area and
 #'                    similar2 cannot equal zero.
-#' @param filevars    A list of string objects that list file names and paths.
 #' @param pwrepeat    A boolean denoting whether population weighting (if used)
 #'                    should be recalculated each time two areas are merged
 #'                    (TRUE) or if area centroids should be weighted with area
@@ -74,11 +74,6 @@
 #'   centroid = "geographic"
 #' )
 #'
-#' filevars <- list(
-#'   popfile = "hfblock",
-#'   poppath = paste0(find.package("gatpkg"), "/extdata")
-#' )
-#'
 #' exclist <- list(
 #'   var1 = "TOTAL_POP", math1 = "less than", val1 = 500,
 #'   var2 = "NONE", # if not "NONE", define math2 & val2
@@ -86,10 +81,9 @@
 #' )
 #' my_merge <-
 #'   defineGATmerge(
-#'     area = hftown,
+#'     area = hftown, pop = hfpop,
 #'     gatvars = gatvars,
 #'     mergevars = mergevars,
-#'     filevars = filevars,
 #'     exclist = exclist,
 #'     pwrepeat = FALSE # don't need pwrepeat if popwt = FALSE
 #'   )
@@ -97,8 +91,8 @@
 #'
 #' @export
 
-defineGATmerge <- function(area, gatvars, mergevars, filevars, exclist = NULL,
-                           pwrepeat = FALSE, adjacent = TRUE,
+defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
+                           pwrepeat = FALSE, adjacent = TRUE, pop = NULL,
                            minfirst = FALSE, progressbar = TRUE) {
   # sf conversion ----
   area <- sf::st_as_sf(area)
@@ -152,8 +146,8 @@ defineGATmerge <- function(area, gatvars, mergevars, filevars, exclist = NULL,
       tcltk::setTkProgressBar(tmb, value = 0, title = mb$title,
                               label = mb$label)
     }
-    temp <- weightGATmap(area = area, popvar = gatvars$popvar,
-                         filevars = filevars, idvar = gatvars$myidvar)
+    temp <- weightGATmap(area = area, pop = pop, popvar = gatvars$popvar,
+                         idvar = gatvars$myidvar)
     mapvars$centroids <- temp$centroids
     mapvars$pop <- temp$pop
     # area$GATpop <- mapvars$centroids$GATpop

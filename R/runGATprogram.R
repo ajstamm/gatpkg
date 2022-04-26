@@ -671,17 +671,16 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
             filevars$popin <- tempfiles$userin
             filevars$popfile <- tempfiles$filein
             filevars$poppath <- tempfiles$pathin
-            temp$popdata <- foreign::read.dbf(paste0(filevars$popin, ".dbf"),
-                                              as.is = TRUE)
-            temp$popshp <- rgdal::readOGR(dsn = filevars$poppath,
-                                       layer = filevars$popfile)
-            temp$polys <- class(temp$popshp)
-            temp$popnumvars <- checkGATvariabletypes(temp$popdata,
+            temp$pop <- sf::st_read(dsn = filevars$poppath,
+                                    layer = filevars$popfile)
+            temp$polys <- sum(grepl("POLYGON", class(temp$pop$geometry),
+                                    fixed = TRUE)) > 0
+            temp$popnumvars <- checkGATvariabletypes(data.frame(temp$pop),
                                                      type = "number")
 
             # add dialog specifying each issue
             # add check for shapefile type (if class(shp) )
-            if (temp$polys != "SpatialPolygonsDataFrame") {
+            if (!temp$polys) {
               # message: wrong kind of shapefile; repeat dialog
               temp$msg <- "The shapefile must contain polygons to be used."
               tcltk::tkmessageBox(title = "Shapefile invalid", type = "ok",
@@ -945,6 +944,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       if (temp$cancel %in% c("Yes", "None")) {
         step <- 20 # done with user input
         myshps$original <- temp$shp
+        myshps$pop <- temp$pop
         # add population file
       } else if (temp$cancel == "back") { # now irrelevant
         step <- step - 1 # go back one
@@ -1026,7 +1026,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     # defineGATmerge failed :(
     # check geographic weighting and similar ratio options
     aggvars <- defineGATmerge(area = myshps$original, gatvars = gatvars,
-                              mergevars = mergevars, filevars = filevars,
+                              mergevars = mergevars, pop = myshps$pop,
                               pwrepeat = pwrepeat, adjacent = adjacent,
                               exclist = exclist, minfirst = minfirst)
 

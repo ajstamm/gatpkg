@@ -47,19 +47,12 @@ mergevars2 <- list( # closest merge
   centroid = "population-weighted"
 )
 
-filevars <- list(
-  popfile = "hfblock",
-  poppath = paste0(find.package("gatpkg"), "/extdata")
-)
-
 # merge areas based on your settings
 # this function identifies areas to merge; it does not merge them
 my_merge <-
   defineGATmerge(
-    area = hftown,
-    gatvars = gatvars,
-    mergevars = mergevars1,
-    filevars = filevars
+    area = hftown, pop = hfpop,
+    gatvars = gatvars, mergevars = mergevars1
   )
 
 # need all rate options if rate to be calculated

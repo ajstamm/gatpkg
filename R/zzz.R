@@ -72,19 +72,14 @@ exclist <- list(
   var3 = "NONE"  # if not "NONE", define math3 & val3
 )
 
-filevars <- list(
-  popfile = "hfblock",
-  poppath = paste0(find.package("gatpkg"), "/extdata")
-)
-
   # first aggregation ----
-aggvars <- defineGATmerge(area = hftown, gatvars = gatvars,
-                          filevars = filevars, mergevars = mergevars,
-                          exclist = exclist, progressbar = FALSE)
+aggvars <- defineGATmerge(area = hftown, pop = hfpop, gatvars = gatvars,
+                          mergevars = mergevars, exclist = exclist,
+                          progressbar = FALSE)
 
 
 hfagg610k <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
-                         idvar = gatvars$myidvar, myshp = hftown)
+                           idvar = gatvars$myidvar, myshp = hftown)
 
 vars <- c("ID", "TOWN", "COUNTY", "TOTAL_POP", "GATflag", "GATx", "GATy",
           "GATnumIDs", "geometry")
@@ -123,8 +118,7 @@ rm(temp)
 
   # second aggregation ----
 aggvars <- defineGATmerge(area = hfagg610k, gatvars = gatvars,
-                          mergevars = mergevars,
-                          progressbar = FALSE)
+                          mergevars = mergevars, progressbar = FALSE)
 
 hfagg615k <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
                          idvar = gatvars$myidvar, myshp = hfagg610k)
