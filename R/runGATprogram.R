@@ -1221,7 +1221,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     pdf(paste0(filevars$userout, "plots.pdf"), onefile=TRUE, width = 10,
         height = 7)
     for (myplot in myplots) {
-      if (class(myplot) == "recordedplot") replayPlot(myplot)
+      if (is(myplot, "recordedplot")) replayPlot(myplot)
     } # only saves plots that exist
     dev.off() # need to close pdf file
 

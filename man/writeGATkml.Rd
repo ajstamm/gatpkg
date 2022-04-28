@@ -7,27 +7,21 @@
 writeGATkml(myshp, filename, filepath, myidvar = "GEOID10")
 }
 \arguments{
-\item{myshp}{A spatial polygons data frame.}
+\item{myshp}{A spatial layer.}
 
 \item{filename}{The desired name for the KML file.}
 
 \item{filepath}{The desired location for the KML file.}
 
-\item{myidvar}{A variable of unique values for the spatial polygons
-data frame.}
+\item{myidvar}{A variable of unique values for the spatial layer.}
 }
 \description{
-This function writes a KML file of the shapefile.
+This function writes a KML file of the spatial layer.
 }
 \examples{
 # creates the kml file in the project root directory
-
 if (interactive()) {
-writeGATkml(
-  myshp = hftown,
-  filename = "my_kml_example",
-  filepath = getwd(),
-  myidvar = "ID"
-)
+writeGATkml(myshp = hftown, filename = "my_kml_example",
+            filepath = getwd(), myidvar = "ID")
 }
 }

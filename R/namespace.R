@@ -26,7 +26,6 @@
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom classInt     classIntervals findColours
 #' @importFrom spdep        poly2nb aggregate.nb
-#' @importFrom plotKML      kml
 #' @importFrom sp           proj4string spTransform CRS coordinates plot
 #'                          spDistsN1 bbox
 #' @importFrom maptools     spCbind
@@ -35,11 +34,5 @@
 #'                          st_intersection
 #' @importFrom raster       intersect
 
-
-# package suggested, not required, so don't call import
-# @importFrom prettymapr addnortharrow addscalebar
-
-# packages no longer used due to weird behavior in RStudio
-# @importFrom svDialogs dlgMessage
 
 NULL
