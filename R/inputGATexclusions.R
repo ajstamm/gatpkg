@@ -75,10 +75,7 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
                     "   2. Select the direction of each exclusion. \n",
                     "   3. Enter a numeric value for each exclusion. \n",
                     "\nTo ignore an option, select 'NONE' for the variable name. \n")
-  fonthead <- tcltk2::tk2font.set(font = "fonthead",
-                                  settings = list(family = "Segoe UI", size = 10,
-                                                  bold = TRUE, italic = FALSE))
-
+  fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
   if (is.null(exclist)) {
     myvar1 <- tcltk::tclVar("NONE")
     myvar2 <- tcltk::tclVar("NONE")
@@ -119,9 +116,9 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
   tt <- tcltk::tktoplevel()
   tcltk::tkwm.title(tt, paste0("Step ", step, ": Exclusions"))
 
-  tt$insttl <- tcltk2::tk2label(tt, text = "Instructions", font = "fonthead")
+  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead)
   tcltk::tkgrid(tt$insttl, sticky = "w", padx = 5, pady = 5)
-  tcltk::tkgrid(tcltk2::tk2label(tt, text = instruct), columnspan = 4,
+  tcltk::tkgrid(tcltk::tklabel(tt, text = instruct), columnspan = 4,
                 sticky = "w")
 
   tt$env$tr <- tcltk::tkframe(tt)
@@ -251,20 +248,20 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
 
   tt$env$tf <- tcltk::tkframe(tt)
   if (backopt) {
-    tt$env$tf$BackBut <- tcltk2::tk2button(tt$env$tf, text = "< Back",
+    tt$env$tf$BackBut <- tcltk::tkbutton(tt$env$tf, text = "< Back",
                                            command = onBack, width = 12)
-    tt$env$tf$OkBut <- tcltk2::tk2button(tt$env$tf, text = "Next >",
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >",
                                          command = onOk, width = 12,
                                          default = "active")
   } else {
-    tt$env$tf$OkBut <- tcltk2::tk2button(tt$env$tf, text = "Confirm",
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm",
                                          command = onOk, width = 12,
                                          default = "active")
   }
 
-  tt$env$tf$HelpBut <- tcltk2::tk2button(tt$env$tf, text="Help",
+  tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help",
                                          width = 12, command = onHelp)
-  tt$env$tf$CancelBut <- tcltk2::tk2button(tt$env$tf, text = "Cancel GAT",
+  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = "Cancel GAT",
                                            width = 12, command = onCancel)
 
   if (backopt) {
@@ -276,7 +273,6 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
   tcltk::tkgrid(tt$env$tf, pady = 5)
 
   ## return selections ####
-
   tcltk::tkwait.window(tt)
 
   return(myenv$exclist)

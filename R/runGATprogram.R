@@ -47,10 +47,11 @@
 #' @export
 
 # this will also incorporate max values
+# limitdenom = FALSE; pwrepeat = FALSE; settings = NULL
+# adjacent = TRUE; minfirst = FALSE; closemap = FALSE
 
-runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
-                          settings = NULL, adjacent = TRUE, minfirst = FALSE,
-                          closemap = FALSE) {
+runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
+                          adjacent = TRUE, minfirst = FALSE, closemap = FALSE) {
   #  1. start the GAT program ####
   # load the progress bar
   mysettings <- list(version = packageDescription("gatpkg")$Version,
@@ -134,7 +135,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
 
   #  2. start user input ####
 
-  while (step < 20){ # get user input until settings confirmed
+  while (step < 20){ # user input settings
     while (step == 1) { # ask user to identify shapefile; check its usability
       pb <- list(title = "NYSDOH GAT: identify shapefile",
                  label = "Identifying and selecting the shapefile.")
@@ -223,7 +224,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           temp$error <- FALSE
         }
       }
-    } # end request shapefile (userin)
+    } # shapefile
     while (step == 2) { # ask user to select ID variable that uniquely
                         # identifies areas to be merged
       pb <- list(title = "NYSDOH GAT: identify identifier",
@@ -254,7 +255,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           step <- step + 1
         }
       }
-    } # end request id variable (myidvar)
+    } # id variable
     while (step == 3) { #ask user to select boundary variable, if present
       pb <- list(title = "NYSDOH GAT: identify boundary",
                  label = "Selecting the boundary variable.")
@@ -298,7 +299,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         }
       }
       rm(tempbound)
-    } # end request boundary variable (boundaryvar)
+    } # boundary variable
     while (step == 4) { # ask for aggregation variables
       pb <- list(title = "NYSDOH GAT: identify aggregators",
                  label = "Selecting the aggregation variables.")
@@ -384,7 +385,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       }
 
       rm(agglist)
-    } # end request aggregation variables (agglist)
+    } # aggregation variables
     while (step == 5) {
       pb <- list(title = "NYSDOH GAT: Enter exclusions",
                  label = "Identifying your exclusion criteria.")
@@ -573,7 +574,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         temp$error <- TRUE
       }
 
-    } # end request exclusions (exclist)
+    } # exclusions (exclist)
     while (step == 6) { # radiobutton dialog to get merge type
       pb <- list(title = "NYSDOH GAT: identify merge type",
                  label = "Selecting the merge type.")
@@ -646,7 +647,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           }
         }
       }
-    } # end request merge type (mergevars)
+    } # merge type (mergevars)
     while (step == 7) {
       pb <- list(title = "NYSDOH GAT: identify base population",
                  label = "Selecting the population file.")
@@ -711,7 +712,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
           step <- step + 1
         }
       }
-    } # end request population weighting
+    } # population weighting
     while (step == 8) { # step 9: get rate settings
       pb <- list(title = "NYSDOH GAT: identify rate",
                  label = "Selecting the rate details.")
@@ -852,7 +853,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
         }
         ratevars <- list(ratename = "no_rate")
       }
-    } # end request rate (ratevars)
+    } # rate (ratevars)
     while (step == 9) {
       # add an option to save the KML file
       pb <- list(title = "NYSDOH GAT: save KML?",
@@ -880,7 +881,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       } else {
         step <- step - 1
       }
-    } # end request save KML (savekml)
+    } # save KML
     while (step == 10) {
       # identify the save files' name and location
       pb <- list(title = "NYSDOH GAT: identify save file",
@@ -901,7 +902,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       } else {
         step <- step + 1
       }
-    } # end request save file (fileout)
+    } # save file
     while (step == 11) { # add dialog to confirm merge settings
       pb <- list(title = "NYSDOH GAT: confirm settings",
                  label = "Confirming your GAT settings.")
@@ -954,13 +955,12 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
       } else if (grepl("[0-9]", temp$cancel)) {
         step <- as.numeric(gsub("[^0-9]", "", temp$cancel))
       }
-    } # end request settings confirmation (filein)
+    } # settings confirmation
   } # end while (step < 20)
-  # rm(temp)
-  #     end user input ####
+  #     end user input ----
 
-  if (!mysettings$quit) { # everything from here onward is automated
-    #  3. read in shapefile ####
+  if (!mysettings$quit) { # here onward is automated
+    #  3. prep shapefile ----
     step <- 14 # reset after the while loop
     pb <- list(title = "NYSDOH GAT: processing the shapefile",
                label = paste0("Reading in map from ", filevars$filein, "."))
@@ -969,47 +969,25 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                 max = 26, initial = 0, width = 400)
     tcltk::setTkProgressBar(tpb, value = step)
 
-    # Is this redundant? Need to test part 2 file
-    # if ("GATy" %in% names(myshps$original@data)) {
-    #   myshps$original@data <- myshps$original@data[,
-    #     names(myshps$original@data)[!names(myshps$original@data) %in%
-    #       c("old_GATx", "old_GATy", "old_GATnumIDs", "old_GATcratio",
-    #         "old_GATflag")]]
-    #   for (i in 1: ncol(myshps$original@data)) {
-    #     # possibly these can be removed entirely, but need to verify
-    #     # if removing, inform user with warning dialog
-    #     # not sure how to handle flag variable - rename it?
-    #
-    #     if (names(myshps$original@data)[i] %in%
-    #         c("GATx", "GATy", "GATnumIDs", "GATcratio", "GATflag")) {
-    #       names(myshps$original@data)[i] <-
-    #         paste0("old_", names(myshps$original@data)[i])
-    #     }
-    #   }
-    # }
-
     # housekeeping
-    if (gatvars$aggregator2 == "NONE") {
-      gatvars$aggregator2 <- gatvars$aggregator1
-    }
-
+    if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
     if (gatvars$myidvar == "missing") {
       myshps$original$temp_id <- paste0("ID_", 1:nrow(myshps$original))
       gatvars$myidvar <- "temp_id"
     }
 
-    # use sf::st_centroid, then extract geometry
     temp$pts <- sf::st_centroid(myshps$original)
     sf::st_geometry(temp$pts) <- sf::st_centroid(temp$pts$geometry)
     temp$pts <- data.frame(do.call(rbind, sf::st_geometry(temp$pts)))
     colnames(temp$pts) <- c("GATx", "GATy")
 
-    mapvars <- list(projection = sum(grepl("longlat", sf::st_crs(myshps$original), fixed = TRUE),
-                                     sf::st_crs(myshps$original, parameters = TRUE)$units_gdal %in%
-                                         c("Degree", "degree", "DEGREE")) > 0,  # returns boolean
-                    centroids = temp$pts[, c("GATx", "GATy")])
+    mapvars <- list(
+      projection = sum(grepl("longlat", sf::st_crs(myshps$original), fixed = TRUE),
+                       sf::st_crs(myshps$original, parameters = TRUE)$units_gdal %in%
+                       c("Degree", "degree", "DEGREE")) > 0,  # returns boolean
+      centroids = temp$pts[, c("GATx", "GATy")])
 
-    # if projection is lat/lon, projection = TRUE, otherwise FALSE
+    # if projection is lat/long, projection = TRUE, otherwise FALSE
     # default to not lat/long if something goes wrong
     if (is.na(mapvars$projection)) mapvars$projection <- FALSE
 
@@ -1149,8 +1127,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
                                                title.main = mapvars$title,
                                                title.sub = mapvars$titlesub,
                                                colcode = mapvars$colcode2before,
-                                               mapstats = TRUE,
-                                               closemap = closemap)
+                                               mapstats = TRUE, closemap = closemap)
 
       mapvars$titlemain = paste(gatvars$aggregator2, "After Merging")
 
@@ -1250,7 +1227,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE,
     grDevices::pdf(paste0(filevars$userout, "plots.pdf"), onefile=TRUE,
                    width = 10, height = 7)
     for (myplot in myplots) {
-      if (class(myplot) == "recordedplot") grDevices::replayPlot(myplot)
+      if (is(myplot, "recordedplot")) grDevices::replayPlot(myplot)
     } # only saves plots that exist
     grDevices::dev.off() # need to close pdf file
 

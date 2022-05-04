@@ -38,15 +38,14 @@
 
 # can the help options be moved to ... ?
 
-inputGATmessage <- function(title = "GAT input window",
-                            help = "There is no help for you.",
+inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
+                            help = "There is no help.",
                             helptitle = "inputGATmessage",
                             helppage = "inputGATmessage", step = 0,
-                            msg = "Is GAT fun?", buttonopt = "Cancel GAT",
-                            backopt = TRUE) {
+                            buttonopt = "Cancel GAT", backopt = TRUE) {
   tt <- tcltk::tktoplevel()
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
-  tt$env$tm <- tcltk2::tk2label(tt, text = msg)
+  tt$env$tm <- tcltk::tklabel(tt, text = msg)
   tcltk::tkgrid(tt$env$tm, sticky = "w", padx = 5, pady = 5)
 
   myenv <- new.env()
@@ -70,20 +69,20 @@ inputGATmessage <- function(title = "GAT input window",
   tt$env$tf <- tcltk::tkframe(tt)
 
   if (backopt) {
-    tt$env$tf$BackBut <- tcltk2::tk2button(tt$env$tf, text = "< Back",
+    tt$env$tf$BackBut <- tcltk::tkbutton(tt$env$tf, text = "< Back",
                                            command = onBack, width = 12)
-    tt$env$tf$OkBut <- tcltk2::tk2button(tt$env$tf, text = "Next >",
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >",
                                          command = onOk, width = 12,
                                          default = "active")
   } else {
-    tt$env$tf$OkBut <- tcltk2::tk2button(tt$env$tf, text = "Confirm",
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm",
                                          command = onOk, width = 12,
                                          default = "active")
   }
 
-  tt$env$tf$HelpBut <- tcltk2::tk2button(tt$env$tf, text="Help", width = 12,
+  tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,
                                          command = onHelp)
-  tt$env$tf$CancelBut <- tcltk2::tk2button(tt$env$tf, text = buttonopt,
+  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = buttonopt,
                                            width = 12, command = onCancel)
 
   # draw the frame, then add buttons or add buttons first; both work.
@@ -100,6 +99,4 @@ inputGATmessage <- function(title = "GAT input window",
   tcltk::tkwait.window(tt)
 
   return(myenv$myvalue)
-
-
 }

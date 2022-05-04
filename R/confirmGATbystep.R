@@ -125,8 +125,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                     "then click 'Confirm'. \n",
                     "If you modify Step 1, GAT will start over.")
 
-  fonthead <- tcltk2::tk2font.set(font = "fonthead", settings = list(family = "Segoe UI",
-                      size = 10, bold = TRUE, italic = FALSE))
+  fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
   stepslist <- c("1. File to aggregate",
                  "2. Identifying variable",
                  "3. Boundary variable",
@@ -213,9 +212,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     }
     mysets <- paste(mysets, paste(rep(" ", 10), collapse = ""),
                     "Areas excluded:", exclist$flagsum, "of", gatvars$numrow, "\n")
-  } else {
-    mysets <- paste(mysets, "None selected \n")
-  }
+  } else mysets <- paste(mysets, "None selected \n")
 
   ### merge type ####
   mysets <- paste0(mysets, "  ", stepslist[6], ":")
@@ -235,9 +232,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     mysets <- paste(mysets, filevars$popfile, "\n",
                     paste(rep(" ", 10), collapse = ""),
                     "Population variable:", gatvars$popvar, "\n")
-  } else {
-    mysets <- paste(mysets, "Population weighting not selected \n")
-  }
+  } else mysets <- paste(mysets, "Population weighting not selected \n")
 
   ### rate settings ####
   mysets <- paste0(mysets, "  ", stepslist[8], ":")
@@ -264,17 +259,17 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   mysets <- paste0(mysets, stepslist[10], ": ", filevars$userout)
 
   ## print GAT settings ####
-  tt$ins <- tcltk2::tk2label(tt, text = mysets)
+  tt$ins <- tcltk::tklabel(tt, text = mysets)
   tcltk::tkgrid(tt$ins, sticky = "w", padx = 5, pady = 5)
-  tt$insttl <- tcltk2::tk2label(tt, text = "Instructions", font = "fonthead")
+  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = "fonthead")
   tcltk::tkgrid(tt$insttl, sticky = "w", padx = 5, pady = 5)
-  tt$ins <- tcltk2::tk2label(tt, text = instruct)
+  tt$ins <- tcltk::tklabel(tt, text = instruct)
   tcltk::tkgrid(tt$ins, sticky = "w", padx = 5, pady = 5)
 
   ## request step selection ####
   tt$stepdir <- tcltk::tkframe(tt)
   stepvar <- tcltk::tclVar("None")
-  tt$stepdir$stepq <- tcltk2::tk2label(tt$stepdir,
+  tt$stepdir$stepq <- tcltk::tklabel(tt$stepdir,
                       text = "Select the setting you wish to modify:")
   tt$stepdir$steplist <- tcltk::ttkcombobox(tt$stepdir, values = stepslist,
                          textvariable = stepvar, state = "readonly")
@@ -306,13 +301,12 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
 
   # draw buttons
   tt$tf <- tcltk::tkframe(tt)
-  tt$tf$HelpBut <- tcltk2::tk2button(tt$tf, text="Help",
-                                     width = 12, command = onHelp)
-  tt$tf$OkBut <- tcltk2::tk2button(tt$tf, text = "Confirm",
-                                   width = 12, command = onOk,
-                                   default = "active")
-  tt$tf$CancelBut <- tcltk2::tk2button(tt$tf, text = "Cancel GAT",
-                                       width = 12, command = onCancel)
+  tt$tf$HelpBut <- tcltk::tkbutton(tt$tf, text="Help",
+                   width = 12, command = onHelp)
+  tt$tf$OkBut <- tcltk::tkbutton(tt$tf, text = "Confirm",
+                 width = 12, command = onOk, default = "active")
+  tt$tf$CancelBut <- tcltk::tkbutton(tt$tf, text = "Cancel GAT",
+                     width = 12, command = onCancel)
 
   tcltk::tkgrid(tt$tf$OkBut, column = 2, row = 1, padx = 5)
   tcltk::tkgrid(tt$tf$CancelBut, column = 3, row = 1, padx = 5)

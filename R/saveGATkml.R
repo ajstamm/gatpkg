@@ -56,19 +56,19 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
 
   # radiobuttons ####
 
-  tt$radio$instruct <- tcltk2::tk2label(tt$radio, text = msg)
+  tt$radio$instruct <- tcltk::tklabel(tt$radio, text = msg)
   tcltk::tkgrid(tt$radio$instruct, sticky = "w", padx = 5, pady = 5,
                 columnspan = 4)
 
   tt$radio$rb1 <- tcltk::tkradiobutton(tt$radio)
-  tt$radio$lab1 <- tcltk2::tk2label(tt$radio, text = "Yes")
+  tt$radio$lab1 <- tcltk::tklabel(tt$radio, text = "Yes")
   tcltk::tkconfigure(tt$radio$rb1, variable = rbValue, value = "Yes")
   tcltk::tkgrid(tt$radio$rb1, tt$radio$lab1)
   tcltk::tkgrid.configure(tt$radio$rb1, sticky = "e")
   tcltk::tkgrid.configure(tt$radio$lab1, sticky = "w")
 
   tt$radio$rb2 <- tcltk::tkradiobutton(tt$radio)
-  tt$radio$lab2 <- tcltk2::tk2label(tt$radio, text = "No")
+  tt$radio$lab2 <- tcltk::tklabel(tt$radio, text = "No")
   tcltk::tkconfigure(tt$radio$rb2, variable = rbValue, value = "No")
   tcltk::tkgrid(tt$radio$rb2, tt$radio$lab2)
   tcltk::tkgrid.configure(tt$radio$rb2, sticky = "e")
@@ -95,19 +95,19 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   }
 
   if (backopt) {
-    tt$tfbuts$BackBut <- tcltk2::tk2button(tt$tfbuts, text = "< Back",
+    tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back",
                                            command = onBack, width = 12)
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Next >",
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >",
                                          command = onOk, width = 12,
                                          default = "active")
   } else {
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Confirm",
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm",
                                          command = onOk, width = 12,
                                          default = "active")
   }
-  tt$tfbuts$HelpBut <- tcltk2::tk2button(tt$tfbuts, text="Help", width = 12,
+  tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text="Help", width = 12,
                                          command = onHelp)
-  tt$tfbuts$CancelBut <- tcltk2::tk2button(tt$tfbuts, text = "Cancel",
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel",
                                            width = 12, command = onCancel)
 
   if (backopt) {

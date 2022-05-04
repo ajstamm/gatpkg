@@ -6,20 +6,20 @@
 \usage{
 inputGATvariable(
   title = "GAT window",
-  instruction = "Please select one.",
-  checkopt = "Select this checkbox.",
-  valueopt = "Enter a number:",
-  help = "There is no help for you.",
-  mylist = letters,
-  checkbox = FALSE,
+  instruction = "Select one.",
+  help = "There is no help.",
   helppage = NULL,
-  step = 0,
-  valuebox = FALSE,
   helptitle = NULL,
+  step = 0,
+  backopt = TRUE,
+  checkopt = "Check this box.",
+  checkbox = FALSE,
+  valuebox = FALSE,
   value = 0,
-  myvar = "NONE",
   check = FALSE,
-  backopt = TRUE
+  valueopt = "Enter a number:",
+  mylist = letters,
+  myvar = "e"
 )
 }
 \arguments{
@@ -27,38 +27,38 @@ inputGATvariable(
 
 \item{instruction}{A text string stating the instructions to the user.}
 
-\item{checkopt}{The text that should accompany the checkbox. If checkbox
-is FALSE, this is ignored.}
-
-\item{valueopt}{The text that should accompany the valuebox. If valuebox
-is FALSE, this is ignored.}
-
 \item{help}{A text string containing the help message.}
-
-\item{mylist}{A character vector of variable names for the list.}
-
-\item{checkbox}{A boolean that denotes whether or not to include a
-checkbox in the dialog.}
 
 \item{helppage}{A text string that contains the function name for the
 relevant function (if any) in the help dialog.}
 
+\item{helptitle}{A text string that denotes the help dialog title.}
+
 \item{step}{Integer step in the GAT program, for help reference.}
+
+\item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{checkopt}{The text that should accompany the checkbox. If checkbox
+is FALSE, this is ignored.}
+
+\item{checkbox}{A boolean that denotes whether or not to include a
+checkbox in the dialog.}
 
 \item{valuebox}{A boolean that denotes whether or not to include a
 valuebox in the dialog.}
 
-\item{helptitle}{A text string that denotes the help dialog title.}
-
 \item{value}{A number or string that denotes the default value for
 the text box.}
-
-\item{myvar}{Variable selected, if pre-defined.}
 
 \item{check}{Boolean denoting the status of the checkbox. If TRUE,
 the checkbox starts checked.}
 
-\item{backopt}{Boolean denoting whether to include the back button.}
+\item{valueopt}{The text that should accompany the valuebox. If valuebox
+is FALSE, this is ignored.}
+
+\item{mylist}{A character vector of variable names for the list.}
+
+\item{myvar}{Variable selected, if pre-defined.}
 }
 \description{
 This function creates a dialog box to ask the user to select an item from

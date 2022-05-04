@@ -30,22 +30,21 @@ LazyData: true
 Depends: R (>= 3.5.0)
 Imports: 
     classInt (>= 0.3.1),
+    graphics, 
     grDevices,
     methods,
     RColorBrewer (>= 1.1.2),
     sf, 
     spdep (>= 1.0-2),
+    stats, 
     tcltk,
-    tcltk2 (>= 1.2.11),
+    tibble,
     utils
 Suggests: 
-    graphics, 
     knitr,
     prettymapr (>= 0.2.2),
     qpdf,
     rmarkdown,
-    stats, 
-    tibble,
     tools,
 RoxygenNote: 7.1.2
 VignetteBuilder: knitr

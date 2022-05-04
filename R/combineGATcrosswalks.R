@@ -78,7 +78,8 @@ combineGATcrosswalks <- function(path, file1, file2, idvar) {
   # load crosswalks ####
   old <- sf::st_read(dsn = path, layer = file1)
   # key1 <- old@data
-  key2 <- foreign::read.dbf(paste0(path, "/", file2, ".dbf"), as.is = TRUE)
+  key2 <- sf::st_read(dsn = path, layer = file2)
+  key2 <- data.frame(key2)
 
   # combine crosswalks ####
   names(old)[names(old) == "GATid"] <- "tempid"

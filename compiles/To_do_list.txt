@@ -19,9 +19,8 @@ Fixes and improvements to address:
 	note:   spdep works with sf
 			    will spdep and maptools will be phased out? ignore for now
 * drop sp, rgdal, rgeos, lwgeom from imports; shift several others to suggests
-  * lwgeom, rgeos, sp dropped
-  * rgdal still showing up somewhere?
-  * want to drop foreign, too, but still showing up?
+  * lwgeom, rgeos, sp, rgdal, foreign, tcltk2 dropped
+* remove/replace memory.limit in/and checkGATshapefilesize. is it still needed?
 
 Started
 	* runGATprogram (rgdal, sp, maptools)

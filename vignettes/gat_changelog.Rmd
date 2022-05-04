@@ -18,8 +18,12 @@ knitr::opts_chunk$set(
 
 ## GAT v2.0.0 
 
-* Converted all instances requiring sp, rgeos, and rgdal to sf.
 * Added advanced options to the settings file and log.
+* Converted all uses of rgeos, rgdal, foreign, and sp to sf and removed those dependencies. 
+* Converted all uses of tcltk2 to tcltk and removed dependency on tcltk2 as it was crashing RStudio with R4.2.0.
+* Revised writeGATkml() to use sf and removed dependency on plotKML.
+* Revised population weighting to read in the population file only once.
+* Removed checkGATshapefilesize() as support for memory.limit() is ending. 
 
 
 ## GAT v1.61.1 (January 4, 2022)

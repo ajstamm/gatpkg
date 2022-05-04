@@ -62,7 +62,6 @@
 inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
                           limitdenom = TRUE, mergevars = NULL,
                           backopt = TRUE) {
-
   # create variable lists ####
   numlistitems <- checkGATvariabletypes(mapdata, type = "number")
   helppage = "inputGATmerge"
@@ -105,11 +104,11 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
   tcltk::tkwm.title(tt, paste0("Step ", step, ": Merging method"))
 
   tt$inst <- tcltk::tkframe(tt, width = 300, height = 5)
-  tt$inst$inst <- tcltk2::tk2label(tt$inst, text = "Instructions", font = "fonthead")
-  tt$inst$title <- tcltk2::tk2label(tt$inst, text = "Merge options", font = "fonthead")
+  tt$inst$inst <- tcltk::tklabel(tt$inst, text = "Instructions", font = "fonthead")
+  tt$inst$title <- tcltk::tklabel(tt$inst, text = "Merge options", font = "fonthead")
     # instructions layout ####
   tcltk::tkgrid(tt$inst$inst, sticky = "w", padx = 1, pady = 5)
-  tcltk::tkgrid(tcltk2::tk2label(tt$inst, text = instruct), columnspan = 4,
+  tcltk::tkgrid(tcltk::tklabel(tt$inst, text = instruct), columnspan = 4,
                 sticky = "w")
   tcltk::tkgrid(tt$inst$title, sticky = "w", padx = 1, pady = 5)
   tcltk::tkgrid(tt$inst, columnspan = 2, pady = 5)
@@ -122,14 +121,14 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
   tcltk::tkconfigure(tt$opts$ts$closebut, variable = rbValue, value = "closest")
   centroidlist <- c("geographic", "population-weighted")
   centroidval <- tcltk::tclVar(mergevars$centroid)
-  tt$opts$ts$closelab <- tcltk2::tk2label(tt$opts$ts, text = "closest area by")
+  tt$opts$ts$closelab <- tcltk::tklabel(tt$opts$ts, text = "closest area by")
   tt$opts$ts$closelist <- tcltk::ttkcombobox(tt$opts$ts, values = centroidlist,
                                             textvariable = centroidval,
                                             state = "readonly")
     # option 1 layout ####
   tcltk::tkgrid(tt$opts$ts$closebut, tt$opts$ts$closelab,
                 tt$opts$ts$closelist,
-                tcltk2::tk2label(tt$opts$ts, text = "centroid"),
+                tcltk::tklabel(tt$opts$ts, text = "centroid"),
                 sticky = "w")
   tcltk::tkgrid.configure(tt$opts$ts$closebut, sticky = "w")
   tcltk::tkgrid.configure(tt$opts$ts, sticky = "w", padx = 20)
@@ -138,7 +137,7 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
   note <- paste("         (note: selecting population weighting will open a",
                 "dialog to \n",
                 "         select a population shapefile)")
-  tcltk::tkgrid(tcltk2::tk2label(tt$opts, text = note), columnspan = 2,
+  tcltk::tkgrid(tcltk::tklabel(tt$opts, text = note), columnspan = 2,
                 sticky = "w", padx = 20)
 
 
@@ -151,7 +150,7 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
   } else {
     msg <- paste("area with least", aggvar)
   } # tt$env$lab2
-  tt$opts$tl$lab2 <- tcltk2::tk2label(tt$opts$tl, text = msg)
+  tt$opts$tl$lab2 <- tcltk::tklabel(tt$opts$tl, text = msg)
     # option 2 layout ####
   tcltk::tkgrid(tt$opts$tl$rb2, tt$opts$tl$lab2)
   tcltk::tkgrid.configure(tt$opts$tl$rb2, sticky = "w")
@@ -170,20 +169,20 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
   tt$opts$tr2$varden <- tcltk::ttkcombobox(tt$opts$tr2, values = numlistitems2,
                                          textvariable = simvar2,
                                          state = "readonly")
-  tt$opts$tr1$msg <- tcltk2::tk2label(tt$opts$tr1, text = "area with most similar ratio of ")
+  tt$opts$tr1$msg <- tcltk::tklabel(tt$opts$tr1, text = "area with most similar ratio of ")
     # option 3 layout ####
   tcltk::tkgrid(tt$opts$tr1$rb3, tt$opts$tr1$msg, tt$opts$tr1$varnum,
                 sticky = "w")
   tcltk::tkgrid.configure(tt$opts$tr1$rb3, sticky = "w")
 
-  tcltk::tkgrid(tcltk2::tk2label(tt$opts$tr2, text = "        to"),
+  tcltk::tkgrid(tcltk::tklabel(tt$opts$tr2, text = "        to"),
                 tt$opts$tr2$varden, sticky = "w")
   tcltk::tkgrid(tt$opts$tr1, sticky = "w", padx = 20)
   tcltk::tkgrid(tt$opts$tr2, sticky = "w", padx = 20)
     # option 3 note ####
   note <- paste("       (note: the numerator and denominator must be different;",
                 "\n       variables with 0 or missings cannot be in the denominator)")
-  tcltk::tkgrid(tcltk2::tk2label(tt$opts, text = note), columnspan = 4,
+  tcltk::tkgrid(tcltk::tklabel(tt$opts, text = note), columnspan = 4,
                 sticky = "w", padx = 20)
 
   tcltk::tkgrid(tt$opts, columnspan = 2, pady = 5)
@@ -232,20 +231,20 @@ inputGATmerge <- function(mapdata, aggvar, aggvar2, step = 8,
     # buttons ####
   tt$tfbuts <- tcltk::tkframe(tt)
   if (backopt) {
-    tt$tfbuts$BackBut <- tcltk2::tk2button(tt$tfbuts, text = "< Back",
+    tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back",
                                            command = onBack, width = 12)
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Next >",
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >",
                                          command = onOk, width = 12,
                                          default = "active")
   } else {
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Confirm",
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm",
                                          command = onOk, width = 12,
                                          default = "active")
   }
 
-  tt$tfbuts$HelpBut <- tcltk2::tk2button(tt$tfbuts, text="Help",
+  tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text="Help",
                                          width = 12, command = onHelp)
-  tt$tfbuts$CancelBut <- tcltk2::tk2button(tt$tfbuts, text = "Cancel GAT",
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
                                            width = 12, command = onCancel)
     # button layout ####
   if (backopt) {
