@@ -76,7 +76,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                              checkopt = "Check this box.", checkbox = FALSE,
                              valuebox = FALSE, value = 0, check = FALSE,
                              valueopt = "Enter a number:", mylist = letters,
-                             myvar = "e") {
+                             myvar = NULL) {
   # create frames ----
   tt <- tcltk::tktoplevel()
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
@@ -85,17 +85,23 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
   tt$frm <- tcltk::tkframe(tt, width = 300, height = 5)
   tt$bound <- tcltk::tkframe(tt$frm, width = 150, height = 110)
   tt$tfbuts <- tcltk::tkframe(tt$frm, width = 300, height = 40)
+
   # list of options ----
+  myvar <- if (is.null(myvar)) tcltk::tclVar("NONE") else tcltk::tclVar(myvar)
+
   tt$bound$note <- tcltk::tklabel(tt$bound, text = instruction)
-  scr <- tcltk::tkscrollbar(tt$bound, repeatinterval = 5,
-                            command = function(...)
-                              tcltk::tkyview(tt$bound$tl, ...))
-  tt$bound$tl <- tcltk::tklistbox(tt$bound, height = 5, selectmode = "single",
-                                  yscrollcommand = function(...)
-                                    tcltk::tkset(scr, ...),
-                                  background = "white")
-  for (i in mylist) tcltk::tkinsert(tt$bound$tl, "end", i)
-  tcltk::tkselection.set(tt$bound$tl, which(mylist == myvar) - 1)
+  tt$bound$tl <- tcltk::ttkcombobox(tt$bound, values = mylist,
+                                    textvariable = myvar,
+                                    state = "readonly")
+  # scr <- tcltk::tkscrollbar(tt$bound, repeatinterval = 5,
+  #                           command = function(...)
+  #                             tcltk::tkyview(tt$bound$tl, ...))
+  # tt$bound$tl <- tcltk::tklistbox(tt$bound, height = 5, selectmode = "single",
+  #                                 yscrollcommand = function(...)
+  #                                   tcltk::tkset(scr, ...),
+  #                                 background = "white")
+  # for (i in mylist) tcltk::tkinsert(tt$bound$tl, "end", i)
+  # tcltk::tkselection.set(tt$bound$tl, which(mylist == myvar) - 1)
   tcltk::tkgrid(tt$bound$note, sticky = "w", columnspan = 4, padx = 5)
   tcltk::tkgrid(tt$bound$tl, padx = 10, pady = c(5, 10), sticky = "w",
                 row = 2, column = 1)
@@ -127,62 +133,56 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
   myenv <- new.env()
   if (checkbox & valuebox) {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       cbVal <- as.character(tcltk::tclvalue(tt$bound$cbvalue))
       threshold <- as.character(tcltk::tclvalue(vbvalue))
       tcltk::tkdestroy(tt)
 
-      if (cbVal == "1") check <- TRUE else check = FALSE
-
+      check <- if (cbVal == "1") TRUE else FALSE
       assign("myoptions", list(myvar = myvar,
                                check = check,
                                threshold = threshold), envir=myenv)
     }
   } else if (checkbox) {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       cbVal <- as.character(tcltk::tclvalue(tt$bound$cbvalue))
       tcltk::tkdestroy(tt)
 
-      if (cbVal == "1") {
-        check <- TRUE
-      } else {
-        check = FALSE
-      }
-
+      check <- if (cbVal == "1") TRUE else FALSE
       assign("myoptions", list(myvar = myvar,
                                check = check,
                                threshold = 0), envir=myenv)
     }
   } else if (valuebox) {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       threshold <- as.character(tcltk::tclvalue(vbvalue))
       tcltk::tkdestroy(tt)
 
-
-      assign("myoptions", list(myvar = myvar,
-                               check = FALSE,
+      assign("myoptions", list(myvar = myvar, check = FALSE,
                                threshold = threshold), envir=myenv)
     }
   } else {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       tcltk::tkdestroy(tt)
 
-      assign("myoptions", list(myvar = myvar,
-                               check = FALSE,
+      assign("myoptions", list(myvar = myvar, check = FALSE,
                                threshold = 0), envir=myenv)
     }
   } # OnOk function versions
   onCancel <- function() {
     tcltk::tkdestroy(tt)
-    assign("myoptions", list(myvar = "cancel",
-                            check = FALSE,
+    assign("myoptions", list(myvar = "cancel", check = FALSE,
                             threshold = 0), envir=myenv)
   }
   onHelp <- function() {
@@ -191,8 +191,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
-    assign("myoptions", list(myvar = "back",
-                            check = FALSE,
+    assign("myoptions", list(myvar = "back", check = FALSE,
                             threshold = 0), envir=myenv)
   }
 
