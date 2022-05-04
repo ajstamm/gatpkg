@@ -91,16 +91,9 @@ identifyGATid <- function(mapdata, step = 2, backopt = TRUE) {
         }
       } else {
         x <- confirmGATquit()
-        if (x == "quit") {
-          myidvar <- "cancel"
-        } else {
-          myidvar <- "repeat"
-        }
+        myidvar <- if (x == "quit") "cancel" else "repeat"
       }
     }
-
-  } else if (noofchoices < 1) {
-    myidvar <- "missing"
-  }
+  } else if (noofchoices < 1) myidvar <- "missing"
   return(myidvar)
 }

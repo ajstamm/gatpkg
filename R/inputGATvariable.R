@@ -93,15 +93,6 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
   tt$bound$tl <- tcltk::ttkcombobox(tt$bound, values = mylist,
                                     textvariable = myvar,
                                     state = "readonly")
-  # scr <- tcltk::tkscrollbar(tt$bound, repeatinterval = 5,
-  #                           command = function(...)
-  #                             tcltk::tkyview(tt$bound$tl, ...))
-  # tt$bound$tl <- tcltk::tklistbox(tt$bound, height = 5, selectmode = "single",
-  #                                 yscrollcommand = function(...)
-  #                                   tcltk::tkset(scr, ...),
-  #                                 background = "white")
-  # for (i in mylist) tcltk::tkinsert(tt$bound$tl, "end", i)
-  # tcltk::tkselection.set(tt$bound$tl, which(mylist == myvar) - 1)
   tcltk::tkgrid(tt$bound$note, sticky = "w", columnspan = 4, padx = 5)
   tcltk::tkgrid(tt$bound$tl, padx = 10, pady = c(5, 10), sticky = "w",
                 row = 2, column = 1)
