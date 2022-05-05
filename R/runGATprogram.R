@@ -46,7 +46,6 @@
 #'
 #' @export
 
-# this will also incorporate max values
 # limitdenom = FALSE; pwrepeat = FALSE; settings = NULL
 # adjacent = TRUE; minfirst = FALSE; closemap = FALSE
 
@@ -86,7 +85,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       # possibly these can be removed entirely, but need to verify
       # if removing, inform user with warning dialog
       # not sure how to handle flag variable - rename it?
-      if (names(temp$mapdata)[i] %in%
+      if (names(temp$shp)[i] %in%
           c("old_GATx", "old_GATy", "old_GATnumIDs", "old_GATcratio",
             "old_flag", "old_GATpop")) {
         temp$old_vars <- c(temp$old_vars, names(temp$shp)[i])
@@ -1152,7 +1151,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                        gatvars = gatvars,
                                        closemap = closemap)
 
-    # 10. map compactness ratio ####
+    # 10. map compactness ratio ----
     step <- step + 1
     pb$label = "Mapping compactness ratio after merging."
     close(tpb)
@@ -1172,7 +1171,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                        ratemap = TRUE,
                                        closemap = closemap)
 
-    # 11. map rates if needed ####
+    # 11. map rates if needed ----
     step <- step + 1
     if (ratevars$ratename != "no_rate") { # map the rate, choropleth map
       pb$label = paste0("Mapping rate variable ", ratevars$ratename, ".")
@@ -1212,7 +1211,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                   closemap = closemap)
     } # end mapping new rate
 
-    # 12. save maps to pdf ####
+    # 12. save maps to pdf ----
     step <- step + 1
     pb$label = paste0("Writing the plots to ", filevars$fileout, "plots.pdf.")
     close(tpb)
@@ -1235,7 +1234,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
          list = c("gatvars", "aggvars", "filevars", "mergevars", "ratevars",
                   "exclist", "mysettings"))
 
-    # 13. save old shapefile ####
+    # 13. save crosswalk shapefile ----
     step <- step + 1
     pb <- list(title = "NYSDOH GAT: saving files",
                label = paste("Writing the original shapfile to",
@@ -1245,18 +1244,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                 max = 26, initial = 0, width = 400)
     tcltk::setTkProgressBar(tpb, value = step)
 
-    # create crosswalk of old and new ids
-    myshps$crosswalk <- cbind(myshps$original,
-                              data.frame(GATid = aggvars$IDlist))
-
+    myshps$original$GATid <- aggvars$IDlist # add crosswalk IDs
     # warnings don't make sense; they say data not written successfully,
     # but shapefile is fine and data match original file
-    sf::st_write(myshps$crosswalk, filevars$pathout,
-                 paste0(filevars$fileout, "in"),
-                 driver = "ESRI Shapefile", # verbose = TRUE,
-                 overwrite_layer = TRUE)
+    sf::st_write(myshps$original, filevars$pathout, driver = "ESRI Shapefile",
+                 paste0(filevars$fileout, "in"), overwrite_layer = TRUE)
 
-    # 14. save new shapefile ####
+    # 14. save new shapefile ----
     step <- step + 1
     pb$label = paste("Writing the merged shapfile to", filevars$fileout)
     close(tpb)
@@ -1265,14 +1259,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
     tcltk::setTkProgressBar(tpb, value = step)
 
     names(myshps$aggregated) <- substr(names(myshps$aggregated), 1, 10)
+    sf::st_write(myshps$aggregated, filevars$pathout, filevars$fileout,
+                 driver = "ESRI Shapefile", overwrite_layer = TRUE)
 
-    # export the map as a shapefile
-    sf::st_write(myshps$aggregated, filevars$pathout,
-                 filevars$fileout, driver = "ESRI Shapefile",
-                 verbose = TRUE, overwrite_layer = TRUE)
-    # large areas throw warnings that appear unfounded
-
-    # 15. save kml file ####
+    # 15. save kml file ----
     if (gatvars$savekml==TRUE) { # now includes descriptions
       step <- step + 1
       pb$label = "Writing the KML file."
@@ -1284,7 +1274,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       writeGATkml(myshp = myshps$aggregated, filename = filevars$fileout,
                   filepath = filevars$pathout, myidvar = gatvars$myidvar)
     }
-    # 16. save log file ####
+    # 16. save log file ----
     step <- step + 1
     pb$label = paste0("Writing the log to ",
                       paste0(filevars$fileout, ".log"), ".")
@@ -1294,9 +1284,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
     tcltk::setTkProgressBar(tpb, value = step)
 
     mysettings$exists = file.exists(paste0(filevars$userout, ".shp"))
-
-    # include projection? number of aggregations? rate calculations?
-    # recode to read in lists (or pre-create chunks) instead of individual values?
     writeGATlog(gatvars = gatvars, aggvars = aggvars, filevars = filevars,
                 mysettings = mysettings, area = myshps$original,
                 mergevars = mergevars, ratevars = ratevars, exclist = exclist)
