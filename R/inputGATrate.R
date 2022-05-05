@@ -54,7 +54,7 @@
 #' @param help       A text string containing the help message.
 #' @param defaultopt An integer that notes which initial list item should be
 #'                   highlighted.
-#' @param mapdata    The data frame from which to select variables.
+#' @param shp        The layer from which to select variables.
 #' @param limitdenom A boolean denoting whether to limit the denominator to
 #'                   only variables without zeroes or missings before
 #'                   aggregation.
@@ -65,12 +65,7 @@
 #' @examples
 #'
 #' if (interactive()) {
-#' hlp <- paste0("To continue, select an option and click 'Next >',",
-#'               "\nto return to the previous step, click '< Back',",
-#'               "\nand to quit the program, click 'Cancel'.")
-#'
-#' # define rate settings
-#' inputGATrate(mapdata = hftown, help = hlp, limitdenom = FALSE)
+#' inputGATrate(shp = hftown, help = "Select your options.", limitdenom = FALSE)
 #' }
 #'
 #' @export
@@ -94,15 +89,15 @@
 ############## start text input function 2 ###################################
 
 # use this function for free text input, like the minimum values
-inputGATrate <- function(mapdata, defaultopt = 0,
+inputGATrate <- function(shp, defaultopt = 0,
                          help = "There is no help for you.",
                          limitdenom = TRUE, step = 9,
                          ratevars = NULL, backopt = TRUE) {
-  # define variable lists ####
-  gatlist1 <- checkGATvariabletypes(mapdata, type = "number")
+  # define variable lists ----
+  gatlist1 <- checkGATvariabletypes(shp, type = "number")
   idlist <- c()
   for (i in 1:length(gatlist1)) {
-    x <- data.frame(mapdata)[, gatlist1[i]]
+    x <- data.frame(shp)[, gatlist1[i]]
     t <- table(x==0 | !is.finite(x))
     idlist[i] <- grepl("TRUE", paste(names(t), collapse = " "))
   }
@@ -232,7 +227,7 @@ inputGATrate <- function(mapdata, defaultopt = 0,
     cbVal <- as.character(tcltk::tclvalue(tt$check$cbvalue))
     numerator <- tcltk::tclvalue(tt$list$numvar)
     denominator <- tcltk::tclvalue(tt$list$denvar)
-    colorscheme <- tcltk::tclvalue(tt$list$colvar)
+    colorname <- tcltk::tclvalue(tt$list$colvar)
     ratename <- tcltk::tclvalue(tt$list$namevar)
     multiplier <- tcltk::tclvalue(tt$list$multvar)
     tcltk::tkdestroy(tt)
@@ -249,7 +244,7 @@ inputGATrate <- function(mapdata, defaultopt = 0,
                            numerator = numerator,
                            denominator = denominator,
                            multiplier = multiplier,
-                           colorscheme = colorscheme), envir=myenv)
+                           colorname = colorname), envir=myenv)
   }
   onCancel <- function() {
     tcltk::tkdestroy(tt)
@@ -257,7 +252,7 @@ inputGATrate <- function(mapdata, defaultopt = 0,
                            numerator = "NONE",
                            denominator = "NONE",
                            multiplier = "0",
-                           colorscheme = "NONE"), envir=myenv)
+                           colorname = "NONE"), envir=myenv)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
@@ -265,7 +260,7 @@ inputGATrate <- function(mapdata, defaultopt = 0,
                            numerator = "NONE",
                            denominator = "NONE",
                            multiplier = "0",
-                           colorscheme = "NONE"), envir=myenv)
+                           colorname = "NONE"), envir=myenv)
   }
   onHelp <- function() {
     showGAThelp(help = hlp, helptitle = "rate settings",
@@ -301,10 +296,10 @@ inputGATrate <- function(mapdata, defaultopt = 0,
 
   tcltk::tkwait.window(tt)
 
-  if (identical(myenv$reslist$colorscheme, character(0))) {
-    myenv$reslist$colorscheme <- "BuGn"
+  if (identical(myenv$reslist$colorname, character(0))) {
+    myenv$reslist$colorname <- "Blues"
   }
-  myenv$reslist$colorname <- colorlist[colors == myenv$reslist$colorscheme]
+  myenv$reslist$colorscheme <- colors[colorlist == myenv$reslist$colorname]
 
   return(myenv$reslist) # ratevars values
 } # end gatrateInput function

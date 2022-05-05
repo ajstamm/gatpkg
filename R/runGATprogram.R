@@ -724,10 +724,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         if (!exists("ratevars")) ratevars <- list()
 
         while (temp$error) {
-          ratevars <- inputGATrate(mapdata = temp$mapflag,
-                                   limitdenom = limitdenom,
-                                   step = step,
-                                   ratevars = ratevars,
+          ratevars <- inputGATrate(shp = temp$mapflag, limitdenom = limitdenom,
+                                   step = step, ratevars = ratevars,
                                    backopt = !temp$flagconfirm)
           temp$error <- FALSE
 
