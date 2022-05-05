@@ -477,22 +477,13 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
         aggvars$IDlist[temp$IDloc] <- townvars$nrid
 
         # calculate new region ----
-        # erroring due to missing or invalid CRS?
-        # but individual functions' code works with these inputs
-        # GATx, GATy no longer lat/long?
-        # weightGATregion fails because nrid not assigned to IDlist
-
         aggvars$IDlist[aggvars$IDlist %in%
                          data.frame(townvars$newreg)$ID] <- townvars$nrid
 
-        townvars$newregdata <- createGATregion(pop = mapvars$pop,
-                                               area = area,
-                                               newreg = townvars$newreg,
-                                               myidvar = "GATid",
-                                               nrid = townvars$nrid,
-                                               IDlist = aggvars$IDlist,
-                                               pwrepeat = pwrepeat,
-                                               popwt = gatvars$popwt)
+        townvars$newregdata <- createGATregion(pop = mapvars$pop, area = area,
+                               newreg = townvars$newreg, myidvar = "GATid",
+                               nrid = townvars$nrid, IDlist = aggvars$IDlist,
+                               pwrepeat = pwrepeat, popwt = gatvars$popwt)
 
         # add the new region to the list of data about the regions ----
         # aggvars$allpolydata <- sf::st_as_sf(aggvars$allpolydata)

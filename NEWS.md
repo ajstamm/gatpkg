@@ -1,9 +1,8 @@
 # gatpkg v2.0.0
 
-* Dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp removed.
-* Removed checkGATshapefilesize() as support for memory.limit() is ending. 
+* Removed dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp.
+* Removed checkGATshapefilesize() and fixed bugs. 
 * Added advanced options to the settings file and log.
-
 
 # gatpkg v1.61.1
 
