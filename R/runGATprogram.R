@@ -52,17 +52,14 @@
 
 runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                           adjacent = TRUE, minfirst = FALSE, closemap = FALSE) {
-  #  1. start the GAT program ####
-  # load the progress bar
+  #  1. start the GAT program ----
   mysettings <- list(version = packageDescription("gatpkg")$Version,
                      pkgdate = packageDescription("gatpkg")$Date,
-                     adjacent = adjacent,
-                     pwrepeat = pwrepeat,
-                     minfirst = minfirst,
-                     limitdenom = limitdenom,
-                     starttime = Sys.time(), # needed for the log
-                     quit = FALSE)
+                     adjacent = adjacent, pwrepeat = pwrepeat,
+                     minfirst = minfirst, limitdenom = limitdenom,
+                     starttime = Sys.time(), quit = FALSE)
 
+  # load the progress bar
   # note https://stackoverflow.com/questions/8436045/double-r-tcltk-progress-bar
   pb <- list(title = paste("NYSDOH Geographic Aggregation Tool (GAT)",
                            mysettings$version, mysettings$date),
@@ -249,6 +246,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         tcltk::tkmessageBox(title = "No suitable ID variable", message = temp$msg,
                             type = "ok", icon = "warning")
       } else { # go ahead
+        temp$shp$GATid <- data.frame(temp$shp)[, "gatvars$myidvar"]
         if (temp$flagconfirm) {
           step <- 11
         } else {
@@ -991,7 +989,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
     # default to not lat/long if something goes wrong
     if (is.na(mapvars$projection)) mapvars$projection <- FALSE
 
-    #  4. run aggregation loop ####
+    #  4. run aggregation loop ----
     step <- step + 1
     pb$label = paste0("Aggregating ", filevars$filein, ".")
     close(tpb)
@@ -1008,7 +1006,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                               pwrepeat = pwrepeat, adjacent = adjacent,
                               exclist = exclist, minfirst = minfirst)
 
-    #  5. aggregate areas ####
+    #  5. aggregate areas ----
     step <- step + 1
     pb$label = paste("Completed", aggvars$newregno, "mergings.")
     close(tpb)
@@ -1017,9 +1015,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
     tcltk::setTkProgressBar(tpb, value = step)
 
     myshps$aggregated <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
-                                       idvar = gatvars$myidvar,
+                                       idvar = "GATid",
                                        myshp = myshps$original)
-
 
     #  6. calculate compactness ratio ####
     step <- step + 1
