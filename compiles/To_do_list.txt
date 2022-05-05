@@ -10,17 +10,17 @@ Fixes and improvements to address:
 * Streamline warnings
 * Add any "old_*" variables created/renamed to the log
 * Where I alter par settings for maps, I revert them to default, but I should revert to user settings
-* Add code to re-draw the progress bar if the user closes it (me, repeatedly and accidentally, in testing)
+* Add code to re-draw the progress bar if the user closes it
+  * (me, repeatedly and accidentally, in testing)
+  * still tinkering
 * Add ability to use point level population-weighting data, and possibly raster (later)
 * For all vignettes and help files, check image alt/descriptions
   * tutorial completed through end of user input section, including redoing most user input screenshots (except help, quit, errors)
 * Opening any help dialog changes all background colors to white
-* convert all instances of rgdal/rgeos/sp to sf, which is faster and better maintained
+* convert spdep and maptools to sf?
 	note:   spdep works with sf
-			    will spdep and maptools will be phased out? ignore for now
-* drop sp, rgdal, rgeos, lwgeom from imports; shift several others to suggests
-  * lwgeom, rgeos, sp, rgdal, foreign, tcltk2 dropped
-* remove/replace memory.limit in/and checkGATshapefilesize. is it still needed?
+* shift some imports to suggests
+  * tibble is giving me trouble no matter where I put it
 
 Started
 	* runGATprogram (rgdal, sp, maptools)
@@ -30,13 +30,7 @@ Started
 		  - writing kml
 		  - error triggers
 		  - randomly deleting progress bar
-		- revise step 1.11 to save temporary population file
-		  - create null value if population weighting is not selected
-		- revise step 3
-		  - I think the flagging & variable naming codes are redundant
-		- revise step 4 (defineGATmerge)
-		  - set up temporary copy of ID that duplicates myidvar
-		    - want ID to concatenate like other variables
+		- step 3: I think the flagging & variable naming codes are redundant
 
 Completed - check examples
 	* createGATregion (sp)

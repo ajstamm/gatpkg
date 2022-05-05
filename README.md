@@ -3,7 +3,7 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 
-**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2. I am in the process of revising GAT to remove this dependency, so if you try to install the dev version of GAT now (or the master version on R 4.2.0), GAT may break.**
+**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2. We are revising GAT to remove this dependency, so if you install the dev version of GAT now (or the master version on R 4.2.0), GAT may break.**
 
 
 # Geographic Aggregation Tool (GAT)
