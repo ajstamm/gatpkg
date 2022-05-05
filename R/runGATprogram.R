@@ -246,7 +246,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         tcltk::tkmessageBox(title = "No suitable ID variable", message = temp$msg,
                             type = "ok", icon = "warning")
       } else { # go ahead
-        temp$shp$GATid <- data.frame(temp$shp)[, "gatvars$myidvar"]
+        temp$shp$GATid <- data.frame(temp$shp)[, gatvars$myidvar]
         if (temp$flagconfirm) {
           step <- 11
         } else {
