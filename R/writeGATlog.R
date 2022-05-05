@@ -160,7 +160,7 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
 
   # fill in full list of names below; code will error otherwise
   listitems <- names(area)
-  listitems <- listitems[listitems != "GATflag"]
+  listitems <- listitems[!listitems %in% c("GATflag", "GATid")]
   myvars <- ""
   for (i in 1:(length(listitems)-1)) {
     myvars <- paste0(myvars, listitems[i], ", ")
@@ -220,9 +220,7 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
   # Merge settings ####
-  logtext <- c("\nMerge type:", mergevars$mergeopt1,
-               "\n  Prefer aggregating to areas below minimum value first?",
-               mysettings$minfirst)
+  logtext <- c("\nMerge type:", mergevars$mergeopt1)
   if (mergevars$mergeopt1 == "similar") {
     logtext <- c(logtext, "\n  First similar variable:  ", mergevars$similar1,
                  "\n  Second similar variable: ", mergevars$similar2)
@@ -235,6 +233,9 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                    mysettings$pwrepeat)
     }
   }
+  logtext <- c(logtext,
+               "\n  Prefer aggregating to areas below minimum value first?",
+               mysettings$minfirst)
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
   # Exclusion criteria ####
@@ -326,6 +327,8 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                  "\n  Aggregated shapefile:             ",
                  paste0(filevars$fileout, ".shp"),
                  "\n    Variables created by GAT:",
+                 "\n        GATid:",
+                 "GAT-generated aggregated area identifier",
                  "\n        GATx:",
                  "longitude of the aggregated area", mergevars$centroid,
                  "centroid",
@@ -376,8 +379,8 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                  "area excluded because value of aggregation variable",
                  "exceeded maximum value",
                  "\n        GATid:",
-                 "GAT-generated identifier of the aggregated area each",
-                 "original area fell inside when aggregated")
+                 "GAT-generated identifier for the area each original area",
+                 "fell inside when aggregated")
   }
   logtext <- c(logtext,
                "\n  Maps:                             ",
