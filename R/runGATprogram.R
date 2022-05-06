@@ -113,7 +113,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
     if (!"GATflag" %in% names(temp$shp)) {
       temp$shp$GATflag <- 0
     }
-    temp$mapflag <- temp$shp[temp$shp$GATflag == 0, ]
+    temp$mapflag <- temp$shp[temp$shp$GATflag == 0, ] # not needed?
+    if (gatvars$popwt) {
+      temp$pop <- sf::st_read(dsn = filevars$poppath,
+                              layer = filevars$popfile)
+    }
   } else {
     gatvars <- list()
     filevars <- list(userin = "")
@@ -910,11 +914,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       temp$shp$GATflag <- 0
       temp$shp$GATflag <- calculateGATflag(exclist, temp$shp)
       temp$shp$GATflag <-
-        ifelse(data.frame(temp$shp)[, gatvars$aggregator1] > as.numeric(gatvars$maxvalue1) &
+        ifelse(data.frame(temp$shp)[, gatvars$aggregator1] >
+                 as.numeric(gatvars$maxvalue1) &
                temp$shp$GATflag == 0, 5, temp$shp$GATflag)
       if (!gatvars$aggregator2 == gatvars$aggregator1) {
         temp$mapdata$GATflag <-
-          ifelse(data.frame(temp$shp)[, gatvars$aggregator2] > as.numeric(gatvars$maxvalue2) &
+          ifelse(data.frame(temp$shp)[, gatvars$aggregator2] >
+                   as.numeric(gatvars$maxvalue2) &
                  temp$shp$GATflag == 0, 5, temp$shp$GATflag)
       }
       gatvars$exclmaxval <- sum(temp$shp$GATflag == 5)
@@ -1012,8 +1018,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
     tcltk::setTkProgressBar(tpb, value = step)
 
     myshps$aggregated <- mergeGATareas(ratevars = ratevars, aggvars = aggvars,
-                                       idvar = "GATid",
-                                       myshp = myshps$original)
+                                       idvar = "GATid", myshp = myshps$original)
 
     #  6. calculate compactness ratio ####
     step <- step + 1

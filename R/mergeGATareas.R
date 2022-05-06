@@ -62,7 +62,7 @@
 mergeGATareas <- function(ratevars, aggvars, idvar = "GATid", myshp) {
   # get the number of polygons per region, and add; has IDlist + Freq
   numpolys <- data.frame(table(IDlist = aggvars$IDlist))
-  d <- merge(aggvars$allpolydata, numpolys, by.x = idvar, by.y = "IDlist")
+  d <- merge(aggvars$shp, numpolys, by.x = idvar, by.y = "IDlist")
   names(d)[names(d) == "Freq"] <- "GATnumIDs"
 
   # if should calculate rate

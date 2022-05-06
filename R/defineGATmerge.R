@@ -8,7 +8,7 @@
 #'   A character vector in which the old IDs are replaced with the merged IDs,
 #'   for the crosswalk.
 #' }
-#' \itemize{\bold{allpolydata: }
+#' \itemize{\bold{shp: }
 #'   A data frame defining the polygons to be merged.
 #' }
 #' \itemize{\bold{newregno: }
@@ -99,6 +99,21 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                            minfirst = FALSE, progressbar = TRUE) {
   # sf conversion ----
   area <- sf::st_as_sf(area)
+  data <- data.frame(area)
+  if (!"GATflag" %in% names(data)) {
+    data$GATflag <- if (is.null(exclist)) 0 else calculateGATflag(exclist, d = data)
+    data$GATflag <- ifelse(data[, gatvars$aggregator1] > max1, 5, data$GATflag)
+    if (!gatvars$aggregator2 == gatvars$aggregator1) {
+      data$GATflag <- ifelse(data[, gatvars$aggregator2] > max2, 5, data$GATflag)
+    }
+    area$GATflag <- data$GATflag
+  }
+  if (!"GATid" %in% names(data)) {
+    data$GATid <- data[, gatvars$myidvar]
+    area$GATid <- data$GATid
+  }
+  row.names(area) <- data$GATid
+
   # row.names(area) <- data.frame(area)[, gatvars$myidvar]
   max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
   if (length(max1) == 0) {
@@ -111,23 +126,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   }
   min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
 
-  # define GATflag if necessary ----
-  if (!"GATflag" %in% names(area)) {
-    if (!is.null(exclist)) {
-      area$GATflag <- calculateGATflag(exclist, d = area)
-    } else {
-      area$GATflag <- 0
-    }
-    area$GATflag <- ifelse(data.frame(area)[, gatvars$aggregator1] > max1, 5,
-                             area$GATflag)
-    if (!gatvars$aggregator2 == gatvars$aggregator1) {
-      area$GATflag <- ifelse(data.frame(area)[, gatvars$aggregator2] > max2, 5,
-                               area$GATflag)
-    }
-  }
-  if (gatvars$aggregator2 == "NONE") {
-    gatvars$aggregator2 <- gatvars$aggregator1
-  }
+  if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
 
   # draw progress bar ----
   if (progressbar) {
@@ -141,7 +140,6 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   mapvars <- list(projection = sf::st_is_longlat(area))
 
   # set up centroids ----
-  if (!"GATid" %in% names(area)) area$GATid <- data.frame(area)[, gatvars$myidvar]
 
   # find a way to not hit memory limit for population weighting
   if (gatvars$popwt) {
@@ -169,26 +167,21 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   if (is.na(mapvars$projection)) mapvars$projection <- FALSE
 
   # add centroids to polygon data ----
-  aggvars <- list(IDlist = data.frame(area)$GATid,
-                  newregno = 1,
-                  allpolydata = cbind(area, mapvars$centroids),
-                  logmsg = "") # record merge warnings in the log)
+  aggvars <- list(IDlist = data$GATid, newregno = 1, logmsg = "",
+                  shp = cbind(area, mapvars$centroids))
 
   # set up temporary variables ----
   if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
   # for some reason, numeric sometimes switched to character
-  aggvars$allpolydata[, gatvars$aggregator1] <-
-    as.numeric(as.character(data.frame(aggvars$allpolydata)[, gatvars$aggregator1]))
-  aggvars$allpolydata[, gatvars$aggregator2] <-
-    as.numeric(as.character(data.frame(aggvars$allpolydata)[, gatvars$aggregator2]))
+  aggvars$shp[, gatvars$aggregator1] <-
+    as.numeric(as.character(data.frame(aggvars$shp)[, gatvars$aggregator1]))
+  aggvars$shp[, gatvars$aggregator2] <-
+    as.numeric(as.character(data.frame(aggvars$shp)[, gatvars$aggregator2]))
 
-  # add explicit row.names call because assigning row names in spdep is failing
-  # are row names needed?
-  row.names(area) <- data.frame(area)$GATid
-  temp <- list(alldata = aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0), ],
-               digits = nchar(nrow(aggvars$allpolydata)),
-               index = sapply(data.frame(aggvars$allpolydata), is.integer),
-               rownames = data.frame(area)$GATid)
+  temp <- list(alldata = aggvars$shp[which(aggvars$shp$GATflag == 0), ],
+               digits = nchar(nrow(aggvars$shp)),
+               index = sapply(data.frame(aggvars$shp), is.integer),
+               rownames = data$GATid)
 
   # test if loop can run ----
   if (nrow(temp$alldata) > 0) {
@@ -196,7 +189,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
     temp$minpop1 = min(data.frame(temp$alldata)[, gatvars$aggregator1])
     temp$minpop2 = min(data.frame(temp$alldata)[, gatvars$aggregator2])
 
-    myids <- as.character(unlist(data.frame(area)$GATid))
+    myids <- as.character(unlist(data$GATid))
     myids <- myids[grepl("GATid", myids)]
     myids <- gsub("GATid_", "",  myids)
 
@@ -217,16 +210,15 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
 
     # convert integers to double (change to convert when I read in file?)
     # might be redundant now, but check later
-    aggvars$allpolydata[, temp$index] <-
-      sapply(data.frame(aggvars$allpolydata)[, temp$index], as.numeric)
+    aggvars$shp[, temp$index] <-
+      sapply(data.frame(aggvars$shp)[, temp$index], as.numeric)
 
     # start while loop ----
-    while ((temp$minpop1 < gatvars$minvalue1) |
-           (temp$minpop2 < gatvars$minvalue2)){
+    while (temp$minpop1 < min1 | temp$minpop2 < min2){
       # identify who is mergeable ----
       # remove flagged areas
       temp$aggdata <-
-        aggvars$allpolydata[which(aggvars$allpolydata$GATflag == 0), ]
+        aggvars$shp[which(aggvars$shp$GATflag == 0), ]
 
       # isolate areas that are too small
       temp$tobemerged <- temp$aggdata[which(
@@ -260,8 +252,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       temp$first <- identifyGATfirstobs(tobemerged = temp$tobemerged,
                                         aggvar = gatvars$aggregator1,
                                         aggvar2 = gatvars$aggregator2,
-                                        minval = gatvars$minvalue1,
-                                        minval2 = gatvars$minvalue2)
+                                        minval = min1, minval2 = min2)
 
       # remove areas that are too large
       temp$aggdata <- temp$aggdata[which(
@@ -438,8 +429,8 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
             # don't want to use least or similar if no adjacent neighbors
             temp$island <- TRUE
             mergevars$mergeopt2 <- "closest"
-            townvars$nbdata <- aggvars$allpolydata[which(
-              data.frame(aggvars$allpolydata)$GATid !=
+            townvars$nbdata <- aggvars$shp[which(
+              data.frame(aggvars$shp)$GATid !=
                 data.frame(temp$first)$GATid), ]
             if (nrow(townvars$nbdata) > 0) {
               temp$idfail <- FALSE # found neighbor
@@ -453,16 +444,14 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       # quit searching for neighbors ----
       if(temp$idfail) {
         # check for and remove flags and oversized at beginning of loop
-        aggvars$allpolydata$GATflag[data.frame(aggvars$allpolydata)$GATid ==
+        aggvars$shp$GATflag[data.frame(aggvars$shp)$GATid ==
                                       data.frame(temp$first)$GATid] <- 10
         temp$warnkey <- "f"
       } else {
         # rank centroid distances ----
-        townvars$nborder <- rankGATdistance(area = area,
-                                            nbdata = townvars$nbdata,
-                                            first = temp$first,
-                                            gatvars = gatvars,
-                                            mergevars = mergevars)
+        townvars$nborder <- rankGATdistance(area = area, mergevars = mergevars,
+                            nbdata = townvars$nbdata, first = temp$first,
+                            gatvars = gatvars)
 
         # data that will be combined to form new region ----
         t <- rbind(temp$first, townvars$nbdata[townvars$nborder[1], ])
@@ -486,12 +475,12 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                                pwrepeat = pwrepeat, popwt = gatvars$popwt)
 
         # add the new region to the list of data about the regions ----
-        # aggvars$allpolydata <- sf::st_as_sf(aggvars$allpolydata)
-        aggvars$allpolydata <- rbind(aggvars$allpolydata, townvars$newregdata)
+        # aggvars$shp <- sf::st_as_sf(aggvars$shp)
+        aggvars$shp <- rbind(aggvars$shp, townvars$newregdata)
 
         # need to remove the info about the old regions
-        aggvars$allpolydata <- aggvars$allpolydata[which(
-                      !data.frame(aggvars$allpolydata)$GATid %in%
+        aggvars$shp <- aggvars$shp[which(
+                      !data.frame(aggvars$shp)$GATid %in%
                         data.frame(townvars$newreg)$GATid), ]
 
         # update neighbor listings ----
@@ -502,9 +491,9 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       # find the minimum population ----
       aggvars$newregno <- aggvars$newregno + 1
 
-      temp$minpop1 <- min(data.frame(aggvars$allpolydata)[which(aggvars$allpolydata$GATflag == 0),
+      temp$minpop1 <- min(data.frame(aggvars$shp)[which(aggvars$shp$GATflag == 0),
                                               gatvars$aggregator1])
-      temp$minpop2 <- min(data.frame(aggvars$allpolydata)[which(aggvars$allpolydata$GATflag == 0),
+      temp$minpop2 <- min(data.frame(aggvars$shp)[which(aggvars$shp$GATflag == 0),
                                               gatvars$aggregator2])
 
       if (temp$warnkey != "n") {
