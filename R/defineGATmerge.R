@@ -100,6 +100,19 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   # sf conversion ----
   area <- sf::st_as_sf(area)
   data <- data.frame(area)
+
+  max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
+  if (length(max1) == 0) {
+    max1 <- max(data.frame(area)[, gatvars$aggregator1])
+  }
+  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
+  max2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
+  if (length(max2) == 0) {
+    max2 <- max(data.frame(area)[, gatvars$aggregator2])
+  }
+  min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
+  if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
+
   if (!"GATflag" %in% names(data)) {
     data$GATflag <- if (is.null(exclist)) 0 else calculateGATflag(exclist, d = data)
     data$GATflag <- ifelse(data[, gatvars$aggregator1] > max1, 5, data$GATflag)
@@ -113,20 +126,6 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
     area$GATid <- data$GATid
   }
   row.names(area) <- data$GATid
-
-  # row.names(area) <- data.frame(area)[, gatvars$myidvar]
-  max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
-  if (length(max1) == 0) {
-    max1 <- max(data.frame(area)[, gatvars$aggregator1])
-  }
-  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
-  max2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
-  if (length(max2) == 0) {
-    max2 <- max(data.frame(area)[, gatvars$aggregator2])
-  }
-  min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
-
-  if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
 
   # draw progress bar ----
   if (progressbar) {
