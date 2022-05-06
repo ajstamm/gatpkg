@@ -62,7 +62,7 @@ It returns a list of the following elements:
 A character vector in which the old IDs are replaced with the merged IDs,
 for the crosswalk.
 }
-\itemize{\bold{allpolydata: }
+\itemize{\bold{shp: }
 A data frame defining the polygons to be merged.
 }
 \itemize{\bold{newregno: }
