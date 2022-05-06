@@ -4,7 +4,7 @@
 \alias{mergeGATareas}
 \title{Merge GAT Areas}
 \usage{
-mergeGATareas(ratevars, aggvars, idvar, myshp)
+mergeGATareas(ratevars, aggvars, idvar = "GATid", myshp)
 }
 \arguments{
 \item{ratevars}{A list of rate-related objects.}

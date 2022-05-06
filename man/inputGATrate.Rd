@@ -5,7 +5,7 @@
 \title{Input GAT Rate}
 \usage{
 inputGATrate(
-  mapdata,
+  shp,
   defaultopt = 0,
   help = "There is no help for you.",
   limitdenom = TRUE,
@@ -15,7 +15,7 @@ inputGATrate(
 )
 }
 \arguments{
-\item{mapdata}{The data frame from which to select variables.}
+\item{shp}{The layer from which to select variables.}
 
 \item{defaultopt}{An integer that notes which initial list item should be
 highlighted.}
@@ -86,12 +86,7 @@ The formal name of the selected ColorBrewer color scheme.
 \examples{
 
 if (interactive()) {
-hlp <- paste0("To continue, select an option and click 'Next >',",
-              "\nto return to the previous step, click '< Back',",
-              "\nand to quit the program, click 'Cancel'.")
-
-# define rate settings
-inputGATrate(mapdata = hftown, help = hlp, limitdenom = FALSE)
+inputGATrate(shp = hftown, help = "Select your options.", limitdenom = FALSE)
 }
 
 }

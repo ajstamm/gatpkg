@@ -37,14 +37,14 @@
 #' # define merge type
 #' mergevars <- list(
 #'   mergeopt1 = "similar",    # can be similar, closest, or least
-#'   similar1 = "B_TOT",       # numeric variable
-#'   similar2 = "W_TOT",       # numeric variable without any zeros
+#'   similar1 = "AREAWATR",       # numeric variable
+#'   similar2 = "AREALAND",       # numeric variable without any zeros
 #'   centroid = "geographic"
 #' )
 #'
 #' # draw the map
 #' plotGATcompare(areaold = hftown, areanew = hfagg610k,
-#'   mergevars = mergevars, gatvars = gatvars)
+#'                mergevars = mergevars, gatvars = gatvars)
 #'
 #' @export
 
@@ -100,18 +100,13 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
                     numformat(gatvars$maxvalue2), " ", gatvars$aggregator2)
   }
   graphics::title(mytitle, sub = mysub, cex.main = 2)
+  raster::scalebar(20, type='bar', divs=5)
 
   # draw arrow and scale bar ####
   if (requireNamespace("prettymapr", quietly = TRUE)) {
     prettymapr::addnortharrow(pos = "bottomleft", padin = c(0.2, 0.05),
                               scale = .5, lwd = 1, border = "black",
                               cols = c("white", "black"), text.col = "black")
-    prettymapr::addscalebar(plotunit = "mi", plotepsg = 4269, widthhint = 0.25,
-                            unitcategory = "imperial", htin = 0.1, lwd = 1,
-                            padin = c(0.7, 0.05), style = "ticks",
-                            linecol = "black", tick.cex = 0.7,
-                            labelpadin = 0.08, label.cex = 0.8,
-                            label.col = "black", pos = "bottomleft")
   }
   # save map ####
   map <- grDevices::recordPlot()

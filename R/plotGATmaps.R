@@ -207,6 +207,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
 
   legend("topleft", legend = labels, fill = fill, border = border, cex = 1,
          bty = "n", inset = 0, y.intersp = 1.25)
+  raster::scalebar(20, type='bar', divs=5)
 
   # calculate summary statistics if mapstats = TRUE ####
   if (mapstats) {
@@ -263,14 +264,6 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
       prettymapr::addnortharrow(pos = "bottomleft", padin = c(0.2, 0.05),
                                 scale = .5, lwd = 1, border = "black",
                                 cols = c("white", "black"), text.col = "black")
-    )
-    suppressMessages(
-      prettymapr::addscalebar(plotunit = "mi", plotepsg = 4269, widthhint = 0.25,
-                              unitcategory = "imperial", htin = 0.1, lwd = 1,
-                              padin = c(0.7, 0.05), style = "ticks",
-                              linecol = "black", tick.cex = 0.7,
-                              labelpadin = 0.08, label.cex = 0.8,
-                              label.col = "black", pos = "bottomleft")
     )
   }
 

@@ -19,7 +19,7 @@ inputGATvariable(
   check = FALSE,
   valueopt = "Enter a number:",
   mylist = letters,
-  myvar = "e"
+  myvar = NULL
 )
 }
 \arguments{

@@ -61,9 +61,11 @@ createGATregion <- function(area, newreg, myidvar, nrid, pop = NULL,
   latnames <- c("LATITUDE", "LAT", "Y", "GATY", "OLD_GATY")
   longnames <- c("LONGITUDE", "X", "LON", "LONG", "GATX", "OLD_GATX")
   items <- items[!toupper(items) %in% c(latnames, longnames)]
-  latlong <- names(area)[toupper(names(area)) %in% c(latnames, longnames)]
+  latlong <- names(data)[toupper(names(data)) %in% c(latnames, longnames)]
   ivars <- ivars[!toupper(ivars) %in% c(latlong, "GATX", "GATY")]
-  for (i in 1:length(latlong)) newreg[, latlong[i]] <- mean(data[, latlong[i]])
+  if (length(latlong) > 0) {
+    for (i in 1:length(latlong)) newreg[, latlong[i]] <- mean(data[, latlong[i]])
+  }
 
   ivars <- ivars[!ivars %in% latlong]
   for (i in 1:length(ivars)) newreg[, ivars[i]] <- sum(data[, ivars[i]])
@@ -112,7 +114,7 @@ createGATregion <- function(area, newreg, myidvar, nrid, pop = NULL,
 
   # region numbers data frame ----
   # newreg$Num_Areas = nrow(data) # handled later
-  items <- unique(c(names(area), "GATx", "GATy"))
+  items <- unique(c(names(data), "GATx", "GATy"))
   newreg <- newreg[, items[items %in% names(newreg)]] # keep column order
   newreg[, myidvar] <- nrid # assign the new region the new id
   row.names(newreg) <- nrid # make sure the row name matches
