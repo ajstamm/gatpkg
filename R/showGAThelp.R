@@ -22,12 +22,8 @@
 #'               "  \u2022  To quit GAT, click 'Cancel'.")
 #'
 #' # create the dialog box
-#' showGAThelp(
-#'   help = hlp,
-#'   helppage = "showGAThelp",
-#'   step = 0,
-#'   helptitle = "GAT help dialog"
-#' )
+#' showGAThelp(help = hlp, helppage = "showGAThelp", step = 0,
+#'             helptitle = "GAT help dialog")
 #' }
 #'
 #' @export
@@ -45,11 +41,9 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
   path <- find.package("gatpkg")
 
   # create window ####
-  hlp <- tcltk::tktoplevel()
-  tcltk::tcl("tk_setPalette", "white") # set background color
+  hlp <- tcltk::tktoplevel(background = "azure2")
   tcltk::tktitle(hlp) <- paste0("Step ", step, ": Help for ", helptitle)
-  hlp$note <- tcltk::tklabel(hlp, text = help)
-  tcltk::tkconfigure(hlp$note, background = "white")
+  hlp$note <- tcltk::tklabel(hlp, text = help, justify = "left")
   tcltk::tkgrid(hlp$note, sticky = "w", columnspan = 3, padx = 5)
 
   # add image and text ####

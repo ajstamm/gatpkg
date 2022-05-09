@@ -43,9 +43,10 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
                             helptitle = "inputGATmessage",
                             helppage = "inputGATmessage", step = 0,
                             buttonopt = "Cancel GAT", backopt = TRUE) {
-  tt <- tcltk::tktoplevel()
+
+  tt <- tcltk::tktoplevel(background = "azure2")
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
-  tt$env$tm <- tcltk::tklabel(tt, text = msg)
+  tt$env$tm <- tcltk::tklabel(tt, text = msg, justify = "left")
   tcltk::tkgrid(tt$env$tm, sticky = "w", padx = 5, pady = 5)
 
   myenv <- new.env()
@@ -70,20 +71,18 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
 
   if (backopt) {
     tt$env$tf$BackBut <- tcltk::tkbutton(tt$env$tf, text = "< Back",
-                                           command = onBack, width = 12)
-    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >",
-                                         command = onOk, width = 12,
-                                         default = "active")
+                                         command = onBack, width = 12)
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >", width = 12,
+                                       command = onOk, default = "active")
   } else {
-    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm", width = 12,
+                                       command = onOk, default = "active")
   }
 
   tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,
-                                         command = onHelp)
+                                       command = onHelp)
   tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = buttonopt,
-                                           width = 12, command = onCancel)
+                                         width = 12, command = onCancel)
 
   # draw the frame, then add buttons or add buttons first; both work.
   # frame creates a bar of buttons on the bottom instead of one button under

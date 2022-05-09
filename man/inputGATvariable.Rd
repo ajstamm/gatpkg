@@ -79,14 +79,12 @@ hlp <- paste0("To continue, select an option and click 'Next >',",
 inputGATvariable(
   title = "My favorite letter",
   instruction = "Please select your favorite letter.",
-  help = hlp,
-  mylist = letters,
+  help = hlp, mylist = letters,
   checkopt = "Check this box \nif you love all letters.",
   valueopt = "Enter the number of letters \nyou love.",
-  checkbox = TRUE,
-  valuebox = TRUE,
+  checkbox = TRUE, valuebox = TRUE,
   helppage = "inputGATvariable",
-  value = "5,000"
+  value = "f"
 )
 }
 

@@ -22,12 +22,8 @@
 #'
 #' if (interactive()) {
 #' pathin <- paste0(find.package("gatpkg"), "/extdata")
-#' mywtshp <- importGATweights(
-#'   area = hftown,
-#'   filein = "hfblock",
-#'   pathin = pathin,
-#'   popvar = "Pop_tot"
-#' )
+#' mywtshp <- importGATweights(area = hftown, filein = "hfblockgrp",
+#'                             pathin = pathin, popvar = "Pop")
 #' }
 #'
 #' @export

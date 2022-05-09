@@ -149,7 +149,7 @@ In this dialog, select the variable you would like to use from the drop-down lis
 
 ```{r boundarypic, fig.cap = 'Dialog: Identify Boundary', fig.alt = 'Dialog: Identify Boundary', echo = FALSE}
 # generate window for image
-# gatpkg::identifyGATboundary(data = gatpkg::hftown)
+# gatpkg::identifyGATboundary(shp = gatpkg::hftown)
 knitr::include_graphics("images/pick_border.png")
 ```
 
@@ -208,7 +208,7 @@ In this dialog, select each variable you would like to use to define exclusions 
 
 ```{r excludepic, fig.cap = 'Dialog: Identify Exclusions', fig.alt = 'Dialog: Identify Exclusion Criteria', echo = FALSE}
 # generate window for image
-# gatpkg::inputGATexclusions(mapdata = gatpkg::hftown, step = 5)
+# gatpkg::inputGATexclusions(shp = gatpkg::hftown, step = 5)
 knitr::include_graphics("images/pick_exclude.png")
 ```
 
@@ -252,7 +252,7 @@ In this dialog, select the method you would like to use to aggregate areas. If y
 
 ```{r mergepic, fig.cap = 'Dialog: Identify Merge Type', fig.alt = 'Dialog: Identify Merge Type', echo = FALSE}
 # generate window for image
-# gatpkg::inputGATmerge(mapdata = gatpkg::hftown, aggvar = "TOTAL_POP", aggvar2 = "NONE", step = 6)
+# gatpkg::inputGATmerge(shp = gatpkg::hftown, aggvar = "TOTAL_POP", aggvar2 = "NONE", step = 6)
 knitr::include_graphics("images/pick_merge.png")
 ```
 
@@ -326,7 +326,7 @@ In this dialog, select the numerator, denominator, and map color scheme from the
 
 ```{r ratepic, fig.cap = 'Dialog: Identify Rate Settings', fig.alt = 'Dialog: Identify Rate Settings', echo = FALSE}
 # generate window for image
-# gatpkg::inputGATrate(mapdata = gatpkg::hftown, limitdenom = FALSE, step = 8)
+# gatpkg::inputGATrate(shp = gatpkg::hftown, limitdenom = FALSE, step = 8)
 knitr::include_graphics("images/pick_rate.png")
 ```
 

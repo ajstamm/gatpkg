@@ -138,9 +138,10 @@ inputGATrate <- function(shp, defaultopt = 0,
   colors <- c("Blues", "BuGn", "BuPu", "GnBu", "Greens", "Greys", "Oranges",
               "OrRd", "PuBu", "PuBuGn", "PuRd", "Purples",
               "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd")
+  fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
 
   ######### create the window #########
-  tt <- tcltk::tktoplevel(width=450, height=250)
+  tt <- tcltk::tktoplevel(width=450, height=250, background = "azure2")
   title <- "Enter rate settings"
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
   tcltk::tkpack.propagate(tt, FALSE) ## Window won't resize
@@ -150,9 +151,10 @@ inputGATrate <- function(shp, defaultopt = 0,
     " To calculate a rate, select your choices from the drop-down menus \n",
     "and enter your desired rate name and multiplier.")
   tt$inst <- tcltk::tkframe(tt, width = 300, height = 5)
-  tt$inst$inst <- tcltk::tklabel(tt$inst, text = "Instructions", font = "fonthead")
+  tt$inst$inst <- tcltk::tklabel(tt$inst, text = "Instructions", font = fonthead)
   tcltk::tkgrid(tt$inst$inst, sticky = "w", padx = 3)
-  tcltk::tkgrid(tcltk::tklabel(tt$inst, text = instruct), sticky = "w", padx = 5)
+  tcltk::tkgrid(tcltk::tklabel(tt$inst, text = instruct, justify = "left"),
+                sticky = "w", padx = 5)
   tcltk::tkgrid(tt$inst, columnspan = 2, pady = 2, sticky = "w")
 
   ######### code for checkbox #########
@@ -164,7 +166,7 @@ inputGATrate <- function(shp, defaultopt = 0,
   tcltk::tkconfigure(tt$check$cb, variable = tt$check$cbvalue)
   tcltk::tkgrid(tt$check$cb, tt$check$cblabel, sticky = "w", pady = 2, padx = 5)
 
-  tt$check$title <- tcltk::tklabel(tt$check, text = "Rate settings", font = "fonthead")
+  tt$check$title <- tcltk::tklabel(tt$check, text = "Rate settings", font = fonthead)
   tcltk::tkgrid(tt$check$title, padx = 3, pady = 5, columnspan = 3, sticky = "w")
   tcltk::tkgrid(tt$check, sticky = "w")
 
@@ -190,8 +192,8 @@ inputGATrate <- function(shp, defaultopt = 0,
     note <- paste(note, "\n          ",
                   "Variables with 0 or missings cannot be in the denominator.")
   }
-  tcltk::tkgrid(tcltk::tklabel(tt$list, text = note), columnspan = 2,
-                sticky = "w", padx = 5)
+  tcltk::tkgrid(tcltk::tklabel(tt$list, text = note, justify = "left"),
+                columnspan = 2, sticky = "w", padx = 5)
 
   tt$list$collbl = tcltk::tklabel(tt$list, text = "Select the map colors:")
   tt$list$tcol <- tcltk::ttkcombobox(tt$list, values = colorlist,
@@ -201,7 +203,7 @@ inputGATrate <- function(shp, defaultopt = 0,
 
     # code for textboxes ####
   txt <- "Enter the rate name: \n (ex. cancer_incidence)"
-  tt$list$namelbl <- tcltk::tklabel(tt$list, text = txt)
+  tt$list$namelbl <- tcltk::tklabel(tt$list, text = txt, justify = "left")
   tt$list$namevar <- tcltk::tclVar(ratevars$ratename)
   tt$list$nametxt <- tcltk::tkentry(tt$list, width = "20",
                                     textvariable = tt$list$namevar,
@@ -209,7 +211,7 @@ inputGATrate <- function(shp, defaultopt = 0,
   tcltk::tkgrid(tt$list$namelbl, tt$list$nametxt, sticky = "w",
                 rowspan = 2, pady = 2)
   txt <- "Enter the rate multiplier: \n (ex. per 10,000 people)"
-  tt$list$multlbl <- tcltk::tklabel(tt$list, text = txt)
+  tt$list$multlbl <- tcltk::tklabel(tt$list, text = txt, justify = "left")
   tt$list$multvar <- tcltk::tclVar(ratevars$multiplier)
   tt$list$multtxt <- tcltk::tkentry(tt$list, width = "20",
                                     textvariable = tt$list$multvar,

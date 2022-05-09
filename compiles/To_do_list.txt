@@ -20,6 +20,8 @@ Fixes and improvements to address:
 * convert spdep and maptools to sf? note: spdep works with sf
 * shift some imports to suggests
   * tibble is giving me trouble no matter where I put it
+* if I want to zip the shapefiles, use the code `unz()` to unzip and read them
+  * this would bypass the "2022 DBF is an executable" bug
 
 Completed - test
 	* runGATprogram (rgdal, sp, maptools)

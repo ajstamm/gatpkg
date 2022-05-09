@@ -41,7 +41,7 @@
 #'   The values to use in the exclusion calculations.
 #' }
 #'
-#' @param mapdata The data frame from which to select variables.
+#' @param shp     Spatial layer.
 #' @param step    Integer step in the GAT program, for help reference.
 #' @param exclist The list of exclusion criteria, if pre-defined.
 #' @param backopt Boolean denoting whether to include the back button.
@@ -55,11 +55,8 @@
 #'
 #' @export
 
-inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
-                               backopt = TRUE) {
-
-  ## define objects ####
-
+inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
+  ## define objects ----
   helppage <- "inputGATexclusions"
   hlp <- paste0("Select your first aggregation variable. In the text box, \n",
                 "enter your desired minimum value. \n",
@@ -67,7 +64,7 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
                 "  \u2022  To return to aggregation variable selection,",
                 "click '< Back'. \n", "  \u2022  To quit GAT, click 'Cancel'.")
 
-  mylist <- checkGATvariabletypes(mapdata, type = "number")
+  mylist <- checkGATvariabletypes(shp, type = "number")
   mylist <- c("NONE", mylist)
   mathlist <- c("equals", "less than", "greater than")
 
@@ -113,28 +110,25 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
 
   ## draw window ####
 
-  tt <- tcltk::tktoplevel()
+  tt <- tcltk::tktoplevel(background = "azure2")
   tcltk::tkwm.title(tt, paste0("Step ", step, ": Exclusions"))
 
   tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead)
   tcltk::tkgrid(tt$insttl, sticky = "w", padx = 5, pady = 5)
-  tcltk::tkgrid(tcltk::tklabel(tt, text = instruct), columnspan = 4,
-                sticky = "w")
+  tcltk::tkgrid(tcltk::tklabel(tt, text = instruct, justify = "left"),
+                columnspan = 4, sticky = "w")
 
   tt$env$tr <- tcltk::tkframe(tt)
 
   ## variable lists ####
 
-  tt$env$tr$Varlist1 <- tcltk::ttkcombobox(tt$env$tr,
-                                           values = mylist,
+  tt$env$tr$Varlist1 <- tcltk::ttkcombobox(tt$env$tr, values = mylist,
                                            textvariable = myvar1,
                                            state = "readonly")
-  tt$env$tr$Varlist2 <- tcltk::ttkcombobox(tt$env$tr,
-                                           values = mylist,
+  tt$env$tr$Varlist2 <- tcltk::ttkcombobox(tt$env$tr, values = mylist,
                                            textvariable = myvar2,
                                            state = "readonly")
-  tt$env$tr$Varlist3 <- tcltk::ttkcombobox(tt$env$tr,
-                                           values = mylist,
+  tt$env$tr$Varlist3 <- tcltk::ttkcombobox(tt$env$tr, values = mylist,
                                            textvariable = myvar3,
                                            state = "readonly")
 
@@ -147,16 +141,13 @@ inputGATexclusions <- function(mapdata, step = 0, exclist = NULL,
 
   ## math lists ####
 
-  tt$env$tr$Mathlist1 <- tcltk::ttkcombobox(tt$env$tr,
-                                            values = mathlist,
+  tt$env$tr$Mathlist1 <- tcltk::ttkcombobox(tt$env$tr, values = mathlist,
                                             textvariable = mymath1,
                                             state = "readonly")
-  tt$env$tr$Mathlist2 <- tcltk::ttkcombobox(tt$env$tr,
-                                            values = mathlist,
+  tt$env$tr$Mathlist2 <- tcltk::ttkcombobox(tt$env$tr, values = mathlist,
                                             textvariable = mymath2,
                                             state = "readonly")
-  tt$env$tr$Mathlist3 <- tcltk::ttkcombobox(tt$env$tr,
-                                            values = mathlist,
+  tt$env$tr$Mathlist3 <- tcltk::ttkcombobox(tt$env$tr, values = mathlist,
                                             textvariable = mymath3,
                                             state = "readonly")
 

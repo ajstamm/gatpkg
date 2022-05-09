@@ -58,8 +58,9 @@ inputGATvalue <- function(title = "GAT input window",
                           helptitle = "this step",
                           backopt = TRUE) {
   tt <- tcltk::tktoplevel()
+  tcltk::tcl("tk_setPalette", "grey") # set background color
   tcltk::tktitle(tt) <- title
-  tt$env$tm <- tcltk::tklabel(tt, text = message)
+  tt$env$tm <- tcltk::tklabel(tt, text = message, justify = "left")
   tcltk::tkgrid(tt$env$tm, sticky = "w", padx = 5, pady = 5)
 
   varText <- tcltk::tclVar(defaulttext)
@@ -78,8 +79,8 @@ inputGATvalue <- function(title = "GAT input window",
     assign("myvalue", "cancel", envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helptitle,
-                helppage = helppage, step = step)
+    showGAThelp(help = help, helptitle = helptitle, helppage = helppage,
+                step = step)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
@@ -89,13 +90,11 @@ inputGATvalue <- function(title = "GAT input window",
   if (backopt) {
     tt$env$tf$BackBut <- tcltk::tkbutton(tt$env$tf, text = "< Back",
                                            command = onBack, width = 12)
-    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >", width = 12,
+                                       command = onOk, default = "active")
   } else {
-    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm", width = 12,
+                                       command = onOk, default = "active")
   }
 
   tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,

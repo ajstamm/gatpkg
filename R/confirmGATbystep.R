@@ -144,7 +144,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   if (is.null(gatvars$ismin2)) gatvars$ismin2 <- FALSE
 
   ## set up window ####
-  tt <- tcltk::tktoplevel()
+  tt <- tcltk::tktoplevel(background = "azure2")
   tcltk::tktitle(tt) <- paste0("Step ", step, ": Review settings")
 
   ## define GAT settings ####
@@ -259,11 +259,11 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   mysets <- paste0(mysets, stepslist[10], ": ", filevars$userout)
 
   ## print GAT settings ####
-  tt$ins <- tcltk::tklabel(tt, text = mysets)
+  tt$ins <- tcltk::tklabel(tt, text = mysets, justify = "left")
   tcltk::tkgrid(tt$ins, sticky = "w", padx = 5, pady = 5)
-  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = "fonthead")
+  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead)
   tcltk::tkgrid(tt$insttl, sticky = "w", padx = 5, pady = 5)
-  tt$ins <- tcltk::tklabel(tt, text = instruct)
+  tt$ins <- tcltk::tklabel(tt, text = instruct, justify = "left")
   tcltk::tkgrid(tt$ins, sticky = "w", padx = 5, pady = 5)
 
   ## request step selection ####

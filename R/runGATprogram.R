@@ -323,7 +323,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
 
       # re-call the function as needed
       while (temp$error) {
-        agglist <- identifyGATaggregators(mapdata = temp$shp, step = step,
+        agglist <- identifyGATaggregators(shp = temp$shp, step = step,
                                           agglist = agglist,
                                           backopt = !temp$flagconfirm)
         temp$error <- FALSE
@@ -399,9 +399,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       temp$error <- TRUE
 
       while (temp$error) {
-        exclist <- inputGATexclusions(mapdata = temp$shp, step = step,
-                                      exclist = exclist,
-                                      backopt = !temp$flagconfirm)
+        exclist <- inputGATexclusions(shp = temp$shp, exclist = exclist,
+                                      step = step, backopt = !temp$flagconfirm)
         temp$error <- FALSE
         if (is.null(exclist)) {
           x <- confirmGATquit()
@@ -593,12 +592,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       temp$error <- TRUE
 
       while (temp$error) {
-        mergevars <- inputGATmerge(mapdata = temp$mapflag,
+        mergevars <- inputGATmerge(shp = temp$mapflag, mergevars = mergevars,
                                    aggvar = gatvars$aggregator1,
-                                   aggvar2 = gatvars$aggregator2,
-                                   step = step,
+                                   aggvar2 = gatvars$aggregator2, step = step,
                                    limitdenom = limitdenom,
-                                   mergevars = mergevars,
                                    backopt = !temp$flagconfirm)
         temp$error <- FALSE
         if (is.null(mergevars)) {

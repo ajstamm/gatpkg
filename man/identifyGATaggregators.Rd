@@ -4,15 +4,15 @@
 \alias{identifyGATaggregators}
 \title{Identify and Check GAT Aggregation Variables}
 \usage{
-identifyGATaggregators(mapdata, step = 4, agglist = NULL, backopt = TRUE)
+identifyGATaggregators(shp, step = 4, agglist = NULL, backopt = TRUE)
 }
 \arguments{
-\item{mapdata}{A data frame or simple features layer.}
+\item{shp}{Spatial layer.}
 
-\item{step}{An integer step in the GAT program, for help reference.}
+\item{step}{Integer step in GAT, for help reference.}
 
-\item{agglist}{The list of aggregation variables, with minimum and maximum
-values, if pre-selected.}
+\item{agglist}{List of aggregation variables, with minimum and maximum values,
+if pre-selected.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
 }
@@ -28,8 +28,7 @@ aggregation variable.
 \examples{
 
 if (interactive()) {
-# identify variable to aggregate
-identifyGATaggregators(mapdata = hftown)
+identifyGATaggregators(shp = hftown)
 }
 
 }

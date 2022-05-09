@@ -28,7 +28,6 @@
 #' @examples
 #'
 #' if (interactive()) {
-#' # choose yes or no
 #' saveGATkml()
 #' }
 #'
@@ -45,7 +44,7 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   rbValue <- tcltk::tclVar("no")
 
   # draw window ####
-  tt <- tcltk::tktoplevel()
+  tt <- tcltk::tktoplevel(background = "azure2")
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
 
   # create frames ####
@@ -56,7 +55,7 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
 
   # radiobuttons ####
 
-  tt$radio$instruct <- tcltk::tklabel(tt$radio, text = msg)
+  tt$radio$instruct <- tcltk::tklabel(tt$radio, text = msg, justify = "left")
   tcltk::tkgrid(tt$radio$instruct, sticky = "w", padx = 5, pady = 5,
                 columnspan = 4)
 
@@ -86,8 +85,8 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
     assign("myvalue", "cancel", envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helppage,
-                helppage = helppage, step = step)
+    showGAThelp(help = help, helptitle = helppage, helppage = helppage,
+                step = step)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
@@ -97,18 +96,16 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   if (backopt) {
     tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back",
                                            command = onBack, width = 12)
-    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >", width = 12,
+                                       command = onOk, default = "active")
   } else {
-    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm", width = 12,
+                                       command = onOk, default = "active")
   }
   tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text="Help", width = 12,
-                                         command = onHelp)
-  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel",
-                                           width = 12, command = onCancel)
+                                       command = onHelp)
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel", width = 12,
+                                         command = onCancel)
 
   if (backopt) {
     tcltk::tkgrid(tt$tfbuts$BackBut, column = 1, row = 1, pady = 5, padx = c(5, 0))

@@ -5,7 +5,7 @@
 \title{Input Multiple GAT Aggregation Variables}
 \usage{
 inputGATaggregators(
-  mapdata,
+  shp,
   step = 4,
   min1 = "5,000",
   min2 = "none",
@@ -17,21 +17,21 @@ inputGATaggregators(
 )
 }
 \arguments{
-\item{mapdata}{A data frame.}
+\item{shp}{Spatial layer.}
 
-\item{step}{An integer step in the GAT program, for help reference.}
+\item{step}{Integer step in GAT, for help reference.}
 
-\item{min1}{The minimum value for the first aggregation variable.}
+\item{min1}{Minimum value for the first aggregation variable.}
 
-\item{min2}{The minimum value for the second aggregation variable.}
+\item{min2}{Minimum value for the second aggregation variable.}
 
-\item{max1}{The maximum value for the first aggregation variable.}
+\item{max1}{Maximum value for the first aggregation variable.}
 
-\item{max2}{The maximum value for the second aggregation variable.}
+\item{max2}{Maximum value for the second aggregation variable.}
 
-\item{var1}{The name of the first aggregation variable.}
+\item{var1}{Name of the first aggregation variable.}
 
-\item{var2}{The name of the second aggregation variable.}
+\item{var2}{Name of the second aggregation variable.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
 }
@@ -64,8 +64,7 @@ function inputGATvalue() to force you to enter a number.
 \examples{
 
 if (interactive()) {
-# identify variable to aggregate
-inputGATaggregators(mapdata = hftown)
+inputGATaggregators(shp = hftown)
 }
 
 }

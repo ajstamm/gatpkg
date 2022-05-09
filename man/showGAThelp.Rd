@@ -39,12 +39,8 @@ hlp <- paste0("Instructions: \n",
               "  \u2022  To quit GAT, click 'Cancel'.")
 
 # create the dialog box
-showGAThelp(
-  help = hlp,
-  helppage = "showGAThelp",
-  step = 0,
-  helptitle = "GAT help dialog"
-)
+showGAThelp(help = hlp, helppage = "showGAThelp", step = 0,
+            helptitle = "GAT help dialog")
 }
 
 }

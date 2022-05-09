@@ -44,14 +44,12 @@
 #' inputGATvariable(
 #'   title = "My favorite letter",
 #'   instruction = "Please select your favorite letter.",
-#'   help = hlp,
-#'   mylist = letters,
+#'   help = hlp, mylist = letters,
 #'   checkopt = "Check this box \nif you love all letters.",
 #'   valueopt = "Enter the number of letters \nyou love.",
-#'   checkbox = TRUE,
-#'   valuebox = TRUE,
+#'   checkbox = TRUE, valuebox = TRUE,
 #'   helppage = "inputGATvariable",
-#'   value = "5,000"
+#'   value = "f"
 #' )
 #' }
 #'
@@ -78,7 +76,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                              valueopt = "Enter a number:", mylist = letters,
                              myvar = NULL) {
   # create frames ----
-  tt <- tcltk::tktoplevel()
+  tt <- tcltk::tktoplevel(background = "azure2")
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
 
   # for some reason, within functions frames must all be created at the start
@@ -89,10 +87,9 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
   # list of options ----
   myvar <- if (is.null(myvar)) tcltk::tclVar("") else tcltk::tclVar(myvar)
 
-  tt$bound$note <- tcltk::tklabel(tt$bound, text = instruction)
+  tt$bound$note <- tcltk::tklabel(tt$bound, text = instruction, justify = "left")
   tt$bound$tl <- tcltk::ttkcombobox(tt$bound, values = mylist,
-                                    textvariable = myvar,
-                                    state = "readonly")
+                                    textvariable = myvar, state = "readonly")
   tcltk::tkgrid(tt$bound$note, sticky = "w", columnspan = 4, padx = 5)
   tcltk::tkgrid(tt$bound$tl, padx = 10, pady = c(5, 10), sticky = "w",
                 row = 2, column = 1)
@@ -103,7 +100,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
     if (checkbox) {
       statebut <- if (check) "active" else "normal"
       tt$bound$cb <- tcltk::tkcheckbutton(tt$opts)
-      tt$bound$cblabel <- tcltk::tklabel(tt$opts, text = checkopt)
+      tt$bound$cblabel <- tcltk::tklabel(tt$opts, text = checkopt, justify = "left")
       tt$bound$cbvalue <- tcltk::tclVar("0")
       tcltk::tkconfigure(tt$bound$cb, variable = tt$bound$cbvalue, state = statebut)
       tcltk::tkconfigure(tt$bound$cblabel, width = 20)
@@ -113,7 +110,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
     if (valuebox) {
       vbvalue <- tcltk::tclVar(value)
       tt$bound$vb <- tcltk::tkentry(tt$opts, textvariable = vbvalue)
-      tt$bound$vblabel <- tcltk::tklabel(tt$opts, text = valueopt)
+      tt$bound$vblabel <- tcltk::tklabel(tt$opts, text = valueopt, justify = "left")
       tcltk::tkconfigure(tt$bound$vblabel, width = 25)
       tcltk::tkgrid(tt$bound$vblabel, column = 1, columnspan = 2, sticky = "nw")
       tcltk::tkgrid(tt$bound$vb, column = 1, columnspan = 2, sticky = "n")
@@ -132,8 +129,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
       tcltk::tkdestroy(tt)
 
       check <- if (cbVal == "1") TRUE else FALSE
-      assign("myoptions", list(myvar = myvar,
-                               check = check,
+      assign("myoptions", list(myvar = myvar, check = check,
                                threshold = threshold), envir=myenv)
     }
   } else if (checkbox) {
@@ -145,8 +141,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
       tcltk::tkdestroy(tt)
 
       check <- if (cbVal == "1") TRUE else FALSE
-      assign("myoptions", list(myvar = myvar,
-                               check = check,
+      assign("myoptions", list(myvar = myvar, check = check,
                                threshold = 0), envir=myenv)
     }
   } else if (valuebox) {
