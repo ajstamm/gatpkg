@@ -75,9 +75,9 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
   plot(areanew$geometry, border = "black", col = "transparent",
            lty = "solid", lwd = 2, add = TRUE)
 
-  legend("topleft", legend = c("Original areas", "Aggregated areas"),
-         fill = "White", border = c("red", "black"), cex = 1,
-         bty = "n", inset = 0, y.intersp = 1.25)
+  graphics::legend("topleft", legend = c("Original areas", "Aggregated areas"),
+                   fill = "White", border = c("red", "black"), cex = 1,
+                   bty = "n", inset = 0, y.intersp = 1.25)
 
   # add labels ####
   mytitle <- "Map comparing original and aggregated areas"

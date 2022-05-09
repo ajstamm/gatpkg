@@ -30,8 +30,8 @@ hftown <- sf::st_transform(hftown, "+proj=longlat +datum=NAD27")
 # to create base population for weighting ----
 # not actually used
 
-hfpop <- importGATweights(area = hftown, filein = "hfblock",
-                          pathin = "inst/extdata", popvar = "Pop_tot")
+hfpop <- importGATweights(area = hftown, filein = "hfblockgrp",
+                          pathin = "inst/extdata", popvar = "Pop")
 
 # to create aggregations ----
 mergevars <- list(mergeopt1 = "closest", similar1 = "AREAWATR",
@@ -52,7 +52,7 @@ gatvars <- list(
   boundary = "COUNTY",        # character variable of non-unique values
   rigidbound = TRUE,          # boolean to enforce boundary
   popwt = TRUE,               # boolean for population weighting
-  popvar = "Pop_tot"          # aggregation variable in population laayer
+  popvar = "Pop"             # aggregation variable in population layer
 )
 
   # first aggregation ----
@@ -86,9 +86,9 @@ gatvars <- list(
   minvalue1 = 6000, minvalue2 = 6000,
   maxvalue1 = 15000, maxvalue2 = 15000,
   boundary = "COUNTY",        # character variable of non-unique values
-  rigidbound = FALSE,          # boolean to enforce boundary
+  rigidbound = FALSE,         # boolean to enforce boundary
   popwt = FALSE,              # boolean for population weighting
-  popvar = "Pop_tot"          # aggregation variable in population laayer
+  popvar = "Pop"              # aggregation variable in population layer
 )
 
 temp <-

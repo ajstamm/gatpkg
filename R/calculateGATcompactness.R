@@ -37,7 +37,7 @@ calculateGATcompactness <- function(myshp) {
 
   # calculate compactness ratio ----
   myareas <- sf::st_area(map)
-  hulldists <- lapply(map$geometry, dist)
+  hulldists <- lapply(map$geometry, stats::dist)
   diams <- sapply(hulldists, max)
   # to get maximum distance (diameter of circle): max(dist(test1))
   cratio <- as.numeric(myareas / (pi * ((diams / 2) ** 2)))

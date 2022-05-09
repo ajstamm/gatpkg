@@ -22,7 +22,7 @@
 #' new identifiers for newly created polygons. Any unmerged polygons will
 #' retain their original identifiers.
 #'
-#' @param mapdata A data frame, intended to be read from a shapefile DBF.
+#' @param shp     Spatial layer.
 #' @param step    Integer step in the GAT program, for help reference.
 #' @param backopt Boolean denoting whether to include the back button.
 #'
@@ -30,17 +30,17 @@
 #'
 #' if (interactive()) {
 #' # identify the character variable to use as the ID
-#' identifyGATid(mapdata = hftown)
+#' identifyGATid(shp = hftown)
 #' }
 #'
 #' @export
 
-identifyGATid <- function(mapdata, step = 2, backopt = TRUE) {
-  iditems <- checkGATvariabletypes(mapdata, type = "character")
+identifyGATid <- function(shp, step = 2, backopt = TRUE) {
+  iditems <- checkGATvariabletypes(shp, type = "character")
   idlist <- c()
   for (i in 1:length(iditems)) {
-    t <- table(data.frame(mapdata)[, iditems[i]])
-    idlist[i] <- length(t) == nrow(mapdata)
+    t <- table(data.frame(shp)[, iditems[i]])
+    idlist[i] <- length(t) == nrow(shp)
   }
 
   iditems <- iditems[idlist == TRUE]

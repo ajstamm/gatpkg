@@ -7,18 +7,17 @@
 weightGATmap(area, pop, idvar, popvar, crs = NULL)
 }
 \arguments{
-\item{area}{A spatial layer representing areas to be aggregated.}
+\item{area}{Spatial layer representing areas to be aggregated.}
 
-\item{pop}{A spatial layer containing underlying population values.}
+\item{pop}{Spatial layer containing underlying population values.}
 
-\item{idvar}{A variable of unique string values to identify the area
-layer's observations.}
+\item{idvar}{Variable of unique string values to identify the layer's
+observations.}
 
 \item{popvar}{The base population variable.}
 
-\item{crs}{A user-defined non-lat/long projection, entered as a
-string. The default is NULL, in which case the function
-defines the projection.}
+\item{crs}{User-defined non-lat/long projection, entered as a string.
+For the default, NULL, the function defines the projection.}
 }
 \description{
 This function identifies the population weighted centroids for all areas
@@ -27,11 +26,7 @@ in your original map.
 \examples{
 
 if (interactive()) {
-mycentroids <-
-  weightGATmap(
-    area = hftown, pop = hfpop,
-    idvar = "ID", popvar = "Pop_tot")
+cen <- weightGATmap(area = hftown, pop = hfpop, idvar = "ID", popvar = "Pop")
 }
-
 
 }

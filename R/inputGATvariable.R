@@ -87,7 +87,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
   tt$tfbuts <- tcltk::tkframe(tt$frm, width = 300, height = 40)
 
   # list of options ----
-  myvar <- if (is.null(myvar)) tcltk::tclVar("NONE") else tcltk::tclVar(myvar)
+  myvar <- if (is.null(myvar)) tcltk::tclVar("") else tcltk::tclVar(myvar)
 
   tt$bound$note <- tcltk::tklabel(tt$bound, text = instruction)
   tt$bound$tl <- tcltk::ttkcombobox(tt$bound, values = mylist,

@@ -4,10 +4,10 @@
 \alias{identifyGATid}
 \title{Identify GAT Shapefile Identifier}
 \usage{
-identifyGATid(mapdata, step = 2, backopt = TRUE)
+identifyGATid(shp, step = 2, backopt = TRUE)
 }
 \arguments{
-\item{mapdata}{A data frame, intended to be read from a shapefile DBF.}
+\item{shp}{Spatial layer.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
 
@@ -40,7 +40,7 @@ retain their original identifiers.
 
 if (interactive()) {
 # identify the character variable to use as the ID
-identifyGATid(mapdata = hftown)
+identifyGATid(shp = hftown)
 }
 
 }

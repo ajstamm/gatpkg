@@ -85,7 +85,7 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
 
   # sp::plot(area, lwd=.5)
   plot(sf::st_geometry(area), lwd=.5)
-  title(main = title.main, sub = title.sub, cex.main = 2)
+  graphics::title(main = title.main, sub = title.sub, cex.main = 2)
 
   if (is.null(colcode)) {
     if (!ratemap) {
@@ -205,8 +205,8 @@ plotGATmaps <- function(area, var, clr = "Blues", title.main = "", class = NULL,
     border = c(border, "magenta")
   }
 
-  legend("topleft", legend = labels, fill = fill, border = border, cex = 1,
-         bty = "n", inset = 0, y.intersp = 1.25)
+  graphics::legend("topleft", legend = labels, fill = fill, border = border,
+                   cex = 1, bty = "n", inset = 0, y.intersp = 1.25)
   raster::scalebar(20, type='bar', divs=5)
 
   # calculate summary statistics if mapstats = TRUE ####

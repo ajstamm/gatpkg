@@ -89,7 +89,7 @@ gatvars <- list(
   boundary = "COUNTY",        # character variable of non-unique values
   rigidbound = TRUE,          # boolean to enforce boundary
   popwt = FALSE,              # boolean for population weighting
-  popvar = "Pop_tot"          # aggregation variable in population laayer
+  popvar = "Pop"              # aggregation variable in population laayer
 )
 
 mergevars <- list(
@@ -104,14 +104,9 @@ exclist <- list(
   var2 = "NONE", # if not "NONE", define math2 & val2
   var3 = "NONE"  # if not "NONE", define math3 & val3
 )
-my_merge <-
-  defineGATmerge(
-    area = hftown, pop = hfpop,
-    gatvars = gatvars,
-    mergevars = mergevars,
-    exclist = exclist,
-    pwrepeat = FALSE # don't need pwrepeat if popwt = FALSE
-  )
+my_merge <- defineGATmerge(
+    area = hftown, pop = hfpop, gatvars = gatvars, mergevars = mergevars,
+    exclist = exclist, progressbar = FALSE, pwrepeat = FALSE)
 }
 
 }

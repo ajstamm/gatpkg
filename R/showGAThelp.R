@@ -68,7 +68,7 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
   # add buttons ----
   onDone <- function() tcltk::tkdestroy(hlp)
   # vignette("gat_step_by_step", package = "gatpkg")
-  onManual <- function() browseURL(paste0(path, "/doc/gat_step_by_step.html"))
+  onManual <- function() utils::browseURL(paste0(path, "/doc/gat_step_by_step.html"))
 
   hlp$env$button <- tcltk::tkframe(hlp, width = 200, height = 40)
   hlp$env$button$Manual <-
@@ -78,7 +78,7 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
 
   if (!is.null(helppage)) {
     # help(helppage, package = "gatpkg")
-    onHelppage <- function() browseURL(paste0(path, "/html/", helppage, ".html"))
+    onHelppage <- function() utils::browseURL(paste0(path, "/html/", helppage, ".html"))
     hlp$env$button$Helppage <-
       tcltk::tkbutton(hlp$env$button, command = onHelppage, width = 25,
                       text = paste("Function help: \n   ", helppage))

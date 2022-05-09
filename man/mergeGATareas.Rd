@@ -30,7 +30,7 @@ gatvars <- list(
   boundary = "COUNTY",        # character variable of non-unique values
   popwt = FALSE,
   rigidbound = FALSE,
-  popvar = "Pop_tot"
+  popvar = "Pop"
 )
 
 mergevars1 <- list( # similar merge
@@ -49,11 +49,9 @@ mergevars2 <- list( # closest merge
 
 # merge areas based on your settings
 # this function identifies areas to merge; it does not merge them
-my_merge <-
-  defineGATmerge(
-    area = hftown, pop = hfpop,
-    gatvars = gatvars, mergevars = mergevars1
-  )
+my_merge <- defineGATmerge(
+    area = hftown, pop = hfpop, progressbar = FALSE,
+    gatvars = gatvars, mergevars = mergevars1)
 
 # need all rate options if rate to be calculated
 # for this example, rate is ignored

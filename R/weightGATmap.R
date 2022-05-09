@@ -3,26 +3,22 @@
 #' This function identifies the population weighted centroids for all areas
 #' in your original map.
 #'
-#' @param area     A spatial layer representing areas to be aggregated.
-#' @param pop      A spatial layer containing underlying population values.
+#' @param area     Spatial layer representing areas to be aggregated.
+#' @param pop      Spatial layer containing underlying population values.
 #' @param popvar   The base population variable.
-#' @param idvar    A variable of unique string values to identify the area
-#'                 layer's observations.
-#' @param crs      A user-defined non-lat/long projection, entered as a
-#'                 string. The default is NULL, in which case the function
-#'                 defines the projection.
+#' @param idvar    Variable of unique string values to identify the layer's
+#'                 observations.
+#' @param crs      User-defined non-lat/long projection, entered as a string.
+#'                 For the default, NULL, the function defines the projection.
 #'
 #' @examples
 #'
 #' if (interactive()) {
-#' mycentroids <-
-#'   weightGATmap(
-#'     area = hftown, pop = hfpop,
-#'     idvar = "ID", popvar = "Pop_tot")
+#' cen <- weightGATmap(area = hftown, pop = hfpop, idvar = "ID", popvar = "Pop")
 #' }
 #'
-#'
 #' @export
+
 weightGATmap <- function(area, pop, idvar, popvar, crs = NULL) {
   # temporary sf conversion ----
   area <- sf::st_as_sf(area)

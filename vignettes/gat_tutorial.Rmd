@@ -289,7 +289,7 @@ In this dialog, you can navigate to any shapefile on your computer or network.
 knitr::include_graphics("images/pick_pop.png")
 ```
 
-To follow the steps as shown, navigate to the "extdata" folder in your installation of "gatpkg", if it does not open automatically. Select the "hfblock" shapefile. 
+To follow the steps as shown, navigate to the "extdata" folder in your installation of "gatpkg", if it does not open automatically. Select the "hfblockgrp" shapefile. 
 
 Click "Open" to move to the next step or click "Cancel" to go back to the merge selection dialog. 
 

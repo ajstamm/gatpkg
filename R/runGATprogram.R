@@ -52,8 +52,8 @@
 runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                           adjacent = TRUE, minfirst = FALSE, closemap = FALSE) {
   #  1. start the GAT program ----
-  mysettings <- list(version = packageDescription("gatpkg")$Version,
-                     pkgdate = packageDescription("gatpkg")$Date,
+  mysettings <- list(version = utils::packageDescription("gatpkg")$Version,
+                     pkgdate = utils::packageDescription("gatpkg")$Date,
                      adjacent = adjacent, pwrepeat = pwrepeat,
                      minfirst = minfirst, limitdenom = limitdenom,
                      starttime = Sys.time(), quit = FALSE)
@@ -235,7 +235,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       tcltk::setTkProgressBar(tpb, value = step)
 
       # identify GAT polygon identifier variable
-      gatvars$myidvar <- identifyGATid(mapdata = temp$shp, step = step,
+      gatvars$myidvar <- identifyGATid(shp = temp$shp, step = step,
                                        backopt = !temp$flagconfirm)
 
       if (gatvars$myidvar == "back"){
@@ -273,7 +273,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       tempbound <- NULL
 
       while (is.null(tempbound)) {
-        tempbound <- identifyGATboundary(data = temp$shp, step = step,
+        tempbound <- identifyGATboundary(shp = temp$shp, step = step,
                                          boundary = gatvars$boundary,
                                          borders = gatvars$rigidbound,
                                          backopt = !temp$flagconfirm)
