@@ -159,7 +159,7 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
   }
 
   # fill in full list of names below; code will error otherwise
-  listitems <- names(area)
+  listitems <- names(data.frame(area))
   listitems <- listitems[!listitems %in% c("GATflag", "GATid")]
   myvars <- ""
   for (i in 1:(length(listitems)-1)) {
@@ -208,12 +208,10 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                "\n  Number of input areas:    ",
                format(gatvars$numrow, big.mark=",", scientific=FALSE),
                "\n  Number of output areas:   ",
-               format(nrow(aggvars$allpolydata), big.mark=",",
-                      scientific=FALSE),
+               format(nrow(aggvars$shp), big.mark=",", scientific=FALSE),
                # does not take into account aborted aggregations
                "\n  Number of aggregations:   ",
-               format(nrow(area) - nrow(aggvars$allpolydata),
-                      big.mark=",",
+               format(nrow(area) - nrow(aggvars$shp), big.mark=",",
                       scientific=FALSE),
                "\n  Number of excluded areas: ",
                format(exclist$flagsum, big.mark=",", scientific=FALSE))
@@ -233,9 +231,8 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                    mysettings$pwrepeat)
     }
   }
-  logtext <- c(logtext,
-               "\n  Prefer aggregating to areas below minimum value first?",
-               mysettings$minfirst)
+  logtext <- c(logtext, "\n  Prefer aggregating to areas",
+               "below minimum value first?", mysettings$minfirst)
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
   # Exclusion criteria ####
@@ -273,7 +270,7 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
   logtext <- c("\nPost-aggregation distribution:")
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
-  write.table(quantile(data.frame(aggvars$allpolydata)[, gatvars$aggregator1]),
+  write.table(quantile(data.frame(aggvars$shp)[, gatvars$aggregator1]),
               file = logfile, row.names = TRUE, col.names = FALSE,
               append = TRUE)
 
@@ -299,7 +296,7 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
   if (gatvars$aggregator1 != gatvars$aggregator2) {
     logtext <- c("\nPost-aggregation distribution:")
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
-    write.table(quantile(data.frame(aggvars$allpolydata)[, gatvars$aggregator2]),
+    write.table(quantile(data.frame(aggvars$shp)[, gatvars$aggregator2]),
                 file = logfile, row.names = TRUE, col.names = FALSE,
                 append = TRUE)
   }
@@ -327,23 +324,17 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                  "\n  Aggregated shapefile:             ",
                  paste0(filevars$fileout, ".shp"),
                  "\n    Variables created by GAT:",
-                 "\n        GATid:",
-                 "GAT-generated aggregated area identifier",
-                 "\n        GATx:",
-                 "longitude of the aggregated area", mergevars$centroid,
-                 "centroid",
-                 "\n        GATy:",
-                 "latitude of the aggregated area", mergevars$centroid,
-                 "centroid",
-                 "\n        GATcratio:",
-                 "compactness ratio, or the area of the polygon over the",
-                 "area of a circle with the same perimeter",
-                 "\n        GATnumIDs:",
-                 "number of original areas that were merged into each",
-                 "aggregated area",
-                 "\n        GATflag:",
-                 "flag of areas that were excluded from aggregation or",
-                 "generated warnings in the log",
+                 "\n        GATid:", "GAT-generated aggregated area identifier",
+                 "\n        GATx:", "longitude of the aggregated area",
+                 mergevars$centroid, "centroid",
+                 "\n        GATy:", "latitude of the aggregated area",
+                 mergevars$centroid, "centroid",
+                 "\n        GATcratio:", "compactness ratio, or the area of the",
+                 "polygon over the area of a circle with the same perimeter",
+                 "\n        GATnumIDs:", "number of original areas",
+                 "that were merged into each aggregated area",
+                 "\n        GATflag:", "flag of areas that were excluded",
+                "from aggregation or generated warnings in the log",
                  "\n            value = 0:", "no flag",
                  "\n            value = 1:",
                  "area excluded based on exclusion criteria",
@@ -361,17 +352,15 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
     }
     if (gatvars$popwt) {
       logtext <- c(logtext,
-                   "\n        GATpop:",
-                   "population of the aggregated area, from the population",
-                   "file")
+                   "\n        GATpop:", "population of the aggregated area,",
+                   "from the population file")
     }
     logtext <- c(logtext,
                  "\n  Original shapefile with crosswalk:",
                  paste0(filevars$fileout, "in.shp"),
                  "\n    Variables created by GAT:",
-                 "\n        GATflag:",
-                 "flag of areas that were excluded from aggregation or",
-                 "generated warnings in the log",
+                 "\n        GATflag:", "flag of areas that were excluded",
+                 "from aggregation or generated warnings in the log",
                  "\n            value = 0:", "no flag",
                  "\n            value = 1:",
                  "area excluded based on exclusion criteria",
