@@ -59,8 +59,7 @@ The values to use in the exclusion calculations.
 \examples{
 
 if (interactive()) {
-# define exclusion criteria
-inputGATexclusions(mapdata = hftown, step = 10)
+inputGATexclusions(shp = hftown)
 }
 
 }

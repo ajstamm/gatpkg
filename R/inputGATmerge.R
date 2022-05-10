@@ -54,7 +54,7 @@
 #'
 #' if (interactive()) {
 #' # make your selections and click "OK"
-#' inputGATmerge(mapdata = hftown, aggvar = "TOTAL_POP", aggvar2 = "W_TOT")
+#' inputGATmerge(shp = hftown, aggvar = "TOTAL_POP", aggvar2 = "W_TOT")
 #' }
 #'
 #' @export
@@ -64,6 +64,8 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
   # create variable lists ----
   nums <- checkGATvariabletypes(shp, type = "number")
   helppage = "inputGATmerge"
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
 
   idlist <- c()
   for (i in 1:length(nums)) {
@@ -91,55 +93,60 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
   } else simvar2 <- tcltk::tclVar(nums2[1])
 
   # draw the window ----
-  tt <- tcltk::tktoplevel(background = "azure2")
+  tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tkwm.title(tt, paste0("Step ", step, ": Merging method"))
 
-  tt$inst <- tcltk::tkframe(tt, width = 300, height = 5)
-  tt$inst$inst <- tcltk::tklabel(tt$inst, text = "Instructions", font = fonthead)
-  tt$inst$title <- tcltk::tklabel(tt$inst, text = "Merge options", font = fonthead)
+  tt$inst <- tcltk::tkframe(tt, width = 300, height = 5, background = bgcol)
+  tt$inst$inst <- tcltk::tklabel(tt$inst, text = "Instructions", font = fonthead,
+                                 background = bgcol)
+  tt$inst$title <- tcltk::tklabel(tt$inst, text = "Merge options", font = fonthead,
+                                  background = bgcol)
     # instructions layout ----
   tcltk::tkgrid(tt$inst$inst, sticky = "w", padx = 1, pady = 5)
-  tcltk::tkgrid(tcltk::tklabel(tt$inst, text = instruct, justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt$inst, text = instruct, justify = "left",
+                               background = bgcol),
                 columnspan = 4, sticky = "w")
   tcltk::tkgrid(tt$inst$title, sticky = "w", padx = 1, pady = 5)
   tcltk::tkgrid(tt$inst, columnspan = 2, pady = 5)
 
-  tt$opts <- tcltk::tkframe(tt, width = 300, height = 5)
+  tt$opts <- tcltk::tkframe(tt, width = 300, height = 5, background = bgcol)
 
   # option 1: "closest" ----
-  tt$opts$ts <- tcltk::tkframe(tt$opts)
-  tt$opts$ts$closebut <- tcltk::tkradiobutton(tt$opts$ts)
+  tt$opts$ts <- tcltk::tkframe(tt$opts, background = bgcol)
+  tt$opts$ts$closebut <- tcltk::tkradiobutton(tt$opts$ts, background = bgcol)
   tcltk::tkconfigure(tt$opts$ts$closebut, variable = rbValue, value = "closest")
   centroidlist <- c("geographic", "population-weighted")
   centroidval <- tcltk::tclVar(mergevars$centroid)
-  tt$opts$ts$closelab <- tcltk::tklabel(tt$opts$ts, text = "closest area by")
+  tt$opts$ts$closelab <- tcltk::tklabel(tt$opts$ts, text = "closest area by",
+                                        background = bgcol)
   tt$opts$ts$closelist <- tcltk::ttkcombobox(tt$opts$ts, values = centroidlist,
                                             textvariable = centroidval,
                                             state = "readonly")
     # option 1 layout ----
   tcltk::tkgrid(tt$opts$ts$closebut, tt$opts$ts$closelab,
                 tt$opts$ts$closelist,
-                tcltk::tklabel(tt$opts$ts, text = "centroid"),
-                sticky = "w")
+                tcltk::tklabel(tt$opts$ts, text = "centroid",
+                               background = bgcol), sticky = "w")
   tcltk::tkgrid.configure(tt$opts$ts$closebut, sticky = "w")
   tcltk::tkgrid.configure(tt$opts$ts, sticky = "w", padx = 20)
 
     # option 1 note ----
   note <- paste("         (note: selecting population weighting will open a",
                 "dialog to \n", "         select a population shapefile)")
-  tcltk::tkgrid(tcltk::tklabel(tt$opts, text = note, justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt$opts, text = note, justify = "left",
+                               background = bgcol),
                 columnspan = 2, sticky = "w", padx = 20)
 
   # option 2: "least" ----
-  tt$opts$tl <- tcltk::tkframe(tt$opts)
-  tt$opts$tl$rb2 <- tcltk::tkradiobutton(tt$opts$tl)
+  tt$opts$tl <- tcltk::tkframe(tt$opts, background = bgcol)
+  tt$opts$tl$rb2 <- tcltk::tkradiobutton(tt$opts$tl, background = bgcol)
   tcltk::tkconfigure(tt$opts$tl$rb2, variable = rbValue, value = "least")
   if (!aggvar2 %in% c(aggvar, "NONE")) {
     msg <- paste("area with least", aggvar, "and/or", aggvar2)
   } else {
     msg <- paste("area with least", aggvar)
   } # tt$env$lab2
-  tt$opts$tl$lab2 <- tcltk::tklabel(tt$opts$tl, text = msg)
+  tt$opts$tl$lab2 <- tcltk::tklabel(tt$opts$tl, text = msg, background = bgcol)
     # option 2 layout ----
   tcltk::tkgrid(tt$opts$tl$rb2, tt$opts$tl$lab2)
   tcltk::tkgrid.configure(tt$opts$tl$rb2, sticky = "w")
@@ -147,9 +154,9 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
   tcltk::tkgrid.configure(tt$opts$tl, sticky = "w", padx = 20)
 
   # option 3: "similar" ----
-  tt$opts$tr1 <- tcltk::tkframe(tt$opts)
-  tt$opts$tr2 <- tcltk::tkframe(tt$opts)
-  tt$opts$tr1$rb3 <- tcltk::tkradiobutton(tt$opts$tr1)
+  tt$opts$tr1 <- tcltk::tkframe(tt$opts, background = bgcol)
+  tt$opts$tr2 <- tcltk::tkframe(tt$opts, background = bgcol)
+  tt$opts$tr1$rb3 <- tcltk::tkradiobutton(tt$opts$tr1, background = bgcol)
   tcltk::tkconfigure(tt$opts$tr1$rb3, variable = rbValue, value = "similar")
 
   tt$opts$tr1$varnum <- tcltk::ttkcombobox(tt$opts$tr1, values = nums,
@@ -158,20 +165,23 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
   tt$opts$tr2$varden <- tcltk::ttkcombobox(tt$opts$tr2, values = nums2,
                                            textvariable = simvar2,
                                            state = "readonly")
-  tt$opts$tr1$msg <- tcltk::tklabel(tt$opts$tr1, text = "area with most similar ratio of ")
+  tt$opts$tr1$msg <- tcltk::tklabel(tt$opts$tr1, text = "area with most similar ratio of ",
+                                    background = bgcol)
     # option 3 layout ----
   tcltk::tkgrid(tt$opts$tr1$rb3, tt$opts$tr1$msg, tt$opts$tr1$varnum,
                 sticky = "w")
   tcltk::tkgrid.configure(tt$opts$tr1$rb3, sticky = "w")
 
-  tcltk::tkgrid(tcltk::tklabel(tt$opts$tr2, text = "        to", justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt$opts$tr2, text = "        to", justify = "left",
+                               background = bgcol),
                 tt$opts$tr2$varden, sticky = "w")
   tcltk::tkgrid(tt$opts$tr1, sticky = "w", padx = 20)
   tcltk::tkgrid(tt$opts$tr2, sticky = "w", padx = 20)
     # option 3 note ----
   note <- paste("       (note: the numerator and denominator must be different;",
                 "\n       variables with 0 or missings cannot be in the denominator)")
-  tcltk::tkgrid(tcltk::tklabel(tt$opts, text = note, justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt$opts, text = note, justify = "left",
+                               background = bgcol),
                 columnspan = 4, sticky = "w", padx = 20)
 
   tcltk::tkgrid(tt$opts, columnspan = 2, pady = 5)
@@ -214,21 +224,26 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
                         mergeopt1 = Rbval, centroid = "geographic"), envir=myenv)
   }
     # buttons ----
-  tt$tfbuts <- tcltk::tkframe(tt)
+  tt$tfbuts <- tcltk::tkframe(tt, background = bgcol)
   if (backopt) {
     tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back",
-                                         command = onBack, width = 12)
+                                         command = onBack, width = 12,
+                                         background = buttoncol)
     tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >", width = 12,
-                                       command = onOk, default = "active")
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   } else {
     tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm", width = 12,
-                                       command = onOk, default = "active")
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   }
 
   tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text="Help",
-                                       width = 12, command = onHelp)
+                                       width = 12, command = onHelp,
+                                       background = buttoncol)
   tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
-                                         width = 12, command = onCancel)
+                                         width = 12, command = onCancel,
+                                         background = buttoncol)
     # button layout ----
   if (backopt) tcltk::tkgrid(tt$tfbuts$BackBut, column = 1, row = 1, padx = 10)
   tcltk::tkgrid(tt$tfbuts$OkBut, column = 2, row = 1, padx = 2)

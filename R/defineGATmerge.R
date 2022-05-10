@@ -123,10 +123,13 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   row.names(area) <- data$GATid
 
   # draw progress bar ----
+  definenv <- new.env()
+
   if (progressbar) {
-    mb <- list(label = "Preparing merge files. Please wait.",
+    definenv$mb <- list(label = "Preparing merge files. Please wait.",
                title = "NYSDOH GAT: merging")
-    tmb <- tcltk::tkProgressBar(title = mb$title, label = mb$label, min = 0,
+    definenv$tmb <- tcltk::tkProgressBar(title = definenv$mb$title,
+                                         label = definenv$mb$label, min = 0,
                                 max = nrow(area), initial = 0, width = 400)
   }
 
@@ -134,15 +137,12 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   mapvars <- list(projection = sf::st_is_longlat(area))
 
   # set up centroids ----
-
-  # find a way to not hit memory limit for population weighting
   if (gatvars$popwt) {
-    # may need to assign ID as row names
     if (progressbar) {
-      mb$label = "Loading population file. This step may be slow."
-      tcltk::setTkProgressBar(tmb, value = 0, title = mb$title,
-                              label = mb$label)
+      definenv$mb$label = "Loading population file. This step may be slow."
+      tcltk::setTkProgressBar(definenv$tmb, value = 0, label = definenv$mb$label)
     }
+
     temp <- weightGATmap(area = area, pop = pop, popvar = gatvars$popvar,
                          idvar = "GATid")
     mapvars$centroids <- temp$centroids
@@ -234,12 +234,18 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       # incremental progress bar ----
       step <- nrow(area) - nrow(temp$tobemerged)
       if (progressbar) {
-        mb$label <- paste0("Merge ", aggvars$newregno + maxid, ": ",
+        definenv$mb$label <- paste0("Merge ", aggvars$newregno + maxid, ": ",
                            nrow(temp$tobemerged), " areas remaining.")
-        close(tmb)
-        tmb <- tcltk::tkProgressBar(title = mb$title, label = mb$label, min = 0,
-                                    max = nrow(area), initial = 0, width = 400)
-        tcltk::setTkProgressBar(tmb, value = step)
+        tryCatch(tcltk::setTkProgressBar(definenv$tmb, value = step,
+                                         label = definenv$mb$label),
+                 error = function(e) definenv$tmb <- NULL)
+        if (is.null(definenv$tmb)) {
+          definenv$tmb <- tcltk::tkProgressBar(title = definenv$mb$title,
+                                               label = definenv$mb$label,
+                                               initial = 0, min = 0,
+                                               max = nrow(area), width = 400)
+          tcltk::setTkProgressBar(definenv$tmb, value = step)
+        }
       }
 
       # identify the area to merge this loop ----
@@ -511,7 +517,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   }
   # close progress bar that monitors the aggregation ----
   if (progressbar) {
-    close(tmb)
+    close(definenv$tmb)
   }
   # return ----
   return(aggvars)

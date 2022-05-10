@@ -101,11 +101,7 @@ inputGATrate <- function(shp, defaultopt = 0,
     t <- table(x==0 | !is.finite(x))
     idlist[i] <- grepl("TRUE", paste(names(t), collapse = " "))
   }
-  if (limitdenom) {
-    gatlist2 <- gatlist1[idlist == FALSE] # denominator
-  } else {
-    gatlist2 <- gatlist1
-  }
+  gatlist2 <- if (limitdenom) gatlist1[idlist == FALSE] else gatlist1
   if (is.null(ratevars)) {
     ratevars <- list(ratename = "gat_rate",
                      numerator = gatlist1[1],
@@ -125,9 +121,11 @@ inputGATrate <- function(shp, defaultopt = 0,
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to boundary selection, click '< Back'. \n",
                 "  \u2022  To quit GAT, click 'Cancel'.")
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
 
 
-  # color vectors ####
+  # color vectors ----
   # sequential palettes are: Blues BuGn BuPu GnBu Greens Greys Oranges OrRd
   # PuBu PuBuGn PuRd Purples RdPu Reds YlGn YlGnBu YlOrBr YlOrRd
   colorlist <- c("Blues", "Blue-Green", "Blue-Purple", "Green-Blue", "Greens",
@@ -140,48 +138,53 @@ inputGATrate <- function(shp, defaultopt = 0,
               "RdPu", "Reds", "YlGn", "YlGnBu", "YlOrBr", "YlOrRd")
   fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
 
-  ######### create the window #########
-  tt <- tcltk::tktoplevel(width=450, height=250, background = "azure2")
+  # create the window ----
+  tt <- tcltk::tktoplevel(width=450, height=250, background = bgcol)
   title <- "Enter rate settings"
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
   tcltk::tkpack.propagate(tt, FALSE) ## Window won't resize
 
-  ######### code for instructions #########
+  # instructions ----
   instruct <- paste(
     " To calculate a rate, select your choices from the drop-down menus \n",
     "and enter your desired rate name and multiplier.")
-  tt$inst <- tcltk::tkframe(tt, width = 300, height = 5)
-  tt$inst$inst <- tcltk::tklabel(tt$inst, text = "Instructions", font = fonthead)
+  tt$inst <- tcltk::tkframe(tt, width = 300, height = 5, background = bgcol)
+  tt$inst$inst <- tcltk::tklabel(tt$inst, text = "Instructions", font = fonthead,
+                                 background = bgcol)
   tcltk::tkgrid(tt$inst$inst, sticky = "w", padx = 3)
-  tcltk::tkgrid(tcltk::tklabel(tt$inst, text = instruct, justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt$inst, text = instruct, justify = "left",
+                               background = bgcol),
                 sticky = "w", padx = 5)
   tcltk::tkgrid(tt$inst, columnspan = 2, pady = 2, sticky = "w")
 
-  ######### code for checkbox #########
-  tt$check <- tcltk::tkframe(tt, width = 400, height = 30)
-  tt$check$cb <- tcltk::tkcheckbutton(tt$check)
+  # checkbox ----
+  tt$check <- tcltk::tkframe(tt, width = 400, height = 30, background = bgcol)
+  tt$check$cb <- tcltk::tkcheckbutton(tt$check, background = bgcol)
   msg <- "Click here if you do NOT want to calculate a rate."
-  tt$check$cblabel <- tcltk::tklabel(tt$check, text = msg)
+  tt$check$cblabel <- tcltk::tklabel(tt$check, text = msg, background = bgcol)
   tt$check$cbvalue <- tcltk::tclVar("0")
   tcltk::tkconfigure(tt$check$cb, variable = tt$check$cbvalue)
   tcltk::tkgrid(tt$check$cb, tt$check$cblabel, sticky = "w", pady = 2, padx = 5)
 
-  tt$check$title <- tcltk::tklabel(tt$check, text = "Rate settings", font = fonthead)
+  tt$check$title <- tcltk::tklabel(tt$check, text = "Rate settings",
+                                   font = fonthead, background = bgcol)
   tcltk::tkgrid(tt$check$title, padx = 3, pady = 5, columnspan = 3, sticky = "w")
   tcltk::tkgrid(tt$check, sticky = "w")
 
-  ######### code for lists #########
-  tt$list <- tcltk::tkframe(tt, width = 420, height = 110)
+  # lists ----
+  tt$list <- tcltk::tkframe(tt, width = 420, height = 110, background = bgcol)
   tt$list$numvar <- tcltk::tclVar(ratevars$numerator)
   tt$list$denvar <- tcltk::tclVar(ratevars$denominator)
   tt$list$colvar <- tcltk::tclVar(ratevars$colorname)
 
-  tt$list$numlbl = tcltk::tklabel(tt$list, text = "Select the numerator:")
+  tt$list$numlbl = tcltk::tklabel(tt$list, text = "Select the numerator:",
+                                  background = bgcol)
   tt$list$tnum <- tcltk::ttkcombobox(tt$list, values = gatlist1,
                                      state = "readonly",
                                      textvariable = tt$list$numvar)
   tcltk::tkgrid(tt$list$numlbl, tt$list$tnum, sticky = "w", pady = 2)
-  tt$list$denlbl = tcltk::tklabel(tt$list, text = "Select the denominator:")
+  tt$list$denlbl = tcltk::tklabel(tt$list, text = "Select the denominator:",
+                                  background = bgcol)
   tt$list$tden <- tcltk::ttkcombobox(tt$list, values = gatlist2,
                                      state = "readonly",
                                      textvariable = tt$list$denvar)
@@ -192,26 +195,29 @@ inputGATrate <- function(shp, defaultopt = 0,
     note <- paste(note, "\n          ",
                   "Variables with 0 or missings cannot be in the denominator.")
   }
-  tcltk::tkgrid(tcltk::tklabel(tt$list, text = note, justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt$list, text = note, justify = "left",
+                               background = bgcol),
                 columnspan = 2, sticky = "w", padx = 5)
 
-  tt$list$collbl = tcltk::tklabel(tt$list, text = "Select the map colors:")
+  tt$list$collbl = tcltk::tklabel(tt$list, text = "Select the map colors:",
+                                  background = bgcol)
   tt$list$tcol <- tcltk::ttkcombobox(tt$list, values = colorlist,
                                      state = "readonly",
                                      textvariable = tt$list$colvar)
   tcltk::tkgrid(tt$list$collbl, tt$list$tcol, sticky = "w", pady = 2)
 
-    # code for textboxes ####
+  # text boxes ----
   txt <- "Enter the rate name: \n (ex. cancer_incidence)"
-  tt$list$namelbl <- tcltk::tklabel(tt$list, text = txt, justify = "left")
+  tt$list$namelbl <- tcltk::tklabel(tt$list, text = txt, justify = "left",
+                                    background = bgcol)
   tt$list$namevar <- tcltk::tclVar(ratevars$ratename)
-  tt$list$nametxt <- tcltk::tkentry(tt$list, width = "20",
-                                    textvariable = tt$list$namevar,
-                                    background = "white")
+  tt$list$nametxt <- tcltk::tkentry(tt$list, width = "20", background = "white",
+                                    textvariable = tt$list$namevar)
   tcltk::tkgrid(tt$list$namelbl, tt$list$nametxt, sticky = "w",
                 rowspan = 2, pady = 2)
   txt <- "Enter the rate multiplier: \n (ex. per 10,000 people)"
-  tt$list$multlbl <- tcltk::tklabel(tt$list, text = txt, justify = "left")
+  tt$list$multlbl <- tcltk::tklabel(tt$list, text = txt, justify = "left",
+                                    background = bgcol)
   tt$list$multvar <- tcltk::tclVar(ratevars$multiplier)
   tt$list$multtxt <- tcltk::tkentry(tt$list, width = "20",
                                     textvariable = tt$list$multvar,
@@ -221,10 +227,8 @@ inputGATrate <- function(shp, defaultopt = 0,
 
   tcltk::tkgrid(tt$list, sticky = "w", padx = 10)
 
-  ######### code for buttons #########
+  # button functions ----
   myenv <- new.env()
-  tt$tfbuts <- tcltk::tkframe(tt, width = 400, height = 40)
-    # functions ####
   onOk <- function() {
     cbVal <- as.character(tcltk::tclvalue(tt$check$cbvalue))
     numerator <- tcltk::tclvalue(tt$list$numvar)
@@ -268,22 +272,25 @@ inputGATrate <- function(shp, defaultopt = 0,
     showGAThelp(help = hlp, helptitle = "rate settings",
                 helppage = helppage, step = step)
   }
-    # layout ####
+  # button layout ----
+  tt$tfbuts <- tcltk::tkframe(tt, width = 400, height = 40, background = bgcol)
+
   if (backopt) {
-    tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back",
-                                           command = onBack, width = 12)
-    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back", width = 12,
+                                         command = onBack, background = buttoncol)
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   } else {
-    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   }
   tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
-                                           command = onCancel, width = 12)
-  tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text = "Help",
-                                         command = onHelp, width = 12)
+                                         command = onCancel, width = 12,
+                                         background = buttoncol)
+  tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text = "Help", width = 12,
+                                       command = onHelp, background = buttoncol)
   if (backopt) {
     tcltk::tkgrid(tt$tfbuts$BackBut, column = 1, row = 11, padx = 5,
                   pady = 5, padx = c(5, 0), sticky = "e")

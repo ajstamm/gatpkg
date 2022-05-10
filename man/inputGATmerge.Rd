@@ -76,7 +76,7 @@ list will be blank.
 
 if (interactive()) {
 # make your selections and click "OK"
-inputGATmerge(mapdata = hftown, aggvar = "TOTAL_POP", aggvar2 = "W_TOT")
+inputGATmerge(shp = hftown, aggvar = "TOTAL_POP", aggvar2 = "W_TOT")
 }
 
 }

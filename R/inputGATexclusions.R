@@ -49,8 +49,7 @@
 #' @examples
 #'
 #' if (interactive()) {
-#' # define exclusion criteria
-#' inputGATexclusions(mapdata = hftown, step = 10)
+#' inputGATexclusions(shp = hftown)
 #' }
 #'
 #' @export
@@ -63,15 +62,17 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to aggregation variable selection,",
                 "click '< Back'. \n", "  \u2022  To quit GAT, click 'Cancel'.")
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
 
   mylist <- checkGATvariabletypes(shp, type = "number")
   mylist <- c("NONE", mylist)
   mathlist <- c("equals", "less than", "greater than")
 
-  instruct <- paste("   1. Select each variable on which you would like to exclude. \n",
+  instruct <- paste("    1. Select each variable on which you would like to exclude. \n",
                     "   2. Select the direction of each exclusion. \n",
                     "   3. Enter a numeric value for each exclusion. \n",
-                    "\nTo ignore an option, select 'NONE' for the variable name. \n")
+                    "\n To ignore an option, select 'NONE' for the variable name. \n")
   fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
   if (is.null(exclist)) {
     myvar1 <- tcltk::tclVar("NONE")
@@ -108,20 +109,20 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
     myvalue3 <- tcltk::tclVar(exclist$val3)
   }
 
-  ## draw window ####
-
-  tt <- tcltk::tktoplevel(background = "azure2")
+  ## draw window ----
+  tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tkwm.title(tt, paste0("Step ", step, ": Exclusions"))
 
-  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead)
+  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead,
+                              background = bgcol)
   tcltk::tkgrid(tt$insttl, sticky = "w", padx = 5, pady = 5)
-  tcltk::tkgrid(tcltk::tklabel(tt, text = instruct, justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt, text = instruct, justify = "left",
+                               background = bgcol),
                 columnspan = 4, sticky = "w")
 
-  tt$env$tr <- tcltk::tkframe(tt)
+  tt$env$tr <- tcltk::tkframe(tt, background = bgcol)
 
-  ## variable lists ####
-
+  ## variable lists ----
   tt$env$tr$Varlist1 <- tcltk::ttkcombobox(tt$env$tr, values = mylist,
                                            textvariable = myvar1,
                                            state = "readonly")
@@ -139,8 +140,7 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
   tcltk::tkgrid(tt$env$tr$Varlist3, row = 3, column = 1, sticky = "w",
                 padx = 5, pady = 5)
 
-  ## math lists ####
-
+  ## math lists ----
   tt$env$tr$Mathlist1 <- tcltk::ttkcombobox(tt$env$tr, values = mathlist,
                                             textvariable = mymath1,
                                             state = "readonly")
@@ -158,8 +158,7 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
   tcltk::tkgrid(tt$env$tr$Mathlist3, row = 3, column = 2, sticky = "w",
                 padx = 5, pady = 5)
 
-  ## value boxes ####
-
+  ## value boxes ----
   tt$env$tr$Value1 <- tcltk::tkentry(tt$env$tr, width = "20",
                                      textvariable = myvalue1)
   tt$env$tr$Value2 <- tcltk::tkentry(tt$env$tr, width = "20",
@@ -173,15 +172,10 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
                 padx = 5, pady = 5)
   tcltk::tkgrid(tt$env$tr$Value3, row = 3, column = 3, sticky = "w",
                 padx = 5, pady = 5)
-
-  ## define buttons ####
-
-
   tcltk::tkgrid(tt$env$tr, columnspan = 3)
-  myenv <- new.env()
 
-  # on ok, create the following list:
-  # var1, var2, var3, math1, math2, math3, val1, val2, val3
+  ## define buttons ----
+  myenv <- new.env()
 
   onOk <- function() {
     var1 <- tcltk::tclvalue(myvar1)
@@ -235,26 +229,26 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
                 helppage = helppage, step = step)
   }
 
-  ## draw buttons ####
-
-  tt$env$tf <- tcltk::tkframe(tt)
+  ## draw buttons ----
+  tt$env$tf <- tcltk::tkframe(tt, background = bgcol)
   if (backopt) {
-    tt$env$tf$BackBut <- tcltk::tkbutton(tt$env$tf, text = "< Back",
-                                           command = onBack, width = 12)
-    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$env$tf$BackBut <- tcltk::tkbutton(tt$env$tf, text = "< Back", width = 12,
+                                         command = onBack,
+                                         background = buttoncol)
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   } else {
-    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   }
-
   tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help",
-                                         width = 12, command = onHelp)
+                                       width = 12, command = onHelp,
+                                       background = buttoncol)
   tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = "Cancel GAT",
-                                           width = 12, command = onCancel)
-
+                                         width = 12, command = onCancel,
+                                         background = buttoncol)
   if (backopt) {
     tcltk::tkgrid(tt$env$tf$BackBut, column = 1, row = 1, padx = 10)
   }
@@ -263,7 +257,7 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
   tcltk::tkgrid(tt$env$tf$HelpBut, column = 4, row = 1, padx = 10)
   tcltk::tkgrid(tt$env$tf, pady = 5)
 
-  ## return selections ####
+  ## return selections ----
   tcltk::tkwait.window(tt)
 
   return(myenv$exclist)

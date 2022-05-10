@@ -36,17 +36,18 @@
 #'
 #' @export
 
-# can the help options be moved to ... ?
-
 inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
                             help = "There is no help.",
                             helptitle = "inputGATmessage",
                             helppage = "inputGATmessage", step = 0,
                             buttonopt = "Cancel GAT", backopt = TRUE) {
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
 
-  tt <- tcltk::tktoplevel(background = "azure2")
+  tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
-  tt$env$tm <- tcltk::tklabel(tt, text = msg, justify = "left")
+  tt$env$tm <- tcltk::tklabel(tt, text = msg, justify = "left",
+                              background = bgcol)
   tcltk::tkgrid(tt$env$tm, sticky = "w", padx = 5, pady = 5)
 
   myenv <- new.env()
@@ -67,26 +68,28 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
     tcltk::tkdestroy(tt)
     assign("myvalue", "back", envir=myenv)
   }
-  tt$env$tf <- tcltk::tkframe(tt)
+  tt$env$tf <- tcltk::tkframe(tt, background = bgcol)
 
   if (backopt) {
     tt$env$tf$BackBut <- tcltk::tkbutton(tt$env$tf, text = "< Back",
-                                         command = onBack, width = 12)
+                                         command = onBack, width = 12,
+                                         background = buttoncol)
     tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Next >", width = 12,
-                                       command = onOk, default = "active")
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   } else {
     tt$env$tf$OkBut <- tcltk::tkbutton(tt$env$tf, text = "Confirm", width = 12,
-                                       command = onOk, default = "active")
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   }
 
   tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,
-                                       command = onHelp)
+                                       command = onHelp,
+                                       background = buttoncol)
   tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = buttonopt,
-                                         width = 12, command = onCancel)
+                                         width = 12, command = onCancel,
+                                         background = buttoncol)
 
-  # draw the frame, then add buttons or add buttons first; both work.
-  # frame creates a bar of buttons on the bottom instead of one button under
-  # the query and the rest off to the right.
   tcltk::tkgrid(tt$env$tf, pady = 5)
   if (backopt) {
     tcltk::tkgrid(tt$env$tf$BackBut, column = 1, row = 1, pady = 5, padx = c(5, 0))

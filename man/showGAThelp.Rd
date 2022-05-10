@@ -32,15 +32,7 @@ assistance in using GAT, including instructions and links to help pages.
 \examples{
 
 if (interactive()) {
-# create the help message
-hlp <- paste0("Instructions: \n",
-              "  \u2022  To continue,  click 'Next >'. \n",
-              "  \u2022  To return to the last option, click '< Back'. \n",
-              "  \u2022  To quit GAT, click 'Cancel'.")
-
-# create the dialog box
-showGAThelp(help = hlp, helppage = "showGAThelp", step = 0,
-            helptitle = "GAT help dialog")
+showGAThelp(helptitle = "GAT help dialog")
 }
 
 }

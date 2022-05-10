@@ -72,19 +72,11 @@ includes options to add a check box or text box if desired.
 \examples{
 
 if (interactive()) {
-hlp <- paste0("To continue, select an option and click 'Next >',",
-              "\nto return to the previous step, click '< Back',",
-              "\nand to quit the program, click 'Cancel'.")
-
 inputGATvariable(
-  title = "My favorite letter",
+  title = "My favorite letter", checkbox = TRUE, valuebox = TRUE,
   instruction = "Please select your favorite letter.",
-  help = hlp, mylist = letters,
   checkopt = "Check this box \nif you love all letters.",
-  valueopt = "Enter the number of letters \nyou love.",
-  checkbox = TRUE, valuebox = TRUE,
-  helppage = "inputGATvariable",
-  value = "f"
+  valueopt = "Enter the number of letters \nyou love."
 )
 }
 

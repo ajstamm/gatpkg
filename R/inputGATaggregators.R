@@ -54,7 +54,6 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to aggregation variable selection,",
                 "click '< Back'. \n", "  \u2022  To quit GAT, click 'Cancel'.")
-
   instruct <- paste(" 1. Select each variable you would like to aggregate. \n",
                     "     To ignore the second aggregation variable, select",
                     "'NONE' \n      for its variable name. \n",
@@ -65,6 +64,8 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
                     "is not \n     required. \n \n",
                     "Note: The first variable and its minimum aggregation value",
                     "are required. \n")
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
 
   fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
   mylist1 <- checkGATvariabletypes(shp, type = "number")
@@ -78,28 +79,30 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
   maxval2 <- tcltk::tclVar(max2)
 
   ## draw window ----
-
-  tt <- tcltk::tktoplevel(background = "azure2")
+  tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tkwm.title(tt, paste0("Step ", step, ": Aggregation Variables"))
-  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead)
+  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead,
+                              background = bgcol)
   tcltk::tkgrid(tt$insttl, sticky = "w", padx = 5, pady = 5)
-  tcltk::tkgrid(tcltk::tklabel(tt, text = instruct, justify = "left"),
+  tcltk::tkgrid(tcltk::tklabel(tt, text = instruct, justify = "left",
+                               background = bgcol),
                 columnspan = 4, sticky = "w")
 
-  tt$tr <- tcltk::tkframe(tt)
+  tt$tr <- tcltk::tkframe(tt, background = bgcol)
 
   ## table headings ----
-
-  tt$tr$varlabel = tcltk::tklabel(tt$tr, text = " Variable", font = fonthead)
-  tt$tr$minlabel = tcltk::tklabel(tt$tr, text = " Minimum value", font = fonthead)
-  tt$tr$maxlabel = tcltk::tklabel(tt$tr, text = " Maximum value", font = fonthead)
+  tt$tr$varlabel = tcltk::tklabel(tt$tr, text = " Variable", font = fonthead,
+                                  background = bgcol)
+  tt$tr$minlabel = tcltk::tklabel(tt$tr, text = " Minimum value", font = fonthead,
+                                  background = bgcol)
+  tt$tr$maxlabel = tcltk::tklabel(tt$tr, text = " Maximum value", font = fonthead,
+                                  background = bgcol)
   tcltk::tkgrid(tt$tr$varlabel, row = 1, column = 1, sticky = "w")
   tcltk::tkgrid(tt$tr$minlabel, row = 1, column = 2, sticky = "w")
   tcltk::tkgrid(tt$tr$maxlabel, row = 1, column = 3, sticky = "w")
 
 
   ## variable lists ----
-
   tt$tr$Varlist1 <- tcltk::ttkcombobox(tt$tr,  values = mylist1,
                     textvariable = myvar1, state = "readonly")
   tt$tr$Varlist2 <- tcltk::ttkcombobox(tt$tr, values = mylist2,
@@ -122,7 +125,6 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
                 padx = 5, pady = 5)
 
   ## maximum values ----
-
   tt$tr$maxval1 <- tcltk::tkentry(tt$tr, width = "20", textvariable = maxval1,
                                   background = "white")
   tt$tr$maxval2 <- tcltk::tkentry(tt$tr, width = "20", textvariable = maxval2,
@@ -176,21 +178,26 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
 
   ## draw buttons ----
 
-  tt$tf <- tcltk::tkframe(tt)
+  tt$tf <- tcltk::tkframe(tt, background = bgcol)
   if (backopt) {
     tt$tf$BackBut <- tcltk::tkbutton(tt$tf, text = "< Back",
-                                     command = onBack, width = 12)
+                                     command = onBack, width = 12,
+                                     background = buttoncol)
     tt$tf$OkBut <- tcltk::tkbutton(tt$tf, text = "Next >", command = onOk,
-                                   width = 12, default = "active")
+                                   width = 12, default = "active",
+                                   background = buttoncol)
   } else {
     tt$tf$OkBut <- tcltk::tkbutton(tt$tf, text = "Confirm", command = onOk,
-                                   width = 12, default = "active")
+                                   width = 12, default = "active",
+                                   background = buttoncol)
   }
 
   tt$tf$HelpBut <- tcltk::tkbutton(tt$tf, text="Help", width = 12,
-                                   command = onHelp)
+                                   command = onHelp,
+                                   background = buttoncol)
   tt$tf$CancelBut <- tcltk::tkbutton(tt$tf, text = "Cancel GAT",
-                                     width = 12, command = onCancel)
+                                     width = 12, command = onCancel,
+                                     background = buttoncol)
 
   if (backopt) tcltk::tkgrid(tt$tf$BackBut, column = 1, row = 1, padx = 10)
   tcltk::tkgrid(tt$tf$OkBut, column = 2, row = 1, padx = 10)

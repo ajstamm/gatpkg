@@ -21,11 +21,13 @@ knitr::opts_chunk$set(
 * Added advanced options to the settings file and log.
 * Converted all uses of rgeos, rgdal, lwgeom, foreign, and sp to sf and removed those dependencies. 
 * Converted all uses of tcltk2 to tcltk and removed dependency on tcltk2 as it was crashing RStudio with R4.2.0.
+* Revised and standardized all pop-up fonts and colors except the pre-defined progress bar and file-selection window.
 * Revised writeGATkml() to use sf and removed dependency on plotKML.
 * Revised population weighting to read in the population file only once.
 * Removed checkGATshapefilesize() as support for memory.limit() is ending. 
-* Added 'GATid' variable to clone selected merge variable instead of overwriting it.
-* Fixed a bug that incorrectly assigned GATid for the crosswalk and messed up the final aggregated areas.
+* Added a 'GATid' variable to clone the selected merge variable instead of overwriting it.
+* Fixed the bug that incorrectly assigned GATid for the crosswalk and messed up the final aggregated areas.
+* Fixed the bug that caused GAT to crash if the user prematurely closed the progress bar.
 
 
 ## GAT v1.61.1 (January 4, 2022)
