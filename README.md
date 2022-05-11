@@ -2,6 +2,8 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/sword)](https://CRAN.R-project.org/package=sword)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
+**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2, so if you install the master version of GAT on R 4.2.0, GAT may break. Please either use R 4.1.x or install the Dev version of GAT using `devtools::install_github("ajstamm/gatpkg@Dev", dependencies = TRUE)`.**
+
 
 # Geographic Aggregation Tool (GAT)
 
