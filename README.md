@@ -3,7 +3,7 @@
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
 
-**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2. We are revising GAT to remove this dependency, so if you install the dev version of GAT now (or the master version on R 4.2.0), GAT may break.**
+**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2. If you install the master version of GAT on R 4.2.0, GAT may break.**
 
 
 # Geographic Aggregation Tool (GAT)
@@ -24,7 +24,7 @@ Run the code below in R to install GAT directly from GitHub.
 install.packages("devtools")
 # install the development version of GAT from Github with all 
 # required packages from CRAN
-devtools::install_github("ajstamm/gatpkg", dependencies = TRUE)
+devtools::install_github("ajstamm/gatpkg@Dev", dependencies = TRUE)
 ```
 
 If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages on CRAN.
