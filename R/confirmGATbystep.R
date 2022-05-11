@@ -274,7 +274,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   tcltk::tkgrid(tt$ins, sticky = "w", padx = 5, pady = 5)
 
   ## request step selection ----
-  tt$stepdir <- tcltk::tkframe(tt)
+  tt$stepdir <- tcltk::tkframe(tt, background = bgcol)
   stepvar <- tcltk::tclVar("None")
   tt$stepdir$stepq <- tcltk::tklabel(tt$stepdir,
                       text = "Select the setting you wish to modify:",
