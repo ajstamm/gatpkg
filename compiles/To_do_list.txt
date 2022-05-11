@@ -2,26 +2,28 @@
 | To do list |
 +------------+
 
+Changes for V3?
+* Add ability to use point level population-weighting data, and possibly raster
+
+To keep in mind:
+* if I want to zip shapefiles, use the code `unz()` to unzip and read them
+  * this would bypass the "2022 DBF is an executable" bug
+* Where I alter par settings for maps, dev.off reverts to default - is this desired?
+* tibble causes trouble - imported random function as temporary fix
+* Create function to handle progress bar drawing? Lots of repeated code.
+* Also, buttons at bottoms of dialogs repeated - shift to function?
+
 Examples to create:
 * combineGATcrosswalks
 
 Fixes and improvements to address:
-* remove `StagedInstall: no` from the end of DESCRIPTION - done.
 * Streamline warnings
 * Add any "old_*" variables created/renamed to the log
-* Where I alter par settings for maps, I revert them to default, but I should revert to user settings - actually, dev.off reverts to default
-* Add code to re-draw the progress bar if the user closes it
-  * (me, repeatedly and accidentally, in testing) - still tinkering
-* Add ability to use point level population-weighting data, and possibly raster (v 3?)
 * For all vignettes and help files, check image alt/descriptions
-  * tutorial completed through end of user input section, including redoing most user input screenshots (except help, quit, errors)
-  * revise population weighting and inputGATvariable screenshots (ID and boundary?)
-* Opening any help dialog changes all background colors to white - define a color?
+  * tutorial completed through end of user input section (except help, quit, errors)
+  * redo all user input screenshots
 * convert spdep and maptools to sf? note: spdep works with sf
-* shift some imports to suggests
-  * tibble is giving me trouble no matter where I put it
-* if I want to zip the shapefiles, use the code `unz()` to unzip and read them
-  * this would bypass the "2022 DBF is an executable" bug
+
 
 Completed - test
 	* runGATprogram (rgdal, sp, maptools)
