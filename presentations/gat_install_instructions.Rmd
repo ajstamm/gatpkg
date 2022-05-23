@@ -4,6 +4,7 @@ author: "Abigail Stamm, New York State Department of Health"
 output: 
   pdf_document:
     toc: TRUE
+    keep_tex: TRUE
 header-includes:
   - \usepackage{fancyhdr}
   - \pagestyle{fancy}
@@ -26,30 +27,25 @@ The Geographic Aggregation Tool (GAT) was created to simplify the process of geo
 
 # Installing R
 
-You can download R at [https://www.r-project.org/](https://www.r-project.org/). Click on *download R* and select any site on the list. From there, choose your platform, then click on *install R for the first time*. Next, click on the download link to download R. If you need help installing R, click on *Installation and other instructions*.
+You can download R at [https://www.r-project.org/](https://www.r-project.org/). Click on *download R* and select any site on the list. From there, choose your platform, then click on *base*. Next, click on the download link to download R. 
 
 # Installing RStudio (optional)
 
-After you have installed R, you can install RStudio, which is a wrapper that makes R more user-friendly and adds functionality, such as support for Markdown and projects, and dedicated windows for environments, tables, and images. RStudio **is not** required to run GAT.
+After you have installed R, you can install RStudio, which is a wrapper that makes R more user-friendly and adds functionality, such as support for Markdown and Shiny and dedicated tabs for environments, tables, and images. RStudio **is not** required to run GAT.
 
 You can download RStudio from [https://rstudio.com/products/rstudio/download/](https://rstudio.com/products/rstudio/download/). Under "RStudio Desktop Open Source License Free", click *Download*. Then click on the button, *Download RStudio for Windows*. After you have downloaded the file, install it as you would any other software program.
 
 # Installing GAT
 
-GAT was compiled in R version 3.6 using RStudio and devtools. GAT has also been tested in R versions 3.4 and 3.5. R version 3.4 or greater is needed to install GAT.
+GAT was compiled in R version 4.2 using RStudio and devtools. GAT has also been tested in R versions 4.0 and 4.1. R version 3.5 or greater is needed to install GAT.
 
 Before installing GAT, install the necessary packages (or check that you have them installed). One way to do this is run the following code in your R console:
 
 ```{r, eval = FALSE}
-# necessary packages
-libs <- c("tcltk2", "rgeos", "maptools", "RColorBrewer", "classInt", "Hmisc",
-          "foreign", "spdep", "plotKML", "sf", "sp", "lwgeom", "tibble",
-          "graphics", "grDevices", "methods", "stats", "tcltk", "utils", 
-          "rgdal")
-# check if installed
+libs <- c("classInt", "graphics", "grDevices", "methods", "raster",
+          "RColorBrewer", "sf", "spdep", "stats", "tcltk", "tibble", "utils")
 req <- unlist(lapply(libs, require, character.only = TRUE))
 req <- libs[!req]
-# install if not installed
 if (length(req) > 0) {
   for (i in 1:length(req)) {
     install.packages(req[i])
@@ -59,18 +55,12 @@ if (length(req) > 0) {
 rm(req, libs)
 ```
 
-Also check whether you have the XML package installed. If you do not or are not sure, this code will install it in Windows with R version 3.6.x:
-
-```{r, eval = FALSE}
-pkg_link = "https://cran.r-project.org/bin/windows/contrib/4.0/XML_3.99-0.5.zip"
-install.packages(pkg_link, type = "binary", repos = NULL)
-```
 
 Save the zip file for GAT. It will have a name like "gatpkg_\<ver>.tar.gz" where \<ver> will be the package version number. 
 
-If you prefer to install GAT through base R (instead of RStudio), click on "Packages" > "Install package(s) from local files...". Navigate to the gatpkg file and click "Open". Wait a few minutes while GAT installs.
+In base R (not RStudio), click on "Packages" > "Install package(s) from local files...". Navigate to the gatpkg file and click "Open". Wait a few minutes while GAT installs.
 
-If you prefer to install GAT through RStudio, click on "Tools" > "Install Packages...". In the "Install from:" drop-down, select "Package Archive File". A dialog should open immediately to select the "gatpkg_\<ver>.tar.gz" file, but if it does not, click the "Browse..." button. Navigate to the gatpkg file and click "Install". Wait a few minutes while GAT installs.
+If you prefer to install GAT through RStudio, click on "Tools" > "Install Packages...". In the "Install from:" drop-down, select "Package Archive File". A dialog should open immediately to select the "gatpkg_\<ver>.tar.gz" file, but if it does not, click the "Browse..." button. Select the file. Click "Install". Wait a few minutes while GAT installs.
 
 # Using GAT
 
@@ -83,16 +73,7 @@ browseVignettes("gatpkg")
 
 Then click on the tutorial vignette HTML link. This will walk you through many of the options and settings available in GAT using shapefiles embedded in `gatpkg`.
 
-The other vignettes embedded in the package include:
-
-* **Technical Notes**: How each merge type works, compactness ratio, thinning
-* **Setting up GAT**: A shorter version of this document
-* **Shapefile specifications**: Requirements for a shapefile you plan to process with GAT
-* **Evaluating results**: Ways to identify and address issues with your aggregated areas
-* **Troubleshooting**: How to handle issues that arise in GAT
-* **Change Log**: Changes across GAT versions, notably from the 2015 script to the 2020 package
-
-To run GAT with default settings, you only need one line of code, 
+To run the default version of GAT, you only need one line of code, 
 
 ```{r, eval = FALSE}
 gatpkg::runGATprogram()
