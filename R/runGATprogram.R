@@ -47,7 +47,7 @@
 #' @export
 
 # limitdenom = FALSE; pwrepeat = FALSE; settings = NULL
-# adjacent = TRUE; minfirst = FALSE; closemap = FALSE
+# adjacent = TRUE; minfirst = TRUE; closemap = TRUE
 
 runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                           adjacent = TRUE, minfirst = FALSE, closemap = FALSE) {
@@ -325,7 +325,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
@@ -354,7 +355,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
           } else {
             temp$error <- TRUE
             agglist <- list(var1 = "")
-
           }
         } else if (length(agglist$var1) == 0) {
           temp$error <- TRUE
@@ -384,25 +384,15 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
           step <- step + 1
         }
       }
-      if (agglist$maxval1 == sum(data.frame(temp$shp)[, agglist$var1],
-                                 na.rm = TRUE)) {
-        gatvars$ismax1 <- TRUE
-      } else {
-        gatvars$ismax1 <- FALSE
-      }
+      gatvars$ismax1 <- if (agglist$maxval1 ==
+                            sum(data.frame(temp$shp)[, agglist$var1],
+                                na.rm = TRUE)) TRUE else FALSE
       if (!agglist$var2 == "NONE") {
-        if (agglist$maxval2 == sum(data.frame(temp$shp)[, agglist$var2],
-                                   na.rm = TRUE)) {
-          gatvars$ismax2 <- TRUE
-        } else {
-          gatvars$ismax2 <- FALSE
-        }
-        if (agglist$minval2 == min(data.frame(temp$shp)[, agglist$var2],
-                                   na.rm = TRUE)) {
-          gatvars$ismin2 <- TRUE
-        } else {
-          gatvars$ismin2 <- FALSE
-        }
+        gatvars$ismax2 <- if (agglist$maxval2 ==
+                              sum(data.frame(temp$shp)[, agglist$var2],
+                                  na.rm = TRUE)) TRUE else FALSE
+        gatvars$ismin2 <- if (agglist$minval2 == min(data.frame(temp$shp)[, agglist$var2],
+                                   na.rm = TRUE)) TRUE else FALSE
       }
 
       rm(agglist)
@@ -415,7 +405,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
@@ -1047,7 +1038,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
              error = function(e) gatenv$tpb <- NULL)
     if (is.null(gatenv$tpb)) {
       gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                         label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                         label = gatenv$pb$label, min = 0,
+                                         max = 26, width = 400)
       tcltk::setTkProgressBar(gatenv$tpb, value = step)
     }
 
@@ -1055,6 +1047,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
 
     # defineGATmerge failed :(
     # check geographic weighting and similar ratio options
+    # area = myshps$original; pop = myshps$pop
     aggvars <- defineGATmerge(area = myshps$original, gatvars = gatvars,
                               mergevars = mergevars, pop = myshps$pop,
                               pwrepeat = pwrepeat, adjacent = adjacent,
@@ -1425,7 +1418,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                     filevars$fileout, "plots.pdf \n  ",
                     filevars$fileout, ".log \n  ",
                     filevars$fileout, "settings.Rdata \n  ")
-      if (gatvars$savekml==TRUE) msg <- paste0(msg, filevars$fileout, ".kml \n")
+      if (gatvars$savekml==TRUE) {
+        msg <- paste0(msg,
+                      filevars$fileout, ".kml \n",
+                      filevars$fileout, ".kmz \n")
+      }
       msg <- paste0(msg, "\nSee the log file for more details.")
 
       message(msg)

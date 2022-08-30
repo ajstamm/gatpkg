@@ -28,7 +28,7 @@ source("R/inputGATmerge.R")
 source("R/inputGATrate.R")
   # unrevised; needed to test runGATprogram
 source("R/locateGATshapefile.R")
-source("R/checkGATshapefilesize.R")
+# source("R/checkGATshapefilesize.R") # removed
 source("R/inputGATvariable.R")
 source("R/inputGATaggregators.R")
 source("R/inputGATexclusions.R")

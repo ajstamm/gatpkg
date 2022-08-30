@@ -11,7 +11,7 @@
 #' # creates the kml file in the project root directory
 #' if (interactive()) {
 #' writeGATkml(myshp = hftown, filename = "my_kml_example",
-#'             filepath = getwd(), myidvar = "ID")
+#'             filepath = getwd(), myidvar = "TOWN")
 #' }
 #' @export
 
@@ -25,11 +25,11 @@ writeGATkml <- function(myshp, filename, filepath, myidvar = "GEOID10") {
   # output kml (must be in lat/lon)
   crs <- "+proj=longlat +datum=NAD83 +no_defs +ellps=GRS80 +towgs84=0,0,0"
   kml <- sf::st_transform(myshp, crs)
-  kml$ID <- 1:nrow(kml)
 
   # create the description tables for the kml file
   # modified from the description section of Gwen's code
   mycolnames <- names(kml)[1:(ncol(kml)-1)]
+  kml$name <- data.frame(kml)[, myidvar]
 
   # this is giving warnings, but working. needs debugging later
   desctemp <- character(nrow(kml))
@@ -44,9 +44,11 @@ writeGATkml <- function(myshp, filename, filepath, myidvar = "GEOID10") {
     desctemp[i] <- paste("<table border = 1>", temp, "</table>")
   }
   kml$description <- desctemp
-  labels <- data.frame(kml)[, myidvar]
 
-  file <- paste0(filepath, "/", filename, ".kml")
-  sf::st_write(kml, file, driver = "KML", delete_dsn = TRUE)
+  # save raw (kml) and zipped (kmz) files
+  filek <- paste0(filepath, "/", filename, ".kml")
+  filez <- paste0(filepath, "/", filename, ".kmz")
+  sf::st_write(kml, filek, driver = "KML", delete_dsn = TRUE)
+  utils::zip(zipfile = filez, files = filek)
 }
 

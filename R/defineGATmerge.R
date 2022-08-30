@@ -122,6 +122,17 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   }
   row.names(area) <- data$GATid
 
+      warnings <- c(
+        ab = "No physically adjacent neighbors found within the same boundary.",
+        amb = paste("No physically adjacent neighbors below the minimum value",
+                    "found within the same boundary."),
+        mb = paste("Found areas in the same boundary below the minimum value,",
+                   "but they are not physically adjacent."),
+        b = "Found areas in the same boundary, but they are not physically adjacent.",
+        f = "No neighbors found. This area cannot be merged further.",
+        nb = "No neighbors found in boundary.",
+        am = "No physically adjacent neighbors found below the minimum aggregation value."
+      )
   # draw progress bar ----
   definenv <- new.env()
 
@@ -177,7 +188,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                index = sapply(data.frame(aggvars$shp), is.integer),
                rownames = data$GATid)
 
-  # test if loop can run ----
+  # set up loop ----
   if (nrow(temp$alldata) > 0) {
     # set up more temporary variables ----
     temp$minpop1 = min(data.frame(temp$alldata)[, gatvars$aggregator1])
@@ -208,25 +219,24 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       sapply(data.frame(aggvars$shp)[, temp$index], as.numeric)
 
     # start while loop ----
-    while (temp$minpop1 < min1 | temp$minpop2 < min2){
-      # identify who is mergeable ----
+    while (temp['minpop1'] < min1 | temp['minpop2'] < min2){
+      # identify who can merge ----
       # remove flagged areas
       temp$aggdata <-
         aggvars$shp[which(aggvars$shp$GATflag == 0), ]
 
       # isolate areas that are too small
+      t <- data.frame(temp$aggdata)
       temp$tobemerged <- temp$aggdata[which(
-        (data.frame(temp$aggdata)[, gatvars$aggregator1] < min1) |
-        (data.frame(temp$aggdata)[, gatvars$aggregator2] < min2) ), ]
+        t[, gatvars$aggregator1] < min1 |
+        t[, gatvars$aggregator2] < min2 ), ]
 
       # change the merge order high to low
-      if (temp$minpop1 < min1) {
-        temp$tobemerged <-
-          temp$tobemerged[order(-data.frame(temp$tobemerged)[, gatvars$aggregator1]), ]
-      } else {
-        temp$tobemerged <-
+      temp$tobemerged <-
+        if (temp$minpop1 < min1)
+          temp$tobemerged[order(-data.frame(temp$tobemerged)[,
+                          gatvars$aggregator1]), ] else
           temp$tobemerged[order(-temp$tobemerged[, gatvars$aggregator2]), ]
-      }
 
       # default merge option is the one selected
       mergevars$mergeopt2 <- mergevars$mergeopt1
@@ -266,17 +276,6 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
                             data.frame(temp$first)$GATid, "):")
       temp$warnkey <- "n" # no warnings
-      warnings <- c(
-        ab = "No physically adjacent neighbors found within the same boundary.",
-        amb = paste("No physically adjacent neighbors below the minimum value",
-                    "found within the same boundary."),
-        mb = paste("Found areas in the same boundary below the minimum value,",
-                   "but they are not physically adjacent."),
-        b = "Found areas in the same boundary, but they are not physically adjacent.",
-        f = "No neighbors found. This area cannot be merged further.",
-        nb = "No neighbors found in boundary.",
-        am = "No physically adjacent neighbors found below the minimum aggregation value."
-      )
 
       # find neighbors ----
       # temporary flag: neighbors found?
@@ -309,10 +308,12 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
           # find neighbors in boundary, adjacent, below minimum value
           if (minfirst) {
             townvars$nbdata <-
-              temp$inboundary[which(temp$inboundary[, gatvars$aggregator1] < min1 |
-                                      temp$inboundary[, gatvars$aggregator2] < min2), ]
-            temp$inco_dex <- which(townvars$nbdata[, gatvars$boundary] ==
-                                     temp$firstboundary)
+              temp$inboundary[which(data.frame(temp$inboundary)[,
+                                               gatvars$aggregator1] < min1 |
+                                      data.frame(temp$inboundary)[,
+                                                 gatvars$aggregator2] < min2), ]
+            temp$inco_dex <- which(data.frame(townvars$nbdata)[,
+                                              gatvars$boundary] == temp$firstboundary)
             temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
             if (nrow(temp$inco_nbdata) > 0) {
               townvars$nbdata <- temp$inco_nbdata

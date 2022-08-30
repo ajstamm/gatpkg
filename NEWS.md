@@ -1,7 +1,8 @@
 # gatpkg v2.0.0
 
+* Revised `writeGATkml` so that it also writes to KMZ.
 * Removed dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp.
-* Removed checkGATshapefilesize() and fixed bugs. 
+* Removed `checkGATshapefilesize` and fixed bugs. 
 * Added advanced options to the settings file and log.
 
 # gatpkg v1.61.1
@@ -12,7 +13,7 @@
 # gatpkg v1.61.0
 
 * Added vignette "Assessing GAT Results".
-* Fixed bugs and typos in confirmGATbystep() and runGATprogram(), notably the 
+* Fixed bugs and typos in `confirmGATbystep` and `runGATprogram`, notably the 
   bug that incorrectly displayed number of excluded areas over maximum.
 * Added objects "ismax1", "ismin2", and "ismax2" to the gatvars list object
   to track if minimum and maximum values were defined by the user and added
@@ -20,14 +21,14 @@
 * Created a separate section in the technical notes to describe variables
   created by GAT.
 * Moved citation and acknowledgements from set-up to a separate vignette.
-* Restructured locateGATshapefile() to add a modifiable status bar option.
+* Restructured `locateGATshapefile` to add a modifiable status bar option.
 * Added and revised several function examples.
-* Added the following function options (and corresponding code in runGATprogram):
-    * writeGATlog: added settingsfile option to allow incorrectly written logs 
+* Added the following function options (and corresponding code in `runGATprogram`):
+    * `writeGATlog`: added settingsfile option to allow incorrectly written logs 
       to be regenerated from the settings.Rdata file produced by GAT
-    * defineGATmerge: added progressbar option to suppress the progress bar if
+    * `defineGATmerge`: added progressbar option to suppress the progress bar if
       desired
-    * plotGATmaps and plotGATcompare: added closemap option to automatically 
+    * `plotGATmaps` and `plotGATcompare`: added closemap option to automatically 
       close map windows if desired
 * Dropped compatibility for R-3.4.0.
 
@@ -37,12 +38,13 @@
 
 # gatpkg v1.60.2
 
-* Completed bug fixes in defineGATmerge.
-* Added function aggregateGATnb, which is used in defineGATmerge.
+* Completed bug fixes in `defineGATmerge`.
+* Added function `aggregateGATnb` (modified from spdep::aggregate.nb), 
+  which is used in `defineGATmerge`.
 
 # gatpkg v1.60.1
 
-* Addressed bug fixes in defineGATmerge.
+* Addressed bug fixes in `defineGATmerge`.
 * Added XML and network saving issues to the troubleshooting document.
 
 # gatpkg v1.60.0

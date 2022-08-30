@@ -22,6 +22,6 @@ This function writes a KML file of the shapefile.
 # creates the kml file in the project root directory
 if (interactive()) {
 writeGATkml(myshp = hftown, filename = "my_kml_example",
-            filepath = getwd(), myidvar = "ID")
+            filepath = getwd(), myidvar = "TOWN")
 }
 }

@@ -15,8 +15,7 @@ Authors@R: c(
     person("New York State Department of Health / Health Research, Inc.", 
       role = c("cph")), 
     person("Centers for Disease Control and Prevention", 
-      role = c("fnd"), comment = "Grant NUE1EH001341-03-01")
-    )
+      role = c("fnd"), comment = "Grant NUE1EH001341-03-01"))
 Maintainer: Abigail Stamm, NYSDOH EPHT <epht@health.ny.gov>
 Description: The purpose of this package is to run the New York State 
     Department of Health’s Geographic Aggregation Tool (GAT) in R. GAT takes 
@@ -46,7 +45,7 @@ Suggests:
     prettymapr (>= 0.2.2),
     rmarkdown,
     tools,
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/ajstamm/gatpkg

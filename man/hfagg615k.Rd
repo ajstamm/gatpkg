@@ -23,11 +23,13 @@ hfagg615k
 }
 \description{
 This object was created by aggregating a US census shapefile of towns
-in Hamilton and Fulton Counties in New York State. The settings used were:\preformatted{* aggregate hfagg610k total population to at least 6,000 and at most
+in Hamilton and Fulton Counties in New York State. The settings used were:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{* aggregate hfagg610k total population to at least 6,000 and at most
   15,000
 * request county borders, but do not require them
 * aggregate by closest geographic centroid
 * do not exclude any areas
-}
+}\if{html}{\out{</div>}}
 }
 \keyword{datasets}

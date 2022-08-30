@@ -369,8 +369,10 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                paste0(filevars$fileout, "settings.Rdata"))
   if (gatvars$savekml) {
     logtext <- c(logtext,
-                 "\n  KML file:                         ",
-                 paste0(filevars$fileout, ".kml"))
+                 "\n  KML file (raw):                   ",
+                 paste0(filevars$fileout, ".kml"),
+                 "\n  KMZ file (zipped):                ",
+                 paste0(filevars$fileout, ".kmz"))
   } else {
     logtext <- c(logtext, "\n  You chose not to write a KML file.")
   }
