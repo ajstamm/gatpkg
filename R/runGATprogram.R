@@ -168,7 +168,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         temp$alphas <- checkGATvariabletypes(temp$shp, type = "character")
         temp$polys <- sum(grepl("POLYGON", class(temp$shp$geometry),
                                 fixed = TRUE)) > 0
-
         # add dialog specifying each issue
         # add check for shapefile type (if class(shp) )
         temp$msg <- ""
@@ -221,6 +220,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                 type = "ok", icon = "warning",
                                 message = temp$msg)
           }
+
+          temp$shp$GATflag <- 0
+
           step <- step + 1
         }
         if (temp$error) {
@@ -232,6 +234,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
           temp$error <- FALSE
         }
       }
+
     } # shapefile
     while (step ==  2) { # ask user to select ID variable that uniquely
                         # identifies areas to be merged
@@ -369,15 +372,17 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         mysettings$quit <- TRUE
       } else if (!temp$error) {
         gatvars$aggregator1 <- agglist$var1
-        if (agglist$var2 == "NONE") {
-          gatvars$aggregator2 <- agglist$var1
-        } else {
-          gatvars$aggregator2 <- agglist$var2
-        }
         gatvars$minvalue1 <- agglist$minval1
         gatvars$maxvalue1 <- agglist$maxval1
-        gatvars$minvalue2 <- agglist$minval2
-        gatvars$maxvalue2 <- agglist$maxval2
+        if (agglist$var2 == "NONE") {
+          gatvars$aggregator2 <- agglist$var1
+          gatvars$minvalue2 <- agglist$minval1
+          gatvars$maxvalue2 <- agglist$maxval1
+        } else {
+          gatvars$aggregator2 <- agglist$var2
+          gatvars$minvalue2 <- agglist$minval2
+          gatvars$maxvalue2 <- agglist$maxval2
+        }
         if (temp$flagconfirm) {
           step <- 11
         } else {
@@ -391,9 +396,16 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         gatvars$ismax2 <- if (agglist$maxval2 ==
                               sum(data.frame(temp$shp)[, agglist$var2],
                                   na.rm = TRUE)) TRUE else FALSE
-        gatvars$ismin2 <- if (agglist$minval2 == min(data.frame(temp$shp)[, agglist$var2],
+        gatvars$ismin2 <- if (agglist$minval2 ==
+                              min(data.frame(temp$shp)[, agglist$var2],
                                    na.rm = TRUE)) TRUE else FALSE
       }
+
+      temp$shp$GATflag <- ifelse(data.frame(temp$shp)[, agglist$var1] >
+                                   as.numeric(gsub(",", "", agglist$maxval1)) |
+                                 data.frame(temp$shp)[, agglist$var1] >
+                                   as.numeric(gsub(",", "", agglist$maxval2)),
+                                 5, temp$shp$GATflag)
 
       rm(agglist)
     } # aggregation variables
@@ -945,17 +957,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       }
 
       # max value exclusions
-      temp$shp$GATflag <- 0
       temp$shp$GATflag <- calculateGATflag(exclist, temp$shp)
-      temp$shp$GATflag <-
-        ifelse(data.frame(temp$shp)[, gatvars$aggregator1] >
-                 as.numeric(gatvars$maxvalue1) &
-               temp$shp$GATflag == 0, 5, temp$shp$GATflag)
-      if (!gatvars$aggregator2 == gatvars$aggregator1) {
-        temp$mapdata$GATflag <-
-          ifelse(data.frame(temp$shp)[, gatvars$aggregator2] >
-                   as.numeric(gatvars$maxvalue2) &
-                 temp$shp$GATflag == 0, 5, temp$shp$GATflag)
       }
       gatvars$exclmaxval <- sum(temp$shp$GATflag == 5)
 

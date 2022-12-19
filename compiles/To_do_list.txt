@@ -23,6 +23,7 @@ Fixes and improvements to address:
   * tutorial completed through end of user input section (except help, quit, errors)
   * redo all user input screenshots
 * convert spdep and maptools to sf? note: spdep works with sf
+* basic geographic aggregation miscalculates values over min, so nothing aggregates
 
 
 Completed - test

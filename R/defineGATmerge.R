@@ -514,7 +514,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
     msg <- paste("All areas have values of", vars,
                  "over your selected minimum value(s). No areas were merged.")
     tcltk::tkmessageBox(title = "Merge failed", message = msg,
-                        type = "yesno", icon = "info")
+                        type = "ok", icon = "info")
   }
   # close progress bar that monitors the aggregation ----
   if (progressbar) {
