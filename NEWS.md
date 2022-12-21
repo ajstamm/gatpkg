@@ -4,6 +4,7 @@
 * Removed dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp.
 * Removed `checkGATshapefilesize` and fixed bugs. 
 * Added advanced options to the settings file and log.
+* Fixed a bug that overwrote the flag variable, causing aggregation to fail.
 
 # gatpkg v1.61.1
 
@@ -24,10 +25,10 @@
 * Restructured `locateGATshapefile` to add a modifiable status bar option.
 * Added and revised several function examples.
 * Added the following function options (and corresponding code in `runGATprogram`):
-    * `writeGATlog`: added settingsfile option to allow incorrectly written logs 
-      to be regenerated from the settings.Rdata file produced by GAT
-    * `defineGATmerge`: added progressbar option to suppress the progress bar if
-      desired
+    * `writeGATlog`: added settingsfile option to allow incorrectly written 
+      logs to be regenerated from the settings.Rdata file produced by GAT
+    * `defineGATmerge`: added progressbar option to suppress the progress bar 
+      if desired
     * `plotGATmaps` and `plotGATcompare`: added closemap option to automatically 
       close map windows if desired
 * Dropped compatibility for R-3.4.0.
