@@ -400,14 +400,14 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                               min(data.frame(temp$shp)[, agglist$var2],
                                    na.rm = TRUE)) TRUE else FALSE
       }
+      rm(agglist)
 
-      temp$shp$GATflag <- ifelse(data.frame(temp$shp)[, agglist$var1] >
-                                   as.numeric(gsub(",", "", agglist$maxval1)) |
-                                 data.frame(temp$shp)[, agglist$var1] >
-                                   as.numeric(gsub(",", "", agglist$maxval2)),
+      temp$shp$GATflag <- ifelse(data.frame(temp$shp)[, gatvars$aggregator1] >
+                                   as.numeric(gsub(",", "", gatvars$maxvalue1)) |
+                                 data.frame(temp$shp)[, gatvars$aggregator2] >
+                                   as.numeric(gsub(",", "", gatvars$maxvalue2)),
                                  5, temp$shp$GATflag)
       gatvars$exclmaxval <- sum(temp$shp$GATflag == 5)
-      rm(agglist)
     } # aggregation variables
     while (step ==  5) {
       gatenv$pb <- list(title = "NYSDOH GAT: Enter exclusions",
@@ -541,7 +541,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       if (!exclist$var1 %in% c("back", "cancel", "repeat")) {
         # calculate exclusions now to use them to calculate the
         # denominator for similar merges and rates
-        temp$shp$GATflag <- 0
         temp$shp$GATflag <- calculateGATflag(exclist, d = temp$shp)
         exclist$flagsum <- sum(temp$shp$GATflag != 0)
 
@@ -955,10 +954,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                            label = gatenv$pb$label, min = 0, max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
-
-      # max value exclusions
-      temp$shp$GATflag <- calculateGATflag(exclist, temp$shp)
-      gatvars$exclmaxval <- sum(temp$shp$GATflag == 5)
 
       temp$flagconfirm <- TRUE
       temp$error <- TRUE
