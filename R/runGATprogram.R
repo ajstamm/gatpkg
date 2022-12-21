@@ -406,7 +406,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                  data.frame(temp$shp)[, agglist$var1] >
                                    as.numeric(gsub(",", "", agglist$maxval2)),
                                  5, temp$shp$GATflag)
-
+      gatvars$exclmaxval <- sum(temp$shp$GATflag == 5)
       rm(agglist)
     } # aggregation variables
     while (step ==  5) {
@@ -958,7 +958,6 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
 
       # max value exclusions
       temp$shp$GATflag <- calculateGATflag(exclist, temp$shp)
-      }
       gatvars$exclmaxval <- sum(temp$shp$GATflag == 5)
 
       temp$flagconfirm <- TRUE
