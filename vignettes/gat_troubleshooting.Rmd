@@ -136,5 +136,7 @@ This warning occurs when there are numeric fields with very large values, such a
 
 This appears to occur randomly. Restarting R and rerunning your aggregation should fix it. To recreate an incorrectly written log, you can also rerun the function [writeGATlog()](../html/writeGATlog.html) with the settingsfile option pointing to the *settings.Rdata file produced by GAT. 
 
+If you do not see your log file, check that you have extensions showing in your file manager, as ".log" may be hidden otherwise.
+
 
 
