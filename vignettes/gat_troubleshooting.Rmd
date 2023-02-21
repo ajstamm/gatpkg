@@ -125,7 +125,12 @@ This issue occurs if there are too few polygons in the map. If the total number 
 
 ## Warning for large numbers not writing correctly
 
-This issue occurs when there are numeric fields with very large values, such as square meters of land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original file against the crosswalk. To avoid this warning, set large number fields to character or remove them from your DBF before running GAT.
+A message like this appears in the R console: 
+
+>	In CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options),  ... :
+> GDAL Message 1: Value 199678888 of field ALAND of feature 40 not successfully written. 
+
+This warning occurs when there are numeric fields with very large values, such as square meters of land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original DBF file against the crosswalk. To avoid this warning, set large number fields to character or remove them from your DBF before running GAT.
 
 ## My aggregation log did not write correctly
 
