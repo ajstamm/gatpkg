@@ -45,7 +45,7 @@ Suggests:
     prettymapr (>= 0.2.2),
     rmarkdown,
     tools,
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
 URL: https://github.com/ajstamm/gatpkg

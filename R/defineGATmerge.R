@@ -58,9 +58,11 @@
 #' gatvars <- list(
 #'   myidvar = "ID",             # character variable of unique values
 #'   aggregator1 = "TOTAL_POP",  # numeric variable
+#'   minvalue1 = 5000,
+#'   maxvalue1 = 15000,
 #'   aggregator2 = "TOTAL_POP",  # numeric variable
-#'   minvalue1 = 5000, minvalue2 = 5000,
-#'   maxvalue1 = 15000, maxvalue2 = 15000,
+#'   minvalue2 = 5000,
+#'   maxvalue2 = 15000,
 #'   boundary = "COUNTY",        # character variable of non-unique values
 #'   rigidbound = TRUE,          # boolean to enforce boundary
 #'   popwt = FALSE,              # boolean for population weighting
@@ -96,20 +98,37 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   area <- sf::st_as_sf(area)
   data <- data.frame(area)
 
+  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
   max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
   if (length(max1) == 0) {
     max1 <- max(data.frame(area)[, gatvars$aggregator1])
   }
-  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
+  if (is.na(max1)) {
+    max1 <- max(data.frame(area)[, gatvars$aggregator1])
+  }
+  if (gatvars$aggregator2 == "NONE") {
+    gatvars$aggregator2 <- gatvars$aggregator1
+    gatvars$minvalue2 <- gatvars$minvalue1
+    gatvars$maxvalue2 <- gatvars$maxvalue1
+  }
   max2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
   if (length(max2) == 0) {
     max2 <- max(data.frame(area)[, gatvars$aggregator2])
   }
+  if (is.na(max2)) {
+    max2 <- max(data.frame(area)[, gatvars$aggregator2])
+  }
   min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
-  if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
+  if (length(min2) == 0) {
+    min2 <- min(data.frame(area)[, gatvars$aggregator2])
+  }
+  if (is.na(min2)) {
+    min2 <- min(data.frame(area)[, gatvars$aggregator2])
+  }
 
   if (!"GATflag" %in% names(data)) {
-    data$GATflag <- if (is.null(exclist)) 0 else calculateGATflag(exclist, d = data)
+    data$GATflag <- 0
+    if (!is.null(exclist)) data$GATflag <- calculateGATflag(exclist, d = data)
     data$GATflag <- ifelse(data[, gatvars$aggregator1] > max1, 5, data$GATflag)
     if (!gatvars$aggregator2 == gatvars$aggregator1) {
       data$GATflag <- ifelse(data[, gatvars$aggregator2] > max2, 5, data$GATflag)
@@ -122,17 +141,17 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   }
   row.names(area) <- data$GATid
 
-      warnings <- c(
-        ab = "No physically adjacent neighbors found within the same boundary.",
-        amb = paste("No physically adjacent neighbors below the minimum value",
-                    "found within the same boundary."),
-        mb = paste("Found areas in the same boundary below the minimum value,",
-                   "but they are not physically adjacent."),
-        b = "Found areas in the same boundary, but they are not physically adjacent.",
-        f = "No neighbors found. This area cannot be merged further.",
-        nb = "No neighbors found in boundary.",
-        am = "No physically adjacent neighbors found below the minimum aggregation value."
-      )
+  warnings <- c(
+    ab = "No physically adjacent neighbors found within the same boundary.",
+    amb = paste("No physically adjacent neighbors below the minimum value",
+                "found within the same boundary."),
+    mb = paste("Found areas in the same boundary below the minimum value,",
+               "but they are not physically adjacent."),
+    b = "Found areas in the same boundary, but they are not physically adjacent.",
+    f = "No neighbors found. This area cannot be merged further.",
+    nb = "No neighbors found in boundary.",
+    am = "No physically adjacent neighbors found below the minimum aggregation value."
+  )
   # draw progress bar ----
   definenv <- new.env()
 
@@ -176,8 +195,6 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                   shp = cbind(area, mapvars$centroids))
 
   # set up temporary variables ----
-  if (gatvars$aggregator2 == "NONE") gatvars$aggregator2 <- gatvars$aggregator1
-  # for some reason, numeric sometimes switched to character
   aggvars$shp[, gatvars$aggregator1] <-
     as.numeric(as.character(data.frame(aggvars$shp)[, gatvars$aggregator1]))
   aggvars$shp[, gatvars$aggregator2] <-

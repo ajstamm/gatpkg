@@ -34,9 +34,9 @@ identifyGATfirstobs <- function(tobemerged, aggvar, aggvar2, minval, minval2) {
 
   # to sort both high to low, take value that is highest percentage of minval
   if (aggvar != aggvar2) {
-    lowpop2 <- order(tobemerged[, aggvar2], decreasing = TRUE)
-    if ((as.numeric(tobemerged[lowpop[1], aggvar]) / minval) >=
-        (as.numeric(tobemerged[lowpop2[1], aggvar2]) / minval2)) {
+    lowpop2 <- order(data.frame(tobemerged)[, aggvar2], decreasing = TRUE)
+    if ((as.numeric(data.frame(tobemerged)[lowpop[1], aggvar]) / minval) >=
+        (as.numeric(data.frame(tobemerged)[lowpop2[1], aggvar2]) / minval2)) {
       first <- tobemerged[lowpop[1], ]
     } else {
       first <- tobemerged[lowpop2[1], ]

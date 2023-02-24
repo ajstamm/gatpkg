@@ -83,9 +83,11 @@ if (interactive()) {
 gatvars <- list(
   myidvar = "ID",             # character variable of unique values
   aggregator1 = "TOTAL_POP",  # numeric variable
+  minvalue1 = 5000,
+  maxvalue1 = 15000,
   aggregator2 = "TOTAL_POP",  # numeric variable
-  minvalue1 = 5000, minvalue2 = 5000,
-  maxvalue1 = 15000, maxvalue2 = 15000,
+  minvalue2 = 5000,
+  maxvalue2 = 15000,
   boundary = "COUNTY",        # character variable of non-unique values
   rigidbound = TRUE,          # boolean to enforce boundary
   popwt = FALSE,              # boolean for population weighting

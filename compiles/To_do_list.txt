@@ -4,6 +4,8 @@
 
 Changes for V3?
 * Add ability to use point level population-weighting data, and possibly raster
+* Add compatibility with linux/unix - need workaround for Windows-specific choose.files function when locating shapefiles
+* Add a way (or vignette?) to bypass the GUI entirely
 
 To keep in mind:
 * if I want to zip shapefiles, use the code `unz()` to unzip and read them

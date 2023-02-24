@@ -105,7 +105,7 @@ These errors and warnings are related to files produced by GAT.
 
 ## Variable names in my aggregated dataset are truncated
 
-This appears to be an issue with the DBF driver used by the foreign package. The driver identifies at least one variable name that it interprets as too long (over 10 characters), but truncates several variable names, not just the offender. The data otherwise still write correctly.
+This appears to be an issue with the DBF driver used by the foreign package. The driver identifies at least one variable name that it interprets as too long (over 10 characters), but truncates several variable names, not just the offender. The data otherwise still write correctly. This should be fixed as of v1.61.0.
 
 ## When I import my shapefile into my GIS program, a blank map appears
 
@@ -134,9 +134,14 @@ This warning occurs when there are numeric fields with very large values, such a
 
 ## My aggregation log did not write correctly
 
-This appears to occur randomly. Restarting R and rerunning your aggregation should fix it. To recreate an incorrectly written log, you can also rerun the function [writeGATlog()](../html/writeGATlog.html) with the settingsfile option pointing to the *settings.Rdata file produced by GAT. 
+This appears to occur randomly. If you do not see your log file, check that you have extensions showing in your file manager, as ".log" may be hidden otherwise.
 
-If you do not see your log file, check that you have extensions showing in your file manager, as ".log" may be hidden otherwise.
+If you still do not see the file, you can try two things. 
+
+1. Restart R and rerun your aggregation. 
+2. Rerun the function [writeGATlog()](../html/writeGATlog.html) by using `settingsfile =` followed by the full file path to your "*settings.Rdata" file produced by GAT. This will also work if your log wrote incorrectly, which appears to occur randomly.
+
+
 
 
 
