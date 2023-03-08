@@ -16,7 +16,7 @@ writeGATkml(myshp, filename, filepath, myidvar = "GEOID10")
 \item{myidvar}{A variable of unique values for the spatial layer.}
 }
 \description{
-This function writes a KML file of the shapefile.
+This function writes a KML file of the spatial layer.
 }
 \examples{
 # creates the kml file in the project root directory

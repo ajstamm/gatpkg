@@ -11,7 +11,7 @@ Authors@R: c(
                                          contributed to technical notes"),
     person("Thomas", "Talbot", 
       role = c("ctb"), comment = "GAT concept creator, 
-                                  wrote part of technical notes"),
+                                  contributed to technical notes"),
     person("New York State Department of Health / Health Research, Inc.", 
       role = c("cph")), 
     person("Centers for Disease Control and Prevention", 
@@ -39,9 +39,10 @@ Imports:
     stats, 
     tcltk,
     tibble,
-    utils
 Suggests: 
     knitr,
+    lwgeom,
+    tools,
     prettymapr (>= 0.2.2),
     rmarkdown,
     tools,

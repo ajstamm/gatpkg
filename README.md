@@ -2,6 +2,8 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/sword)](https://CRAN.R-project.org/package=sword)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 
+**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2, so if you install the master version of GAT on R 4.2.0, GAT may break. Please either use R 4.1.x or install the Dev version of GAT using `devtools::install_github("ajstamm/gatpkg@Dev", dependencies = TRUE)`.**
+
 
 **Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2. If you install the master version of GAT on R 4.2.0, GAT may break.**
 
@@ -27,7 +29,7 @@ install.packages("devtools")
 devtools::install_github("ajstamm/gatpkg@Dev", dependencies = TRUE)
 ```
 
-If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages on CRAN.
+If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages on CRAN. (Please note plotKML was removed from CRAN and is no longer required for GAT - this note will be removed when the instructions PDF is updated.)
 
 
 ### Why create GAT

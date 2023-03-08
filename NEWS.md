@@ -6,6 +6,10 @@
 * Added advanced options to the settings file and log.
 * Fixed a bug that overwrote the flag variable, causing aggregation to fail.
 
+# gatpkg v1.61.2
+
+* Patched to replace plotKML in writeGATkml with sf::st_write because plotKML was removed from CRAN.
+
 # gatpkg v1.61.1
 
 * Added structure for pkgdown.

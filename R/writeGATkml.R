@@ -1,6 +1,6 @@
 #' Write GAT KML File
 #'
-#' This function writes a KML file of the shapefile.
+#' This function writes a KML file of the spatial layer.
 #'
 #' @param myshp    A spatial layer.
 #' @param filename The desired name for the KML file.
@@ -14,9 +14,6 @@
 #'             filepath = getwd(), myidvar = "TOWN")
 #' }
 #' @export
-
-# this function works and is fast, but notes are a mess and kmz may be buggy
-# see https://stackoverflow.com/questions/35280417/r-export-to-kml-with-custom-descriptionfield
 
 writeGATkml <- function(myshp, filename, filepath, myidvar = "GEOID10") {
   # temporary sf conversion ----
@@ -37,9 +34,9 @@ writeGATkml <- function(myshp, filename, filepath, myidvar = "GEOID10") {
     temp <- c()
     for (j in 1:length(mycolnames)) {
       temp <- paste(temp, "<tr>",
-                          "<td>", mycolnames[j], "</td>",
-                          "<td>", kml[i, j], "</td>",
-                          "</tr>")
+                    "<td>", mycolnames[j], "</td>",
+                    "<td>", kml[i, j], "</td>",
+                    "</tr>")
     }
     desctemp[i] <- paste("<table border = 1>", temp, "</table>")
   }
