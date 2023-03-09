@@ -2,9 +2,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/sword)](https://CRAN.R-project.org/package=sword)
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
-
 # Geographic Aggregation Tool (GAT)
-
 
 The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding from the CDC administered through Health Research Incorporated. GAT is maintained by Abigail Stamm at the NYSDOH. 
 
@@ -26,7 +24,6 @@ devtools::install_github("ajstamm/gatpkg", dependencies = TRUE)
 
 If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_2.0.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages on CRAN.
 
-
 ### Why create GAT
 
 Health outcome maps with fine geographic resolution can be misleading due to random fluctuations in disease rates caused by small numbers. In some cases these maps can also inadvertently disclose confidential data. To overcome these limitations we developed GAT to join neighboring geographic areas together until a user defined population and/or number of cases is reached. GAT can be used to produce maps for the public at the finest geographic resolution practicable.
@@ -43,7 +40,7 @@ GAT reads in a polygon shapefile. The shapefile must contain at minimum a charac
 
 GAT outputs two shapefiles, one containing aggregated areas and one containing a crosswalk between the original areas and the aggregated areas. GAT also outputs a log, several maps to help you identify potential issues in the aggregation process, and, optionally, a KML file.
 
-The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
+The package for GAT includes a tutorial to learn the tool, an embedded map file to use for examples in many package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
 
 To learn more about GAT, view our [presentations](presentations/).
 
