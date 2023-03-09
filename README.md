@@ -5,7 +5,7 @@
 stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
-**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2. If you install the master version of GAT on R 4.2.0, GAT may break.**
+
 
 
 # Geographic Aggregation Tool (GAT)
