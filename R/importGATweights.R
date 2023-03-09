@@ -22,23 +22,22 @@
 #'
 #' if (interactive()) {
 #' pathin <- paste0(find.package("gatpkg"), "/extdata")
-#' mywtshp <- importGATweights(
-#'   area = hftown,
-#'   filein = "hfblock",
-#'   pathin = pathin,
-#'   popvar = "Pop_tot"
-#' )
+#' mywtshp <- importGATweights(area = hftown, filein = "hfblockgrp",
+#'                             pathin = pathin, popvar = "Pop")
 #' }
 #'
 #' @export
 
 importGATweights <- function(area, filein, pathin, popvar = "Pop_tot") {
   # convert original shapefile
-  proj <- sp::proj4string(area)
   shp <- sf::st_as_sf(area)
-  if (!grepl("longlat", proj, fixed = TRUE)) {
+
+  # rewrite to use utm function?
+  if (!sf::st_is_longlat(area)) {
     proj <- "+proj=longlat +datum=NAD27"
     shp <- sf::st_transform(shp, proj)
+  } else {
+    proj <- sf::st_crs(area)
   }
 
   # read in population file

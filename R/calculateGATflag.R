@@ -19,7 +19,7 @@
 #'   var3 = "NONE"  # if not "NONE", define math3 & val3
 #' )
 #'
-#' calculateGATflag(exclist = exclist, d = hftown@data)
+#' calculateGATflag(exclist = exclist, d = hftown)
 #'
 #' @export
 
@@ -28,7 +28,7 @@ calculateGATflag <- function(exclist, d) {
     d$GATflag <- 0 # for non-default uses of this function
   }
 
-    if (exclist$var1 != "NONE") {
+  if (exclist$var1 != "NONE") {
     d <- calculateGATexclusions(d, exclist$var1, exclist$math1, exclist$val1)
   }
   if (exclist$var2 != "NONE") {

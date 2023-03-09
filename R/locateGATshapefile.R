@@ -58,8 +58,8 @@ locateGATshapefile <- function(myfile = "", step = 1, msg = "",
     mycaption <- paste0("Step ", step, ": Select your shapefile")
   }
   while (checkfile != 0){
-    userfile <- choose.files(filters = fil, caption = mycaption,
-                             default = myfile)
+    userfile <- utils::choose.files(filters = fil, caption = mycaption,
+                                    default = myfile)
     if (length(userfile) > 0) {
       userfile <- gsub("\\\\", "/", userfile) # add "if Windows" tag
       # remove extension if present
@@ -76,8 +76,6 @@ locateGATshapefile <- function(myfile = "", step = 1, msg = "",
         tcltk::tkmessageBox(title = "File error", message = msg,
                             type = "ok", icon = "error")
       } else if (length(userfile) > 0) {
-        # make sure file is not too large
-        checkfile <- checkGATshapefilesize(userfile)
         # find location of last slash, divides path and file name
         slashloc = max(unlist(gregexpr("/", userfile, fixed = TRUE)))
 

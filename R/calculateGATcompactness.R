@@ -8,48 +8,38 @@
 #' an alternate projection. The spatial polygons data frame is then used
 #' to calculate compactness ratio. The function returns a vector of ratios.
 #'
-#' @param shp A spatial polygons data frame.
+#' @param myshp A spatial layer.
 #'
 #' @examples
-#' calculateGATcompactness(
-#'   shp = hftown
-#' )
+#' calculateGATcompactness(myshp = hftown)
 #'
 #' @export
 
-calculateGATcompactness <- function(shp) {
-  # get areas of myshps$aggregated, but first check for planar coordinates
-  # gArea ex:
-  # "+proj=utm +zone=18 +datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0"
-  proj <- grepl("longlat", sp::proj4string(shp), fixed = TRUE)
+calculateGATcompactness <- function(myshp) {
+  # sf conversion ----
+  area <- sf::st_as_sf(myshp)
+
+  # get areas of layer, but first check for planar coordinates
+  proj <- sum(grepl("longlat", sf::st_crs(area), fixed = TRUE),
+              sf::st_crs(area, parameters=TRUE)$units_gdal %in%
+                c("Degree", "degree", "DEGREE")) > 0
 
   if (!proj | is.na(proj)) {
     # if not lat/lon, can use directly to calculate compactness ratio
-    map <- shp
+    map <- area
   } else if (proj) { # write function to capture pstring?
     # need to find approx longitude of map to pick an appropriate utm zone
     # utms only for use between 80°S and 84°N latitude
     # also there are exceptions for both UTM Zone Exceptions in Norway and Svalbard
-    mapcenter <- rgeos::gCentroid(shp, byid = FALSE) # get center of map
-    latcenter <- mapcenter@coords[1]
-    # myutm <- floor((-75.5+180)/6)+1
-    myutm <- floor((latcenter + 180) / 6) + 1
-    pstring <- paste0("+proj=utm +zone=", myutm,
-                      "+datum=NAD83 +units=m +no_defs +ellps=GRS80 +towgs84=0,0,0")
-    map <- sp::spTransform(shp, sp::CRS(pstring))
+    mycrs <- convertlatlong2UTM(area, units = 'm')
+    map <- sf::st_transform(area, mycrs)
   } # if lat/long, need to reproject
 
-  # start calculate compactness ratio
-  myareas <- rgeos::gArea(map, byid = TRUE)
-  myhulls <- rgeos::gConvexHull(map, byid = TRUE)
-  hullcoords <- lapply(myhulls@polygons, function(y) {
-    y@Polygons[[1]]@coords
-  } )
-  hulldists <- lapply(hullcoords, dist)
+  # calculate compactness ratio ----
+  myareas <- sf::st_area(map)
+  hulldists <- lapply(map$geometry, stats::dist)
   diams <- sapply(hulldists, max)
-
-  # calculate compactness ratio
   # to get maximum distance (diameter of circle): max(dist(test1))
-  cratio <- myareas / (pi * ((diams / 2) ** 2))
+  cratio <- as.numeric(myareas / (pi * ((diams / 2) ** 2)))
   return(cratio)
 }

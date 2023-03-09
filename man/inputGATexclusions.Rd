@@ -4,10 +4,10 @@
 \alias{inputGATexclusions}
 \title{Input GAT Exclusions}
 \usage{
-inputGATexclusions(mapdata, step = 0, exclist = NULL, backopt = TRUE)
+inputGATexclusions(shp, step = 0, exclist = NULL, backopt = TRUE)
 }
 \arguments{
-\item{mapdata}{The data frame from which to select variables.}
+\item{shp}{Spatial layer.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
 
@@ -59,11 +59,7 @@ The values to use in the exclusion calculations.
 \examples{
 
 if (interactive()) {
-# define exclusion criteria
-inputGATexclusions(
-  mapdata = hftown@data,
-  step = 10
-)
+inputGATexclusions(shp = hftown)
 }
 
 }

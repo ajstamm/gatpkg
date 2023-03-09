@@ -13,9 +13,12 @@
 #'
 
 convertlatlong2UTM <- function(area, units = 'm') {
-  bounds <- sp::bbox(area)
-  lat = mean(bounds[2,]) # latitude
-  long = mean(bounds[1,]) # longitude
+  # temporary sf conversion
+  area <- sf::st_as_sf(area)
+
+  bounds <- sf::st_bbox(area)
+  lat = mean(bounds[c(2, 4)]) # latitude
+  long = mean(bounds[c(1, 3)]) # longitude
 
   # find UTM hemisphere (latitude)
   hemisphere <- ifelse(lat > 0, "north", "south")

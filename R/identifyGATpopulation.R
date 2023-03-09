@@ -29,10 +29,7 @@
 #'
 #' if (interactive()) {
 #' # identify variable to aggregate
-#' identifyGATpopulation(
-#'   varlist = c("Pop_tot", "F_tot", "M_tot"),
-#'   step = 7
-#' )
+#' identifyGATpopulation(varlist = c("Pop_tot", "F_tot", "M_tot"), step = 7)
 #' }
 #'
 #' @export

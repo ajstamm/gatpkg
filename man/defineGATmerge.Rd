@@ -8,20 +8,21 @@ defineGATmerge(
   area,
   gatvars,
   mergevars,
-  filevars,
+  exclist = NULL,
   pwrepeat = FALSE,
   adjacent = TRUE,
+  pop = NULL,
   minfirst = FALSE,
   progressbar = TRUE
 )
 }
 \arguments{
-\item{area}{A spatial polygons data frame.}
+\item{area}{A spatial layer representing areas to be aggregated.}
 
-\item{gatvars}{A list of objects created by the GAT tool. It contains
-the strings myidvar, aggregator1, aggregator2, and
-boundary, which are all variables in the area, the
-boolean popwt, and the numbers minvalue1 and minvalue2.
+\item{gatvars}{A list of objects created by GAT. It contains the
+strings myidvar, aggregator1, aggregator2, and boundary,
+which are all variables in the area, the boolean popwt,
+and the numbers minvalue1 and minvalue2.
 Both aggregator1 and aggregator2 must be numeric and
 myidvar must contain unique values.}
 
@@ -32,7 +33,7 @@ similar2. The valid options for mergeopt1 are "closest",
 and similar2 must be numeric variables in the area and
 similar2 cannot equal zero.}
 
-\item{filevars}{A list of string objects that list file names and paths.}
+\item{exclist}{The settings to define areas to be excluded.}
 
 \item{pwrepeat}{A boolean denoting whether population weighting (if used)
 should be recalculated each time two areas are merged
@@ -43,11 +44,13 @@ this option is ignored.}
 \item{adjacent}{A boolean denoting whether to force GAT to merge only
 adjacent areas.}
 
+\item{pop}{A spatial layer containing underlying population values.}
+
 \item{minfirst}{A boolean denoting whether or not to select the most
 desirable neighbor only from among the neighbors that
 have values below the desired minimum. If no neighbors
 are below the desired minimum, the most desirable of all
-elligible neighbors is selected.}
+eligible neighbors is selected.}
 
 \item{progressbar}{A boolean denoting whether to display the progress bar.}
 }
@@ -59,7 +62,7 @@ It returns a list of the following elements:
 A character vector in which the old IDs are replaced with the merged IDs,
 for the crosswalk.
 }
-\itemize{\bold{allpolydata: }
+\itemize{\bold{shp: }
 A data frame defining the polygons to be merged.
 }
 \itemize{\bold{newregno: }
@@ -80,13 +83,15 @@ if (interactive()) {
 gatvars <- list(
   myidvar = "ID",             # character variable of unique values
   aggregator1 = "TOTAL_POP",  # numeric variable
+  minvalue1 = 5000,
+  maxvalue1 = 15000,
   aggregator2 = "TOTAL_POP",  # numeric variable
-  minvalue1 = 5000, minvalue2 = 5000,
-  maxvalue1 = 15000, maxvalue2 = 15000,
+  minvalue2 = 5000,
+  maxvalue2 = 15000,
   boundary = "COUNTY",        # character variable of non-unique values
   rigidbound = TRUE,          # boolean to enforce boundary
   popwt = FALSE,              # boolean for population weighting
-  popvar = "Pop_tot"          # aggregation variable in population laayer
+  popvar = "Pop"              # aggregation variable in population laayer
 )
 
 mergevars <- list(
@@ -96,19 +101,14 @@ mergevars <- list(
   centroid = "geographic"
 )
 
-filevars <- list(
-  popfile = "hfblock",
-  poppath = paste0(find.package("gatpkg"), "/extdata")
+exclist <- list(
+  var1 = "TOTAL_POP", math1 = "less than", val1 = 500,
+  var2 = "NONE", # if not "NONE", define math2 & val2
+  var3 = "NONE"  # if not "NONE", define math3 & val3
 )
-
-my_merge <-
-  defineGATmerge(
-    area = hftown,
-    gatvars = gatvars,
-    mergevars = mergevars,
-    filevars = filevars,
-    pwrepeat = FALSE # don't need pwrepeat if popwt = FALSE
-  )
+my_merge <- defineGATmerge(
+    area = hftown, pop = hfpop, gatvars = gatvars, mergevars = mergevars,
+    exclist = exclist, progressbar = FALSE, pwrepeat = FALSE)
 }
 
 }

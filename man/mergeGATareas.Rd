@@ -4,7 +4,7 @@
 \alias{mergeGATareas}
 \title{Merge GAT Areas}
 \usage{
-mergeGATareas(ratevars, aggvars, idvar, myshp)
+mergeGATareas(ratevars, aggvars, idvar = "GATid", myshp)
 }
 \arguments{
 \item{ratevars}{A list of rate-related objects.}
@@ -30,7 +30,7 @@ gatvars <- list(
   boundary = "COUNTY",        # character variable of non-unique values
   popwt = FALSE,
   rigidbound = FALSE,
-  popvar = "Pop_tot"
+  popvar = "Pop"
 )
 
 mergevars1 <- list( # similar merge
@@ -47,20 +47,11 @@ mergevars2 <- list( # closest merge
   centroid = "population-weighted"
 )
 
-filevars <- list(
-  popfile = "hfblock",
-  poppath = paste0(find.package("gatpkg"), "/extdata")
-)
-
 # merge areas based on your settings
 # this function identifies areas to merge; it does not merge them
-my_merge <-
-  defineGATmerge(
-    area = hftown,
-    gatvars = gatvars,
-    mergevars = mergevars1,
-    filevars = filevars
-  )
+my_merge <- defineGATmerge(
+    area = hftown, pop = hfpop, progressbar = FALSE,
+    gatvars = gatvars, mergevars = mergevars1)
 
 # need all rate options if rate to be calculated
 # for this example, rate is ignored

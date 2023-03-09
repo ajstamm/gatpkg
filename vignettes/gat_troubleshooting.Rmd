@@ -29,8 +29,8 @@ Usually, the issue is that vignettes fail to install. To fix this, uninstall gat
 
 This message appears in the R console: 
 
-`Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :`  
-`isTRUE(gpclibPermitStatus()) is not TRUE`
+> Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :  
+> isTRUE(gpclibPermitStatus()) is not TRUE
 
 This error appears due to a conflict between the packages rgeos and rgdal. Reinstall rgdal after each update of rgeos to fix it.
 
@@ -66,9 +66,9 @@ GAT occasionally has trouble getting permission to write to network drives. Try 
 
 This message appears in the R console: 
 
-`Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :`  
-`GDAL Error 4: Failed to open shapefile C:/aggtest/output/testin.shp.` 
-`It may be corrupt or read-only file accessed in update mode.`
+> Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :  
+> GDAL Error 4: Failed to open shapefile C:/aggtest/output/testin.shp.  
+> It may be corrupt or read-only file accessed in update mode.
 
 Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as ".shp", ".dbf", ".prj") from the directory you are trying to save to.
 
@@ -81,8 +81,8 @@ The progress bars were designed to help you determine whether GAT has stalled. U
 
 This message appears in the R console: 
 
-`In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :`  
-`n greater than number of different finite values\nn reset to number of different finite values`
+> In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :  
+> n greater than number of different finite values\nn reset to number of different finite values
 
 This warning appears when the number of polygons or individual values matches or is less than the number of categories in the choropleth maps. The maps will still be drawn accurately.
 
@@ -90,9 +90,9 @@ This warning appears when the number of polygons or individual values matches or
 
 One or both of these messages appears in the R console: 
 
-`st_centroid assumes attributes are constant over geometries of x`
+> st_centroid assumes attributes are constant over geometries of x
 
-`st_centroid does not give correct centroids for longitude/latitude data`
+> st_centroid does not give correct centroids for longitude/latitude data
 
 These warnings may appear when you first install gatpkg and will appear if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using appropriate coordinate systems. They do not appear if you are using geographic centroids.
 
@@ -105,7 +105,7 @@ These errors and warnings are related to files produced by GAT.
 
 ## Variable names in my aggregated dataset are truncated
 
-This appears to be an issue with the DBF driver used by the foreign package. The driver identifies at least one variable name that it interprets as too long (over 10 characters), but truncates several variable names, not just the offender. The data otherwise still write correctly.
+This appears to be an issue with the DBF driver used by the foreign package. The driver identifies at least one variable name that it interprets as too long (over 10 characters), but truncates several variable names, not just the offender. The data otherwise still write correctly. This should be fixed as of v1.61.0.
 
 ## When I import my shapefile into my GIS program, a blank map appears
 
@@ -125,11 +125,23 @@ This issue occurs if there are too few polygons in the map. If the total number 
 
 ## Warning for large numbers not writing correctly
 
-This issue occurs when there are numeric fields with very large values, such as square meters of land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original file against the crosswalk. To avoid this warning, set large number fields to character or remove them from your DBF before running GAT.
+A message like this appears in the R console: 
+
+>	In CPL_write_ogr(obj, dsn, layer, driver, as.character(dataset_options),  ... :
+> GDAL Message 1: Value 199678888 of field ALAND of feature 40 not successfully written. 
+
+This warning occurs when there are numeric fields with very large values, such as square meters of land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original DBF file against the crosswalk. To avoid this warning, set large number fields to character or remove them from your DBF before running GAT.
 
 ## My aggregation log did not write correctly
 
-This appears to occur randomly. Restarting R and rerunning your aggregation should fix it. To recreate an incorrectly written log, rerun the function [writeGATlog()](../html/writeGATlog.html) with the settingsfile option pointing to the *settings.Rdata file produced by GAT. 
+This appears to occur randomly. If you do not see your log file, check that you have extensions showing in your file manager, as ".log" may be hidden otherwise.
+
+If you still do not see the file, you can try two things. 
+
+1. Restart R and rerun your aggregation. 
+2. Rerun the function [writeGATlog()](../html/writeGATlog.html) by using `settingsfile =` followed by the full file path to your "*settings.Rdata" file produced by GAT. This will also work if your log wrote incorrectly, which appears to occur randomly.
+
+
 
 
 

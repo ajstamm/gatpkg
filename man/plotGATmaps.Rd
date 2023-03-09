@@ -67,47 +67,29 @@ to a recordPlot object and write to PDF.
 \examples{
 
 ## plot population
-# create a randomized flag variable (will not match label)
-hftown@data$GATflag <-
-  sample(
-    c(0, 10), nrow(hftown@data),
-    replace = TRUE,
-    prob = c(.9, .1)
-  )
-# plot the variable
-plotGATmaps(
-  area = hftown,
-  var = "TOTAL_POP",
-  clr = "YlGn",
-  title.main = "Population",
-  breaks = 3,
-  mapstats = TRUE
-)
+# create a flag variable (used to check for and map exceptions)
+hftown$GATflag <- 0
 
-## plot a rate
-# create a randomized flag variable (will not match labels)
-# 0 = no flag, 1-3 = excluded by user, 10 = below minimum aggregation value
-hftown@data$GATflag <-
-  sample(
-    c(0, 1, 10), nrow(hftown@data),
-    replace = TRUE,
-    prob = c(.8, .1, .1)
-  )
+# plot the population
+plotGATmaps(area = hfcw610k, var = "TOTAL_POP", clr = "YlGn",
+  title.main = "Population", breaks = 3, mapstats = TRUE)
+
+## to plot a rate
+# create a randomized flag variable (data will not match labels here)
+# 0 = no flag, 1-3 = excluded by user, 5 = above maximum aggregation value,
+# 10 = below minimum aggregation value
+hftown$GATflag <-
+  sample(c(0, 1, 5, 10), nrow(hftown), replace = TRUE,
+  prob = c(.8, .1, .05, .05))
 
 # create a rate
-hftown@data$pop_dens <- 100 * hftown@data$TOTAL_POP / hftown@data$AREALAND
-# add some random missings to illustrate uncalculated rates
-hftown@data$pop_dens[sample(length(hftown@data), 2)] <- NA
+hftown$pop_dens <- 10000 * hftown$TOTAL_POP / hftown$AREALAND
+# add a couple random missings to illustrate uncalculated rates
+hftown$pop_dens[sample(length(hftown), 2)] <- NA
 
 # plot the rate
-plotGATmaps(
-  area = hftown,
-  var = "pop_dens",
-  clr = "YlGn",
-  title.main = "population density",
-  breaks = 3,
-  mapstats = TRUE,
-  ratemap = TRUE
-)
+plotGATmaps(area = hftown, var = "pop_dens", clr = "YlGn",
+  title.main = "population density", breaks = 3,
+  mapstats = TRUE, ratemap = TRUE)
 
 }

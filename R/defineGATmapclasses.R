@@ -14,7 +14,7 @@
 #' # prepare the classes for the choropleth maps
 #' defineGATmapclasses(
 #'   areaold = hftown,
-#'   areanew = hfagg5k,
+#'   areanew = hfagg610k,
 #'   aggvar = "TOTAL_POP",
 #'   breaks = 4
 #' )
@@ -22,8 +22,8 @@
 #' @export
 
 defineGATmapclasses <- function(areaold, areanew, aggvar, breaks = 7) {
-  olddata <- as.numeric(areaold@data[, aggvar])
-  newdata <- as.numeric(areanew@data[, aggvar])
+  olddata <- as.numeric(data.frame(areaold)[, aggvar])
+  newdata <- as.numeric(data.frame(areanew)[, aggvar])
   combinedata <- c(olddata, newdata)
 
   if (length(table(combinedata)) < breaks) {

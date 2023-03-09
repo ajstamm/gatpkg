@@ -19,7 +19,7 @@
 #'   boundary = "COUNTY",        # character variable of non-unique values
 #'   popwt = FALSE,
 #'   rigidbound = FALSE,
-#'   popvar = "Pop_tot"
+#'   popvar = "Pop"
 #' )
 #'
 #' mergevars1 <- list( # similar merge
@@ -36,20 +36,11 @@
 #'   centroid = "population-weighted"
 #' )
 #'
-#' filevars <- list(
-#'   popfile = "hfblock",
-#'   poppath = paste0(find.package("gatpkg"), "/extdata")
-#' )
-#'
 #' # merge areas based on your settings
 #' # this function identifies areas to merge; it does not merge them
-#' my_merge <-
-#'   defineGATmerge(
-#'     area = hftown,
-#'     gatvars = gatvars,
-#'     mergevars = mergevars1,
-#'     filevars = filevars
-#'   )
+#' my_merge <- defineGATmerge(
+#'     area = hftown, pop = hfpop, progressbar = FALSE,
+#'     gatvars = gatvars, mergevars = mergevars1)
 #'
 #' # need all rate options if rate to be calculated
 #' # for this example, rate is ignored
@@ -66,27 +57,18 @@
 #'
 #' @export
 
-mergeGATareas <- function(ratevars, aggvars, idvar, myshp) {
+mergeGATareas <- function(ratevars, aggvars, idvar = "GATid", myshp) {
   # get the number of polygons per region, and add; has IDlist + Freq
-  numpolys <- as.data.frame(table(IDlist = aggvars$IDlist))
-  d <- aggvars$allpolydata
-  d <- merge(d, numpolys, by.x = idvar, by.y = "IDlist")
-
-  # merge doesn't preserve row names like cbind - so restore row names,
-  # but ensure they are not more than 10 characters
-  row.names(d) <- d[, idvar]
+  numpolys <- data.frame(table(IDlist = aggvars$IDlist))
+  d <- merge(aggvars$shp, numpolys, by.x = idvar, by.y = "IDlist")
   names(d)[names(d) == "Freq"] <- "GATnumIDs"
 
-  aggregated <- maptools::unionSpatialPolygons(myshp, aggvars$IDlist)
-
-  if (ratevars$ratename != "no_rate") { # if should calculate rate
-    m <- as.numeric(ratevars$multiplier)
-    myrate <- m * d[, ratevars$numerator] / d[, ratevars$denominator]
-    d <- cbind(d, myrate)
+  # if should calculate rate
+  if (ratevars$ratename != "no_rate") {
+    d$myrate <- as.numeric(ratevars$multiplier) *
+                data.frame(d)[, ratevars$numerator] /
+                data.frame(d)[, ratevars$denominator]
     names(d)[names(d) == "myrate"] <- ratevars$ratename
-  } # end if should calculate rate
-
-  aggregated <- sp::SpatialPolygonsDataFrame(aggregated, d, match.ID = TRUE)
-  # return the completed shapefile
-  return(aggregated)
+  }
+  return(d)
 }

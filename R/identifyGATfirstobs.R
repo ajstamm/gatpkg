@@ -19,7 +19,7 @@
 #'
 #' # observation with the highest POP2010
 #' my_firstobs <- identifyGATfirstobs(
-#'   tobemerged = hftown@data,
+#'   tobemerged = hftown,
 #'   aggvar = aggvar,
 #'   aggvar2 = aggvar, # repeat aggvar if only one variable
 #'   minval = minvalue,
@@ -30,13 +30,13 @@
 
 identifyGATfirstobs <- function(tobemerged, aggvar, aggvar2, minval, minval2) {
   # single line OR gives all results, double line gives only one row
-  lowpop <- order(tobemerged[, aggvar], decreasing = TRUE)
+  lowpop <- order(data.frame(tobemerged)[, aggvar], decreasing = TRUE)
 
   # to sort both high to low, take value that is highest percentage of minval
   if (aggvar != aggvar2) {
-    lowpop2 <- order(tobemerged[, aggvar2], decreasing = TRUE)
-    if ((as.numeric(tobemerged[lowpop[1], aggvar]) / minval) >=
-        (as.numeric(tobemerged[lowpop2[1], aggvar2]) / minval2)) {
+    lowpop2 <- order(data.frame(tobemerged)[, aggvar2], decreasing = TRUE)
+    if ((as.numeric(data.frame(tobemerged)[lowpop[1], aggvar]) / minval) >=
+        (as.numeric(data.frame(tobemerged)[lowpop2[1], aggvar2]) / minval2)) {
       first <- tobemerged[lowpop[1], ]
     } else {
       first <- tobemerged[lowpop2[1], ]

@@ -37,7 +37,6 @@ GE in Chrome v9.2.90.1.
 \examples{
 
 if (interactive()) {
-# choose yes or no
 saveGATkml()
 }
 

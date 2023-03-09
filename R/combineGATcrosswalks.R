@@ -41,12 +41,14 @@
 #'
 #'
 #'
+#' @export
+#'
 
 # for testing
 # path <- "P:/.../tract_mcd"
-# file1 <- "gat_step1_newmcdin.dbf"
-# file2 <- "gat_step2_newmcdin.dbf"
-# idvar <- "tract10"
+# file1 <- "gat_step1_newmcdin"
+# file2 <- "gat_step2_newmcdin"
+# idvar <- "tract10" # key
 
 combineGATcrosswalks <- function(path, file1, file2, idvar) {
   # clean filepath and filenames ####
@@ -74,35 +76,33 @@ combineGATcrosswalks <- function(path, file1, file2, idvar) {
   path <- gsub("/$", "/", path)
 
   # load crosswalks ####
-  old <- rgdal::readOGR(dsn = path, layer = file1,
-                        stringsAsFactors = FALSE)
-  key1 <- old@data
-  key2 <- foreign::read.dbf(paste0(path, "/", file2, ".dbf"), as.is = TRUE)
+  old <- sf::st_read(dsn = path, layer = file1)
+  # key1 <- old@data
+  key2 <- sf::st_read(dsn = path, layer = file2)
+  key2 <- data.frame(key2)
 
   # combine crosswalks ####
-  names(key1)[names(key1) == "GATid"] <- "tempid"
+  names(old)[names(old) == "GATid"] <- "tempid"
   names(key2)[names(key2) == idvar] <- "tempid"
   key2 <- key2[, c("tempid", "GATid")]
-  key <- merge(key1, key2, by = "tempid")
+  old <- merge(old, key2, by = "tempid")
 
-  old@data <- key
-  rgdal::writeOGR(old, path, paste0(file1, "_combined"),
-                  driver = "ESRI Shapefile", verbose = TRUE,
-                  overwrite_layer = TRUE)
+  sf::st_write(old, path, paste0(file1, "_combined"),
+               driver = "ESRI Shapefile", verbose = TRUE,
+               overwrite_layer = TRUE)
 
   # add correct area numbers ####
-  num_areas <- data.frame(table(key$GATid))
+  num_areas <- data.frame(table(old$GATid))
   names(num_areas) <- c(idvar, "GATnumIDs")
 
-  new <- rgdal::readOGR(dsn = path, layer = gsub("in$", "", file2),
-                        stringsAsFactors = FALSE)
+  new <- sf::st_read(dsn = path, layer = gsub("in$", "", file2))
 
-  l <- names(new@data)[names(new@data) != "GATnumIDs"]
-  n <- new@data[, l]
-  n <- merge(n, num_areas, by = idvar)
-  new@data <- n
+  l <- names(new)[names(new) != "GATnumIDs"]
+  n <- new[, l]
+  new <- merge(n, num_areas, by = idvar)
 
-  rgdal::writeOGR(new, path, paste0(gsub("in$", "", file2), "_combined"),
-                  driver = "ESRI Shapefile", verbose = TRUE,
-                  overwrite_layer = TRUE)
+  sf::st_write(new, path, paste0(gsub("in$", "", file2), "_combined"),
+               driver = "ESRI Shapefile", verbose = TRUE,
+               overwrite_layer = TRUE)
 }
+

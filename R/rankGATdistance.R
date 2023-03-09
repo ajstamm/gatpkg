@@ -22,19 +22,16 @@
 #'
 #' @examples
 #' # add GAT variables
-#' centroids <- sp::coordinates(hftown)
+#' centroids <- sf::st_coordinates(sf::st_geometry(sf::st_centroid(hftown)))
 #' colnames(centroids) <- c("GATx", "GATy")
-#' my_data <- data.frame(hftown@data, centroids)
-#' first <-
-#'   my_data[which(
-#'     grepl("37374", my_data$ID)
-#'   ), ]                        # only one observation
+#' my_data <- data.frame(hftown, centroids)
+#' my_data <- sf::st_as_sf(my_data, coords = c("GATx", "GATy"),
+#'                         crs = sf::st_crs(hftown))
+#' first <- my_data[which(grepl("37374", my_data$ID)), ] # only one observation
 #'
 #' # hard coded for simplicity; use spdep::poly2nb() to get these obs
-#' nbdata <-
-#'   my_data[which(
-#'     grepl("43412|02572|40794|79059", my_data$ID)
-#'   ), ]                        # only adjacent neighbors to first
+#' nbdata <- my_data[which(grepl("43412|02572|40794|79059", my_data$ID)), ]
+#'           # only adjacent neighbors to first
 #'
 #' gatvars <- list(
 #'   myidvar = "ID",             # character variable of unique values
@@ -51,39 +48,43 @@
 #'   similar2 = "W_TOT"        # numeric variable without any zeros
 #' )
 #' # rank the distances
-#' my_rank_list <-
-#'   rankGATdistance(
-#'     area = hftown,
-#'     nbdata = nbdata,
-#'     first = first,
-#'     gatvars = gatvars,
-#'     mergevars = mergevars
-#'   )
+#' my_rank_list <- rankGATdistance(area = hftown, nbdata = nbdata,
+#'                                 first = first, gatvars = gatvars,
+#'                                 mergevars = mergevars)
 #'
 #' @export
 
 rankGATdistance <- function(area, nbdata, first, gatvars, mergevars) {
+  # temporary sf conversion
+  area <- sf::st_as_sf(area)
+  nbdata <- sf::st_as_sf(nbdata)
+  first <- sf::st_as_sf(first)
+
+  min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
+  min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
+
+
   # distance for lat/long, in kilometers
   # if projection is lat/lon, projection = TRUE, otherwise FALSE
-  projection = grepl("longlat", sp::proj4string(area), fixed = TRUE)
+  projection <- sum(grepl("longlat", sf::st_crs(area), fixed = TRUE)) > 0
   # default to not lat/long if something goes wrong
   if (is.na(projection)) projection <- FALSE
 
   # if longlat = FALSE, euclidian distance in metric of points
-  mydist <- sp::spDistsN1(as.matrix(nbdata[, c("GATx", "GATy")]),
-                          as.matrix(first[, c("GATx", "GATy")]),
-                          longlat = projection)
+  mydist <- sf::st_distance(nbdata$geometry, first$geometry)
   nborder <- order(mydist) # order according to distance, this will be default
 
   # order according to aggregation variable (i.e. cases or population)
-  if (mergevars$mergeopt2 == "least" & gatvars$aggregator2 == "NONE"){
-    nborder<-order(nbdata[, gatvars$aggregator1])
-  } else if (mergevars$mergeopt2 == "least" & gatvars$aggregator2 != "NONE"){
-    nborder1<-order(nbdata[, gatvars$aggregator1])
-    nborder2<-order(nbdata[, gatvars$aggregator2])
-    if (nbdata[nborder1[1], gatvars$aggregator1] / gatvars$minvalue1 <=
-        nbdata[nborder2[1], gatvars$aggregator2] / gatvars$minvalue2) {
-      nborder<-nborder1
+  if (mergevars$mergeopt2 == "least" &
+      gatvars$aggregator2 %in% c("NONE", gatvars$aggregator1)) {
+    nborder <- order(data.frame(nbdata)[, gatvars$aggregator1])
+  } else if (mergevars$mergeopt2 == "least" &
+             !gatvars$aggregator2 %in% c("NONE", gatvars$aggregator1)) {
+    nborder1 <- order(data.frame(nbdata)[, gatvars$aggregator1])
+    nborder2 <- order(data.frame(nbdata)[, gatvars$aggregator2])
+    if (data.frame(nbdata)[nborder1[1], gatvars$aggregator1] / min1 <=
+        data.frame(nbdata)[nborder2[1], gatvars$aggregator2] / min2) {
+      nborder <- nborder1
     } else {
       nborder <- nborder2
     }
@@ -91,8 +92,10 @@ rankGATdistance <- function(area, nbdata, first, gatvars, mergevars) {
 
   # order according to similarity
   if (mergevars$mergeopt2 == "similar") {
-    nborder <- order(abs(nbdata[, mergevars$similar1] / nbdata[, mergevars$similar2] -
-                         first[, mergevars$similar1] / first[, mergevars$similar2]))
+    nborder <- order(abs(data.frame(nbdata)[, mergevars$similar1] /
+                           data.frame(nbdata)[, mergevars$similar2] -
+                           data.frame(first)[, mergevars$similar1] /
+                           data.frame(first)[, mergevars$similar2]))
   }
   return(nborder)
 }
