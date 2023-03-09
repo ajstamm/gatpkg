@@ -2,7 +2,7 @@ Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
 Version: 2.0.0
-Date: 2022-04-13
+Date: 2023-03-09
 Authors@R: c(
     person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 
       role = c("cre", "aut"), comment = "author of R package"),
@@ -18,11 +18,12 @@ Authors@R: c(
       role = c("fnd"), comment = "Grant NUE1EH001341-03-01"))
 Maintainer: Abigail Stamm, NYSDOH EPHT <epht@health.ny.gov>
 Description: The purpose of this package is to run the New York State 
-    Department of Health’s Geographic Aggregation Tool (GAT) in R. GAT takes 
-    an input shapefile and aggregates polygons based on user-defined numeric 
-    values, then returns the new shapefile, the old shapefile with a crosswalk 
-    attached, and other diagnostic information. See the vignettes and the 
-    functions' help documentation for more details on how GAT works.
+    Department of Health (NYSDOH)  Environmental Public Health Tracking 
+    Geographic Aggregation Tool (GAT) in R. GAT takes an input shapefile and 
+    aggregates polygons based on user-defined numeric values, then returns 
+    the new shapefile, the old shapefile with a crosswalk attached, and 
+    other diagnostic information. See the vignettes and the functions' help 
+    documentation for more details on how GAT works.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -49,6 +50,6 @@ Suggests:
 RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/ajstamm/gatpkg
-BugReports: https://github.com/ajstamm/gatpkg/issues
+URL: https://github.com/nystracking/gatpkg
+BugReports: https://github.com/nystracking/gatpkg/issues
 
