@@ -20,8 +20,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -34,17 +32,23 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -82,7 +86,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ajstamm/gatpkg/" class="external-link">
+  <a href="https://github.com/ajstamm/gatpkg/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,46 +101,56 @@
 
       
 
-      </header><div class="row">
+      </header><script src="gat_citation_files/header-attrs-2.20/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Geographic Aggregation Tool (GAT) Citation Information</h1>
-                        <h4 data-toc-skip class="author">Abigail Stamm</h4>
+      <h1 data-toc-skip>Geographic Aggregation Tool (GAT) Citation
+Information</h1>
+                        <h4 class="author">Abigail Stamm</h4>
             
-            <h4 data-toc-skip class="date">2022-01-04</h4>
+            <h4 class="date">2023-03-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_citation.Rmd" class="external-link"><code>vignettes/gat_citation.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_citation.Rmd"><code>vignettes/gat_citation.Rmd</code></a></small>
       <div class="hidden name"><code>gat_citation.Rmd</code></div>
 
     </div>
 
     
     
-<div class="section level1">
-<h1 id="citation-and-feedback">Citation and feedback<a class="anchor" aria-label="anchor" href="#citation-and-feedback"></a>
-</h1>
-<p>Suggestions for improvement and bug reports are welcome. Send feedback to <a href="mailto:epht@health.ny.gov?subject=%5BGAT%20in%20R%5D">NYSDOH EPHT</a> and include <em>GAT in R</em> in the subject line.</p>
-<p>If you use any part of the GAT package, please cite it. For the suggested citation, type:</p>
+<div id="citation-and-feedback" class="section level1">
+<h1 class="hasAnchor">
+<a href="#citation-and-feedback" class="anchor"></a>Citation and feedback</h1>
+<p>Suggestions for improvement and bug reports are welcome. Send
+feedback to <a href="mailto:epht@health.ny.gov?subject=%5BGAT%20in%20R%5D">NYSDOH
+EPHT</a> and include <em>GAT in R</em> in the subject line.</p>
+<p>If you use any part of the GAT package, please cite it. For the
+suggested citation, type:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"gatpkg"</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; To cite package 'gatpkg' in publications use:</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   Abigail Stamm and Gwen Babcock (2022). gatpkg: Geographic Aggregation</span>
-<span class="co">#&gt;   Tool (GAT). R package version 1.61.1.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; A BibTeX entry for LaTeX users is</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   @Manual{,</span>
-<span class="co">#&gt;     title = {gatpkg: Geographic Aggregation Tool (GAT)},</span>
-<span class="co">#&gt;     author = {Abigail Stamm and Gwen Babcock},</span>
-<span class="co">#&gt;     year = {2022},</span>
-<span class="co">#&gt;     note = {R package version 1.61.1},</span>
-<span class="co">#&gt;   }</span></code></pre></div>
-<div class="section level2">
-<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
-</h2>
-<p>The conversion of GAT to an R package would not have been possible without the support of the Centers for Disease Control and Prevention (CDC) National Environmental Health Tracking Program (NEPHT) and NYS Department of Health (NYSDOH) Bureau of Environmental and Occupational Epidemiology (BEOE) staff and interns, including:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html">citation</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"gatpkg"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; To cite package 'gatpkg' in publications use:</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   Stamm A, Babcock G (2023). _gatpkg: Geographic Aggregation Tool</span></span>
+<span><span class="co">#&gt;   (GAT)_. R package version 2.0.0,</span></span>
+<span><span class="co">#&gt;   &lt;https://github.com/nystracking/gatpkg&gt;.</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; A BibTeX entry for LaTeX users is</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   @Manual{,</span></span>
+<span><span class="co">#&gt;     title = {gatpkg: Geographic Aggregation Tool (GAT)},</span></span>
+<span><span class="co">#&gt;     author = {Abigail Stamm and Gwen Babcock},</span></span>
+<span><span class="co">#&gt;     year = {2023},</span></span>
+<span><span class="co">#&gt;     note = {R package version 2.0.0},</span></span>
+<span><span class="co">#&gt;     url = {https://github.com/nystracking/gatpkg},</span></span>
+<span><span class="co">#&gt;   }</span></span></code></pre></div>
+<div id="acknowledgements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
+<p>The conversion of GAT to an R package would not have been possible
+without the support of the Centers for Disease Control and Prevention
+(CDC) National Environmental Health Tracking Program (NEPHT) and NYS
+Department of Health (NYSDOH) Bureau of Environmental and Occupational
+Epidemiology (BEOE) staff and interns, including:</p>
 <p><strong>Major contributors</strong><br>
 Abigail Stamm, NYSDOH BEOE<br>
 Gwen (Babcock) LaSelva, NYSDOH BEOE<br>
@@ -151,7 +165,11 @@ Marine Nalbandyan</p>
 <p><strong>Beta testers</strong><br>
 Angela Werner, CDC NEPHT<br>
 Aya Abdelfattah, NYSDOH BEOE</p>
-<p>GAT was made possible through funding made available to the New York State Department of Health / HRI by the CDC through grant # NUE1EH001341-03-01. Its content is solely the responsibility of the authors and does not necessarily represent the official views of the CDC.</p>
+<p>GAT was made possible through funding made available to the New York
+State Department of Health / HRI by the CDC through grant #
+NUE1EH001341-03-01. Its content is solely the responsibility of the
+authors and does not necessarily represent the official views of the
+CDC.</p>
 </div>
 </div>
   </div>
@@ -167,13 +185,11 @@ Aya Abdelfattah, NYSDOH BEOE</p>
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -181,8 +197,6 @@ Aya Abdelfattah, NYSDOH BEOE</p>
 
   
 
-
-  
 
   </body>
 </html>

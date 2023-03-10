@@ -1,5 +1,40 @@
 # Geographic Aggregation Tool (GAT) Change Log
 
+
+## [GAT v2.0.0](gatpkg_2.0.0.tar.gz) (March 9, 2023)
+
+> Use this version of GAT for R version 4.0 and above.
+> You must use this version of GAT for R version 4.2 and above.
+
+* Added advanced options to the settings file and log.
+* Converted all instances of rgeos, rgdal, lwgeom, foreign, and sp to sf and removed those dependencies. 
+* Converted all uses of tcltk2 to tcltk and removed dependency on tcltk2 as it was crashing RStudio with R4.2.0.
+* Revised and standardized all pop-up fonts and colors except the pre-defined progress bar and file-selection window.
+* Revised writeGATkml() to use sf and removed dependency on plotKML.
+* Revised population weighting to read in the population file only once.
+* Removed checkGATshapefilesize() as support for memory.limit() is ending. 
+* Added a 'GATid' variable to clone the selected merge variable instead of overwriting it.
+* Fixed the bug that incorrectly assigned GATid for the crosswalk and messed up the final aggregated areas.
+* Fixed the bug that caused GAT to crash if the user prematurely closed the progress bar.
+* Clarified possible issues in the troubleshooting vignette.
+* Fixed bugs in defineGATmerge() and identifyGATfirstobs() that caused GAT to crash.
+
+# [gatpkg v1.62.0](gatpkg_1.62.0.tar.gz) (January 1, 2023)
+
+> Use this version of GAT for R versions 3.5 to 4.1. 
+
+* Minor edits. Last GAT version before the overhaul.
+
+# gatpkg v1.61.2 (April 13, 2022)
+
+* Patched to replace plotKML in writeGATkml with sf::st_write because plotKML was removed from CRAN.
+
+## GAT v1.61.1 (January 4, 2022)
+
+* Added structure for pkgdown.
+* Fixed typos and formatting issues in documentation.
+
+
 ## [GAT v1.61.0](gatpkg_1.61.0.tar.gz) (February 8, 2021)
 
 * Added vignette "Assessing GAT Results".
@@ -36,7 +71,9 @@
 * Addressed bug fixes in defineGATmerge.
 * Added XML and network saving issues to the troubleshooting document.
 
-## GAT v1.60.0 (Jan 2019 - Jul 2020)
+## [GAT v1.60.0](gatpkg_1.60.0.tar.gz) (Jan 2019 - Jul 2020)
+
+> Use this version of GAT for R version 3.4 to 3.6.
 
 All changes from January 2019 onward by Abigail Stamm.
 

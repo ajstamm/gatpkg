@@ -2,6 +2,8 @@
 
 # Run once to configure package to use pkgdown
 # usethis::use_pkgdown()
+# weird bug in pkgdown v2.0 where you need to install ragg first? didn't work
+# reverted to pkgdown v1.6.1
 
 # deactivate internet check - will sync later
 options(pkgdown.internet = F)

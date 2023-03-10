@@ -20,8 +20,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -34,17 +32,23 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -82,7 +86,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ajstamm/gatpkg/" class="external-link">
+  <a href="https://github.com/ajstamm/gatpkg/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,109 +101,181 @@
 
       
 
-      </header><div class="row">
+      </header><script src="gat_changelog_files/header-attrs-2.20/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Geographic Aggregation Tool (GAT) Change Log</h1>
-                        <h4 data-toc-skip class="author">Abigail Stamm</h4>
+      <h1 data-toc-skip>Geographic Aggregation Tool (GAT) Change
+Log</h1>
+                        <h4 class="author">Abigail Stamm</h4>
             
-            <h4 data-toc-skip class="date">2022-01-04</h4>
+            <h4 class="date">2023-03-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_changelog.Rmd" class="external-link"><code>vignettes/gat_changelog.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_changelog.Rmd"><code>vignettes/gat_changelog.Rmd</code></a></small>
       <div class="hidden name"><code>gat_changelog.Rmd</code></div>
 
     </div>
 
     
     
-<div class="section level2">
-<h2 id="gat-v1-61-1-january-4-2021">GAT v1.61.1 (January 4, 2021)<a class="anchor" aria-label="anchor" href="#gat-v1-61-1-january-4-2021"></a>
-</h2>
+<div id="gat-v2-0-0-march-9-2023" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v2-0-0-march-9-2023" class="anchor"></a>GAT v2.0.0 (March 9, 2023)</h2>
+<ul>
+<li>Added advanced options to the settings file and log.</li>
+<li>Converted all instances of rgeos, rgdal, lwgeom, foreign, and sp to
+sf and removed those dependencies.</li>
+<li>Converted all uses of tcltk2 to tcltk and removed dependency on
+tcltk2 as it was crashing RStudio with R4.2.0.</li>
+<li>Revised and standardized all pop-up fonts and colors except the
+pre-defined progress bar and file-selection window.</li>
+<li>Revised writeGATkml() to use sf and removed dependency on
+plotKML.</li>
+<li>Revised population weighting to read in the population file only
+once.</li>
+<li>Removed checkGATshapefilesize() as support for memory.limit() is
+ending.</li>
+<li>Added a ‘GATid’ variable to clone the selected merge variable
+instead of overwriting it.</li>
+<li>Fixed the bug that incorrectly assigned GATid for the crosswalk and
+messed up the final aggregated areas.</li>
+<li>Fixed the bug that caused GAT to crash if the user prematurely
+closed the progress bar.</li>
+<li>Clarified possible issues in the troubleshooting vignette.</li>
+<li>Fixed bugs in defineGATmerge() and identifyGATfirstobs() that caused
+GAT to crash.</li>
+</ul>
+</div>
+<div id="gatpkg-v1-62-0-january-1-2023" class="section level1">
+<h1 class="hasAnchor">
+<a href="#gatpkg-v1-62-0-january-1-2023" class="anchor"></a>gatpkg v1.62.0 (January 1, 2023)</h1>
+<ul>
+<li>Minor edits; last version before the overhaul</li>
+</ul>
+</div>
+<div id="gatpkg-v1-61-2-april-13-2022" class="section level1">
+<h1 class="hasAnchor">
+<a href="#gatpkg-v1-61-2-april-13-2022" class="anchor"></a>gatpkg v1.61.2 (April 13, 2022)</h1>
+<ul>
+<li>Patched to replace plotKML in writeGATkml with sf::st_write because
+plotKML was removed from CRAN.</li>
+</ul>
+<div id="gat-v1-61-1-january-4-2022" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v1-61-1-january-4-2022" class="anchor"></a>GAT v1.61.1 (January 4, 2022)</h2>
 <ul>
 <li>Added structure for pkgdown.</li>
 <li>Fixed typos and formatting issues in documentation.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="gat-v1-61-0-february-8-2021">GAT v1.61.0 (February 8, 2021)<a class="anchor" aria-label="anchor" href="#gat-v1-61-0-february-8-2021"></a>
-</h2>
+<div id="gat-v1-61-0-february-8-2021" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v1-61-0-february-8-2021" class="anchor"></a>GAT v1.61.0 (February 8, 2021)</h2>
 <ul>
 <li>Added vignette “Assessing GAT Results”.</li>
-<li>Fixed bugs and typos in confirmGATbystep() and runGATprogram(), notably the bug that incorrectly displayed number of excluded areas over maximum.</li>
-<li>Added objects “ismax1”, “ismin2”, and “ismax2” to the gatvars list object to track if minimum and maximum values were defined by the user and added this information to the log.</li>
-<li>Created a separate section in the technical notes to describe variables created by GAT.</li>
-<li>Moved citation and acknowledgements from set-up to a separate vignette.</li>
-<li>Restructured locateGATshapefile() to add a modifiable status bar option.</li>
+<li>Fixed bugs and typos in <code><a href="../reference/confirmGATbystep.html">confirmGATbystep()</a></code> and
+<code><a href="../reference/runGATprogram.html">runGATprogram()</a></code>, notably the bug that incorrectly displayed
+number of excluded areas over maximum.</li>
+<li>Added objects “ismax1”, “ismin2”, and “ismax2” to the gatvars list
+object to track if minimum and maximum values were defined by the user
+and added this information to the log.</li>
+<li>Created a separate section in the technical notes to describe
+variables created by GAT.</li>
+<li>Moved citation and acknowledgements from set-up to a separate
+vignette.</li>
+<li>Restructured <code><a href="../reference/locateGATshapefile.html">locateGATshapefile()</a></code> to add a modifiable
+status bar option.</li>
 <li>Added and revised several function examples.</li>
-<li>Added the following function options (and corresponding code in runGATprogram):
+<li>Added the following function options (and corresponding code in
+runGATprogram):
 <ul>
-<li>writeGATlog: added settingsfile option to allow incorrectly written logs to be regenerated from the settings.Rdata file produced by GAT</li>
-<li>defineGATmerge: added progressbar option to suppress the progress bar if desired</li>
-<li>plotGATmaps and plotGATcompare: added closemap option to automatically close map windows if desired</li>
+<li>
+<code><a href="../reference/writeGATlog.html">writeGATlog()</a></code>: added settingsfile option to allow
+incorrectly written logs to be regenerated from the settings.Rdata file
+produced by GAT</li>
+<li>
+<code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code>: added progressbar option to suppress
+the progress bar if desired</li>
+<li>
+<code><a href="../reference/plotGATmaps.html">plotGATmaps()</a></code> and <code><a href="../reference/plotGATcompare.html">plotGATcompare()</a></code>: added
+closemap option to automatically close map windows if desired</li>
 </ul>
 </li>
 <li>Dropped compatibility for R-3.4.0.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="gat-v1-60-3-august-31-2020">GAT v1.60.3 (August 31, 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-3-august-31-2020"></a>
-</h2>
+<div id="gat-v1-60-3-august-31-2020" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v1-60-3-august-31-2020" class="anchor"></a>GAT v1.60.3 (August 31, 2020)</h2>
 <ul>
-<li>Added vignette “Preparing your shapefile for GAT”.</li>
+<li>Added vignette <a href="gat_prepare_shapefile.html">Preparing your
+shapefile for GAT</a>.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="gat-v1-60-2-august-14-2020">GAT v1.60.2 (August 14, 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-2-august-14-2020"></a>
-</h2>
+<div id="gat-v1-60-2-august-14-2020" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v1-60-2-august-14-2020" class="anchor"></a>GAT v1.60.2 (August 14, 2020)</h2>
 <ul>
-<li>Completed bug fixes in defineGATmerge.</li>
-<li>Added function aggregateGATnb, which is used in defineGATmerge.</li>
+<li>Completed bug fixes in <code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code>.</li>
+<li>Added function <code><a href="../reference/aggregateGATnb.html">aggregateGATnb()</a></code>, which is used in
+<code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code>.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="gat-v1-60-1-august-6-2020">GAT v1.60.1 (August 6, 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-1-august-6-2020"></a>
-</h2>
+<div id="gat-v1-60-1-august-6-2020" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v1-60-1-august-6-2020" class="anchor"></a>GAT v1.60.1 (August 6, 2020)</h2>
 <ul>
-<li>Addressed bug fixes in defineGATmerge.</li>
-<li>Added XML and network saving issues to the troubleshooting document.</li>
+<li>Patched bugs in <code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code>.</li>
+<li>Added XML and network saving issues to the troubleshooting
+document.</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="gat-v1-60-0-jan-2019---jul-2020">GAT v1.60.0 (Jan 2019 - Jul 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-0-jan-2019---jul-2020"></a>
-</h2>
+<div id="gat-v1-60-0-jan-2019---jul-2020" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v1-60-0-jan-2019---jul-2020" class="anchor"></a>GAT v1.60.0 (Jan 2019 - Jul 2020)</h2>
 <p>All changes from January 2019 onward by Abigail Stamm.</p>
 <blockquote>
-<p>Below is a summary of differences between the R script for GAT released in 2015 and the first beta release of the R package for GAT in 2020.</p>
+<p>Below is a summary of differences between the R script for GAT
+released in 2015 and the first beta release of the R package for GAT in
+2020.</p>
 </blockquote>
-<div class="section level4">
-<h4 id="coding-changes">Coding changes<a class="anchor" aria-label="anchor" href="#coding-changes"></a>
-</h4>
+<div id="coding-changes" class="section level4">
+<h4 class="hasAnchor">
+<a href="#coding-changes" class="anchor"></a>Coding changes</h4>
 <ul>
-<li>Reordered GAT steps by section: user input, aggregation, mapping, and file saving.</li>
-<li>Converted all instances of svdialogs to tcltk and where possible, upgraded tcltk code to tcltk2.</li>
-<li>Rewrote KML code to use plotKML(), which sped it up considerably.</li>
-<li>Rewrote and expanded quit code to request quit confirmation and not crash GAT.</li>
+<li>Reordered GAT steps by section: user input, aggregation, mapping,
+and file saving.</li>
+<li>Converted all instances of svdialogs to tcltk and where possible,
+upgraded tcltk code to tcltk2.</li>
+<li>Rewrote KML code to use <code>plotKML()</code>, which sped it up
+considerably.</li>
+<li>Rewrote and expanded quit code to request quit confirmation and not
+crash GAT.</li>
 <li>Standardized GAT-created variable names.</li>
 <li>Made GAT ID length dynamic and consistent.</li>
 <li>Expanded error messaging and improved its precision.</li>
 <li>Added dialogs to handle incorrectly entered data on the fly.</li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="resource-changes">Resource changes<a class="anchor" aria-label="anchor" href="#resource-changes"></a>
-</h4>
+<div id="resource-changes" class="section level4">
+<h4 class="hasAnchor">
+<a href="#resource-changes" class="anchor"></a>Resource changes</h4>
 <ul>
-<li>Created over 30 functions with accompanying help files and examples.</li>
-<li>Developed several vignettes, including a tutorial, and expanded the technical notes and troubleshooting documents.</li>
-<li>Replaced statewide and Albany shapefiles with two smaller shapefiles, hftown and hfblock, and updated examples to use only these files.</li>
+<li>Created over 30 functions with accompanying help files and
+examples.</li>
+<li>Developed several vignettes, including a tutorial, and expanded the
+technical notes and troubleshooting documents.</li>
+<li>Replaced statewide and Albany shapefiles with two smaller
+shapefiles, hftown and hfblock, and updated examples to use only these
+files.</li>
 <li>Removed simulated birth data and references to it.</li>
 <li>Added citation, license, and funding information.</li>
-<li>Added a function to combine results after running a shapefile through GAT, then running its result through GAT.</li>
+<li>Added a function to combine results after running a shapefile
+through GAT, then running its result through GAT.</li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="user-input-changes">User input changes<a class="anchor" aria-label="anchor" href="#user-input-changes"></a>
-</h4>
+<div id="user-input-changes" class="section level4">
+<h4 class="hasAnchor">
+<a href="#user-input-changes" class="anchor"></a>User input changes</h4>
 <ul>
 <li>Reordered and restructured user input dialogs.</li>
 <li>Added help button and instructions to user input dialogs.</li>
@@ -212,84 +288,111 @@
 <li>up to 3 exclusion criteria (numeric only)</li>
 <li>option not to write KML file</li>
 <li>saving and rerunning prior settings</li>
-<li>confirmation dialog that allows user to return to previous steps</li>
+<li>confirmation dialog that allows user to return to previous
+steps</li>
 </ul>
 </li>
 </ul>
 </div>
-<div class="section level4">
-<h4 id="output-changes">Output changes<a class="anchor" aria-label="anchor" href="#output-changes"></a>
-</h4>
+<div id="output-changes" class="section level4">
+<h4 class="hasAnchor">
+<a href="#output-changes" class="anchor"></a>Output changes</h4>
 <ul>
 <li>Added aggregation and summary information to maps.</li>
 <li>Added map layers for excluded and problematic areas.</li>
 <li>Saved all maps to a PDF file.</li>
-<li>Added all settings, aggregation warnings, and GAT-created variables and files to the log.</li>
+<li>Added all settings, aggregation warnings, and GAT-created variables
+and files to the log.</li>
 <li>Added a list of saved files to the console.</li>
 <li>Saved GAT settings in an Rdata object to be reread into GAT.</li>
 <li>Made saving to KML optional.</li>
 </ul>
 </div>
 </div>
-<div class="section level2">
-<h2 id="gat-v1-34-release-date-aug-28-2015">GAT v1.34 (Release date: Aug 28, 2015)<a class="anchor" aria-label="anchor" href="#gat-v1-34-release-date-aug-28-2015"></a>
-</h2>
+<div id="gat-v1-34-release-date-aug-28-2015" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-v1-34-release-date-aug-28-2015" class="anchor"></a>GAT v1.34 (Release date: Aug 28, 2015)</h2>
 <p>All changes prior to 2019 by Gwen Babcock.</p>
 <blockquote>
-<p>Changes prior to 2019 are listed below as they were entered in the program comments, with minor formatting changes. Most do not appear to correspond directly to specific versions. Comments appear to cover a mix of actual and planned changes.</p>
+<p>Changes prior to 2019 are listed below as they were entered in the
+program comments, with minor formatting changes. Most do not appear to
+correspond directly to specific versions. Comments appear to cover a mix
+of actual and planned changes.</p>
 </blockquote>
 <ul>
 <li>Jan 11, 2009 modified to add kml output
 <ul>
-<li>want to add capability to use two variables, and to merge from the highest down instead of lowest up</li>
-<li>modify to use rgdal to read &amp; write shapefile. It allows for projection info, but does have other limitations</li>
-<li>Note: need to explicitly specify any libraries needed to run as a batch file, even those that would ordinarily be loaded by default</li>
-<li>have problem with svDialog list. We hypothesize that it can bomb if the list contains less than 3 items so modify the program accordingly</li>
+<li>want to add capability to use two variables, and to merge from the
+highest down instead of lowest up</li>
+<li>modify to use rgdal to read &amp; write shapefile. It allows for
+projection info, but does have other limitations</li>
+<li>Note: need to explicitly specify any libraries needed to run as a
+batch file, even those that would ordinarily be loaded by default</li>
+<li>have problem with svDialog list. We hypothesize that it can bomb if
+the list contains less than 3 items so modify the program
+accordingly</li>
 </ul>
 </li>
-<li>April 20, 2009 modify to put compactness ratio measure in output data</li>
-<li>beta v5 June 21, 2010 change dialogs to add ‘back’ and ‘help’ options</li>
-<li>beta v6 July 15, 2010 add option to calculate rate, added popup when aggregation occurs to warn of slowness
+<li>April 20, 2009 modify to put compactness ratio measure in output
+data</li>
+<li>beta v5 June 21, 2010 change dialogs to add ‘back’ and ‘help’
+options</li>
+<li>beta v6 July 15, 2010 add option to calculate rate, added popup when
+aggregation occurs to warn of slowness
 <ul>
 <li>added column with number of areas per region</li>
 <li>add comparison of file size with memory availability</li>
 </ul>
 </li>
-<li>beta v6.1 December 7, 2010 add conditional code to run gpclibPermit() function if needed</li>
+<li>beta v6.1 December 7, 2010 add conditional code to run
+gpclibPermit() function if needed</li>
 <li>December 10, 2010 change name to production version 1.0</li>
 <li>Dec 14, 2010 add merging option to most similar neighbor</li>
-<li>May 2011 v 1.2 bug fixes: check for errors in rate calculations and remove extra linking variable before re-exporting input shapfile</li>
-<li>October 27, 2011 found bug: will not export shapefile if field names are more than 10 characters
+<li>May 2011 v 1.2 bug fixes: check for errors in rate calculations and
+remove extra linking variable before re-exporting input shapfile</li>
+<li>October 27, 2011 found bug: will not export shapefile if field names
+are more than 10 characters
 <ul>
-<li>fix this by adding substring function to reduce variable name length if needed</li>
+<li>fix this by adding substring function to reduce variable name length
+if needed</li>
 </ul>
 </li>
 <li>Sept 27,2012 modify to not standardize compactness ratios</li>
-<li>Feb 13, 2013 include version number and date in message, so it will be included in the log</li>
+<li>Feb 13, 2013 include version number and date in message, so it will
+be included in the log</li>
 <li>Aug 15, 2013 modify to work in R 3.0.1
 <ul>
 <li>That looks like it will take a lot of work</li>
-<li>some packages I used before are no longer available, such as gpclib</li>
+<li>some packages I used before are no longer available, such as
+gpclib</li>
 <li>svDialogs has changed - new function names</li>
 <li>add progress dialog</li>
 <li>also make KML output always, reprojecting if needed</li>
 <li>need to wait for listboxes to be visible before populating them</li>
 </ul>
 </li>
-<li>October 31, 2013 add code to make similarity based on a ratio, not a count</li>
-<li>November 5, 2013 change logic to merge in same specified boundary whenever possible, even if not contiguous</li>
-<li>November 7, 2013 test rates and similarity ratios for zero denominators. Don’t allow them for similarity, but plot the rates while ignoring bad values</li>
-<li>November 8, 2013 change rate plot to show integers only, and use jenks (natural breaks) because quintiles was not working</li>
-<li>Feb 5, 2014 fix bugs in transformations - wrong formula to calculate UTM zones; rename version to v1.31</li>
-<li>June 13, 2014 add filter to open dialog to limit view to shapefiles.</li>
-<li>April 10, 2015 fix problem: limit dialog messages to 255 characters</li>
+<li>October 31, 2013 add code to make similarity based on a ratio, not a
+count</li>
+<li>November 5, 2013 change logic to merge in same specified boundary
+whenever possible, even if not contiguous</li>
+<li>November 7, 2013 test rates and similarity ratios for zero
+denominators. Don’t allow them for similarity, but plot the rates while
+ignoring bad values</li>
+<li>November 8, 2013 change rate plot to show integers only, and use
+jenks (natural breaks) because quintiles was not working</li>
+<li>Feb 5, 2014 fix bugs in transformations - wrong formula to calculate
+UTM zones; rename version to v1.31</li>
+<li>June 13, 2014 add filter to open dialog to limit view to
+shapefiles.</li>
+<li>April 10, 2015 fix problem: limit dialog messages to 255
+characters</li>
 <li>August 28, 2015 fix typo mergoption-&gt;mergeoption</li>
 <li>November 20, 2015 fix typo indentified-&gt;identified</li>
 </ul>
 </div>
-<div class="section level2">
-<h2 id="package-notes-as-of-gat-v1-34">Package notes as of GAT v1.34<a class="anchor" aria-label="anchor" href="#package-notes-as-of-gat-v1-34"></a>
-</h2>
+<div id="package-notes-as-of-gat-v1-34" class="section level2">
+<h2 class="hasAnchor">
+<a href="#package-notes-as-of-gat-v1-34" class="anchor"></a>Package notes as of GAT v1.34</h2>
 <ol style="list-style-type: decimal">
 <li>attached base packages:
 <ul>
@@ -335,6 +438,7 @@
 </li>
 </ol>
 </div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -348,13 +452,11 @@
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -362,8 +464,6 @@
 
   
 
-
-  
 
   </body>
 </html>

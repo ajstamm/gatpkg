@@ -4,7 +4,14 @@
 * Removed dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp.
 * Removed `checkGATshapefilesize` and fixed bugs. 
 * Added advanced options to the settings file and log.
-* Fixed a bug that overwrote the flag variable, causing aggregation to fail.
+* Fixed several bugs that broke GAT.
+* Revised and standardized all pop-up fonts and colors except the pre-defined progress bar and file-selection window.
+* Revised population weighting to read in the population file only once.
+* Added a 'GATid' variable to clone the selected merge variable instead of overwriting it.
+
+# gatpkg v1.62.0
+
+* Minor edits; last version before the overhaul.
 
 # gatpkg v1.61.2
 

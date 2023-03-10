@@ -20,8 +20,6 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -34,17 +32,23 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -82,7 +86,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ajstamm/gatpkg/" class="external-link">
+  <a href="https://github.com/ajstamm/gatpkg/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -97,134 +101,226 @@
 
       
 
-      </header><div class="row">
+      </header><script src="gat_troubleshooting_files/header-attrs-2.20/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Geographic Aggregation Tool (GAT) Troubleshooting</h1>
-                        <h4 data-toc-skip class="author">Abigail Stamm, Thomas Talbot, and Gwen Babcock</h4>
+      <h1 data-toc-skip>Geographic Aggregation Tool (GAT)
+Troubleshooting</h1>
+                        <h4 class="author">Abigail Stamm, Thomas Talbot,
+and Gwen Babcock</h4>
             
-            <h4 data-toc-skip class="date">2022-01-04</h4>
+            <h4 class="date">2023-03-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_troubleshooting.Rmd" class="external-link"><code>vignettes/gat_troubleshooting.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_troubleshooting.Rmd"><code>vignettes/gat_troubleshooting.Rmd</code></a></small>
       <div class="hidden name"><code>gat_troubleshooting.Rmd</code></div>
 
     </div>
 
     
     
-<div class="section level1">
-<h1 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
-</h1>
+<div id="installation" class="section level1">
+<h1 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h1>
 <p>These errors and warnings are related to GAT installation.</p>
-<div class="section level2">
-<h2 id="i-got-an-error-about-xml-when-i-tried-to-install-gat">I got an error about XML when I tried to install GAT<a class="anchor" aria-label="anchor" href="#i-got-an-error-about-xml-when-i-tried-to-install-gat"></a>
-</h2>
-<p>On Windows, run <code>install.packages("https://cran.r-project.org/bin/windows/contrib/4.0/XML_3.99-0.5.zip", type = "binary", repos = NULL)</code> to install the XML package. 3.99-0.5 is the latest XML version as of August 2020.</p>
+<div id="i-got-an-error-about-xml-when-i-tried-to-install-gat" class="section level2">
+<h2 class="hasAnchor">
+<a href="#i-got-an-error-about-xml-when-i-tried-to-install-gat" class="anchor"></a>I got an error about XML when I tried to install GAT</h2>
+<p>On Windows, run
+<code>install.packages("https://cran.r-project.org/bin/windows/contrib/4.0/XML_3.99-0.5.zip", type = "binary", repos = NULL)</code>
+to install the XML package. 3.99-0.5 is the latest XML version as of
+August 2020.</p>
 </div>
-<div class="section level2">
-<h2 id="there-is-an-issue-with-the-package-installation">There is an issue with the package installation<a class="anchor" aria-label="anchor" href="#there-is-an-issue-with-the-package-installation"></a>
-</h2>
-<p>Usually, the issue is that vignettes fail to install. To fix this, uninstall gatpkg, restart R, and reinstall gatpkg.</p>
+<div id="there-is-an-issue-with-the-package-installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#there-is-an-issue-with-the-package-installation" class="anchor"></a>There is an issue with the package installation</h2>
+<p>Usually, the issue is that vignettes fail to install. To fix this,
+uninstall gatpkg, restart R, and reinstall gatpkg.</p>
 </div>
-<div class="section level2">
-<h2 id="im-missing-library-permissions">I’m missing library permissions<a class="anchor" aria-label="anchor" href="#im-missing-library-permissions"></a>
-</h2>
+<div id="im-missing-library-permissions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#im-missing-library-permissions" class="anchor"></a>I’m missing library permissions</h2>
 <p>This message appears in the R console:</p>
-<p><code>Error in maptools::unionSpatialPolygons(myshps\$original, aggvars\$Idlist) :</code><br><code>isTRUE(gpclibPermitStatus()) is not TRUE</code></p>
-<p>This error appears due to a conflict between the packages rgeos and rgdal. Reinstall rgdal after each update of rgeos to fix it.</p>
+<blockquote>
+<p>Error in maptools::unionSpatialPolygons(myshps$original,
+aggvars$Idlist) :<br>
+isTRUE(gpclibPermitStatus()) is not TRUE</p>
+</blockquote>
+<p>This error appears due to a conflict between the packages rgeos and
+rgdal. Reinstall rgdal after each update of rgeos to fix it.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="user-input">User input<a class="anchor" aria-label="anchor" href="#user-input"></a>
-</h1>
-<p>These errors and warnings are related to the user input portion of GAT.</p>
-<div class="section level2">
-<h2 id="on-step-3-in-the-confirm-gat-settings-dialog-all-of-my-areas-are-excluded">On step 3 in the confirm GAT settings dialog, all of my areas are excluded<a class="anchor" aria-label="anchor" href="#on-step-3-in-the-confirm-gat-settings-dialog-all-of-my-areas-are-excluded"></a>
-</h2>
-<p>The areas are not excluded, but an incorrect number of areas is displayed. If you rerun GAT and read in the settings from this run using the “settings=” option, the correct value will be shown in the confirmation dialog. This should be fixed as of v1.61.0.</p>
+<div id="user-input" class="section level1">
+<h1 class="hasAnchor">
+<a href="#user-input" class="anchor"></a>User input</h1>
+<p>These errors and warnings are related to the user input portion of
+GAT.</p>
+<div id="on-step-3-in-the-confirm-gat-settings-dialog-all-of-my-areas-are-excluded" class="section level2">
+<h2 class="hasAnchor">
+<a href="#on-step-3-in-the-confirm-gat-settings-dialog-all-of-my-areas-are-excluded" class="anchor"></a>On step 3 in the confirm GAT settings dialog, all of my areas are
+excluded</h2>
+<p>The areas are not excluded, but an incorrect number of areas is
+displayed. If you rerun GAT and read in the settings from this run using
+the “settings=” option, the correct value will be shown in the
+confirmation dialog. This should be fixed as of v1.61.0.</p>
 </div>
-<div class="section level2">
-<h2 id="im-not-seeing-the-dialog-boxes">I’m not seeing the dialog boxes<a class="anchor" aria-label="anchor" href="#im-not-seeing-the-dialog-boxes"></a>
-</h2>
-<p>The dialog boxes may be hidden beneath other windows. Close or minimize extraneous windows or check the taskbar for an icon that looks like a thin quill/feather.</p>
-<p>Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the <a href="../doc/gat_tech_notes.html">GAT technocal notes</a>).</p>
-<p>The progress bars were designed to help you determine whether GAT has stalled. Using population weighted centroids, merging shapefiles with thousands of polygons, and saving KML files can also cause GAT to run slowly, so allow a few minutes for each of these steps. For any steps besides saving files and population weighting, if a progress bar is not updating at least once a minute, it is possible GAT has stalled and you will need to restart R.</p>
+<div id="im-not-seeing-the-dialog-boxes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#im-not-seeing-the-dialog-boxes" class="anchor"></a>I’m not seeing the dialog boxes</h2>
+<p>The dialog boxes may be hidden beneath other windows. Close or
+minimize extraneous windows or check the taskbar for an icon that looks
+like a thin quill/feather.</p>
+<p>Try reducing the number of geographical boundary nodes (by thinning
+or simplifying polygons: see Thinning geographic boundaries in the <a href="../doc/gat_tech_notes.html">GAT technical notes</a>).</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="running-gat">Running GAT<a class="anchor" aria-label="anchor" href="#running-gat"></a>
-</h1>
-<p>These errors and warnings may occur while GAT is processing your shapefile.</p>
-<div class="section level2">
-<h2 id="gat-ran-but-my-shapefiles-wouldnt-save-and-gat-crashed">GAT ran, but my shapefiles wouldn’t save and GAT crashed<a class="anchor" aria-label="anchor" href="#gat-ran-but-my-shapefiles-wouldnt-save-and-gat-crashed"></a>
-</h2>
-<p>GAT occasionally has trouble getting permission to write to network drives. Try saving to your local computer, then transferring the files.</p>
+<div id="running-gat" class="section level1">
+<h1 class="hasAnchor">
+<a href="#running-gat" class="anchor"></a>Running GAT</h1>
+<p>These errors and warnings may occur while GAT is processing your
+shapefile.</p>
+<div id="gat-ran-but-my-shapefiles-wouldnt-save-and-gat-crashed" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-ran-but-my-shapefiles-wouldnt-save-and-gat-crashed" class="anchor"></a>GAT ran, but my shapefiles wouldn’t save and GAT crashed</h2>
+<p>GAT occasionally has trouble getting permission to write to network
+drives. Try saving to your local computer, then transferring the
+files.</p>
 </div>
-<div class="section level2">
-<h2 id="output-files-are-not-saved">Output files are not saved<a class="anchor" aria-label="anchor" href="#output-files-are-not-saved"></a>
-</h2>
+<div id="output-files-are-not-saved" class="section level2">
+<h2 class="hasAnchor">
+<a href="#output-files-are-not-saved" class="anchor"></a>Output files are not saved</h2>
 <p>This message appears in the R console:</p>
-<p><code>Error in writeOGR(newmapwdata, userpathout, userfileout, driver = "ESRI Shapefile", :</code><br><code>GDAL Error 4: Failed to open shapefile C:/aggtest/output/testin.shp.</code> <code>It may be corrupt or read-only file accessed in update mode.</code></p>
-<p>Be sure to enter a valid file name in the save dialog. Remove all files with extensions only (such as “.shp”, “.dbf”, “.prj”) from the directory you are trying to save to.</p>
+<blockquote>
+<p>Error in writeOGR(newmapwdata, userpathout, userfileout, driver =
+“ESRI Shapefile”, :<br>
+GDAL Error 4: Failed to open shapefile
+C:/aggtest/output/testin.shp.<br>
+It may be corrupt or read-only file accessed in update mode.</p>
+</blockquote>
+<p>Be sure to enter a valid file name in the save dialog. Remove all
+files with extensions only (such as “.shp”, “.dbf”, “.prj”) from the
+directory you are trying to save to.</p>
 </div>
-<div class="section level2">
-<h2 id="gat-is-very-slow">GAT is very slow<a class="anchor" aria-label="anchor" href="#gat-is-very-slow"></a>
-</h2>
+<div id="gat-is-very-slow" class="section level2">
+<h2 class="hasAnchor">
+<a href="#gat-is-very-slow" class="anchor"></a>GAT is very slow</h2>
+<p>The progress bars were designed to help you determine whether GAT has
+stalled. Using population weighted centroids, merging shapefiles with
+thousands of polygons, and saving KML files can also cause GAT to run
+slowly, so allow a few minutes for each of these steps. For any steps
+besides saving files and population weighting, if a progress bar is not
+updating at least once a minute, it is possible GAT has stalled and you
+will need to restart R.</p>
 </div>
-<div class="section level2">
-<h2 id="warning-for-classint">Warning for classInt<a class="anchor" aria-label="anchor" href="#warning-for-classint"></a>
-</h2>
+<div id="warning-for-classint" class="section level2">
+<h2 class="hasAnchor">
+<a href="#warning-for-classint" class="anchor"></a>Warning for classInt</h2>
 <p>This message appears in the R console:</p>
-<p><code>In classInt::classIntervals(newdata, n = breaks, style = "fixed",  :</code><br><code>n greater than number of different finite values\nn reset to number of different finite values</code></p>
-<p>This warning appears when the number of polygons or individual values matches or is less than the number of categories in the choropleth maps. The maps will still be drawn accurately.</p>
+<blockquote>
+<p>In classInt::classIntervals(newdata, n = breaks, style = “fixed”,
+:<br>
+n greater than number of different finite valuesreset to number of
+different finite values</p>
+</blockquote>
+<p>This warning appears when the number of polygons or individual values
+matches or is less than the number of categories in the choropleth maps.
+The maps will still be drawn accurately.</p>
 </div>
-<div class="section level2">
-<h2 id="warning-for-st_centroid">Warning for st_centroid<a class="anchor" aria-label="anchor" href="#warning-for-st_centroid"></a>
-</h2>
+<div id="warning-for-st_centroid" class="section level2">
+<h2 class="hasAnchor">
+<a href="#warning-for-st_centroid" class="anchor"></a>Warning for st_centroid</h2>
 <p>One or both of these messages appears in the R console:</p>
-<p><code>st_centroid assumes attributes are constant over geometries of x</code></p>
-<p><code>st_centroid does not give correct centroids for longitude/latitude data</code></p>
-<p>These warnings may appear when you first install gatpkg and will appear if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using appropriate coordinate systems. They do not appear if you are using geographic centroids.</p>
+<blockquote>
+<p>st_centroid assumes attributes are constant over geometries of x</p>
+</blockquote>
+<blockquote>
+<p>st_centroid does not give correct centroids for longitude/latitude
+data</p>
+</blockquote>
+<p>These warnings may appear when you first install gatpkg and will
+appear if you use the population weighting option in GAT. They are not
+errors and the centroids will still write correctly, assuming you are
+using appropriate coordinate systems. They do not appear if you are
+using geographic centroids.</p>
 </div>
 </div>
-<div class="section level1">
-<h1 id="output-files">Output files<a class="anchor" aria-label="anchor" href="#output-files"></a>
-</h1>
+<div id="output-files" class="section level1">
+<h1 class="hasAnchor">
+<a href="#output-files" class="anchor"></a>Output files</h1>
 <p>These errors and warnings are related to files produced by GAT.</p>
-<div class="section level2">
-<h2 id="variable-names-in-my-aggregated-dataset-are-truncated">Variable names in my aggregated dataset are truncated<a class="anchor" aria-label="anchor" href="#variable-names-in-my-aggregated-dataset-are-truncated"></a>
-</h2>
-<p>This appears to be an issue with the DBF driver used by the foreign package. The driver identifies at least one variable name that it interprets as too long (over 10 characters), but truncates several variable names, not just the offender. The data otherwise still write correctly.</p>
+<div id="variable-names-in-my-aggregated-dataset-are-truncated" class="section level2">
+<h2 class="hasAnchor">
+<a href="#variable-names-in-my-aggregated-dataset-are-truncated" class="anchor"></a>Variable names in my aggregated dataset are truncated</h2>
+<p>This appears to be an issue with the DBF driver used by the foreign
+package. The driver identifies at least one variable name that it
+interprets as too long (over 10 characters), but truncates several
+variable names, not just the offender. The data otherwise still write
+correctly. This should be fixed as of v1.61.0.</p>
 </div>
-<div class="section level2">
-<h2 id="when-i-import-my-shapefile-into-my-gis-program-a-blank-map-appears">When I import my shapefile into my GIS program, a blank map appears<a class="anchor" aria-label="anchor" href="#when-i-import-my-shapefile-into-my-gis-program-a-blank-map-appears"></a>
-</h2>
-<p>When importing a shapefile, be sure that the same projection is selected in the GIS program as in the original shapefile. The shapefile’s projection information is included in the log file generated by GAT.</p>
+<div id="when-i-import-my-shapefile-into-my-gis-program-a-blank-map-appears" class="section level2">
+<h2 class="hasAnchor">
+<a href="#when-i-import-my-shapefile-into-my-gis-program-a-blank-map-appears" class="anchor"></a>When I import my shapefile into my GIS program, a blank map
+appears</h2>
+<p>When importing a shapefile, be sure that the same projection is
+selected in the GIS program as in the original shapefile. The
+shapefile’s projection information is included in the log file generated
+by GAT.</p>
 </div>
-<div class="section level2">
-<h2 id="no-kml-file-is-produced">No KML file is produced<a class="anchor" aria-label="anchor" href="#no-kml-file-is-produced"></a>
-</h2>
-<p>Make sure to select that you want a KML file. Check the log file generated by GAT to confirm that you requested one. Wait for the “NYS Geographic Aggregation Tool is finished” message to display before closing the windows/pop-ups generated by GAT.</p>
+<div id="no-kml-file-is-produced" class="section level2">
+<h2 class="hasAnchor">
+<a href="#no-kml-file-is-produced" class="anchor"></a>No KML file is produced</h2>
+<p>Make sure to select that you want a KML file. Check the log file
+generated by GAT to confirm that you requested one. Wait for the “NYS
+Geographic Aggregation Tool is finished” message to display before
+closing the windows/pop-ups generated by GAT.</p>
 </div>
-<div class="section level2">
-<h2 id="data-do-not-appear-in-google-earth">Data do not appear in Google Earth<a class="anchor" aria-label="anchor" href="#data-do-not-appear-in-google-earth"></a>
-</h2>
-<p>When I click on a region in Google Earth, the data do not appear in the description callout. The data may not appear in Google Earth 4.x, so use Google Earth 5.0 or greater. Try clicking on the area’s link in the left sidebar to see the data.</p>
+<div id="data-do-not-appear-in-google-earth" class="section level2">
+<h2 class="hasAnchor">
+<a href="#data-do-not-appear-in-google-earth" class="anchor"></a>Data do not appear in Google Earth</h2>
+<p>When I click on a region in Google Earth, the data do not appear in
+the description callout. The data may not appear in Google Earth 4.x, so
+use Google Earth 5.0 or greater. Try clicking on the area’s link in the
+left sidebar to see the data.</p>
 </div>
-<div class="section level2">
-<h2 id="the-legend-scales-for-my-before-and-after-maps-dont-match">The legend scales for my before and after maps don’t match<a class="anchor" aria-label="anchor" href="#the-legend-scales-for-my-before-and-after-maps-dont-match"></a>
-</h2>
-<p>This issue occurs if there are too few polygons in the map. If the total number of polygons is less than 2 plus the number of categories (default is 7), the code that assigns the categories will force the scale to be redefined. To fix this issue, use a smaller minimum value, use a map with more polygons, or redefine the number of categories. <em>This issue should be fixed now.</em></p>
+<div id="the-legend-scales-for-my-before-and-after-maps-dont-match" class="section level2">
+<h2 class="hasAnchor">
+<a href="#the-legend-scales-for-my-before-and-after-maps-dont-match" class="anchor"></a>The legend scales for my before and after maps don’t match</h2>
+<p>This issue occurs if there are too few polygons in the map. If the
+total number of polygons is less than 2 plus the number of categories
+(default is 7), the code that assigns the categories will force the
+scale to be redefined. To fix this issue, use a smaller minimum value,
+use a map with more polygons, or redefine the number of categories.
+<em>This issue should be fixed now.</em></p>
 </div>
-<div class="section level2">
-<h2 id="warning-for-large-numbers-not-writing-correctly">Warning for large numbers not writing correctly<a class="anchor" aria-label="anchor" href="#warning-for-large-numbers-not-writing-correctly"></a>
-</h2>
-<p>This issue occurs when there are numeric fields with very large values, such as square meters of land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original file against the crosswalk. To avoid this warning, set large number fields to character or remove them from your DBF before running GAT.</p>
+<div id="warning-for-large-numbers-not-writing-correctly" class="section level2">
+<h2 class="hasAnchor">
+<a href="#warning-for-large-numbers-not-writing-correctly" class="anchor"></a>Warning for large numbers not writing correctly</h2>
+<p>A message like this appears in the R console:</p>
+<blockquote>
+<p>In CPL_write_ogr(obj, dsn, layer, driver,
+as.character(dataset_options), … : GDAL Message 1: Value 199678888 of
+field ALAND of feature 40 not successfully written.</p>
+</blockquote>
+<p>This warning occurs when there are numeric fields with very large
+values, such as square meters of land or water areas. In testing, the
+output values matched the input values. You can verify this yourself by
+checking the original DBF file against the crosswalk. To avoid this
+warning, set large number fields to character or remove them from your
+DBF before running GAT.</p>
 </div>
-<div class="section level2">
-<h2 id="my-aggregation-log-did-not-write-correctly">My aggregation log did not write correctly<a class="anchor" aria-label="anchor" href="#my-aggregation-log-did-not-write-correctly"></a>
-</h2>
-<p>This appears to occur randomly. Restarting R and rerunning your aggregation should fix it. To recreate an incorrectly written log, rerun the function <a href="../html/writeGATlog.html">writeGATlog()</a> with the settingsfile option pointing to the *settings.Rdata file produced by GAT.</p>
+<div id="my-aggregation-log-did-not-write-correctly" class="section level2">
+<h2 class="hasAnchor">
+<a href="#my-aggregation-log-did-not-write-correctly" class="anchor"></a>My aggregation log did not write correctly</h2>
+<p>This appears to occur randomly. If you do not see your log file,
+check that you have extensions showing in your file manager, as “.log”
+may be hidden otherwise.</p>
+<p>If you still do not see the file, you can try two things.</p>
+<ol style="list-style-type: decimal">
+<li>Restart R and rerun your aggregation.</li>
+<li>Rerun the function <a href="../html/writeGATlog.html">writeGATlog()</a> by using
+<code>settingsfile =</code> followed by the full file path to your
+“*settings.Rdata” file produced by GAT. This will also work if your log
+wrote incorrectly, which appears to occur randomly.</li>
+</ol>
 </div>
 </div>
   </div>
@@ -240,13 +336,11 @@
 
 
       <footer><div class="copyright">
-  <p></p>
-<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -254,8 +348,6 @@
 
   
 
-
-  
 
   </body>
 </html>
