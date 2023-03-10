@@ -3,6 +3,7 @@ inst/doc/**
 .Rproj.user/**
 .git/**
 ^extdata/**
+docs/dev_old/**
 
 # Ignore docs files
 _gh_pages

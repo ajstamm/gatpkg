@@ -71,7 +71,7 @@
 * Addressed bug fixes in defineGATmerge.
 * Added XML and network saving issues to the troubleshooting document.
 
-## GAT v1.60.0 (Jan 2019 - Jul 2020)
+## [GAT v1.60.0](gatpkg_1.60.0.tar.gz) (Jan 2019 - Jul 2020)
 
 > Use this version of GAT for R version 3.4 to 3.6.
 
