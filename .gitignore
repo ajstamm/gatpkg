@@ -13,7 +13,6 @@ Gemfile.lock
 .Rhistory
 notes.txt
 gis.txt
-README.Rmd
 .Rbuildignore
 
 # Numerous always-ignore extensions
@@ -45,8 +44,8 @@ nbproject
 .idea
 .Rproj.user
 *.db
-*.db
 vignettes/images/Thumbs.db
+man/figures/Thumbs.db
 *.kml
 extdata/hfblock.dbf
 extdata/hfblock.prj
