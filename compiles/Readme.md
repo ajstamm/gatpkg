@@ -19,13 +19,13 @@
 * Clarified possible issues in the troubleshooting vignette.
 * Fixed bugs in defineGATmerge() and identifyGATfirstobs() that caused GAT to crash.
 
-# [gatpkg v1.62.0](gatpkg_1.62.0.tar.gz) (January 1, 2023)
+## [GAT v1.62.0](gatpkg_1.62.0.tar.gz) (January 1, 2023)
 
 > Use this version of GAT for R versions 3.5 to 4.1. 
 
 * Minor edits. Last GAT version before the overhaul.
 
-# gatpkg v1.61.2 (April 13, 2022)
+## GAT v1.61.2 (April 13, 2022)
 
 * Patched to replace plotKML in writeGATkml with sf::st_write because plotKML was removed from CRAN.
 
