@@ -183,6 +183,58 @@ to a recordPlot object and write to PDF.</p>
 <span class="r-in"><span><span class="co"># plot the population</span></span></span>
 <span class="r-in"><span><span class="fu">plotGATmaps</span><span class="op">(</span>area <span class="op">=</span> <span class="va">hfcw610k</span>, var <span class="op">=</span> <span class="st">"TOTAL_POP"</span>, clr <span class="op">=</span> <span class="st">"YlGn"</span>,</span></span>
 <span class="r-in"><span>  title.main <span class="op">=</span> <span class="st">"Population"</span>, breaks <span class="op">=</span> <span class="fl">3</span>, mapstats <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> debugging in: grDevices::dev.new(noRStudioGD = TRUE, res = 1200, width = 20, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     height = 14)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> debug: {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     dev &lt;- getOption("device")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (!is.character(dev) &amp;&amp; !is.function(dev)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         stop("invalid setting for 'getOption(\"device\")'")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (noRStudioGD &amp;&amp; is.character(dev) &amp;&amp; dev == "RStudioGD") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         dev &lt;- .select_device()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (is.character(dev)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         dev &lt;- if (exists(dev, .GlobalEnv)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             get(dev, .GlobalEnv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         else if (exists(dev, asNamespace("grDevices"))) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             get(dev, asNamespace("grDevices"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         else stop(gettextf("device '%s' not found", dev), domain = NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a &lt;- list(...)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a2 &lt;- names(formals(dev))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a &lt;- a[names(a) %in% a2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (identical(dev, pdf)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(a[["file"]]) &amp;&amp; file.exists("Rplots.pdf")) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             fe &lt;- file.exists(tmp &lt;- paste0("Rplots", 1L:999, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 ".pdf"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             if (all(fe)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 stop("no suitable unused file name for pdf()")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             message(gettextf("dev.new(): using pdf(file=\"%s\")", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 tmp[!fe][1L]), domain = NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$file &lt;- tmp[!fe][1L]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (identical(dev, postscript)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(a[["file"]]) &amp;&amp; file.exists("Rplots.ps")) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             fe &lt;- file.exists(tmp &lt;- paste0("Rplots", 1L:999, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 ".ps"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             if (all(fe)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 stop("no suitable unused file name for postscript()")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             message(gettextf("dev.new(): using postscript(file=\"%s\")", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 tmp[!fe][1L]), domain = NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$file &lt;- tmp[!fe][1L]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (!is.null(a[["width"]]) &amp;&amp; !is.null(a[["height"]]) &amp;&amp; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         (identical(dev, png) || identical(dev, jpeg) || identical(dev, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             bmp) || identical(dev, tiff))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(a[["units"]]) &amp;&amp; is.null(a[["res"]])) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$units &lt;- "in"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$res &lt;- 72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     do.call(dev, a)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> exiting from: grDevices::dev.new(noRStudioGD = TRUE, res = 1200, width = 20, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     height = 14)</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co">## to plot a rate</span></span></span>
 <span class="r-in"><span><span class="co"># create a randomized flag variable (data will not match labels here)</span></span></span>
@@ -202,6 +254,58 @@ to a recordPlot object and write to PDF.</p>
 <span class="r-in"><span><span class="fu">plotGATmaps</span><span class="op">(</span>area <span class="op">=</span> <span class="va">hftown</span>, var <span class="op">=</span> <span class="st">"pop_dens"</span>, clr <span class="op">=</span> <span class="st">"YlGn"</span>,</span></span>
 <span class="r-in"><span>  title.main <span class="op">=</span> <span class="st">"population density"</span>, breaks <span class="op">=</span> <span class="fl">3</span>,</span></span>
 <span class="r-in"><span>  mapstats <span class="op">=</span> <span class="cn">TRUE</span>, ratemap <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> debugging in: grDevices::dev.new(noRStudioGD = TRUE, res = 1200, width = 20, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     height = 14)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> debug: {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     dev &lt;- getOption("device")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (!is.character(dev) &amp;&amp; !is.function(dev)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         stop("invalid setting for 'getOption(\"device\")'")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (noRStudioGD &amp;&amp; is.character(dev) &amp;&amp; dev == "RStudioGD") </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         dev &lt;- .select_device()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (is.character(dev)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         dev &lt;- if (exists(dev, .GlobalEnv)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             get(dev, .GlobalEnv)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         else if (exists(dev, asNamespace("grDevices"))) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             get(dev, asNamespace("grDevices"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         else stop(gettextf("device '%s' not found", dev), domain = NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a &lt;- list(...)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a2 &lt;- names(formals(dev))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     a &lt;- a[names(a) %in% a2]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     if (identical(dev, pdf)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(a[["file"]]) &amp;&amp; file.exists("Rplots.pdf")) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             fe &lt;- file.exists(tmp &lt;- paste0("Rplots", 1L:999, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 ".pdf"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             if (all(fe)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 stop("no suitable unused file name for pdf()")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             message(gettextf("dev.new(): using pdf(file=\"%s\")", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 tmp[!fe][1L]), domain = NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$file &lt;- tmp[!fe][1L]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (identical(dev, postscript)) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(a[["file"]]) &amp;&amp; file.exists("Rplots.ps")) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             fe &lt;- file.exists(tmp &lt;- paste0("Rplots", 1L:999, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 ".ps"))</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             if (all(fe)) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 stop("no suitable unused file name for postscript()")</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             message(gettextf("dev.new(): using postscript(file=\"%s\")", </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                 tmp[!fe][1L]), domain = NA)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$file &lt;- tmp[!fe][1L]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     else if (!is.null(a[["width"]]) &amp;&amp; !is.null(a[["height"]]) &amp;&amp; </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         (identical(dev, png) || identical(dev, jpeg) || identical(dev, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             bmp) || identical(dev, tiff))) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         if (is.null(a[["units"]]) &amp;&amp; is.null(a[["res"]])) {</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$units &lt;- "in"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             a$res &lt;- 72</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     do.call(dev, a)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> exiting from: grDevices::dev.new(noRStudioGD = TRUE, res = 1200, width = 20, </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     height = 14)</span>
 <span class="r-in"><span></span></span>
 <span class="r-plt img"><img src="plotGATmaps-2.png" alt="" width="700" height="433"></span>
 </code></pre></div>
