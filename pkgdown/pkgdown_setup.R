@@ -19,7 +19,7 @@ pkgdown::build_site(new_process = TRUE, devel = FALSE)
 # check my home account for an index.md
 
 # Run to build the website
-pkgdown::build_site(new_process = FALSE, devel = TRUE)
+pkgdown::build_site(new_process = FALSE, devel = FALSE)
 
 # fix reference list
 pkgdown::build_reference_index()
@@ -32,4 +32,10 @@ pkgdown::build_reference_index()
 devtools::document() # create help files
 devtools::check()
 devtools::build()
+
+# to debug, run ...
+# from https://github.com/r-lib/downlit/issues/166
+debug(grDevices::dev.new)
+pkgdown::build_site(new_process = FALSE)
+
 

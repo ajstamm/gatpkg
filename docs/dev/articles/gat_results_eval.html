@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,12 +40,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -86,7 +82,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ajstamm/gatpkg/">
+  <a href="https://github.com/ajstamm/gatpkg/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -101,25 +97,26 @@
 
       
 
-      </header><script src="gat_results_eval_files/header-attrs-2.20/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Assessing Geographic Aggregation Tool (GAT)
 Results</h1>
-                        <h4 class="author">Abigail Stamm</h4>
+                        <h4 data-toc-skip class="author">Abigail
+Stamm</h4>
             
-            <h4 class="date">2023-03-10</h4>
+            <h4 data-toc-skip class="date">2023-03-15</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_results_eval.Rmd"><code>vignettes/gat_results_eval.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_results_eval.Rmd" class="external-link"><code>vignettes/gat_results_eval.Rmd</code></a></small>
       <div class="hidden name"><code>gat_results_eval.Rmd</code></div>
 
     </div>
 
     
     
-<div id="gat-outputs" class="section level1">
-<h1 class="hasAnchor">
-<a href="#gat-outputs" class="anchor"></a>GAT outputs</h1>
+<div class="section level2">
+<h2 id="gat-outputs">GAT outputs<a class="anchor" aria-label="anchor" href="#gat-outputs"></a>
+</h2>
 <p>GAT generates and saves several files in the save folder defined by
 the user. Generated files include:</p>
 <p><strong>Log:</strong> The log includes all of your settings and a
@@ -148,9 +145,9 @@ GATflag.</p>
 <p><strong>Optionally, aggregated KML file:</strong> This file will only
 be written if you request it and is not used in assessment.</p>
 </div>
-<div id="figuring-out-why-areas-were-flagged" class="section level1">
-<h1 class="hasAnchor">
-<a href="#figuring-out-why-areas-were-flagged" class="anchor"></a>Figuring out why areas were flagged</h1>
+<div class="section level2">
+<h2 id="figuring-out-why-areas-were-flagged">Figuring out why areas were flagged<a class="anchor" aria-label="anchor" href="#figuring-out-why-areas-were-flagged"></a>
+</h2>
 <p>If you notice highlighted areas in places you do not expect, there
 are a few things you can do. First, review your settings. Note
 especially aggregation minimum and maximum values, exclusion criteria,
@@ -158,9 +155,9 @@ and boundary settings. All basic settings are written to the log. In
 addition, the advanced setting <code>adjacent = TRUE</code> in the
 function options for <code><a href="../reference/runGATprogram.html">runGATprogram()</a></code> may cause unexpected
 behavior. These will be covered in the next few subsections.</p>
-<div id="areas-excluded-by-the-user" class="section level2">
-<h2 class="hasAnchor">
-<a href="#areas-excluded-by-the-user" class="anchor"></a>Areas excluded by the user</h2>
+<div class="section level3">
+<h3 id="areas-excluded-by-the-user">Areas excluded by the user<a class="anchor" aria-label="anchor" href="#areas-excluded-by-the-user"></a>
+</h3>
 <p>These areas meet one or more of the exclusion criteria you provided.
 They will be highlighted in <strong><span style="color: CornflowerBlue;">blue-grey</span></strong> on the plots
 and labeled “1” in the variable GATflag in both shapefiles. Check that
@@ -173,9 +170,9 @@ a numeric Boolean flag (e.g. 0 = true/include, 1 = false/exclude) prior
 to running your shapefile through GAT. Then use that Boolean flag as
 your exclusion variable.</p>
 </div>
-<div id="areas-above-maximum-aggregation-value" class="section level2">
-<h2 class="hasAnchor">
-<a href="#areas-above-maximum-aggregation-value" class="anchor"></a>Areas above maximum aggregation value</h2>
+<div class="section level3">
+<h3 id="areas-above-maximum-aggregation-value">Areas above maximum aggregation value<a class="anchor" aria-label="anchor" href="#areas-above-maximum-aggregation-value"></a>
+</h3>
 <p>These areas had a value higher than your maximum value for <em>one or
 both</em> of your aggregation variables. They will be highlighted in
 <strong><span style="color: magenta;">magenta</span></strong> on the
@@ -183,9 +180,9 @@ plots and labeled “5” in the variable GATflag in both shapefiles. Check
 that the areas highlighted are those you expected to have high
 values.</p>
 </div>
-<div id="areas-below-minimum-aggregation-value" class="section level2">
-<h2 class="hasAnchor">
-<a href="#areas-below-minimum-aggregation-value" class="anchor"></a>Areas below minimum aggregation value</h2>
+<div class="section level3">
+<h3 id="areas-below-minimum-aggregation-value">Areas below minimum aggregation value<a class="anchor" aria-label="anchor" href="#areas-below-minimum-aggregation-value"></a>
+</h3>
 <p>These areas may have aggregated at least once. However, they did not
 aggregate enough to meet your minimum aggregation value for one or both
 aggregation variables. They will be highlighted in <strong><span style="color: cyan;">cyan</span></strong> on the plots and labeled “10”
@@ -193,9 +190,9 @@ in the variable GATflag in the aggregated shapefile. In general, any
 areas with GATflag = 10 are problematic. Some of the situations that
 cause variables to be flagged are listed below, followed by ways to
 address these situations.</p>
-<div id="causes" class="section level3">
-<h3 class="hasAnchor">
-<a href="#causes" class="anchor"></a>Causes</h3>
+<div class="section level4">
+<h4 id="causes">Causes<a class="anchor" aria-label="anchor" href="#causes"></a>
+</h4>
 <p>An area fails to aggregate to the minimum value because it has no
 neighbors eligible for aggregation. This is especially common if you use
 the <code>adjacent = TRUE</code> setting because it forces areas to
@@ -231,9 +228,9 @@ them would cause one or both aggregation values in the resulting area to
 exceed the maximum aggregation values.</li>
 </ol>
 </div>
-<div id="solutions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#solutions" class="anchor"></a>Solutions</h3>
+<div class="section level4">
+<h4 id="solutions">Solutions<a class="anchor" aria-label="anchor" href="#solutions"></a>
+</h4>
 <p>Inspect the areas that were flagged and consider which issues above
 apply to your data. Review which settings are essential and which could
 be modified, including the merge method. The solutions you choose depend
@@ -263,9 +260,9 @@ variable before and after aggregating.</li>
 </ol>
 </div>
 </div>
-<div id="areas-with-low-compactness-ratio" class="section level2">
-<h2 class="hasAnchor">
-<a href="#areas-with-low-compactness-ratio" class="anchor"></a>Areas with low compactness ratio</h2>
+<div class="section level3">
+<h3 id="areas-with-low-compactness-ratio">Areas with low compactness ratio<a class="anchor" aria-label="anchor" href="#areas-with-low-compactness-ratio"></a>
+</h3>
 <p>These areas may include long, narrow shapes or windy shapes that look
 like spiders or snakes. They can be identified using the compactness
 ratio map. In this map, areas with a low compactness ratio (longer or
@@ -278,9 +275,9 @@ aggregating to geographic centroids using the function option
 in highly compact areas.</p>
 </div>
 </div>
-<div id="post-processing" class="section level1">
-<h1 class="hasAnchor">
-<a href="#post-processing" class="anchor"></a>Post-processing</h1>
+<div class="section level2">
+<h2 id="post-processing">Post-processing<a class="anchor" aria-label="anchor" href="#post-processing"></a>
+</h2>
 <p>This two-part process is optional. Your goal here is to create the
 final crosswalk file and address any flagged areas. If your aggregation
 has two steps (see example below), the first part of post-processing is
@@ -320,11 +317,13 @@ shapefiles.</p>
 
 
       <footer><div class="copyright">
-  <p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p>
+<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -332,6 +331,8 @@ shapefiles.</p>
 
   
 
+
+  
 
   </body>
 </html>

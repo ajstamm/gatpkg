@@ -29,7 +29,6 @@ hftown <- sf::st_transform(hftown, "+proj=longlat +datum=NAD27")
 
 # to create base population for weighting ----
 # not actually used
-
 hfpop <- importGATweights(area = hftown, filein = "hfblockgrp",
                           pathin = "inst/extdata", popvar = "Pop")
 
@@ -56,6 +55,9 @@ gatvars <- list(
 )
 
   # first aggregation ----
+sf::st_agr(hftown) <- "constant"
+sf::st_agr(hfpop) <- "constant"
+
 aggvars <- defineGATmerge(area = hftown, pop = hfpop, gatvars = gatvars,
                           mergevars = mergevars, exclist = exclist,
                           progressbar = FALSE)
@@ -99,6 +101,8 @@ hfagg610k$GATflag <- temp
 rm(temp)
 
   # second aggregation ----
+sf::st_agr(hfagg610k) <- "constant"
+
 aggvars <- defineGATmerge(area = hfagg610k, gatvars = gatvars,
                           mergevars = mergevars, progressbar = FALSE)
 

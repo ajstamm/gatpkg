@@ -3,7 +3,7 @@
 \docType{data}
 \name{hfagg610k}
 \alias{hfagg610k}
-\title{Hamilton & Fulton counties aggregated simple feature}
+\title{Hamilton & Fulton counties aggregated to 10k population}
 \format{
 Simple features object with the following structure.
 
@@ -24,11 +24,11 @@ hfagg610k
 \description{
 This object was created by aggregating a US census shapefile of towns
 in Hamilton and Fulton Counties in New York State. The settings used were:
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{* aggregate hftown total population to at least 6,000 and at most 10,000
-* maintain/require county borders
-* aggregate by closest geographic centroid
-* do not exclude any areas
-}\if{html}{\out{</div>}}
+\itemize{
+\item aggregate hftown total population to at least 6,000 and at most 10,000
+\item maintain/require county borders
+\item aggregate by closest geographic centroid
+\item do not exclude any areas
+}
 }
 \keyword{datasets}

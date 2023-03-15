@@ -97,34 +97,24 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   # sf conversion ----
   area <- sf::st_as_sf(area)
   data <- data.frame(area)
+  sf::st_agr(area) <- "constant"
+  if (!is.null(pop)) sf::st_agr(pop) <- "constant"
 
   min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
   max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
-  if (length(max1) == 0) {
-    max1 <- max(data.frame(area)[, gatvars$aggregator1])
-  }
-  if (is.na(max1)) {
-    max1 <- max(data.frame(area)[, gatvars$aggregator1])
-  }
+  if (length(max1) == 0) max1 <- max(data.frame(area)[, gatvars$aggregator1])
+  if (is.na(max1)) max1 <- max(data.frame(area)[, gatvars$aggregator1])
   if (gatvars$aggregator2 == "NONE") {
     gatvars$aggregator2 <- gatvars$aggregator1
     gatvars$minvalue2 <- gatvars$minvalue1
     gatvars$maxvalue2 <- gatvars$maxvalue1
   }
   max2 <- as.numeric(gsub(",", "", gatvars$maxvalue2))
-  if (length(max2) == 0) {
-    max2 <- max(data.frame(area)[, gatvars$aggregator2])
-  }
-  if (is.na(max2)) {
-    max2 <- max(data.frame(area)[, gatvars$aggregator2])
-  }
+  if (length(max2) == 0) max2 <- max(data.frame(area)[, gatvars$aggregator2])
+  if (is.na(max2)) max2 <- max(data.frame(area)[, gatvars$aggregator2])
   min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
-  if (length(min2) == 0) {
-    min2 <- min(data.frame(area)[, gatvars$aggregator2])
-  }
-  if (is.na(min2)) {
-    min2 <- min(data.frame(area)[, gatvars$aggregator2])
-  }
+  if (length(min2) == 0) min2 <- min(data.frame(area)[, gatvars$aggregator2])
+  if (is.na(min2)) min2 <- min(data.frame(area)[, gatvars$aggregator2])
 
   if (!"GATflag" %in% names(data)) {
     data$GATflag <- 0
@@ -179,7 +169,9 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
     mapvars$pop <- temp$pop
     # area$GATpop <- mapvars$centroids$GATpop
   } else {
+    sf::st_agr(area) <- "constant"
     j <- sf::st_centroid(area)
+    sf::st_agr(j) <- "constant"
     sf::st_geometry(j) <- sf::st_centroid(j$geometry)
     pts <- do.call(rbind, sf::st_geometry(j))
     mapvars$centroids <- data.frame(pts)
@@ -394,9 +386,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
           }
         }
         # if no neighbors, quit loop
-        if (temp$idfail) {
-          temp$warnkey <- "nb"
-        }
+        if (temp$idfail) temp$warnkey <- "nb"
       }
       # if boundary not enforced
       if (temp$idfail & !gatvars$rigidbound) {
@@ -534,9 +524,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                         type = "ok", icon = "info")
   }
   # close progress bar that monitors the aggregation ----
-  if (progressbar) {
-    close(definenv$tmb)
-  }
+  if (progressbar) close(definenv$tmb)
   # return ----
   return(aggvars)
 }

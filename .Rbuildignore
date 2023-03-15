@@ -20,3 +20,5 @@
 load_revised_functions\.R
 ^extdata$
 ^testing$
+^doc$
+^Meta$

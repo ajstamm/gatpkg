@@ -37,6 +37,7 @@ weightGATregion <- function(area, pop, IDlist, idvar, nrid) {
   # isolate polygons of interest ----
   area <- cbind(area, IDlist)
   area <- area[area$IDlist == nrid, ]
+  sf::st_agr(area) <- "constant"
 
   # assign consistent CRS ----
   pop <- sf::st_transform(pop, sf::st_crs(area))
@@ -44,6 +45,7 @@ weightGATregion <- function(area, pop, IDlist, idvar, nrid) {
 
   # intersect layers ----
   popshp <- sf::st_intersection(pop, area)
+  sf::st_agr(popshp) <- "constant"
 
   coords <- data.frame(
     GATy = sum(popshp$y * popshp$pop) / sum(popshp$pop),
