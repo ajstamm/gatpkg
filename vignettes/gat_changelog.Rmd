@@ -1,5 +1,5 @@
 ---
-title: "Geographic Aggregation Tool (GAT) Change Log"
+title: "GAT Change Log"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GAT v2.0.0 (March 9, 2023)
+## GAT v2.0.0 (March 15, 2023)
 
 * Added advanced options to the settings file and log.
 * Converted all instances of rgeos, rgdal, lwgeom, foreign, and sp to sf and removed those dependencies. 

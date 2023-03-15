@@ -1,5 +1,5 @@
 ---
-title: "Geographic Aggregation Tool (GAT) Citation Information"
+title: "GAT Citation Information"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -20,7 +20,7 @@ knitr::opts_chunk$set(
 
 Suggestions for improvement and bug reports are welcome. Send feedback to [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]) and include *GAT in R* in the subject line.
 
-If you use any part of the GAT package, please cite it. For the suggested citation, type:
+If you use any part of the Geographic Aggregation Tool (GAT) package, please cite it. For the suggested citation, type:
 
 ```{r}
 citation(package = "gatpkg")
@@ -35,17 +35,18 @@ Abigail Stamm, NYSDOH BEOE
 Gwen (Babcock) LaSelva, NYSDOH BEOE  
 Thomas Talbot  
 
-**Alpha testers and consultants**  
+**Alpha testers and contributors**  
 Neil Muscatiello, NYSDOH BEOE  
-Arjita Rai, NYSDOH BEOE  
+Arjita Rai  
 Catherine Wargo, NYSDOH BEOE  
 Douglas Done, NYSDOH BEOE  
-Maxime Fokoua Dongmo, NYSDOH BEOE  
+Maxime Fokoua Dongmo  
 Marine Nalbandyan  
 
 **Beta testers**  
 Angela Werner, CDC NEPHT  
-Aya Abdelfattah, NYSDOH BEOE  
+Aya Abdelfattah  
+Anne Pysnik, NYSDOH BEOE
 
-GAT was made possible through funding made available to the New York State Department of Health / HRI by the CDC through grant # NUE1EH001341-03-01. Its content is solely the responsibility of the authors and does not necessarily represent the official views of the CDC.
+GAT was made possible through funding made available to the New York State Department of Health / Health Research, Incorporated by the CDC through grant # NUE1EH001341-03-01. Its content is solely the responsibility of the authors and does not necessarily represent the official views of the CDC.
 

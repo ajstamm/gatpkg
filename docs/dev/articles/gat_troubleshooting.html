@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Geographic Aggregation Tool (GAT) Troubleshooting • NYS EPHT GAT</title>
+<title>GAT Troubleshooting • NYS EPHT GAT</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Geographic Aggregation Tool (GAT) Troubleshooting">
+<script src="../pkgdown.js"></script><meta property="og:title" content="GAT Troubleshooting">
 <meta property="og:description" content="gatpkg">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -51,25 +51,25 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -100,8 +100,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Geographic Aggregation Tool (GAT)
-Troubleshooting</h1>
+      <h1 data-toc-skip>GAT Troubleshooting</h1>
                         <h4 data-toc-skip class="author">Abigail Stamm,
 Thomas Talbot, and Gwen Babcock</h4>
             
@@ -117,7 +116,8 @@ Thomas Talbot, and Gwen Babcock</h4>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>These errors and warnings are related to GAT installation.</p>
+<p>These errors and warnings are related to installation of the
+Geographic Aggregation Tool (GAT).</p>
 <div class="section level3">
 <h3 id="i-got-an-error-about-xml-when-i-tried-to-install-gat">I got an error about XML when I tried to install GAT<a class="anchor" aria-label="anchor" href="#i-got-an-error-about-xml-when-i-tried-to-install-gat"></a>
 </h3>
@@ -130,7 +130,16 @@ August 2020.</p>
 <h3 id="there-is-an-issue-with-the-package-installation">There is an issue with the package installation<a class="anchor" aria-label="anchor" href="#there-is-an-issue-with-the-package-installation"></a>
 </h3>
 <p>Usually, the issue is that vignettes fail to install. To fix this,
-uninstall gatpkg, restart R, and reinstall gatpkg.</p>
+try one of these solutions.</p>
+<ol style="list-style-type: decimal">
+<li>If installing from the zipped file, uninstall gatpkg, restart R, and
+reinstall gatpkg.</li>
+<li>If installing from GitHub, run this code:</li>
+</ol>
+<blockquote>
+<p>devtools::install_github(“ajstamm/gatpkg”, dependencies = TRUE,
+build_vignettes = TRUE)</p>
+</blockquote>
 </div>
 <div class="section level3">
 <h3 id="im-missing-library-permissions">I’m missing library permissions<a class="anchor" aria-label="anchor" href="#im-missing-library-permissions"></a>
@@ -143,6 +152,8 @@ isTRUE(gpclibPermitStatus()) is not TRUE</p>
 </blockquote>
 <p>This error appears due to a conflict between the packages rgeos and
 rgdal. Reinstall rgdal after each update of rgeos to fix it.</p>
+<p>Both rgeos and rgdal have been removed as of v2.0.0, so this should
+no longer be an issue.</p>
 </div>
 </div>
 <div class="section level2">
@@ -157,7 +168,8 @@ excluded<a class="anchor" aria-label="anchor" href="#on-step-3-in-the-confirm-ga
 <p>The areas are not excluded, but an incorrect number of areas is
 displayed. If you rerun GAT and read in the settings from this run using
 the “settings=” option, the correct value will be shown in the
-confirmation dialog. This should be fixed as of v1.61.0.</p>
+confirmation dialog.</p>
+<p>This should be fixed as of v1.61.0.</p>
 </div>
 <div class="section level3">
 <h3 id="im-not-seeing-the-dialog-boxes">I’m not seeing the dialog boxes<a class="anchor" aria-label="anchor" href="#im-not-seeing-the-dialog-boxes"></a>
@@ -165,8 +177,6 @@ confirmation dialog. This should be fixed as of v1.61.0.</p>
 <p>The dialog boxes may be hidden beneath other windows. Close or
 minimize extraneous windows or check the taskbar for an icon that looks
 like a thin quill/feather.</p>
-<p>Try reducing the number of geographical boundary nodes (by thinning
-or simplifying polygons: see Thinning geographic boundaries in the <a href="../doc/gat_tech_notes.html">GAT technical notes</a>).</p>
 </div>
 </div>
 <div class="section level2">
@@ -206,6 +216,8 @@ slowly, so allow a few minutes for each of these steps. For any steps
 besides saving files and population weighting, if a progress bar is not
 updating at least once a minute, it is possible GAT has stalled and you
 will need to restart R.</p>
+<p>Try reducing the number of geographical boundary nodes (by thinning
+or simplifying polygons: see Thinning geographic boundaries in the <a href="../doc/gat_tech_notes.html">GAT technical notes</a>).</p>
 </div>
 <div class="section level3">
 <h3 id="warning-for-classint">Warning for classInt<a class="anchor" aria-label="anchor" href="#warning-for-classint"></a>
@@ -232,11 +244,11 @@ The maps will still be drawn accurately.</p>
 <p>st_centroid does not give correct centroids for longitude/latitude
 data</p>
 </blockquote>
-<p>These warnings may appear when you first install gatpkg and will
-appear if you use the population weighting option in GAT. They are not
-errors and the centroids will still write correctly, assuming you are
-using appropriate coordinate systems. They do not appear if you are
-using geographic centroids.</p>
+<p>These warnings may appear when you first install gatpkg or if you use
+the population weighting option in GAT. They are not errors and the
+centroids will still write correctly, assuming you are using appropriate
+coordinate systems.</p>
+<p>This should be addressed as of v2.0.0.</p>
 </div>
 </div>
 <div class="section level2">
@@ -284,8 +296,8 @@ left sidebar to see the data.</p>
 total number of polygons is less than 2 plus the number of categories
 (default is 7), the code that assigns the categories will force the
 scale to be redefined. To fix this issue, use a smaller minimum value,
-use a map with more polygons, or redefine the number of categories.
-<em>This issue should be fixed now.</em></p>
+use a map with more polygons, or redefine the number of categories.</p>
+<p>This should be fixed as of v2.0.0.</p>
 </div>
 <div class="section level3">
 <h3 id="warning-for-large-numbers-not-writing-correctly">Warning for large numbers not writing correctly<a class="anchor" aria-label="anchor" href="#warning-for-large-numbers-not-writing-correctly"></a>
@@ -304,19 +316,20 @@ warning, set large number fields to character or remove them from your
 DBF before running GAT.</p>
 </div>
 <div class="section level3">
-<h3 id="my-aggregation-log-did-not-write-correctly">My aggregation log did not write correctly<a class="anchor" aria-label="anchor" href="#my-aggregation-log-did-not-write-correctly"></a>
+<h3 id="my-aggregation-log-did-not-write-or-did-not-write-correctly">My aggregation log did not write or did not write correctly<a class="anchor" aria-label="anchor" href="#my-aggregation-log-did-not-write-or-did-not-write-correctly"></a>
 </h3>
-<p>This appears to occur randomly. If you do not see your log file,
-check that you have extensions showing in your file manager, as “.log”
-may be hidden otherwise.</p>
-<p>If you still do not see the file, you can try two things.</p>
+<p>This appears to occur randomly.</p>
+<p>If you do not see your log file, check that you have extensions
+showing in your file manager, as “.log” may be hidden otherwise. If you
+still do not see the file, you can try two things.</p>
 <ol style="list-style-type: decimal">
 <li>Restart R and rerun your aggregation.</li>
 <li>Rerun the function <a href="../html/writeGATlog.html">writeGATlog()</a> by using
 <code>settingsfile =</code> followed by the full file path to your
-“*settings.Rdata” file produced by GAT. This will also work if your log
-wrote incorrectly, which appears to occur randomly.</li>
+“*settings.Rdata” file produced by GAT.</li>
 </ol>
+<p>If your log wrote incorrectly, rerun <a href="../html/writeGATlog.html">writeGATlog()</a> as described
+above.</p>
 </div>
 </div>
   </div>

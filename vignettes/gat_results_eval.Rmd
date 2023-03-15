@@ -1,5 +1,5 @@
 ---
-title: "Assessing Geographic Aggregation Tool (GAT) Results"
+title: "GAT Results Evaluation"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: 
@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 # GAT outputs 
 
-GAT generates and saves several files in the save folder defined by the user. Generated files include:
+The Geographic Aggregation Tool (GAT) generates and saves several files in the save folder defined by the user. Generated files include:
 
 **Log:** The log includes all of your settings and a brief list of variables created by GAT, including a data dictionary for the GATflag variable, which corresponds with the highlighted areas displayed in the plots.
 

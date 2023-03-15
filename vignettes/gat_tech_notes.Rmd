@@ -1,5 +1,5 @@
 ---
-title: "Geographic Aggregation Tool (GAT) Technical Notes"
+title: "GAT Technical Notes"
 author: "Abigail Stamm, Thomas Talbot, and Gwen Babcock"
 date: "`r Sys.Date()`"
 output: 
