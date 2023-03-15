@@ -1,5 +1,5 @@
 ---
-title: "Geographic Aggregation Tool (GAT) Troubleshooting"
+title: "GAT Troubleshooting"
 author: "Abigail Stamm, Thomas Talbot, and Gwen Babcock"
 date: "`r Sys.Date()`"
 output: 
@@ -15,7 +15,7 @@ vignette: >
 
 # Installation
 
-These errors and warnings are related to GAT installation. 
+These errors and warnings are related to installation of the Geographic Aggregation Tool (GAT). 
 
 ## I got an error about XML when I tried to install GAT
 
@@ -23,7 +23,13 @@ On Windows, run `install.packages("https://cran.r-project.org/bin/windows/contri
 
 ## There is an issue with the package installation
 
-Usually, the issue is that vignettes fail to install. To fix this, uninstall gatpkg, restart R, and reinstall gatpkg.
+Usually, the issue is that vignettes fail to install. To fix this, try one of these solutions.
+
+1. If installing from the zipped file, uninstall gatpkg, restart R, and reinstall gatpkg.
+2. If installing from GitHub, run this code: 
+
+> devtools::install_github("ajstamm/gatpkg", dependencies = TRUE, 
+>                          build_vignettes = TRUE)
 
 ## I'm missing library permissions
 
@@ -34,6 +40,8 @@ This message appears in the R console:
 
 This error appears due to a conflict between the packages rgeos and rgdal. Reinstall rgdal after each update of rgeos to fix it.
 
+Both rgeos and rgdal have been removed as of v2.0.0, so this should no longer be an issue.
+
 
 # User input
 
@@ -41,16 +49,13 @@ These errors and warnings are related to the user input portion of GAT.
 
 ## On step 3 in the confirm GAT settings dialog, all of my areas are excluded
 
-The areas are not excluded, but an incorrect number of areas is displayed. If you rerun GAT and read in the settings from this run using the "settings=" option, the correct value will be shown in the confirmation dialog. This should be fixed as of v1.61.0.
+The areas are not excluded, but an incorrect number of areas is displayed. If you rerun GAT and read in the settings from this run using the "settings=" option, the correct value will be shown in the confirmation dialog. 
+
+This should be fixed as of v1.61.0.
 
 ## I'm not seeing the dialog boxes
 
 The dialog boxes may be hidden beneath other windows. Close or minimize extraneous windows or check the taskbar for an icon that looks like a thin quill/feather.
-
-
-Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technical notes](../doc/gat_tech_notes.html)). 
-
-
 
 
 
@@ -76,6 +81,8 @@ Be sure to enter a valid file name in the save dialog. Remove all files with ext
 
 The progress bars were designed to help you determine whether GAT has stalled. Using population weighted centroids, merging shapefiles with thousands of polygons, and saving KML files can also cause GAT to run slowly, so allow a few minutes for each of these steps. For any steps besides saving files and population weighting, if a progress bar is not updating at least once a minute, it is possible GAT has stalled and you will need to restart R. 
 
+Try reducing the number of geographical boundary nodes (by thinning or simplifying polygons: see Thinning geographic boundaries in the [GAT technical notes](../doc/gat_tech_notes.html)). 
+
 
 ## Warning for classInt
 
@@ -94,7 +101,9 @@ One or both of these messages appears in the R console:
 
 > st_centroid does not give correct centroids for longitude/latitude data
 
-These warnings may appear when you first install gatpkg and will appear if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using appropriate coordinate systems. They do not appear if you are using geographic centroids.
+These warnings may appear when you first install gatpkg or if you use the population weighting option in GAT. They are not errors and the centroids will still write correctly, assuming you are using appropriate coordinate systems. 
+
+This should be addressed as of v2.0.0.
 
 
 
@@ -121,7 +130,9 @@ When I click on a region in Google Earth, the data do not appear in the descript
 
 ## The legend scales for my before and after maps don't match
 
-This issue occurs if there are too few polygons in the map. If the total number of polygons is less than 2 plus the number of categories (default is 7), the code that assigns the categories will force the scale to be redefined. To fix this issue, use a smaller minimum value, use a map with more polygons, or redefine the number of categories. *This issue should be fixed now.*
+This issue occurs if there are too few polygons in the map. If the total number of polygons is less than 2 plus the number of categories (default is 7), the code that assigns the categories will force the scale to be redefined. To fix this issue, use a smaller minimum value, use a map with more polygons, or redefine the number of categories. 
+
+This should be fixed as of v2.0.0.
 
 ## Warning for large numbers not writing correctly
 
@@ -132,14 +143,16 @@ A message like this appears in the R console:
 
 This warning occurs when there are numeric fields with very large values, such as square meters of land or water areas. In testing, the output values matched the input values. You can verify this yourself by checking the original DBF file against the crosswalk. To avoid this warning, set large number fields to character or remove them from your DBF before running GAT.
 
-## My aggregation log did not write correctly
+## My aggregation log did not write or did not write correctly
 
-This appears to occur randomly. If you do not see your log file, check that you have extensions showing in your file manager, as ".log" may be hidden otherwise.
+This appears to occur randomly. 
 
-If you still do not see the file, you can try two things. 
+If you do not see your log file, check that you have extensions showing in your file manager, as ".log" may be hidden otherwise. If you still do not see the file, you can try two things. 
 
 1. Restart R and rerun your aggregation. 
-2. Rerun the function [writeGATlog()](../html/writeGATlog.html) by using `settingsfile =` followed by the full file path to your "*settings.Rdata" file produced by GAT. This will also work if your log wrote incorrectly, which appears to occur randomly.
+2. Rerun the function [writeGATlog()](../html/writeGATlog.html) by using `settingsfile =` followed by the full file path to your "*settings.Rdata" file produced by GAT. 
+
+If your log wrote incorrectly, rerun [writeGATlog()](../html/writeGATlog.html) as described above.
 
 
 

@@ -19,7 +19,7 @@ pkgdown::build_site(new_process = TRUE, devel = FALSE)
 # check my home account for an index.md
 
 # Run to build the website
-pkgdown::build_site(new_process = FALSE, devel = FALSE)
+pkgdown::build_site(new_process = FALSE)
 
 # fix reference list
 pkgdown::build_reference_index()
