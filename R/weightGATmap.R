@@ -51,10 +51,12 @@ weightGATmap <- function(area, pop, idvar, popvar, crs = NULL) {
   area <- sf::st_set_precision(area, 1000000)
   area <- sf::st_buffer(area, dist = 0)
   area <- sf::st_make_valid(area)
+  sf::st_agr(area) <- "constant"
 
   pop <- sf::st_set_precision(pop, 1000000)
   pop <- sf::st_buffer(pop, dist = 0)
   pop <- sf::st_make_valid(pop)
+  sf::st_agr(pop) <- "constant"
 
   # to plot: plot(sf::st_geometry(pop))
   # or: plot(pop$geometry)
@@ -63,6 +65,7 @@ weightGATmap <- function(area, pop, idvar, popvar, crs = NULL) {
   # intersect area and pop ####
   popshp <- sf::st_intersection(pop, area)
   popshp <- sf::st_transform(popshp, old_crs)
+  sf::st_agr(popshp) <- "constant"
 
   popshp$area_new <- sf::st_area(popshp$geometry)
   popshp$area_prop <- popshp$area_new / popshp$area_old

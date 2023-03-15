@@ -6,7 +6,6 @@
 ^man.bak$
 ^data_raw$
 ^README\.Rmd$
-^README\.md$
 ^.*\.log
 ^.*\.kml
 ^compiles$
@@ -20,3 +19,6 @@
 ^pkgdown_setup\.R$
 load_revised_functions\.R
 ^extdata$
+^testing$
+^doc$
+^Meta$

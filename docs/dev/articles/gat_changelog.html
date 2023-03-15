@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,12 +40,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -86,7 +82,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ajstamm/gatpkg/">
+  <a href="https://github.com/ajstamm/gatpkg/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -101,25 +97,26 @@
 
       
 
-      </header><script src="gat_changelog_files/header-attrs-2.20/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Geographic Aggregation Tool (GAT) Change
 Log</h1>
-                        <h4 class="author">Abigail Stamm</h4>
+                        <h4 data-toc-skip class="author">Abigail
+Stamm</h4>
             
-            <h4 class="date">2023-03-10</h4>
+            <h4 data-toc-skip class="date">2023-03-15</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_changelog.Rmd"><code>vignettes/gat_changelog.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_changelog.Rmd" class="external-link"><code>vignettes/gat_changelog.Rmd</code></a></small>
       <div class="hidden name"><code>gat_changelog.Rmd</code></div>
 
     </div>
 
     
     
-<div id="gat-v2-0-0-march-9-2023" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v2-0-0-march-9-2023" class="anchor"></a>GAT v2.0.0 (March 9, 2023)</h2>
+<div class="section level2">
+<h2 id="gat-v2-0-0-march-9-2023">GAT v2.0.0 (March 9, 2023)<a class="anchor" aria-label="anchor" href="#gat-v2-0-0-march-9-2023"></a>
+</h2>
 <ul>
 <li>Added advanced options to the settings file and log.</li>
 <li>Converted all instances of rgeos, rgdal, lwgeom, foreign, and sp to
@@ -128,8 +125,8 @@ sf and removed those dependencies.</li>
 tcltk2 as it was crashing RStudio with R4.2.0.</li>
 <li>Revised and standardized all pop-up fonts and colors except the
 pre-defined progress bar and file-selection window.</li>
-<li>Revised writeGATkml() to use sf and removed dependency on
-plotKML.</li>
+<li>Revised <code><a href="../reference/writeGATkml.html">writeGATkml()</a></code> to use sf and removed dependency
+on plotKML.</li>
 <li>Revised population weighting to read in the population file only
 once.</li>
 <li>Removed checkGATshapefilesize() as support for memory.limit() is
@@ -141,37 +138,39 @@ messed up the final aggregated areas.</li>
 <li>Fixed the bug that caused GAT to crash if the user prematurely
 closed the progress bar.</li>
 <li>Clarified possible issues in the troubleshooting vignette.</li>
-<li>Fixed bugs in defineGATmerge() and identifyGATfirstobs() that caused
-GAT to crash.</li>
+<li>Fixed bugs in <code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code> and
+<code><a href="../reference/identifyGATfirstobs.html">identifyGATfirstobs()</a></code> that caused GAT to crash.</li>
 </ul>
 </div>
-<div id="gatpkg-v1-62-0-january-1-2023" class="section level1">
-<h1 class="hasAnchor">
-<a href="#gatpkg-v1-62-0-january-1-2023" class="anchor"></a>gatpkg v1.62.0 (January 1, 2023)</h1>
+<div class="section level2">
+<h2 id="gat-v1-62-0-january-1-2023">GAT v1.62.0 (January 1, 2023)<a class="anchor" aria-label="anchor" href="#gat-v1-62-0-january-1-2023"></a>
+</h2>
 <ul>
 <li>Minor edits; last version before the overhaul</li>
 </ul>
 </div>
-<div id="gatpkg-v1-61-2-april-13-2022" class="section level1">
-<h1 class="hasAnchor">
-<a href="#gatpkg-v1-61-2-april-13-2022" class="anchor"></a>gatpkg v1.61.2 (April 13, 2022)</h1>
+<div class="section level2">
+<h2 id="gat-v1-61-2-april-13-2022">GAT v1.61.2 (April 13, 2022)<a class="anchor" aria-label="anchor" href="#gat-v1-61-2-april-13-2022"></a>
+</h2>
 <ul>
-<li>Patched to replace plotKML in writeGATkml with sf::st_write because
-plotKML was removed from CRAN.</li>
+<li>Patched to replace plotKML in <code><a href="../reference/writeGATkml.html">writeGATkml()</a></code> with
+sf::st_write because plotKML was removed from CRAN.</li>
 </ul>
-<div id="gat-v1-61-1-january-4-2022" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v1-61-1-january-4-2022" class="anchor"></a>GAT v1.61.1 (January 4, 2022)</h2>
+</div>
+<div class="section level2">
+<h2 id="gat-v1-61-1-january-4-2022">GAT v1.61.1 (January 4, 2022)<a class="anchor" aria-label="anchor" href="#gat-v1-61-1-january-4-2022"></a>
+</h2>
 <ul>
 <li>Added structure for pkgdown.</li>
 <li>Fixed typos and formatting issues in documentation.</li>
 </ul>
 </div>
-<div id="gat-v1-61-0-february-8-2021" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v1-61-0-february-8-2021" class="anchor"></a>GAT v1.61.0 (February 8, 2021)</h2>
+<div class="section level2">
+<h2 id="gat-v1-61-0-february-8-2021">GAT v1.61.0 (February 8, 2021)<a class="anchor" aria-label="anchor" href="#gat-v1-61-0-february-8-2021"></a>
+</h2>
 <ul>
-<li>Added vignette “Assessing GAT Results”.</li>
+<li>Added vignette <a href="gat_results_eval.html">Assessing GAT
+Results</a>.</li>
 <li>Fixed bugs and typos in <code><a href="../reference/confirmGATbystep.html">confirmGATbystep()</a></code> and
 <code><a href="../reference/runGATprogram.html">runGATprogram()</a></code>, notably the bug that incorrectly displayed
 number of excluded areas over maximum.</li>
@@ -203,44 +202,44 @@ closemap option to automatically close map windows if desired</li>
 <li>Dropped compatibility for R-3.4.0.</li>
 </ul>
 </div>
-<div id="gat-v1-60-3-august-31-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v1-60-3-august-31-2020" class="anchor"></a>GAT v1.60.3 (August 31, 2020)</h2>
+<div class="section level2">
+<h2 id="gat-v1-60-3-august-31-2020">GAT v1.60.3 (August 31, 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-3-august-31-2020"></a>
+</h2>
 <ul>
 <li>Added vignette <a href="gat_prepare_shapefile.html">Preparing your
 shapefile for GAT</a>.</li>
 </ul>
 </div>
-<div id="gat-v1-60-2-august-14-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v1-60-2-august-14-2020" class="anchor"></a>GAT v1.60.2 (August 14, 2020)</h2>
+<div class="section level2">
+<h2 id="gat-v1-60-2-august-14-2020">GAT v1.60.2 (August 14, 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-2-august-14-2020"></a>
+</h2>
 <ul>
 <li>Completed bug fixes in <code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code>.</li>
 <li>Added function <code><a href="../reference/aggregateGATnb.html">aggregateGATnb()</a></code>, which is used in
 <code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code>.</li>
 </ul>
 </div>
-<div id="gat-v1-60-1-august-6-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v1-60-1-august-6-2020" class="anchor"></a>GAT v1.60.1 (August 6, 2020)</h2>
+<div class="section level2">
+<h2 id="gat-v1-60-1-august-6-2020">GAT v1.60.1 (August 6, 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-1-august-6-2020"></a>
+</h2>
 <ul>
 <li>Patched bugs in <code><a href="../reference/defineGATmerge.html">defineGATmerge()</a></code>.</li>
 <li>Added XML and network saving issues to the troubleshooting
 document.</li>
 </ul>
 </div>
-<div id="gat-v1-60-0-jan-2019---jul-2020" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v1-60-0-jan-2019---jul-2020" class="anchor"></a>GAT v1.60.0 (Jan 2019 - Jul 2020)</h2>
+<div class="section level2">
+<h2 id="gat-v1-60-0-jan-2019---jul-2020">GAT v1.60.0 (Jan 2019 - Jul 2020)<a class="anchor" aria-label="anchor" href="#gat-v1-60-0-jan-2019---jul-2020"></a>
+</h2>
 <p>All changes from January 2019 onward by Abigail Stamm.</p>
 <blockquote>
 <p>Below is a summary of differences between the R script for GAT
 released in 2015 and the first beta release of the R package for GAT in
 2020.</p>
 </blockquote>
-<div id="coding-changes" class="section level4">
-<h4 class="hasAnchor">
-<a href="#coding-changes" class="anchor"></a>Coding changes</h4>
+<div class="section level4">
+<h4 id="coding-changes">Coding changes<a class="anchor" aria-label="anchor" href="#coding-changes"></a>
+</h4>
 <ul>
 <li>Reordered GAT steps by section: user input, aggregation, mapping,
 and file saving.</li>
@@ -256,9 +255,9 @@ crash GAT.</li>
 <li>Added dialogs to handle incorrectly entered data on the fly.</li>
 </ul>
 </div>
-<div id="resource-changes" class="section level4">
-<h4 class="hasAnchor">
-<a href="#resource-changes" class="anchor"></a>Resource changes</h4>
+<div class="section level4">
+<h4 id="resource-changes">Resource changes<a class="anchor" aria-label="anchor" href="#resource-changes"></a>
+</h4>
 <ul>
 <li>Created over 30 functions with accompanying help files and
 examples.</li>
@@ -273,9 +272,9 @@ files.</li>
 through GAT, then running its result through GAT.</li>
 </ul>
 </div>
-<div id="user-input-changes" class="section level4">
-<h4 class="hasAnchor">
-<a href="#user-input-changes" class="anchor"></a>User input changes</h4>
+<div class="section level4">
+<h4 id="user-input-changes">User input changes<a class="anchor" aria-label="anchor" href="#user-input-changes"></a>
+</h4>
 <ul>
 <li>Reordered and restructured user input dialogs.</li>
 <li>Added help button and instructions to user input dialogs.</li>
@@ -294,9 +293,9 @@ steps</li>
 </li>
 </ul>
 </div>
-<div id="output-changes" class="section level4">
-<h4 class="hasAnchor">
-<a href="#output-changes" class="anchor"></a>Output changes</h4>
+<div class="section level4">
+<h4 id="output-changes">Output changes<a class="anchor" aria-label="anchor" href="#output-changes"></a>
+</h4>
 <ul>
 <li>Added aggregation and summary information to maps.</li>
 <li>Added map layers for excluded and problematic areas.</li>
@@ -309,9 +308,9 @@ and files to the log.</li>
 </ul>
 </div>
 </div>
-<div id="gat-v1-34-release-date-aug-28-2015" class="section level2">
-<h2 class="hasAnchor">
-<a href="#gat-v1-34-release-date-aug-28-2015" class="anchor"></a>GAT v1.34 (Release date: Aug 28, 2015)</h2>
+<div class="section level2">
+<h2 id="gat-v1-34-august-28-2015">GAT v1.34 (August 28, 2015)<a class="anchor" aria-label="anchor" href="#gat-v1-34-august-28-2015"></a>
+</h2>
 <p>All changes prior to 2019 by Gwen Babcock.</p>
 <blockquote>
 <p>Changes prior to 2019 are listed below as they were entered in the
@@ -390,9 +389,9 @@ characters</li>
 <li>November 20, 2015 fix typo indentified-&gt;identified</li>
 </ul>
 </div>
-<div id="package-notes-as-of-gat-v1-34" class="section level2">
-<h2 class="hasAnchor">
-<a href="#package-notes-as-of-gat-v1-34" class="anchor"></a>Package notes as of GAT v1.34</h2>
+<div class="section level2">
+<h2 id="package-notes-as-of-gat-v1-34">Package notes as of GAT v1.34<a class="anchor" aria-label="anchor" href="#package-notes-as-of-gat-v1-34"></a>
+</h2>
 <ol style="list-style-type: decimal">
 <li>attached base packages:
 <ul>
@@ -438,7 +437,6 @@ characters</li>
 </li>
 </ol>
 </div>
-</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -452,11 +450,13 @@ characters</li>
 
 
       <footer><div class="copyright">
-  <p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p>
+<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -464,6 +464,8 @@ characters</li>
 
   
 
+
+  
 
   </body>
 </html>

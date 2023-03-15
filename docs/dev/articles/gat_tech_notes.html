@@ -20,6 +20,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,12 +40,6 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -86,7 +82,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/ajstamm/gatpkg/">
+  <a href="https://github.com/ajstamm/gatpkg/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -101,26 +97,26 @@
 
       
 
-      </header><script src="gat_tech_notes_files/header-attrs-2.20/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Geographic Aggregation Tool (GAT) Technical
 Notes</h1>
-                        <h4 class="author">Abigail Stamm, Thomas Talbot,
-and Gwen Babcock</h4>
+                        <h4 data-toc-skip class="author">Abigail Stamm,
+Thomas Talbot, and Gwen Babcock</h4>
             
-            <h4 class="date">2023-03-10</h4>
+            <h4 data-toc-skip class="date">2023-03-15</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_tech_notes.Rmd"><code>vignettes/gat_tech_notes.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_tech_notes.Rmd" class="external-link"><code>vignettes/gat_tech_notes.Rmd</code></a></small>
       <div class="hidden name"><code>gat_tech_notes.Rmd</code></div>
 
     </div>
 
     
     
-<div id="gat-overview" class="section level1">
-<h1 class="hasAnchor">
-<a href="#gat-overview" class="anchor"></a>GAT overview</h1>
+<div class="section level2">
+<h2 id="gat-overview">GAT overview<a class="anchor" aria-label="anchor" href="#gat-overview"></a>
+</h2>
 <p>This package is maintained by the New York State Department of Health
 (NYSDOH) Environmental Public Health Tracking (EPHT) program. The
 purpose of this package is to run the Geographic Aggregation Tool (GAT)
@@ -155,9 +151,9 @@ in Google Earth and other Internet-based mapping programs.</p>
 several of the package functions. For details on these shapefiles, enter
 <code><a href="../reference/hftown.html">?hftown</a></code> or <code><a href="../reference/hfpop.html">?hfpop</a></code> into the R console.</p>
 </div>
-<div id="variables-created-by-gat" class="section level1">
-<h1 class="hasAnchor">
-<a href="#variables-created-by-gat" class="anchor"></a>Variables created by GAT</h1>
+<div class="section level2">
+<h2 id="variables-created-by-gat">Variables created by GAT<a class="anchor" aria-label="anchor" href="#variables-created-by-gat"></a>
+</h2>
 <p>GAT creates several variables in both the original shapefile, which
 it resaves as a crosswalk, and the aggregated shapefile. These variables
 are listed below. For the flag variable, a brief data dictionary is
@@ -214,16 +210,16 @@ population file (applies only if population weighting was selected)</li>
 calculation was requested)</li>
 </ul>
 </div>
-<div id="how-gat-identifies-areas-to-merge" class="section level1">
-<h1 class="hasAnchor">
-<a href="#how-gat-identifies-areas-to-merge" class="anchor"></a>How GAT identifies areas to merge</h1>
+<div class="section level2">
+<h2 id="how-gat-identifies-areas-to-merge">How GAT identifies areas to merge<a class="anchor" aria-label="anchor" href="#how-gat-identifies-areas-to-merge"></a>
+</h2>
 <p>The overall goal of the merging is to create a relatively large
 number of compact regions that meet the specified criteria. To
 accomplish this, the areas in the input shapefile are aggregated
 pairwise until all regions have the minimum values specified.</p>
-<div id="selecting-the-target-area" class="section level2">
-<h2 class="hasAnchor">
-<a href="#selecting-the-target-area" class="anchor"></a>Selecting the target area</h2>
+<div class="section level3">
+<h3 id="selecting-the-target-area">Selecting the target area<a class="anchor" aria-label="anchor" href="#selecting-the-target-area"></a>
+</h3>
 <p>First, a subset of areas is selected that meets the following
 restrictions:</p>
 <ul>
@@ -265,9 +261,9 @@ maximum proportion = 0.5</li>
 so it will be merged first.</p>
 </blockquote>
 </div>
-<div id="identifying-eligible-neighbors" class="section level2">
-<h2 class="hasAnchor">
-<a href="#identifying-eligible-neighbors" class="anchor"></a>Identifying eligible neighbors</h2>
+<div class="section level3">
+<h3 id="identifying-eligible-neighbors">Identifying eligible neighbors<a class="anchor" aria-label="anchor" href="#identifying-eligible-neighbors"></a>
+</h3>
 <p>After the target area has been identified, GAT generates a list of
 its neighbors. Areas are considered neighbors if they share at least two
 points with the selected area. However, not all of these neighbors may
@@ -312,9 +308,9 @@ restrictions, the target area is flagged as unable to merge further. For
 each area for which selection criteria were relaxed, a warning is
 written to the log.</p>
 </div>
-<div id="selecting-the-most-eligible-neighbor" class="section level2">
-<h2 class="hasAnchor">
-<a href="#selecting-the-most-eligible-neighbor" class="anchor"></a>Selecting the most eligible neighbor</h2>
+<div class="section level3">
+<h3 id="selecting-the-most-eligible-neighbor">Selecting the most eligible neighbor<a class="anchor" aria-label="anchor" href="#selecting-the-most-eligible-neighbor"></a>
+</h3>
 <p>If the area does not have adjacent neighbors and you used
 <code>adjacent = FALSE</code>, GAT will default to the closest
 geographic centroid unless you chose population weighting, in which case
@@ -326,9 +322,9 @@ type.</p>
 merging continues until all regions contain the minimum values of the
 aggregation variables specified or have been flagged as being unable to
 merge further.</p>
-<div id="closest-geographic-centroid" class="section level3">
-<h3 class="hasAnchor">
-<a href="#closest-geographic-centroid" class="anchor"></a>Closest geographic centroid</h3>
+<div class="section level4">
+<h4 id="closest-geographic-centroid">Closest geographic centroid<a class="anchor" aria-label="anchor" href="#closest-geographic-centroid"></a>
+</h4>
 <p>The target area is merged with the eligible area with the closest
 straight-line centroid based on the shape of the area. The new centroid
 is calculated by averaging the latitudes and longitudes of the two
@@ -348,9 +344,9 @@ B.</p>
 <p>This method provides the most compact areas and can work well for
 environmental exposures like air pollution and temperature.</p>
 </div>
-<div id="closest-population-weighted-centroid" class="section level3">
-<h3 class="hasAnchor">
-<a href="#closest-population-weighted-centroid" class="anchor"></a>Closest population-weighted centroid</h3>
+<div class="section level4">
+<h4 id="closest-population-weighted-centroid">Closest population-weighted centroid<a class="anchor" aria-label="anchor" href="#closest-population-weighted-centroid"></a>
+</h4>
 <p>The population file the user selected is used to determine the area’s
 centroid based on the underlying population. The target area is merged
 with the eligible area with the closest population-weighted centroid.
@@ -380,9 +376,9 @@ B.</p>
 representative of population centers and can work well for disease
 rates.</p>
 </div>
-<div id="neighbor-with-the-least-value" class="section level3">
-<h3 class="hasAnchor">
-<a href="#neighbor-with-the-least-value" class="anchor"></a>Neighbor with the least value</h3>
+<div class="section level4">
+<h4 id="neighbor-with-the-least-value">Neighbor with the least value<a class="anchor" aria-label="anchor" href="#neighbor-with-the-least-value"></a>
+</h4>
 <p>If there is only one minimum value specified, the area with lowest
 value is selected. If there are two minimum values specified, the area
 with the lowest proportion of aggregation variable to minimum value
@@ -400,9 +396,9 @@ neighbor with the smallest value is A, so GAT merges DE to A.</p>
 greatest granularity. However, it can result in weird snaky shapes and
 possibly donuts, where a rural area entirely surrounds an urban one.</p>
 </div>
-<div id="neighbor-with-the-most-similar-ratio" class="section level3">
-<h3 class="hasAnchor">
-<a href="#neighbor-with-the-most-similar-ratio" class="anchor"></a>Neighbor with the most similar ratio</h3>
+<div class="section level4">
+<h4 id="neighbor-with-the-most-similar-ratio">Neighbor with the most similar ratio<a class="anchor" aria-label="anchor" href="#neighbor-with-the-most-similar-ratio"></a>
+</h4>
 <p>The selected area is merged with the area with the least absolute
 difference between the ratios of the variables chosen for similarity
 comparison. For example, suppose the variables chosen for similarity
@@ -426,9 +422,9 @@ populations to investigate social determinants of health.</p>
 </div>
 </div>
 </div>
-<div id="thinning-geographic-boundaries" class="section level1">
-<h1 class="hasAnchor">
-<a href="#thinning-geographic-boundaries" class="anchor"></a>Thinning geographic boundaries</h1>
+<div class="section level2">
+<h2 id="thinning-geographic-boundaries">Thinning geographic boundaries<a class="anchor" aria-label="anchor" href="#thinning-geographic-boundaries"></a>
+</h2>
 <p>The program may merge very slowly if the geographic boundaries are
 unnecessarily complex. Boundaries can be simplified by a process known
 as “thinning” (or “simplification” or “integrating” or “generalizing”).
@@ -445,9 +441,9 @@ Comparing detail as nodes are thinned
 </p>
 </div>
 </div>
-<div id="compactness-ratio" class="section level1">
-<h1 class="hasAnchor">
-<a href="#compactness-ratio" class="anchor"></a>Compactness ratio</h1>
+<div class="section level2">
+<h2 id="compactness-ratio">Compactness ratio<a class="anchor" aria-label="anchor" href="#compactness-ratio"></a>
+</h2>
 <p>The compactness ratio is a measure used to assess how well areas were
 aggregated. Ideally, areas should be combined with other areas very
 close to them under the assumption that people tend to live closer to
@@ -480,11 +476,13 @@ Compactness examples
 
 
       <footer><div class="copyright">
-  <p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p>
+<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -492,6 +490,8 @@ Compactness examples
 
   
 
+
+  
 
   </body>
 </html>

@@ -2,7 +2,7 @@
 % Please edit documentation in R/defineGATmapclasses.R
 \name{defineGATmapclasses}
 \alias{defineGATmapclasses}
-\title{Plot GAT Maps}
+\title{Define Classes for Map Legends}
 \usage{
 defineGATmapclasses(areaold, areanew, aggvar, breaks = 7)
 }

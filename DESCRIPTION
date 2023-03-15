@@ -43,7 +43,6 @@ Imports:
 Suggests: 
     knitr,
     lwgeom,
-    tools,
     prettymapr (>= 0.2.2),
     rmarkdown,
     tools,

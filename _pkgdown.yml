@@ -66,6 +66,4 @@ reference:
   desc: Embedded objects
 - contents:
   - gatpkg
-  - hfagg5k
-  - hfpop
-  - hftown
+  - starts_with("hf")

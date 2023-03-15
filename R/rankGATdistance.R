@@ -22,6 +22,7 @@
 #'
 #' @examples
 #' # add GAT variables
+#' sf::st_agr(hftown) <- "constant"
 #' centroids <- sf::st_coordinates(sf::st_geometry(sf::st_centroid(hftown)))
 #' colnames(centroids) <- c("GATx", "GATy")
 #' my_data <- data.frame(hftown, centroids)

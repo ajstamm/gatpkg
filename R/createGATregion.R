@@ -49,6 +49,9 @@ createGATregion <- function(area, newreg, myidvar, nrid, pop = NULL,
   # sf conversion ----
   area <- sf::st_as_sf(area)
   data <- data.frame(newreg)
+  sf::st_agr(area) <- "constant"
+  sf::st_agr(newreg) <- "constant"
+
   newreg <- sf::st_as_sf(sf::st_union(newreg))
 
   # get data classes for all columns ----
@@ -93,16 +96,20 @@ createGATregion <- function(area, newreg, myidvar, nrid, pop = NULL,
     area <- merge(area, pts, by.x = myidvar, by.y = "id", all.y = FALSE)
   }
   if (pwrepeat) {
-      # population weighted centroids (repeat weighting)
-      gatmeans <- weightGATregion(area = area, pop = pop, IDlist = IDlist,
-                                  idvar = myidvar, nrid = nrid)
-      if (!is.na(gatmeans["GATx"])) { # population not missing
-        if (is.finite(gatmeans$GATy)) newreg$GATx <- gatmeans$GATx
-        if (is.finite(gatmeans$GATx)) newreg$GATy <- gatmeans$GATy
-      }
+    sf::st_agr(area) <- "constant"
+
+    # population weighted centroids (repeat weighting)
+    gatmeans <- weightGATregion(area = area, pop = pop, IDlist = IDlist,
+                                idvar = myidvar, nrid = nrid)
+    if (!is.na(gatmeans["GATx"])) { # population not missing
+      if (is.finite(gatmeans$GATy)) newreg$GATx <- gatmeans$GATx
+      if (is.finite(gatmeans$GATx)) newreg$GATy <- gatmeans$GATy
+    }
   } else if (popwt) {
     # population weighted area centroids (if population available)
     t <- area[IDlist == nrid,]
+    sf::st_agr(t) <- "constant"
+
     gatmeans <- weightGATregion(area = t, pop = pop,
                                 IDlist = rep(nrid, nrow(t)),
                                 idvar = myidvar, nrid = nrid)

@@ -1,13 +1,13 @@
-#' Hamilton & Fulton counties aggregated simple feature
+#' Hamilton & Fulton counties aggregated to 10k population
 #'
 #' @description
 #' This object was created by aggregating a US census shapefile of towns
 #' in Hamilton and Fulton Counties in New York State. The settings used were:
 #'
-#'     * aggregate hftown total population to at least 6,000 and at most 10,000
-#'     * maintain/require county borders
-#'     * aggregate by closest geographic centroid
-#'     * do not exclude any areas
+#' * aggregate hftown total population to at least 6,000 and at most 10,000
+#' * maintain/require county borders
+#' * aggregate by closest geographic centroid
+#' * do not exclude any areas
 #'
 #' @format Simple features object with the following structure.
 #'
@@ -25,17 +25,17 @@
 #' @export
 "hfagg610k"
 
-#' Hamilton & Fulton counties aggregated simple feature
+#' Hamilton & Fulton counties aggregated to 15k population
 #'
 #' @description
 #' This object was created by aggregating a US census shapefile of towns
 #' in Hamilton and Fulton Counties in New York State. The settings used were:
 #'
-#'     * aggregate hfagg610k total population to at least 6,000 and at most
-#'       15,000
-#'     * request county borders, but do not require them
-#'     * aggregate by closest geographic centroid
-#'     * do not exclude any areas
+#' * aggregate hfagg610k total population to at least 6,000 and at most
+#'   15,000
+#' * request county borders, but do not require them
+#' * aggregate by closest geographic centroid
+#' * do not exclude any areas
 #'
 #' @format Simple features object with the following structure.
 #'
@@ -53,16 +53,16 @@
 #' @export
 "hfagg615k"
 
-#' Hamilton & Fulton counties aggregated simple feature
+#' Hamilton & Fulton counties aggregation to 10k population crosswalk
 #'
 #' @description
 #' This object was created by aggregating a US census shapefile of towns
 #' in Hamilton and Fulton Counties in New York State. The settings used were:
 #'
-#'     * aggregate hftown total population to at least 6,000 and at most 10,000
-#'     * maintain/require county borders
-#'     * aggregate by closest geographic centroid
-#'     * do not exclude any areas
+#' * aggregate hftown total population to at least 6,000 and at most 10,000
+#' * maintain/require county borders
+#' * aggregate by closest geographic centroid
+#' * do not exclude any areas
 #'
 #' @format Simple features object with the following structure.
 #'
@@ -78,7 +78,7 @@
 #' @export
 "hfcw610k"
 
-#' Hamilton & Fulton counties aggregated simple feature
+#' Hamilton & Fulton counties aggregation to 15k population crosswalk
 #'
 #' @description
 #' This object was created by aggregating a US census shapefile of towns

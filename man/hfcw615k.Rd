@@ -3,7 +3,7 @@
 \docType{data}
 \name{hfcw615k}
 \alias{hfcw615k}
-\title{Hamilton & Fulton counties aggregated simple feature}
+\title{Hamilton & Fulton counties aggregation to 15k population crosswalk}
 \format{
 Simple features object with the following structure.
 

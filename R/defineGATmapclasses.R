@@ -1,4 +1,4 @@
-#' Plot GAT Maps
+#' Define Classes for Map Legends
 #'
 #' @description
 #' This function prepares the classes for the original and aggregated maps

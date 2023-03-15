@@ -1011,7 +1011,10 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       gatvars$myidvar <- "temp_id"
     }
 
+    sf::st_agr(myshps$original) <- "constant"
     temp$pts <- sf::st_centroid(myshps$original)
+
+    sf::st_agr(temp$pts) <- "constant"
     sf::st_geometry(temp$pts) <- sf::st_centroid(temp$pts$geometry)
     temp$pts <- data.frame(do.call(rbind, sf::st_geometry(temp$pts)))
     colnames(temp$pts) <- c("GATx", "GATy")
