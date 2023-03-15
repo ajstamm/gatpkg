@@ -1,8 +1,8 @@
 Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
-Version: 1.61.2
-Date: 2022-04-21
+Version: 2.0.0
+Date: 2023-03-15
 Authors@R: c(
     person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 
       role = c("cre", "aut"), comment = "author of R package"),
@@ -15,47 +15,40 @@ Authors@R: c(
     person("New York State Department of Health / Health Research, Inc.", 
       role = c("cph")), 
     person("Centers for Disease Control and Prevention", 
-      role = c("fnd"), comment = "Grant NUE1EH001341-03-01")
-    )
+      role = c("fnd"), comment = "Grant NUE1EH001341-03-01"))
 Maintainer: Abigail Stamm, NYSDOH EPHT <epht@health.ny.gov>
 Description: The purpose of this package is to run the New York State 
-    Department of Health’s Geographic Aggregation Tool (GAT) in R. GAT takes 
-    an input shapefile and aggregates polygons based on user-defined numeric 
-    values, then returns the new shapefile, the old shapefile with a crosswalk 
-    attached, and other diagnostic information. See the vignettes and the 
-    functions' help documentation for more details on how GAT works.
+    Department of Health (NYSDOH)  Environmental Public Health Tracking 
+    Geographic Aggregation Tool (GAT) in R. GAT takes an input shapefile and 
+    aggregates polygons based on user-defined numeric values, then returns 
+    the new shapefile, the old shapefile with a crosswalk attached, and 
+    other diagnostic information. See the vignettes and the functions' help 
+    documentation for more details on how GAT works.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-Depends: R (>= 3.5.0)
+Depends: R (>= 4.0.0)
 Imports: 
     classInt (>= 0.3.1),
-    foreign (>= 0.8.69),
     graphics, 
     grDevices,
-    maptools (>= 0.9.5),
     methods,
-    RColorBrewer (>= 1.1.2),
     raster,
-    rgdal,
-    rgeos (>= 0.4.2),
+    RColorBrewer (>= 1.1.2),
     sf, 
-    sp (>= 1.3-1),
     spdep (>= 1.0-2),
     stats, 
     tcltk,
-    tcltk2 (>= 1.2.11),
     tibble,
-    utils,
 Suggests: 
     knitr,
     lwgeom,
-    tools,
     prettymapr (>= 0.2.2),
-    qpdf,
     rmarkdown,
-RoxygenNote: 7.1.2
+    tools,
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/ajstamm/gatpkg
-BugReports: https://github.com/ajstamm/gatpkg/issues
+URL: https://github.com/nystracking/gatpkg
+BugReports: https://github.com/nystracking/gatpkg/issues
+

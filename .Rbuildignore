@@ -6,9 +6,8 @@
 ^man.bak$
 ^data_raw$
 ^README\.Rmd$
-^README\.md$
-my_hftown\.log
-my_kml_example\.kml
+^.*\.log
+^.*\.kml
 ^compiles$
 ^presentations$
 ^archive$
@@ -18,3 +17,8 @@ my_kml_example\.kml
 ^_pkgdown\.yml$
 ^pkgdown$
 ^pkgdown_setup\.R$
+load_revised_functions\.R
+^extdata$
+^testing$
+^doc$
+^Meta$

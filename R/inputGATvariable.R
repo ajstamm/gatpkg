@@ -37,21 +37,11 @@
 #' @examples
 #'
 #' if (interactive()) {
-#' hlp <- paste0("To continue, select an option and click 'Next >',",
-#'               "\nto return to the previous step, click '< Back',",
-#'               "\nand to quit the program, click 'Cancel'.")
-#'
 #' inputGATvariable(
-#'   title = "My favorite letter",
+#'   title = "My favorite letter", checkbox = TRUE, valuebox = TRUE,
 #'   instruction = "Please select your favorite letter.",
-#'   help = hlp,
-#'   mylist = letters,
 #'   checkopt = "Check this box \nif you love all letters.",
-#'   valueopt = "Enter the number of letters \nyou love.",
-#'   checkbox = TRUE,
-#'   valuebox = TRUE,
-#'   helppage = "inputGATvariable",
-#'   value = "5,000"
+#'   valueopt = "Enter the number of letters \nyou love."
 #' )
 #' }
 #'
@@ -70,40 +60,48 @@
 #     returns "go back" or the selected item from the list, as text
 ############## start gui function #############################################
 
-inputGATvariable <- function(title = "GAT window",
-                             instruction = "Please select one.",
-                             checkopt = "Select this checkbox.",
-                             valueopt = "Enter a number:",
-                             help = "There is no help for you.",
-                             mylist = letters, checkbox = FALSE,
-                             helppage = NULL, step = 0,
-                             valuebox = FALSE, helptitle = NULL,
-                             value = 0, myvar = "NONE", check = FALSE,
-                             backopt = TRUE) {
-  tt <- tcltk::tktoplevel()
+inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
+                             help = "There is no help.", helppage = NULL,
+                             helptitle = NULL, step = 0, backopt = TRUE,
+                             checkopt = "Check this box.", checkbox = FALSE,
+                             valuebox = FALSE, value = 0, check = FALSE,
+                             valueopt = "Enter a number:", mylist = letters,
+                             myvar = NULL) {
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
+
+  # create frames ----
+  tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
 
-  # create frames ####
-  # for some reason, within functions frames must all be created at the start
-  tt$frm <- tcltk::tkframe(tt, width = 300, height = 5)
-  tt$bound <- tcltk::tkframe(tt$frm, width = 150, height = 110)
-  tt$tfbuts <- tcltk::tkframe(tt$frm, width = 300, height = 40)
-  # list of options ####
-  tt$bound$note <- tcltk2::tk2label(tt$bound, text = instruction)
-  tt$bound$tl <- tcltk2::tk2listbox(tt$bound, height = 5,
-                                    values = mylist, selectmode = "single",
-                                    background = "white", value = myvar)
+  # for some reason, within functions frames must all be created at the start?
+  tt$frm <- tcltk::tkframe(tt, width = 300, height = 5,
+                           background = bgcol)
+  tt$bound <- tcltk::tkframe(tt$frm, width = 150, height = 110,
+                             background = bgcol)
+  tt$tfbuts <- tcltk::tkframe(tt$frm, width = 300, height = 40,
+                              background = bgcol)
+
+  # list of options ----
+  myvar <- if (is.null(myvar)) tcltk::tclVar("") else tcltk::tclVar(myvar)
+
+  tt$bound$note <- tcltk::tklabel(tt$bound, text = instruction, justify = "left",
+                                  background = bgcol)
+  tt$bound$tl <- tcltk::ttkcombobox(tt$bound, values = mylist,
+                                    textvariable = myvar, state = "readonly")
   tcltk::tkgrid(tt$bound$note, sticky = "w", columnspan = 4, padx = 5)
   tcltk::tkgrid(tt$bound$tl, padx = 10, pady = c(5, 10), sticky = "w",
                 row = 2, column = 1)
 
-  # checkbox and valuebox ####
+  # checkbox and valuebox ----
   if (checkbox | valuebox) {
-    tt$opts <- tcltk::tkframe(tt$frm, width = 150, height = 110)
+    tt$opts <- tcltk::tkframe(tt$frm, width = 150, height = 110,
+                              background = bgcol)
     if (checkbox) {
       statebut <- if (check) "active" else "normal"
-      tt$bound$cb <- tcltk::tkcheckbutton(tt$opts)
-      tt$bound$cblabel <- tcltk2::tk2label(tt$opts, text = checkopt)
+      tt$bound$cb <- tcltk::tkcheckbutton(tt$opts, background = bgcol)
+      tt$bound$cblabel <- tcltk::tklabel(tt$opts, text = checkopt,
+                                         justify = "left", background = bgcol)
       tt$bound$cbvalue <- tcltk::tclVar("0")
       tcltk::tkconfigure(tt$bound$cb, variable = tt$bound$cbvalue, state = statebut)
       tcltk::tkconfigure(tt$bound$cblabel, width = 20)
@@ -113,73 +111,66 @@ inputGATvariable <- function(title = "GAT window",
     if (valuebox) {
       vbvalue <- tcltk::tclVar(value)
       tt$bound$vb <- tcltk::tkentry(tt$opts, textvariable = vbvalue)
-      tt$bound$vblabel <- tcltk2::tk2label(tt$opts, text = valueopt)
+      tt$bound$vblabel <- tcltk::tklabel(tt$opts, text = valueopt,
+                                         justify = "left", background = bgcol)
       tcltk::tkconfigure(tt$bound$vblabel, width = 25)
       tcltk::tkgrid(tt$bound$vblabel, column = 1, columnspan = 2, sticky = "nw")
       tcltk::tkgrid(tt$bound$vb, column = 1, columnspan = 2, sticky = "n")
     }
   }
 
-  # bottom button functions ####
+  # bottom button functions ----
   myenv <- new.env()
   if (checkbox & valuebox) {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       cbVal <- as.character(tcltk::tclvalue(tt$bound$cbvalue))
       threshold <- as.character(tcltk::tclvalue(vbvalue))
       tcltk::tkdestroy(tt)
 
-      if (cbVal == "1") check <- TRUE else check = FALSE
-
-      assign("myoptions", list(myvar = myvar,
-                               check = check,
+      check <- if (cbVal == "1") TRUE else FALSE
+      assign("myoptions", list(myvar = myvar, check = check,
                                threshold = threshold), envir=myenv)
     }
   } else if (checkbox) {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       cbVal <- as.character(tcltk::tclvalue(tt$bound$cbvalue))
       tcltk::tkdestroy(tt)
 
-      if (cbVal == "1") {
-        check <- TRUE
-      } else {
-        check = FALSE
-      }
-
-      assign("myoptions", list(myvar = myvar,
-                               check = check,
+      check <- if (cbVal == "1") TRUE else FALSE
+      assign("myoptions", list(myvar = myvar, check = check,
                                threshold = 0), envir=myenv)
     }
   } else if (valuebox) {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       threshold <- as.character(tcltk::tclvalue(vbvalue))
       tcltk::tkdestroy(tt)
 
-
-      assign("myoptions", list(myvar = myvar,
-                               check = FALSE,
+      assign("myoptions", list(myvar = myvar, check = FALSE,
                                threshold = threshold), envir=myenv)
     }
   } else {
     onOk <- function() {
-      ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
-      myvar <- mylist[ind + 1] # list 1
+      # ind <- as.numeric(tcltk::tkcurselection(tt$bound$tl))
+      # myvar <- mylist[ind + 1] # list 1
+      myvar <- tcltk::tclvalue(myvar)
       tcltk::tkdestroy(tt)
 
-      assign("myoptions", list(myvar = myvar,
-                               check = FALSE,
+      assign("myoptions", list(myvar = myvar, check = FALSE,
                                threshold = 0), envir=myenv)
     }
   } # OnOk function versions
   onCancel <- function() {
     tcltk::tkdestroy(tt)
-    assign("myoptions", list(myvar = "cancel",
-                            check = FALSE,
+    assign("myoptions", list(myvar = "cancel", check = FALSE,
                             threshold = 0), envir=myenv)
   }
   onHelp <- function() {
@@ -188,30 +179,30 @@ inputGATvariable <- function(title = "GAT window",
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
-    assign("myoptions", list(myvar = "back",
-                            check = FALSE,
+    assign("myoptions", list(myvar = "back", check = FALSE,
                             threshold = 0), envir=myenv)
   }
 
-  # bottom button placements ####
+  # bottom button placements ----
   if (backopt) {
-    tt$tfbuts$BackBut <- tcltk2::tk2button(tt$tfbuts, text = "< Back",
-                                           command = onBack, width = 12)
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Next >",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back", width = 12,
+                                         command = onBack, background = buttoncol)
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   } else {
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Confirm",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   }
 
-  tt$tfbuts$CancelBut <- tcltk2::tk2button(tt$tfbuts, text = "Cancel GAT",
-                                           command = onCancel, width = 12)
-  tt$tfbuts$HelpBut <- tcltk2::tk2button(tt$tfbuts, text = "Help",
-                                         command = onHelp, width = 12)
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
+                                         command = onCancel, width = 12,
+                                         background = buttoncol)
+  tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text = "Help", width = 12,
+                                       command = onHelp, background = buttoncol)
 
-  # add elements to the window
+  # configure elements ----
   if (backopt) {
     tcltk::tkgrid(tt$tfbuts$BackBut, column = 1, row = 1, pady = 5, padx = c(5, 0))
   }
@@ -219,26 +210,20 @@ inputGATvariable <- function(title = "GAT window",
   tcltk::tkgrid(tt$tfbuts$CancelBut, column = 3, row = 1, pady = 5)
   tcltk::tkgrid(tt$tfbuts$HelpBut, column = 4, row = 1, pady = 5, padx = c(0, 5))
 
-  # configure elements ####
   if (backopt) {
     tcltk::tkgrid.configure(tt$tfbuts$BackBut, sticky = "e")
   }
   tcltk::tkgrid.configure(tt$tfbuts$OkBut, sticky = "w")
-
   tcltk::tkpack(tt$tfbuts, tt$bound, side = "bottom")
   if (checkbox | valuebox) {
     tcltk::tkpack(tt$bound, tt$opts, side = "left", fill = "y")
   }
   tcltk::tkpack(tt$frm)
 
-  # wait for user ####
+  # wait for user ----
   tcltk::tkfocus(tt)
   tcltk::tkwait.window(tt) # pauses code to accept user input
 
   return(myenv$myoptions)
 }
 
-# inputGATvariable(mylist = letters, helpfile = "hlp")
-# inputGATvariable(mylist = letters, helpfile = "hlp", checkbox = TRUE)
-
-############## end gui function #############################

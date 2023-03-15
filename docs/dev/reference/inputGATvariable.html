@@ -21,7 +21,7 @@ Figure: Dialog to enter several values"><meta name="robots" content="noindex"><!
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -30,31 +30,31 @@ Figure: Dialog to enter several values"><meta name="robots" content="noindex"><!
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -92,88 +92,116 @@ includes options to add a check box or text box if desired.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">inputGATvariable</span><span class="op">(</span>
-  title <span class="op">=</span> <span class="st">"GAT window"</span>,
-  instruction <span class="op">=</span> <span class="st">"Please select one."</span>,
-  checkopt <span class="op">=</span> <span class="st">"Select this checkbox."</span>,
-  valueopt <span class="op">=</span> <span class="st">"Enter a number:"</span>,
-  help <span class="op">=</span> <span class="st">"There is no help for you."</span>,
-  mylist <span class="op">=</span> <span class="va">letters</span>,
-  checkbox <span class="op">=</span> <span class="cn">FALSE</span>,
-  helppage <span class="op">=</span> <span class="cn">NULL</span>,
-  step <span class="op">=</span> <span class="fl">0</span>,
-  valuebox <span class="op">=</span> <span class="cn">FALSE</span>,
-  helptitle <span class="op">=</span> <span class="cn">NULL</span>,
-  value <span class="op">=</span> <span class="fl">0</span>,
-  myvar <span class="op">=</span> <span class="st">"NONE"</span>,
-  check <span class="op">=</span> <span class="cn">FALSE</span>,
-  backopt <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">inputGATvariable</span><span class="op">(</span></span>
+<span>  title <span class="op">=</span> <span class="st">"GAT window"</span>,</span>
+<span>  instruction <span class="op">=</span> <span class="st">"Select one."</span>,</span>
+<span>  help <span class="op">=</span> <span class="st">"There is no help."</span>,</span>
+<span>  helppage <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  helptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  step <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  backopt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  checkopt <span class="op">=</span> <span class="st">"Check this box."</span>,</span>
+<span>  checkbox <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  valuebox <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  value <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  check <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  valueopt <span class="op">=</span> <span class="st">"Enter a number:"</span>,</span>
+<span>  mylist <span class="op">=</span> <span class="va">letters</span>,</span>
+<span>  myvar <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>title</dt>
 <dd><p>A text string that denotes the dialog title.</p></dd>
+
+
 <dt>instruction</dt>
 <dd><p>A text string stating the instructions to the user.</p></dd>
-<dt>checkopt</dt>
-<dd><p>The text that should accompany the checkbox. If checkbox
-is FALSE, this is ignored.</p></dd>
-<dt>valueopt</dt>
-<dd><p>The text that should accompany the valuebox. If valuebox
-is FALSE, this is ignored.</p></dd>
+
+
 <dt>help</dt>
 <dd><p>A text string containing the help message.</p></dd>
-<dt>mylist</dt>
-<dd><p>A character vector of variable names for the list.</p></dd>
-<dt>checkbox</dt>
-<dd><p>A boolean that denotes whether or not to include a
-checkbox in the dialog.</p></dd>
+
+
 <dt>helppage</dt>
 <dd><p>A text string that contains the function name for the
 relevant function (if any) in the help dialog.</p></dd>
+
+
+<dt>helptitle</dt>
+<dd><p>A text string that denotes the help dialog title.</p></dd>
+
+
 <dt>step</dt>
 <dd><p>Integer step in the GAT program, for help reference.</p></dd>
+
+
+<dt>backopt</dt>
+<dd><p>Boolean denoting whether to include the back button.</p></dd>
+
+
+<dt>checkopt</dt>
+<dd><p>The text that should accompany the checkbox. If checkbox
+is FALSE, this is ignored.</p></dd>
+
+
+<dt>checkbox</dt>
+<dd><p>A boolean that denotes whether or not to include a
+checkbox in the dialog.</p></dd>
+
+
 <dt>valuebox</dt>
 <dd><p>A boolean that denotes whether or not to include a
 valuebox in the dialog.</p></dd>
-<dt>helptitle</dt>
-<dd><p>A text string that denotes the help dialog title.</p></dd>
+
+
 <dt>value</dt>
 <dd><p>A number or string that denotes the default value for
 the text box.</p></dd>
-<dt>myvar</dt>
-<dd><p>Variable selected, if pre-defined.</p></dd>
+
+
 <dt>check</dt>
 <dd><p>Boolean denoting the status of the checkbox. If TRUE,
 the checkbox starts checked.</p></dd>
-<dt>backopt</dt>
-<dd><p>Boolean denoting whether to include the back button.</p></dd>
+
+
+<dt>valueopt</dt>
+<dd><p>The text that should accompany the valuebox. If valuebox
+is FALSE, this is ignored.</p></dd>
+
+
+<dt>mylist</dt>
+<dd><p>A character vector of variable names for the list.</p></dd>
+
+
+<dt>myvar</dt>
+<dd><p>Variable selected, if pre-defined.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">hlp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"To continue, select an option and click 'Next &gt;',"</span>,</span>
-<span class="r-in">              <span class="st">"\nto return to the previous step, click '&lt; Back',"</span>,</span>
-<span class="r-in">              <span class="st">"\nand to quit the program, click 'Cancel'."</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">inputGATvariable</span><span class="op">(</span></span>
-<span class="r-in">  title <span class="op">=</span> <span class="st">"My favorite letter"</span>,</span>
-<span class="r-in">  instruction <span class="op">=</span> <span class="st">"Please select your favorite letter."</span>,</span>
-<span class="r-in">  help <span class="op">=</span> <span class="va">hlp</span>,</span>
-<span class="r-in">  mylist <span class="op">=</span> <span class="va">letters</span>,</span>
-<span class="r-in">  checkopt <span class="op">=</span> <span class="st">"Check this box \nif you love all letters."</span>,</span>
-<span class="r-in">  valueopt <span class="op">=</span> <span class="st">"Enter the number of letters \nyou love."</span>,</span>
-<span class="r-in">  checkbox <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  valuebox <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span class="r-in">  helppage <span class="op">=</span> <span class="st">"inputGATvariable"</span>,</span>
-<span class="r-in">  value <span class="op">=</span> <span class="st">"5,000"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">inputGATvariable</span><span class="op">(</span></span></span>
+<span class="r-in"><span>  title <span class="op">=</span> <span class="st">"My favorite letter"</span>, checkbox <span class="op">=</span> <span class="cn">TRUE</span>, valuebox <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  instruction <span class="op">=</span> <span class="st">"Please select your favorite letter."</span>,</span></span>
+<span class="r-in"><span>  checkopt <span class="op">=</span> <span class="st">"Check this box \nif you love all letters."</span>,</span></span>
+<span class="r-in"><span>  valueopt <span class="op">=</span> <span class="st">"Enter the number of letters \nyou love."</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $myvar</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cancel"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $check</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $threshold</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -188,7 +216,7 @@ the checkbox starts checked.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

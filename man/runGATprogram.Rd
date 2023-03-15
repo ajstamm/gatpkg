@@ -33,7 +33,7 @@ adjacent areas.}
 desirable neighbor only from among the neighbors that
 have values below the desired minimum. If no neighbors
 are below the desired minimum, the most desirable of all
-elligible neighbors is selected.}
+eligible neighbors is selected.}
 
 \item{closemap}{A boolean to denote whether to close the map windows after
 the maps are drawn and saved. The default setting is TRUE
@@ -59,7 +59,7 @@ For more information  on how the different merge options work, see
 
 if (interactive()) {
 # this code will run the default version of GAT
-runGATprogram() # uses defaults
+runGATprogram()
 }
 
 }

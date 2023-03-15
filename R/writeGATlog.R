@@ -5,41 +5,35 @@
 #' aggregation variables, map projection, program start and end times, and
 #' any warnings that were generated.
 #'
-#' @param area         A spatial polygons data frame.
-#' @param gatvars      A list of objects created by the GAT tool. It contains
-#'                     the strings myidvar, aggregator1, aggregator2,
-#'                     mergeopt1,and boundary, which are all variables in the
-#'                     area, the numbers minvalue1 and minvalue2, and the
-#'                     boolean rigidbound. Both aggregator1 and aggregator2
-#'                     must be numeric and myidvar must contain unique values.
-#' @param aggvars      A list of objects created by the aggregation process.
+#' @param area         Spatial layer.
+#' @param gatvars      List of objects created by GAT. See the example for
+#'                     the elements it contains.
+#' @param aggvars      List of objects created by the aggregation process.
 #'                     See mergeGATpolygons() for the elements created.
-#' @param filevars     A list of file names and paths. Of relevance to this
+#' @param filevars     List of file names and paths. Of relevance to this
 #'                     function are the filename, filein, and the combined save
 #'                     path and save name, userout.
-#' @param mysettings   A list of system settings, including version, pkgdate,
+#' @param mysettings   List of system settings, including version, pkgdate,
 #'                     starttime, and the booleans savekml and exists.
-#' @param mergevars    A list of settings for the aggregation, including type
-#'                     of aggregation (mergeopt1) and, if relevant, the
-#'                     variables to compare, similar1 and similar2.
-#' @param ratevars     A list of settings for calculating rate, including
-#'                     ratename, numerator and denominator variable names,
-#'                     multiplier value, and color name and scheme for the map.
-#' @param exclist      A list of exclusion criteria to use when merging.
-#' @param settingsfile An R data file (*.Rdata) produced as part of GAT's
-#'                     output. This file saves all settings for GAT and can be
-#'                     used to reproduce the log. Other options can only be set
-#'                     to NULL if this option is defined.
+#' @param mergevars    List of settings for the aggregation. See the example
+#'                     for the elements it contains.
+#' @param ratevars     List of settings for calculating rate. See the example
+#'                     for the elements it contains.
+#' @param exclist      List of exclusion criteria to use when merging.
+#' @param settingsfile R data file (*.Rdata) produced as part of GAT's output.
+#'                     This file saves all settings for GAT. Other options can
+#'                     be set to NULL only if this option is defined.
 #'
 #'
 #' Notes on using the settingsfile option:
 #'
 #' 1. You will get an error if you moved the input shapefile before running
-#'    the function with this option, since the function needs access to the
+#'    the function with this option, since the function needs to access the
 #'    input shapefile to recreate the log.
 #' 2. Reading in an *.Rdata file from a previous version of GAT may result in
-#'    incorrect elapsed time and GAT version numbers being written to the log
-#'    due to changes in settings saved to the *.Rdata file as GAT has evolved.
+#'    incorrect elapsed time and GAT version numbers being written to the log,
+#'    or in errors that cause the file to be incomplete, due to changes in
+#'    settings saved to the *.Rdata file as GAT has evolved.
 #'
 #' @examples
 #'
@@ -98,6 +92,9 @@
 #'   starttime = Sys.time(),
 #'   version = "1.0",
 #'   pkgdate = format(Sys.Date(), "%m-%d-%Y"),
+#'   adjacent = TRUE,
+#'   pwrepeat = FALSE,
+#'   minfirst = TRUE,
 #'   exists = FALSE
 #' )
 #'
@@ -129,10 +126,7 @@
 #' @export
 
 # should the log include these?
-# * rate calculations
-# * GAT version? currently reads in package version
 # * gatpkg citation?
-# re-order distributions by aggregation variable? - done
 
 writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                         filevars = NULL, mysettings = NULL,
@@ -142,19 +136,22 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
   if (!is.null(settingsfile)) {
     load(settingsfile)
     if (is.null(mysettings)) { # rerunning failed log
-      mysettings <- list(version = packageDescription("gatpkg")$Version,
-                         pkgdate = packageDescription("gatpkg")$Date,
+      mysettings <- list(version = utils::packageDescription("gatpkg")$Version,
+                         pkgdate = utils::packageDescription("gatpkg")$Date,
+                         adjacent = "unknown",
+                         pwrepeat = "unknown",
+                         minfirst = "unknown",
+                         limitdenom = "unknown",
                          starttime = Sys.time()) # needed for the log
     }
     mysettings$exists = file.exists(paste0(filevars$userout, ".shp"))
-    area <- rgdal::readOGR(dsn = filevars$pathin,
-                           layer = filevars$filein,
-                           stringsAsFactors = FALSE)
+    area <- sf::st_read(dsn = filevars$pathin,
+                        layer = filevars$filein)
   }
 
   # fill in full list of names below; code will error otherwise
-  listitems <- names(area@data)
-  listitems <- listitems[listitems != "GATflag"]
+  listitems <- names(data.frame(area))
+  listitems <- listitems[!listitems %in% c("GATflag", "GATid")]
   myvars <- ""
   for (i in 1:(length(listitems)-1)) {
     myvars <- paste0(myvars, listitems[i], ", ")
@@ -182,9 +179,11 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
 
   # input file ####
   logtext <- c("\nInput file:          ", filevars$userin,
-               "\n  Projection:        ", sp::proj4string(area),
+               "\n  Projection:        ",
+               sf::st_crs(area, parameters = TRUE)$proj4string,
                "\n  Field names:       ", myvars,
                "\n  Identifier:        ", gatvars$myidvar,
+               "\n  Adjacency required?", mysettings$adjacent,
                "\n  Boundary variable: ", gatvars$boundary)
   if (!gatvars$rigidbound & gatvars$boundary != "NONE") {
     logtext <- c(logtext, "\n    You did not require the aggregation to",
@@ -200,12 +199,10 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                "\n  Number of input areas:    ",
                format(gatvars$numrow, big.mark=",", scientific=FALSE),
                "\n  Number of output areas:   ",
-               format(nrow(aggvars$allpolydata), big.mark=",",
-                      scientific=FALSE),
+               format(nrow(aggvars$shp), big.mark=",", scientific=FALSE),
                # does not take into account aborted aggregations
                "\n  Number of aggregations:   ",
-               format(nrow(area@data) - nrow(aggvars$allpolydata),
-                      big.mark=",",
+               format(nrow(area) - nrow(aggvars$shp), big.mark=",",
                       scientific=FALSE),
                "\n  Number of excluded areas: ",
                format(exclist$flagsum, big.mark=",", scientific=FALSE))
@@ -220,9 +217,13 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
     logtext <- c(logtext, mergevars$centroid, "centroid")
     if (mergevars$centroid == "population-weighted") {
       logtext <- c(logtext, "\n  Population file:", filevars$popin,
-                   "\n  Population variable:", gatvars$popvar)
+                   "\n  Population variable:", gatvars$popvar,
+                   "\n  Recalculate centroid after each merge?",
+                   mysettings$pwrepeat)
     }
   }
+  logtext <- c(logtext, "\n  Prefer aggregating to areas",
+               "below minimum value first?", mysettings$minfirst)
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
   # Exclusion criteria ####
@@ -254,15 +255,14 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                "\n  Minimum value:", min1, "\n  Maximum value:", max1,
                "\nPre-aggregation distribution:")
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
-  write.table(quantile(area@data[, gatvars$aggregator1]), file = logfile,
+  utils::write.table(stats::quantile(data.frame(area)[, gatvars$aggregator1]), file = logfile,
               row.names = TRUE, col.names = FALSE, append = TRUE)
 
   logtext <- c("\nPost-aggregation distribution:")
   write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
 
-  write.table(quantile(aggvars$allpolydata[, gatvars$aggregator1]),
-              file = logfile, row.names = TRUE, col.names = FALSE,
-              append = TRUE)
+  utils::write.table(stats::quantile(data.frame(aggvars$shp)[, gatvars$aggregator1]),
+              file = logfile, row.names = TRUE, col.names = FALSE, append = TRUE)
 
   # second aggregation variable ####
   if (gatvars$aggregator1 != gatvars$aggregator2) {
@@ -279,16 +279,15 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                  "\n  Minimum value:", min2, "\n  Maximum value:", max2,
                  "\nPre-aggregation distribution:")
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
-    write.table(quantile(area@data[, gatvars$aggregator2]), file = logfile,
-                row.names = TRUE, col.names = FALSE, append = TRUE)
+    utils::write.table(stats::quantile(data.frame(area)[, gatvars$aggregator2]),
+                       file = logfile, row.names = TRUE, col.names = FALSE, append = TRUE)
   }
 
   if (gatvars$aggregator1 != gatvars$aggregator2) {
     logtext <- c("\nPost-aggregation distribution:")
     write(logtext, file = logfile, ncolumns = length(logtext), append = TRUE)
-    write.table(quantile(aggvars$allpolydata[, gatvars$aggregator2]),
-                file = logfile, row.names = TRUE, col.names = FALSE,
-                append = TRUE)
+    utils::write.table(stats::quantile(data.frame(aggvars$shp)[, gatvars$aggregator2]),
+                file = logfile, row.names = TRUE, col.names = FALSE, append = TRUE)
   }
 
   # rate calculation if requested ####
@@ -314,21 +313,17 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                  "\n  Aggregated shapefile:             ",
                  paste0(filevars$fileout, ".shp"),
                  "\n    Variables created by GAT:",
-                 "\n        GATx:",
-                 "longitude of the aggregated area", mergevars$centroid,
-                 "centroid",
-                 "\n        GATy:",
-                 "latitude of the aggregated area", mergevars$centroid,
-                 "centroid",
-                 "\n        GATcratio:",
-                 "compactness ratio, or the area of the polygon over the",
-                 "area of a circle with the same perimeter",
-                 "\n        GATnumIDs:",
-                 "number of original areas that were merged into each",
-                 "aggregated area",
-                 "\n        GATflag:",
-                 "flag of areas that were excluded from aggregation or",
-                 "generated warnings in the log",
+                 "\n        GATid:", "GAT-generated aggregated area identifier",
+                 "\n        GATx:", "longitude of the aggregated area",
+                 mergevars$centroid, "centroid",
+                 "\n        GATy:", "latitude of the aggregated area",
+                 mergevars$centroid, "centroid",
+                 "\n        GATcratio:", "compactness ratio, or the area of the",
+                 "polygon over the area of a circle with the same perimeter",
+                 "\n        GATnumIDs:", "number of original areas",
+                 "that were merged into each aggregated area",
+                 "\n        GATflag:", "flag of areas that were excluded",
+                "from aggregation or generated warnings in the log",
                  "\n            value = 0:", "no flag",
                  "\n            value = 1:",
                  "area excluded based on exclusion criteria",
@@ -346,17 +341,15 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
     }
     if (gatvars$popwt) {
       logtext <- c(logtext,
-                   "\n        GATpop:",
-                   "population of the aggregated area, from the population",
-                   "file")
+                   "\n        GATpop:", "population of the aggregated area,",
+                   "from the population file")
     }
     logtext <- c(logtext,
                  "\n  Original shapefile with crosswalk:",
                  paste0(filevars$fileout, "in.shp"),
                  "\n    Variables created by GAT:",
-                 "\n        GATflag:",
-                 "flag of areas that were excluded from aggregation or",
-                 "generated warnings in the log",
+                 "\n        GATflag:", "flag of areas that were excluded",
+                 "from aggregation or generated warnings in the log",
                  "\n            value = 0:", "no flag",
                  "\n            value = 1:",
                  "area excluded based on exclusion criteria",
@@ -364,8 +357,8 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                  "area excluded because value of aggregation variable",
                  "exceeded maximum value",
                  "\n        GATid:",
-                 "GAT-generated identifier of the aggregated area each",
-                 "original area fell inside when aggregated")
+                 "GAT-generated identifier for the area each original area",
+                 "fell inside when aggregated")
   }
   logtext <- c(logtext,
                "\n  Maps:                             ",
@@ -376,8 +369,10 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
                paste0(filevars$fileout, "settings.Rdata"))
   if (gatvars$savekml) {
     logtext <- c(logtext,
-                 "\n  KML file:                         ",
-                 paste0(filevars$fileout, ".kml"))
+                 "\n  KML file (raw):                   ",
+                 paste0(filevars$fileout, ".kml"),
+                 "\n  KMZ file (zipped):                ",
+                 paste0(filevars$fileout, ".kmz"))
   } else {
     logtext <- c(logtext, "\n  You chose not to write a KML file.")
   }

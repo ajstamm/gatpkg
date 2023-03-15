@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Preparing your shapefile for GAT • NYS EPHT GAT</title>
+<title>GAT Shapefile Preparation • NYS EPHT GAT</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Preparing your shapefile for GAT">
+<script src="../pkgdown.js"></script><meta property="og:title" content="GAT Shapefile Preparation">
 <meta property="og:description" content="gatpkg">
 <meta name="robots" content="noindex">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -44,32 +44,32 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -100,10 +100,11 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Preparing your shapefile for GAT</h1>
-                        <h4 data-toc-skip class="author">Abigail Stamm</h4>
+      <h1 data-toc-skip>GAT Shapefile Preparation</h1>
+                        <h4 data-toc-skip class="author">Abigail
+Stamm</h4>
             
-            <h4 data-toc-skip class="date">2022-01-04</h4>
+            <h4 data-toc-skip class="date">2023-03-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_prepare_shapefile.Rmd" class="external-link"><code>vignettes/gat_prepare_shapefile.Rmd</code></a></small>
       <div class="hidden name"><code>gat_prepare_shapefile.Rmd</code></div>
@@ -115,21 +116,29 @@
 <div class="section level2">
 <h2 id="shapefile-specifications">Shapefile specifications<a class="anchor" aria-label="anchor" href="#shapefile-specifications"></a>
 </h2>
-<p>This vignette provides the requirements for a shapefile that will be processed by GAT and the necessary specifications if you wish to use GAT’s various options.</p>
-<p>GAT requires an Esri shapefile. If your file is in another format, you will need to convert it to an Esri shapefile using R or your preferred GIS software.</p>
+<p>This vignette provides the requirements for a shapefile that will be
+processed by the Geographic Aggregation Tool (GAT) and the necessary
+specifications if you wish to use GAT’s various options.</p>
+<p>GAT requires an Esri shapefile. If your file is in another format,
+you will need to convert it to an Esri shapefile using R or your
+preferred GIS software.</p>
 <div class="section level3">
 <h3 id="minimum-requirements">Minimum requirements<a class="anchor" aria-label="anchor" href="#minimum-requirements"></a>
 </h3>
 <p>The minimum requirements for your shapefile include:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Polygon geometry</strong>: The layer shapes must be polygons, for example state outlines.</li>
+<strong>Polygon geometry</strong>: The layer shapes must be
+polygons, for example state outlines.</li>
 <li>
-<strong>Identifier variable</strong>: A character or string variable with unique values for each row.</li>
+<strong>Identifier variable</strong>: A character or string variable
+with unique values for each row.</li>
 <li>
-<strong>Aggregation variable</strong>: A numeric variable used for the aggregation.</li>
+<strong>Aggregation variable</strong>: A numeric variable used for
+the aggregation.</li>
 </ol>
-<p>These requirements allow you to merge areas using lowest count and closest geographic centroid merge settings.</p>
+<p>These requirements allow you to merge areas using lowest count and
+closest geographic centroid merge settings.</p>
 </div>
 <div class="section level3">
 <h3 id="optional-specifications">Optional specifications<a class="anchor" aria-label="anchor" href="#optional-specifications"></a>
@@ -137,33 +146,50 @@
 <p>If you want to aggregate within a boundary, you will also need:</p>
 <ol start="4" style="list-style-type: decimal">
 <li>
-<strong>Boundary variable</strong>: A character or string variable containing non-unique values.</li>
+<strong>Boundary variable</strong>: A character or string variable
+containing non-unique values.</li>
 </ol>
 <p>If you want to use exclusion criteria, you will also need:</p>
 <ol start="5" style="list-style-type: decimal">
 <li>
-<strong>Exclusion variables</strong>: Up to three numeric variables. If you have more than three exclusion variables or you need to exclude on character or string variables, create a numeric flag variable (for example 0, 1) to use instead.</li>
+<strong>Exclusion variables</strong>: Up to three numeric variables.
+If you have more than three exclusion variables or you need to exclude
+on character or string variables, create a numeric flag variable (for
+example 0, 1) to use instead.</li>
 </ol>
 <p>If you want to merge on similar variables, you will also need:</p>
 <ol start="6" style="list-style-type: decimal">
 <li>
-<strong>Numerator</strong>: A numeric variable to serve as the numerator in the ratio.</li>
+<strong>Numerator</strong>: A numeric variable to serve as the
+numerator in the ratio.</li>
 <li>
-<strong>Denominator</strong>: A numeric variable to serve as the denominator in the ratio. If you use the advanced setting <code>limitdenom=TRUE</code>, this variable cannot contain any zeroes after removing exclusions.</li>
+<strong>Denominator</strong>: A numeric variable to serve as the
+denominator in the ratio. If you use the advanced setting
+<code>limitdenom=TRUE</code>, this variable cannot contain any zeroes
+after removing exclusions.</li>
 </ol>
-<p>If you want to include a rate calculation (or ratio or density), you will also need:</p>
+<p>If you want to include a rate calculation (or ratio or density), you
+will also need:</p>
 <ol start="8" style="list-style-type: decimal">
 <li>
-<strong>Numerator</strong>: A numeric variable to serve as the numerator in the ratio.</li>
+<strong>Numerator</strong>: A numeric variable to serve as the
+numerator in the ratio.</li>
 <li>
-<strong>Denominator</strong>: A numeric variable to serve as the denominator in the ratio. If you use the advanced setting <code>limitdenom=TRUE</code>, this variable cannot contain any zeroes after removing exclusions.</li>
+<strong>Denominator</strong>: A numeric variable to serve as the
+denominator in the ratio. If you use the advanced setting
+<code>limitdenom=TRUE</code>, this variable cannot contain any zeroes
+after removing exclusions.</li>
 </ol>
-<p>If you want to merge by the closest population-weighted centroid, you will also need another Esri shapefile, which can be the aggregation shapefile or an entirely different shapefile. It must include:</p>
+<p>If you want to merge by the closest population-weighted centroid, you
+will also need another Esri shapefile, which can be the aggregation
+shapefile or an entirely different shapefile. It must include:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Polygon geometry</strong>: The layer shapes must be polygons, for example state outlines.</li>
+<strong>Polygon geometry</strong>: The layer shapes must be
+polygons, for example state outlines.</li>
 <li>
-<strong>Population variable</strong>: A numeric variable used for the population counts.</li>
+<strong>Population variable</strong>: A numeric variable used for
+the population counts.</li>
 </ol>
 </div>
 </div>
@@ -186,7 +212,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

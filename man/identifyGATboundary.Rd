@@ -5,30 +5,30 @@
 \title{Identify GAT Boundary}
 \usage{
 identifyGATboundary(
-  data,
+  shp,
   step = 3,
   boundary = "NONE",
-  borders = FALSE,
   myvar = "NONE",
+  borders = FALSE,
   check = FALSE,
   backopt = TRUE
 )
 }
 \arguments{
-\item{data}{A data frame, intended to be read from a shapefile DBF.}
+\item{shp}{Spatial layer.}
 
-\item{step}{Integer step in the GAT program, for help reference.}
+\item{step}{Integer step in GAT, for help reference.}
 
 \item{boundary}{Boundary variable, if pre-selected. Defaults to "NONE",
 which means no boundary selected.}
 
-\item{borders}{Boolean denoting whether to enforce boundary. Defaults
-to FALSE.}
+\item{myvar}{Boundary variable, if pre-selected.}
 
-\item{myvar}{The boundary variable, if pre-selected.}
+\item{borders}{Boolean denoting whether to enforce boundary. Default is
+FALSE.}
 
-\item{check}{The checkbox setting, if pre-selected. Currently does
-not do anything.}
+\item{check}{Checkbox setting, if pre-selected. Currently does not do
+anything.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
 }
@@ -60,9 +60,7 @@ suitable for defining larger geographic areas in GAT.
 
 if (interactive()) {
 # select boundary variable
-identifyGATboundary(
-  data = hftown@data,
-)
+identifyGATboundary(shp = hftown)
 }
 
 }

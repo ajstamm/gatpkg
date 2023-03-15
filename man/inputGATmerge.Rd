@@ -5,7 +5,7 @@
 \title{Input GAT Merge}
 \usage{
 inputGATmerge(
-  mapdata,
+  shp,
   aggvar,
   aggvar2,
   step = 8,
@@ -15,12 +15,12 @@ inputGATmerge(
 )
 }
 \arguments{
-\item{mapdata}{The data frame.}
+\item{shp}{Spatial layer.}
 
-\item{aggvar}{A string denoting the name of the first aggregation
+\item{aggvar}{String denoting the name of the first aggregation
 variable in the data frame.}
 
-\item{aggvar2}{A string denoting the name of the second aggregation
+\item{aggvar2}{String denoting the name of the second aggregation
 variable in the data frame.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
@@ -76,11 +76,7 @@ list will be blank.
 
 if (interactive()) {
 # make your selections and click "OK"
-inputGATmerge(
-  mapdata = hftown@data,
-  aggvar = "TOTAL_POP",
-  aggvar2 = "W_TOT"
-)
+inputGATmerge(shp = hftown, aggvar = "TOTAL_POP", aggvar2 = "W_TOT")
 }
 
 }

@@ -6,11 +6,11 @@
 \usage{
 inputGATvalue(
   title = "GAT input window",
+  helppage = NULL,
+  step = 0,
   help = "Enter the desired value and click 'Next >'.",
   message = "Please enter something in the box.",
   defaulttext = "default text",
-  helppage = NULL,
-  step = 0,
   helptitle = "this step",
   backopt = TRUE
 )
@@ -18,16 +18,16 @@ inputGATvalue(
 \arguments{
 \item{title}{A text string that denotes the dialog title.}
 
+\item{helppage}{A text string that contains the funcion name for the
+relevant function (if any) in the help dialog.}
+
+\item{step}{Integer step in the GAT program, for help reference.}
+
 \item{help}{A text string containing the help message.}
 
 \item{message}{A text string stating the request or message for the user.}
 
 \item{defaulttext}{A text string that is pre-entered in the text box.}
-
-\item{helppage}{A text string that contains the funcion name for the
-relevant function (if any) in the help dialog.}
-
-\item{step}{Integer step in the GAT program, for help reference.}
 
 \item{helptitle}{The step name to display in the title bar.}
 
@@ -44,19 +44,9 @@ and provides a link to the relevant help file in the GAT program.
 \examples{
 
 if (interactive()) {
-hlp <-
-  paste0(
-    "To continue, select an option and click 'Next >',",
-    "\nto return to the previous step, click '< Back',",
-    "\nand to quit the program, click 'Cancel'."
-  )
-
-inputGATvalue(
-  title = "Learning your name",
-  help = hlp,
-  message = "Please enter your name.",
-  defaulttext = "Charlie Brown"
-)
+inputGATvalue(title = "Learning your name",
+              message = "Please enter your name.",
+              defaulttext = "Charlie Brown")
 }
 
 }

@@ -1,5 +1,5 @@
 ---
-title: "Geographic Aggregation Tool (GAT) Change Log"
+title: "GAT Change Log"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -16,6 +16,29 @@ knitr::opts_chunk$set(
 )
 ```
 
+## GAT v2.0.0 (March 15, 2023)
+
+* Added advanced options to the settings file and log.
+* Converted all instances of rgeos, rgdal, lwgeom, foreign, and sp to sf and removed those dependencies. 
+* Converted all uses of tcltk2 to tcltk and removed dependency on tcltk2 as it was crashing RStudio with R4.2.0.
+* Revised and standardized all pop-up fonts and colors except the pre-defined progress bar and file-selection window.
+* Revised `writeGATkml()` to use sf and removed dependency on plotKML.
+* Revised population weighting to read in the population file only once.
+* Removed checkGATshapefilesize() as support for memory.limit() is ending. 
+* Added a 'GATid' variable to clone the selected merge variable instead of overwriting it.
+* Fixed the bug that incorrectly assigned GATid for the crosswalk and messed up the final aggregated areas.
+* Fixed the bug that caused GAT to crash if the user prematurely closed the progress bar.
+* Clarified possible issues in the troubleshooting vignette.
+* Fixed bugs in `defineGATmerge()` and `identifyGATfirstobs()` that caused GAT to crash.
+
+## GAT v1.62.0 (January 1, 2023)
+
+* Minor edits; last version before the overhaul
+
+## GAT v1.61.2 (April 13, 2022)
+
+* Patched to replace plotKML in `writeGATkml()` with sf::st_write because plotKML was removed from CRAN.
+
 ## GAT v1.61.1 (January 4, 2022)
 
 * Added structure for pkgdown.
@@ -23,7 +46,7 @@ knitr::opts_chunk$set(
 
 ## GAT v1.61.0 (February 8, 2021)
 
-* Added vignette "Assessing GAT Results".
+* Added vignette [Assessing GAT Results](gat_results_eval.html).
 * Fixed bugs and typos in `confirmGATbystep()` and `runGATprogram()`, notably the 
   bug that incorrectly displayed number of excluded areas over maximum.
 * Added objects "ismax1", "ismin2", and "ismax2" to the gatvars list object
@@ -121,7 +144,7 @@ All changes from January 2019 onward by Abigail Stamm.
 
 
 
-## GAT v1.34 (Release date: Aug 28, 2015)
+## GAT v1.34 (August 28, 2015)
 
 All changes prior to 2019 by Gwen Babcock.
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/defineGATmapclasses.R
 \name{defineGATmapclasses}
 \alias{defineGATmapclasses}
-\title{Plot GAT Maps}
+\title{Define Classes for Map Legends}
 \usage{
 defineGATmapclasses(areaold, areanew, aggvar, breaks = 7)
 }
@@ -24,7 +24,7 @@ so that the same scale can be used for both.
 # prepare the classes for the choropleth maps
 defineGATmapclasses(
   areaold = hftown,
-  areanew = hfagg5k,
+  areanew = hfagg610k,
   aggvar = "TOTAL_POP",
   breaks = 4
 )

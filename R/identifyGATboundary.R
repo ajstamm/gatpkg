@@ -23,41 +23,37 @@
 #' are (1) character and (2) not unique, since only these variables will be
 #' suitable for defining larger geographic areas in GAT.
 #'
-#' @param data     A data frame, intended to be read from a shapefile DBF.
-#' @param step     Integer step in the GAT program, for help reference.
+#' @param shp      Spatial layer.
+#' @param step     Integer step in GAT, for help reference.
 #' @param boundary Boundary variable, if pre-selected. Defaults to "NONE",
 #'                 which means no boundary selected.
-#' @param borders  Boolean denoting whether to enforce boundary. Defaults
-#'                 to FALSE.
-#' @param myvar    The boundary variable, if pre-selected.
-#' @param check    The checkbox setting, if pre-selected. Currently does
-#'                 not do anything.
+#' @param borders  Boolean denoting whether to enforce boundary. Default is
+#'                 FALSE.
+#' @param myvar    Boundary variable, if pre-selected.
+#' @param check    Checkbox setting, if pre-selected. Currently does not do
+#'                 anything.
 #' @param backopt  Boolean denoting whether to include the back button.
 #'
 #' @examples
 #'
 #' if (interactive()) {
 #' # select boundary variable
-#' identifyGATboundary(
-#'   data = hftown@data,
-#' )
+#' identifyGATboundary(shp = hftown)
 #' }
 #'
 #' @export
 
-identifyGATboundary <- function(data, step = 3, boundary = "NONE",
-                                borders = FALSE,
-                                myvar = "NONE", check = FALSE,
-                                backopt = TRUE) {
+identifyGATboundary <- function(shp, step = 3, boundary = "NONE", myvar = "NONE",
+                                borders = FALSE, check = FALSE, backopt = TRUE) {
   # should be at least two choices, because we add "NONE"
-  charlistitems <- checkGATvariabletypes(data, type = "character")
+  chars <- checkGATvariabletypes(shp, type = "character")
   idlist <- c()
-  for (i in 1:length(charlistitems)) {
-    t <- table(data[, charlistitems[i]])
-    idlist[i] <- length(t) == nrow(data)
+  for (i in 1:length(chars)) {
+    t <- table(data.frame(shp)[, chars[i]])
+    idlist[i] <- length(t) == nrow(shp)
   }
 
-  boundaryitems <- c("NONE", charlistitems[idlist == FALSE])
+  boundaryitems <- c("NONE", chars[idlist == FALSE])
 
   noofchoices <- length(boundaryitems)
 
@@ -76,11 +72,9 @@ identifyGATboundary <- function(data, step = 3, boundary = "NONE",
 
     while (error) {
       boundaryvars <- inputGATvariable(mylist = boundaryitems, instruction = msg,
-                                     title = "Boundary Variable", checkopt = chk,
-                                     checkbox = TRUE, help = hlp, step = step,
-                                     helppage = "identifyGATboundary",
-                                     myvar = boundary, check = borders,
-                                     backopt = backopt)
+                      title = "Boundary Variable", checkopt = chk, checkbox = TRUE,
+                      help = hlp, step = step, helppage = "identifyGATboundary",
+                      myvar = boundary, check = borders, backopt = backopt)
       error <- FALSE
       if (is.null(boundaryvars)) {
         x <- confirmGATquit()

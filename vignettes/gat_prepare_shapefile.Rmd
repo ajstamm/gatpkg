@@ -1,10 +1,10 @@
 ---
-title: "Preparing your shapefile for GAT"
+title: "GAT Shapefile Preparation"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Preparing your shapefile for GAT}
+  %\VignetteIndexEntry{GAT Shapefile Preparation}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 ## Shapefile specifications
 
-This vignette provides the requirements for a shapefile that will be processed by GAT and the necessary specifications if you wish to use GAT's various options.
+This vignette provides the requirements for a shapefile that will be processed by the Geographic Aggregation Tool (GAT) and the necessary specifications if you wish to use GAT's various options.
 
 GAT requires an Esri shapefile. If your file is in another format, you will need to convert it to an Esri shapefile using R or your preferred GIS software.
 

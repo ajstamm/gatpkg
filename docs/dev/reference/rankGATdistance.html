@@ -18,7 +18,7 @@ nearest to farthest and returns a vector of integers."><meta name="robots" conte
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -27,31 +27,31 @@ nearest to farthest and returns a vector of integers."><meta name="robots" conte
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -86,17 +86,23 @@ nearest to farthest and returns a vector of integers.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">rankGATdistance</span><span class="op">(</span><span class="va">area</span>, <span class="va">nbdata</span>, <span class="va">first</span>, <span class="va">gatvars</span>, <span class="va">mergevars</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">rankGATdistance</span><span class="op">(</span><span class="va">area</span>, <span class="va">nbdata</span>, <span class="va">first</span>, <span class="va">gatvars</span>, <span class="va">mergevars</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>area</dt>
 <dd><p>A spatial polygons data frame.</p></dd>
+
+
 <dt>nbdata</dt>
 <dd><p>A data frame of (polygon) observations.</p></dd>
+
+
 <dt>first</dt>
 <dd><p>A data frame with one (polygon) observation.</p></dd>
+
+
 <dt>gatvars</dt>
 <dd><p>A list of objects created by the GAT tool. It contains the
 strings myidvar, aggregator1, aggregator2, and boundary,
@@ -104,6 +110,8 @@ which are all variables in the area, and the numbers
 minvalue1 and minvalue2. Both aggregator1 and aggregator2
 must be numeric. The identifier, myidvar, must contain
 unique values.</p></dd>
+
+
 <dt>mergevars</dt>
 <dd><p>A list of string objects needed to aggregate the areas in
 the GAT tool. It contains mergeopt1, mergeopt2, similar1,
@@ -112,51 +120,43 @@ mergeopt2 are "closest", "least", and "similar". If
 "similar" is selected, similar1 and similar2 must be
 numeric variables in the area and similar2 cannot equal
 zero.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># add GAT variables</span></span>
-<span class="r-in"><span class="va">centroids</span> <span class="op">&lt;-</span> <span class="fu">sp</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/sp/man/coordinates.html" class="external-link">coordinates</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">centroids</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GATx"</span>, <span class="st">"GATy"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">@</span><span class="va">data</span>, <span class="va">centroids</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">first</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">my_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"37374"</span>, <span class="va">my_data</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span>, <span class="op">]</span>                        <span class="co"># only one observation</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># hard coded for simplicity; use spdep::poly2nb() to get these obs</span></span>
-<span class="r-in"><span class="va">nbdata</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="va">my_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"43412|02572|40794|79059"</span>, <span class="va">my_data</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span></span>
-<span class="r-in">  <span class="op">)</span>, <span class="op">]</span>                        <span class="co"># only adjacent neighbors to first</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">gatvars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  myidvar <span class="op">=</span> <span class="st">"ID"</span>,             <span class="co"># character variable of unique values</span></span>
-<span class="r-in">  aggregator1 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span>
-<span class="r-in">  aggregator2 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span>
-<span class="r-in">  minvalue1 <span class="op">=</span> <span class="fl">5000</span>, minvalue2 <span class="op">=</span> <span class="fl">5000</span>,</span>
-<span class="r-in">  boundary <span class="op">=</span> <span class="st">"COUNTY"</span>         <span class="co"># character variable of non-unique values</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mergevars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  mergeopt1 <span class="op">=</span> <span class="st">"similar"</span>,    <span class="co"># can be similar, closest, or least</span></span>
-<span class="r-in">  mergeopt2 <span class="op">=</span> <span class="st">"closest"</span>,    <span class="co"># if "similar" fails</span></span>
-<span class="r-in">  similar1 <span class="op">=</span> <span class="st">"B_TOT"</span>,       <span class="co"># numeric variable</span></span>
-<span class="r-in">  similar2 <span class="op">=</span> <span class="st">"W_TOT"</span>        <span class="co"># numeric variable without any zeros</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="co"># rank the distances</span></span>
-<span class="r-in"><span class="va">my_rank_list</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">rankGATdistance</span><span class="op">(</span></span>
-<span class="r-in">    area <span class="op">=</span> <span class="va">hftown</span>,</span>
-<span class="r-in">    nbdata <span class="op">=</span> <span class="va">nbdata</span>,</span>
-<span class="r-in">    first <span class="op">=</span> <span class="va">first</span>,</span>
-<span class="r-in">    gatvars <span class="op">=</span> <span class="va">gatvars</span>,</span>
-<span class="r-in">    mergevars <span class="op">=</span> <span class="va">mergevars</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>CRS object has comment, which is lost in output; in tests, see</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://cran.r-project.org/web/packages/sp/vignettes/CRS_warnings.html</span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># add GAT variables</span></span></span>
+<span class="r-in"><span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_agr.html" class="external-link">st_agr</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"constant"</span></span></span>
+<span class="r-in"><span><span class="va">centroids</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_coordinates.html" class="external-link">st_coordinates</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/geos_unary.html" class="external-link">st_centroid</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">centroids</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GATx"</span>, <span class="st">"GATy"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="va">hftown</span>, <span class="va">centroids</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_as_sf.html" class="external-link">st_as_sf</a></span><span class="op">(</span><span class="va">my_data</span>, coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"GATx"</span>, <span class="st">"GATy"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                        crs <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">first</span> <span class="op">&lt;-</span> <span class="va">my_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"37374"</span>, <span class="va">my_data</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span> <span class="co"># only one observation</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># hard coded for simplicity; use spdep::poly2nb() to get these obs</span></span></span>
+<span class="r-in"><span><span class="va">nbdata</span> <span class="op">&lt;-</span> <span class="va">my_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"43412|02572|40794|79059"</span>, <span class="va">my_data</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span></span>
+<span class="r-in"><span>          <span class="co"># only adjacent neighbors to first</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">gatvars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  myidvar <span class="op">=</span> <span class="st">"ID"</span>,             <span class="co"># character variable of unique values</span></span></span>
+<span class="r-in"><span>  aggregator1 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span></span>
+<span class="r-in"><span>  aggregator2 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span></span>
+<span class="r-in"><span>  minvalue1 <span class="op">=</span> <span class="fl">5000</span>, minvalue2 <span class="op">=</span> <span class="fl">5000</span>,</span></span>
+<span class="r-in"><span>  boundary <span class="op">=</span> <span class="st">"COUNTY"</span>         <span class="co"># character variable of non-unique values</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mergevars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  mergeopt1 <span class="op">=</span> <span class="st">"similar"</span>,    <span class="co"># can be similar, closest, or least</span></span></span>
+<span class="r-in"><span>  mergeopt2 <span class="op">=</span> <span class="st">"closest"</span>,    <span class="co"># if "similar" fails</span></span></span>
+<span class="r-in"><span>  similar1 <span class="op">=</span> <span class="st">"B_TOT"</span>,       <span class="co"># numeric variable</span></span></span>
+<span class="r-in"><span>  similar2 <span class="op">=</span> <span class="st">"W_TOT"</span>        <span class="co"># numeric variable without any zeros</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># rank the distances</span></span></span>
+<span class="r-in"><span><span class="va">my_rank_list</span> <span class="op">&lt;-</span> <span class="fu">rankGATdistance</span><span class="op">(</span>area <span class="op">=</span> <span class="va">hftown</span>, nbdata <span class="op">=</span> <span class="va">nbdata</span>,</span></span>
+<span class="r-in"><span>                                first <span class="op">=</span> <span class="va">first</span>, gatvars <span class="op">=</span> <span class="va">gatvars</span>,</span></span>
+<span class="r-in"><span>                                mergevars <span class="op">=</span> <span class="va">mergevars</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -171,7 +171,7 @@ zero.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

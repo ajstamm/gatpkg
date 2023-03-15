@@ -18,7 +18,7 @@ variables in the data frame."><meta name="robots" content="noindex"><!-- mathjax
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -27,31 +27,31 @@ variables in the data frame."><meta name="robots" content="noindex"><!-- mathjax
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -86,28 +86,31 @@ variables in the data frame.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">checkGATvariabletypes</span><span class="op">(</span><span class="va">mapdata</span>, type <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">checkGATvariabletypes</span><span class="op">(</span><span class="va">mapdata</span>, type <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>mapdata</dt>
 <dd><p>A data frame, intended to be read from a shapefile DBF.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Variable type. Options include "number", which returns a vector
 of names for all numeric variables, and "character", which
 returns a vector of names for all character variables.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># identify numeric variables</span></span>
-<span class="r-in"><span class="va">my_numericvars</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">checkGATvariabletypes</span><span class="op">(</span></span>
-<span class="r-in">    mapdata <span class="op">=</span> <span class="va">hftown</span><span class="op">@</span><span class="va">data</span>,</span>
-<span class="r-in">    type <span class="op">=</span> <span class="st">"number"</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># identify numeric variables</span></span></span>
+<span class="r-in"><span><span class="va">my_numericvars</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">checkGATvariabletypes</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    mapdata <span class="op">=</span> <span class="va">hftown</span>,</span></span>
+<span class="r-in"><span>    type <span class="op">=</span> <span class="st">"number"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -122,7 +125,7 @@ returns a vector of names for all character variables.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -4,10 +4,10 @@
 \alias{calculateGATcompactness}
 \title{Calculate GAT Compactness}
 \usage{
-calculateGATcompactness(shp)
+calculateGATcompactness(myshp)
 }
 \arguments{
-\item{shp}{A spatial polygons data frame.}
+\item{myshp}{A spatial layer.}
 }
 \description{
 This function calculates the compactness ratios for the aggregated areas.
@@ -18,8 +18,6 @@ an alternate projection. The spatial polygons data frame is then used
 to calculate compactness ratio. The function returns a vector of ratios.
 }
 \examples{
-calculateGATcompactness(
-  shp = hftown
-)
+calculateGATcompactness(myshp = hftown)
 
 }

@@ -5,11 +5,10 @@
 \title{Create New GAT Region}
 \usage{
 createGATregion(
-  mydata,
+  area,
   newreg,
   myidvar,
   nrid,
-  area = NULL,
   pop = NULL,
   IDlist = NULL,
   pwrepeat = FALSE,
@@ -17,7 +16,7 @@ createGATregion(
 )
 }
 \arguments{
-\item{mydata}{A data frame from the original shapefile.}
+\item{area}{The original shapefile.}
 
 \item{newreg}{The rows in the data frame (polygons in the shapefile later)
 that will be joined into a single observation (polygon).}
@@ -27,8 +26,6 @@ observations.}
 
 \item{nrid}{A string that will be the ID for the merged observation
 (polygon).}
-
-\item{area}{The area shapefile (if pwrepeat=TRUE or GATx/GATy missing).}
 
 \item{pop}{The base population shapefile (if popwt=TRUE).}
 
@@ -58,11 +55,10 @@ ids <- c("e", "e", "d", "d", "f", "f", "f", "e", "e", "d", "e",
          "d", "b", "c", "c", "a", "b", "c", "a", "b", "c")
 my_merged_obs <-
   createGATregion(
-    mydata = hftown@data,
-    newreg = hftown@data[ids=="a",],
+    area = hftown,
+    newreg = hftown[ids=="a",],
     myidvar = "ID",
     nrid = "a",
-    area = hftown,
     pop = hfpop,
     IDlist = ids,
     pwrepeat = TRUE,

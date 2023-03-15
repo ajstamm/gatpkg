@@ -37,18 +37,14 @@
 #' # define merge type
 #' mergevars <- list(
 #'   mergeopt1 = "similar",    # can be similar, closest, or least
-#'   similar1 = "B_TOT",       # numeric variable
-#'   similar2 = "W_TOT",       # numeric variable without any zeros
+#'   similar1 = "AREAWATR",       # numeric variable
+#'   similar2 = "AREALAND",       # numeric variable without any zeros
 #'   centroid = "geographic"
 #' )
 #'
 #' # draw the map
-#' plotGATcompare(
-#'   areaold = hftown,
-#'   areanew = hfagg5k,
-#'   mergevars = mergevars,
-#'   gatvars = gatvars
-#' )
+#' plotGATcompare(areaold = hftown, areanew = hfagg610k,
+#'                mergevars = mergevars, gatvars = gatvars)
 #'
 #' @export
 
@@ -58,26 +54,30 @@
 # but function doesn't recognize them
 plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
                            closemap = FALSE) {
+  # temporary sf conversion
+  areaold <- sf::st_as_sf(areaold)
+  areanew <- sf::st_as_sf(areanew)
+
   # function to handle numbers
   numformat <- function(num) {
     format(as.numeric(gsub(",", "", num)), big.mark=",", scientific=FALSE)
   }
 
   # set map size
-  dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
+  grDevices::dev.new(noRStudioGD = TRUE, res = 1200, width = 20, height = 14)
   # enable display list
-  dev.control('enable')
+  grDevices::dev.control('enable')
   # plot shapefiles ####
   graphics::par(mar = c(3.5,0,2,0), mgp = c(0,0,0)) # bottom, left, top, right
 
-  sp::plot(areaold, border = "red", col = "transparent",
+  plot(areaold$geometry, border = "red", col = "transparent",
            lty = "solid", lwd = 1)
-  sp::plot(areanew, border = "black", col = "transparent",
+  plot(areanew$geometry, border = "black", col = "transparent",
            lty = "solid", lwd = 2, add = TRUE)
 
-  legend("topleft", legend = c("Original areas", "Aggregated areas"),
-         fill = "White", border = c("red", "black"), cex = 1,
-         bty = "n", inset = 0, y.intersp = 1.25)
+  graphics::legend("topleft", legend = c("Original areas", "Aggregated areas"),
+                   fill = "White", border = c("red", "black"), cex = 1,
+                   bty = "n", inset = 0, y.intersp = 1.25)
 
   # add labels ####
   mytitle <- "Map comparing original and aggregated areas"
@@ -99,26 +99,21 @@ plotGATcompare <- function(areaold, areanew, mergevars, gatvars,
                     numformat(gatvars$minvalue2), " to ",
                     numformat(gatvars$maxvalue2), " ", gatvars$aggregator2)
   }
-  title(mytitle, sub = mysub, cex.main = 2)
+  graphics::title(mytitle, sub = mysub, cex.main = 2)
+  raster::scalebar(20, type='bar', divs=5)
 
   # draw arrow and scale bar ####
   if (requireNamespace("prettymapr", quietly = TRUE)) {
     prettymapr::addnortharrow(pos = "bottomleft", padin = c(0.2, 0.05),
                               scale = .5, lwd = 1, border = "black",
                               cols = c("white", "black"), text.col = "black")
-    prettymapr::addscalebar(plotunit = "mi", plotepsg = 4269, widthhint = 0.25,
-                            unitcategory = "imperial", htin = 0.1, lwd = 1,
-                            padin = c(0.7, 0.05), style = "ticks",
-                            linecol = "black", tick.cex = 0.7,
-                            labelpadin = 0.08, label.cex = 0.8,
-                            label.col = "black", pos = "bottomleft")
   }
   # save map ####
-  map <- recordPlot()
+  map <- grDevices::recordPlot()
 
   graphics::par(mar=c(5,4,4,2)+.1, mgp = c(3, 1, 0)) # default bottom, left, top, right
   if (closemap) {
-    dev.off()
+    grDevices::dev.off()
   }
   return(map)
 }

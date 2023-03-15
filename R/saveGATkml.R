@@ -28,7 +28,6 @@
 #' @examples
 #'
 #' if (interactive()) {
-#' # choose yes or no
 #' saveGATkml()
 #' }
 #'
@@ -43,38 +42,41 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   helppage <- "saveGATkml_radio"
   title <- "Save KML file?"
   rbValue <- tcltk::tclVar("no")
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
 
   # draw window ####
-  tt <- tcltk::tktoplevel()
+  tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
 
   # create frames ####
   # for some reason, within functions frames must all be created at the start
-  tt$frm <- tcltk::tkframe(tt, width = 300, height = 5)
-  tt$tfbuts <- tcltk::tkframe(tt$frm, width = 300, height = 40)
-  tt$radio <- tcltk::tkframe(tt$frm, width = 150, height = 110)
+  tt$frm <- tcltk::tkframe(tt, width = 300, height = 5, background = bgcol)
+  tt$tfbuts <- tcltk::tkframe(tt$frm, width = 300, height = 40, background = bgcol)
+  tt$radio <- tcltk::tkframe(tt$frm, width = 150, height = 110, background = bgcol)
 
   # radiobuttons ####
 
-  tt$radio$instruct <- tcltk2::tk2label(tt$radio, text = msg)
+  tt$radio$instruct <- tcltk::tklabel(tt$radio, text = msg, justify = "left",
+                                      background = bgcol)
   tcltk::tkgrid(tt$radio$instruct, sticky = "w", padx = 5, pady = 5,
                 columnspan = 4)
 
-  tt$radio$rb1 <- tcltk::tkradiobutton(tt$radio)
-  tt$radio$lab1 <- tcltk2::tk2label(tt$radio, text = "Yes")
+  tt$radio$rb1 <- tcltk::tkradiobutton(tt$radio, background = bgcol)
+  tt$radio$lab1 <- tcltk::tklabel(tt$radio, text = "Yes", background = bgcol)
   tcltk::tkconfigure(tt$radio$rb1, variable = rbValue, value = "Yes")
   tcltk::tkgrid(tt$radio$rb1, tt$radio$lab1)
   tcltk::tkgrid.configure(tt$radio$rb1, sticky = "e")
   tcltk::tkgrid.configure(tt$radio$lab1, sticky = "w")
 
-  tt$radio$rb2 <- tcltk::tkradiobutton(tt$radio)
-  tt$radio$lab2 <- tcltk2::tk2label(tt$radio, text = "No")
+  tt$radio$rb2 <- tcltk::tkradiobutton(tt$radio, background = bgcol)
+  tt$radio$lab2 <- tcltk::tklabel(tt$radio, text = "No", background = bgcol)
   tcltk::tkconfigure(tt$radio$rb2, variable = rbValue, value = "No")
   tcltk::tkgrid(tt$radio$rb2, tt$radio$lab2)
   tcltk::tkgrid.configure(tt$radio$rb2, sticky = "e")
   tcltk::tkgrid.configure(tt$radio$lab2, sticky = "w")
 
-  # bottom button functions ####
+  # bottom button functions ----
   myenv <- new.env()
   onOk <- function() {
     rbval <- tcltk::tclvalue(rbValue)
@@ -86,8 +88,8 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
     assign("myvalue", "cancel", envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helppage,
-                helppage = helppage, step = step)
+    showGAThelp(help = help, helptitle = helppage, helppage = helppage,
+                step = step)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
@@ -95,20 +97,20 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   }
 
   if (backopt) {
-    tt$tfbuts$BackBut <- tcltk2::tk2button(tt$tfbuts, text = "< Back",
-                                           command = onBack, width = 12)
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Next >",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$BackBut <- tcltk::tkbutton(tt$tfbuts, text = "< Back", width = 12,
+                                         command = onBack, background = buttoncol)
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Next >", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   } else {
-    tt$tfbuts$OkBut <- tcltk2::tk2button(tt$tfbuts, text = "Confirm",
-                                         command = onOk, width = 12,
-                                         default = "active")
+    tt$tfbuts$OkBut <- tcltk::tkbutton(tt$tfbuts, text = "Confirm", width = 12,
+                                       command = onOk, default = "active",
+                                       background = buttoncol)
   }
-  tt$tfbuts$HelpBut <- tcltk2::tk2button(tt$tfbuts, text="Help", width = 12,
-                                         command = onHelp)
-  tt$tfbuts$CancelBut <- tcltk2::tk2button(tt$tfbuts, text = "Cancel",
-                                           width = 12, command = onCancel)
+  tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text="Help", width = 12,
+                                       command = onHelp, background = buttoncol)
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel", width = 12,
+                                         command = onCancel, background = buttoncol)
 
   if (backopt) {
     tcltk::tkgrid(tt$tfbuts$BackBut, column = 1, row = 1, pady = 5, padx = c(5, 0))
@@ -118,7 +120,6 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   tcltk::tkgrid(tt$tfbuts$HelpBut, column = 4, row = 1, pady = 5, padx = c(0, 5))
 
   # add frames to dialog ####
-
   tcltk::tkpack(tt$tfbuts, tt$radio, side = "bottom")
   tcltk::tkpack(tt$frm)
   tcltk::tkwait.window(tt)

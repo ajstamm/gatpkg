@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -26,31 +26,31 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -79,6 +79,25 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="2.0.0" id="gatpkg-v200">gatpkg v2.0.0<a class="anchor" aria-label="anchor" href="#gatpkg-v200"></a></h2>
+<ul><li>Revised <code>writeGATkml</code> so that it also writes to KMZ.</li>
+<li>Removed dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp.</li>
+<li>Removed <code>checkGATshapefilesize</code> and fixed bugs.</li>
+<li>Added advanced options to the settings file and log.</li>
+<li>Fixed several bugs that broke GAT.</li>
+<li>Revised and standardized all pop-up fonts and colors except the pre-defined progress bar and file-selection window.</li>
+<li>Revised population weighting to read in the population file only once.</li>
+<li>Added a ‘GATid’ variable to clone the selected merge variable instead of overwriting it.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.62.0" id="gatpkg-v1620">gatpkg v1.62.0<a class="anchor" aria-label="anchor" href="#gatpkg-v1620"></a></h2>
+<ul><li>Minor edits; last version before the overhaul.</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="1.61.2" id="gatpkg-v1612">gatpkg v1.61.2<a class="anchor" aria-label="anchor" href="#gatpkg-v1612"></a></h2>
+<ul><li>Patched to replace plotKML in writeGATkml with sf::st_write because plotKML was removed from CRAN.</li>
+</ul></div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="1.61.1" id="gatpkg-v1611">gatpkg v1.61.1<a class="anchor" aria-label="anchor" href="#gatpkg-v1611"></a></h2>
 <ul><li>Added structure for pkgdown.</li>
 <li>Fixed typos and formatting issues in documentation.</li>
@@ -86,16 +105,19 @@
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.61.0" id="gatpkg-v1610">gatpkg v1.61.0<a class="anchor" aria-label="anchor" href="#gatpkg-v1610"></a></h2>
 <ul><li>Added vignette “Assessing GAT Results”.</li>
-<li>Fixed bugs and typos in confirmGATbystep() and runGATprogram(), notably the bug that incorrectly displayed number of excluded areas over maximum.</li>
+<li>Fixed bugs and typos in <code>confirmGATbystep</code> and <code>runGATprogram</code>, notably the bug that incorrectly displayed number of excluded areas over maximum.</li>
 <li>Added objects “ismax1”, “ismin2”, and “ismax2” to the gatvars list object to track if minimum and maximum values were defined by the user and added this information to the log.</li>
 <li>Created a separate section in the technical notes to describe variables created by GAT.</li>
 <li>Moved citation and acknowledgements from set-up to a separate vignette.</li>
-<li>Restructured locateGATshapefile() to add a modifiable status bar option.</li>
+<li>Restructured <code>locateGATshapefile</code> to add a modifiable status bar option.</li>
 <li>Added and revised several function examples.</li>
-<li>Added the following function options (and corresponding code in runGATprogram):
-<ul><li>writeGATlog: added settingsfile option to allow incorrectly written logs to be regenerated from the settings.Rdata file produced by GAT</li>
-<li>defineGATmerge: added progressbar option to suppress the progress bar if desired</li>
-<li>plotGATmaps and plotGATcompare: added closemap option to automatically close map windows if desired</li>
+<li>Added the following function options (and corresponding code in <code>runGATprogram</code>):
+<ul><li>
+<code>writeGATlog</code>: added settingsfile option to allow incorrectly written logs to be regenerated from the settings.Rdata file produced by GAT</li>
+<li>
+<code>defineGATmerge</code>: added progressbar option to suppress the progress bar if desired</li>
+<li>
+<code>plotGATmaps</code> and <code>plotGATcompare</code>: added closemap option to automatically close map windows if desired</li>
 </ul></li>
 <li>Dropped compatibility for R-3.4.0.</li>
 </ul></div>
@@ -105,12 +127,12 @@
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.60.2" id="gatpkg-v1602">gatpkg v1.60.2<a class="anchor" aria-label="anchor" href="#gatpkg-v1602"></a></h2>
-<ul><li>Completed bug fixes in defineGATmerge.</li>
-<li>Added function aggregateGATnb, which is used in defineGATmerge.</li>
+<ul><li>Completed bug fixes in <code>defineGATmerge</code>.</li>
+<li>Added function <code>aggregateGATnb</code> (modified from spdep::aggregate.nb), which is used in <code>defineGATmerge</code>.</li>
 </ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.60.1" id="gatpkg-v1601">gatpkg v1.60.1<a class="anchor" aria-label="anchor" href="#gatpkg-v1601"></a></h2>
-<ul><li>Addressed bug fixes in defineGATmerge.</li>
+<ul><li>Addressed bug fixes in <code>defineGATmerge</code>.</li>
 <li>Added XML and network saving issues to the troubleshooting document.</li>
 </ul></div>
     <div class="section level2">
@@ -267,7 +289,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

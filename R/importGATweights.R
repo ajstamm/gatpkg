@@ -22,23 +22,23 @@
 #'
 #' if (interactive()) {
 #' pathin <- paste0(find.package("gatpkg"), "/extdata")
-#' mywtshp <- importGATweights(
-#'   area = hftown,
-#'   filein = "hfblock",
-#'   pathin = pathin,
-#'   popvar = "Pop_tot"
-#' )
+#' mywtshp <- importGATweights(area = hftown, filein = "hfblockgrp",
+#'                             pathin = pathin, popvar = "Pop")
 #' }
 #'
 #' @export
 
 importGATweights <- function(area, filein, pathin, popvar = "Pop_tot") {
   # convert original shapefile
-  proj <- sp::proj4string(area)
   shp <- sf::st_as_sf(area)
-  if (!grepl("longlat", proj, fixed = TRUE)) {
+  sf::st_agr(shp) <- "constant"
+
+  # rewrite to use utm function?
+  if (!sf::st_is_longlat(area)) {
     proj <- "+proj=longlat +datum=NAD27"
     shp <- sf::st_transform(shp, proj)
+  } else {
+    proj <- sf::st_crs(area)
   }
 
   # read in population file
@@ -46,6 +46,8 @@ importGATweights <- function(area, filein, pathin, popvar = "Pop_tot") {
   pop <- pop[, popvar]
   pop$area_old <- sf::st_area(pop$geometry)
   pop <- sf::st_transform(pop, proj)
+  pop <- sf::st_as_sf(pop)
+  sf::st_agr(pop) <- "constant"
 
   # intersect shapefiles
   i <- sf::st_intersection(pop, shp)
@@ -57,6 +59,8 @@ importGATweights <- function(area, filein, pathin, popvar = "Pop_tot") {
   # remove artifacts
   i <- i[, c(popvar, "pop")]
   # add centroids - not straightforward in sf
+  sf::st_agr(i) <- "constant"
+
   j <- sf::st_centroid(i)
   sf::st_geometry(j) <- sf::st_centroid(j$geometry)
   pts <- do.call(rbind, sf::st_geometry(j))

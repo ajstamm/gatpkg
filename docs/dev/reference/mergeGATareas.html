@@ -20,7 +20,7 @@ vignette("gat_tech_notes", package = "gatpkg").'><meta name="robots" content="no
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -29,31 +29,31 @@ vignette("gat_tech_notes", package = "gatpkg").'><meta name="robots" content="no
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -90,78 +90,74 @@ in the previous step. For details on how merges are assigned, see
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mergeGATareas</span><span class="op">(</span><span class="va">ratevars</span>, <span class="va">aggvars</span>, <span class="va">idvar</span>, <span class="va">myshp</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mergeGATareas</span><span class="op">(</span><span class="va">ratevars</span>, <span class="va">aggvars</span>, idvar <span class="op">=</span> <span class="st">"GATid"</span>, <span class="va">myshp</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>ratevars</dt>
 <dd><p>A list of rate-related objects.</p></dd>
+
+
 <dt>aggvars</dt>
 <dd><p>A list of objects produced by the merging process.</p></dd>
+
+
 <dt>idvar</dt>
 <dd><p>The identifier variable for the original shapefile.</p></dd>
+
+
 <dt>myshp</dt>
 <dd><p>The original shapefile used in the merging process.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">gatvars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  myidvar <span class="op">=</span> <span class="st">"ID"</span>,             <span class="co"># character variable of unique values</span></span>
-<span class="r-in">  aggregator1 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span>
-<span class="r-in">  aggregator2 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span>
-<span class="r-in">  minvalue1 <span class="op">=</span> <span class="fl">5000</span>, minvalue2 <span class="op">=</span> <span class="fl">5000</span>,</span>
-<span class="r-in">  boundary <span class="op">=</span> <span class="st">"COUNTY"</span>,        <span class="co"># character variable of non-unique values</span></span>
-<span class="r-in">  popwt <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">  rigidbound <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">  popvar <span class="op">=</span> <span class="st">"Pop_tot"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mergevars1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> <span class="co"># similar merge</span></span>
-<span class="r-in">  mergeopt1 <span class="op">=</span> <span class="st">"similar"</span>,    <span class="co"># can be similar, closest, or least</span></span>
-<span class="r-in">  similar1 <span class="op">=</span> <span class="st">"AREAWATR"</span>,    <span class="co"># numeric variable</span></span>
-<span class="r-in">  similar2 <span class="op">=</span> <span class="st">"AREALAND"</span>,    <span class="co"># numeric variable without any zeros</span></span>
-<span class="r-in">  centroid <span class="op">=</span> <span class="st">"geographic"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mergevars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> <span class="co"># closest merge</span></span>
-<span class="r-in">  mergeopt1 <span class="op">=</span> <span class="st">"closest"</span>,    <span class="co"># can be similar, closest, or least</span></span>
-<span class="r-in">  similar1 <span class="op">=</span> <span class="st">"NONE"</span>,        <span class="co"># numeric variable</span></span>
-<span class="r-in">  similar2 <span class="op">=</span> <span class="st">"NONE"</span>,        <span class="co"># numeric variable without any zeros</span></span>
-<span class="r-in">  centroid <span class="op">=</span> <span class="st">"population-weighted"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">filevars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span class="r-in">  popfile <span class="op">=</span> <span class="st">"hfblock"</span>,</span>
-<span class="r-in">  poppath <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/find.package.html" class="external-link">find.package</a></span><span class="op">(</span><span class="st">"gatpkg"</span><span class="op">)</span>, <span class="st">"/extdata"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># merge areas based on your settings</span></span>
-<span class="r-in"><span class="co"># this function identifies areas to merge; it does not merge them</span></span>
-<span class="r-in"><span class="va">my_merge</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu"><a href="defineGATmerge.html">defineGATmerge</a></span><span class="op">(</span></span>
-<span class="r-in">    area <span class="op">=</span> <span class="va">hftown</span>,</span>
-<span class="r-in">    gatvars <span class="op">=</span> <span class="va">gatvars</span>,</span>
-<span class="r-in">    mergevars <span class="op">=</span> <span class="va">mergevars1</span>,</span>
-<span class="r-in">    filevars <span class="op">=</span> <span class="va">filevars</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>CRS object has comment, which is lost in output; in tests, see</span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> https://cran.r-project.org/web/packages/sp/vignettes/CRS_warnings.html</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># need all rate options if rate to be calculated</span></span>
-<span class="r-in"><span class="co"># for this example, rate is ignored</span></span>
-<span class="r-in"><span class="va">ratevars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ratename <span class="op">=</span> <span class="st">"no_rate"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># aggregate shapefile after identifying areas to merge</span></span>
-<span class="r-in"><span class="va">aggregatedshp</span> <span class="op">&lt;-</span></span>
-<span class="r-in">  <span class="fu">mergeGATareas</span><span class="op">(</span></span>
-<span class="r-in">    ratevars <span class="op">=</span> <span class="va">ratevars</span>,</span>
-<span class="r-in">    aggvars <span class="op">=</span> <span class="va">my_merge</span>,      <span class="co"># results from the merge function</span></span>
-<span class="r-in">    idvar <span class="op">=</span> <span class="va">gatvars</span><span class="op">$</span><span class="va">myidvar</span>,</span>
-<span class="r-in">    myshp <span class="op">=</span> <span class="va">hftown</span></span>
-<span class="r-in">  <span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">gatvars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  myidvar <span class="op">=</span> <span class="st">"ID"</span>,             <span class="co"># character variable of unique values</span></span></span>
+<span class="r-in"><span>  aggregator1 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span></span>
+<span class="r-in"><span>  aggregator2 <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,  <span class="co"># numeric variable</span></span></span>
+<span class="r-in"><span>  minvalue1 <span class="op">=</span> <span class="fl">5000</span>, minvalue2 <span class="op">=</span> <span class="fl">5000</span>,</span></span>
+<span class="r-in"><span>  boundary <span class="op">=</span> <span class="st">"COUNTY"</span>,        <span class="co"># character variable of non-unique values</span></span></span>
+<span class="r-in"><span>  popwt <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  rigidbound <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  popvar <span class="op">=</span> <span class="st">"Pop"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mergevars1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> <span class="co"># similar merge</span></span></span>
+<span class="r-in"><span>  mergeopt1 <span class="op">=</span> <span class="st">"similar"</span>,    <span class="co"># can be similar, closest, or least</span></span></span>
+<span class="r-in"><span>  similar1 <span class="op">=</span> <span class="st">"AREAWATR"</span>,    <span class="co"># numeric variable</span></span></span>
+<span class="r-in"><span>  similar2 <span class="op">=</span> <span class="st">"AREALAND"</span>,    <span class="co"># numeric variable without any zeros</span></span></span>
+<span class="r-in"><span>  centroid <span class="op">=</span> <span class="st">"geographic"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mergevars2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span> <span class="co"># closest merge</span></span></span>
+<span class="r-in"><span>  mergeopt1 <span class="op">=</span> <span class="st">"closest"</span>,    <span class="co"># can be similar, closest, or least</span></span></span>
+<span class="r-in"><span>  similar1 <span class="op">=</span> <span class="st">"NONE"</span>,        <span class="co"># numeric variable</span></span></span>
+<span class="r-in"><span>  similar2 <span class="op">=</span> <span class="st">"NONE"</span>,        <span class="co"># numeric variable without any zeros</span></span></span>
+<span class="r-in"><span>  centroid <span class="op">=</span> <span class="st">"population-weighted"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># merge areas based on your settings</span></span></span>
+<span class="r-in"><span><span class="co"># this function identifies areas to merge; it does not merge them</span></span></span>
+<span class="r-in"><span><span class="va">my_merge</span> <span class="op">&lt;-</span> <span class="fu"><a href="defineGATmerge.html">defineGATmerge</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    area <span class="op">=</span> <span class="va">hftown</span>, pop <span class="op">=</span> <span class="va">hfpop</span>, progressbar <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>    gatvars <span class="op">=</span> <span class="va">gatvars</span>, mergevars <span class="op">=</span> <span class="va">mergevars1</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># need all rate options if rate to be calculated</span></span></span>
+<span class="r-in"><span><span class="co"># for this example, rate is ignored</span></span></span>
+<span class="r-in"><span><span class="va">ratevars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>ratename <span class="op">=</span> <span class="st">"no_rate"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># aggregate shapefile after identifying areas to merge</span></span></span>
+<span class="r-in"><span><span class="va">aggregatedshp</span> <span class="op">&lt;-</span></span></span>
+<span class="r-in"><span>  <span class="fu">mergeGATareas</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    ratevars <span class="op">=</span> <span class="va">ratevars</span>,</span></span>
+<span class="r-in"><span>    aggvars <span class="op">=</span> <span class="va">my_merge</span>,      <span class="co"># results from the merge function</span></span></span>
+<span class="r-in"><span>    idvar <span class="op">=</span> <span class="va">gatvars</span><span class="op">$</span><span class="va">myidvar</span>,</span></span>
+<span class="r-in"><span>    myshp <span class="op">=</span> <span class="va">hftown</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -176,7 +172,7 @@ in the previous step. For details on how merges are assigned, see
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

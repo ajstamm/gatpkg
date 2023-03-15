@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -26,31 +26,31 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -218,10 +218,6 @@
         </td>
         <td><p>Calculate GAT Flag</p></td>
       </tr><tr><td>
-          <p><code><a href="checkGATshapefilesize.html">checkGATshapefilesize()</a></code> </p>
-        </td>
-        <td><p>Check GAT Shapefile Size</p></td>
-      </tr><tr><td>
           <p><code><a href="checkGATvariabletypes.html">checkGATvariabletypes()</a></code> </p>
         </td>
         <td><p>Check GAT Variable Types</p></td>
@@ -232,7 +228,7 @@
       </tr><tr><td>
           <p><code><a href="defineGATmapclasses.html">defineGATmapclasses()</a></code> </p>
         </td>
-        <td><p>Plot GAT Maps</p></td>
+        <td><p>Define Classes for Map Legends</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="output-functions">Output functions <a href="#output-functions" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p><p>Functions that write output files</p>
@@ -266,13 +262,25 @@
         </td>
         <td><p>The NYS Geographic Aggregation Tool (GAT)</p></td>
       </tr><tr><td>
-          <p><code><a href="hfagg5k.html">hfagg5k</a></code> </p>
+          <p><code><a href="hfagg610k.html">hfagg610k</a></code> </p>
         </td>
-        <td><p>Hamilton &amp; Fulton counties aggregated spatial polygon data frame</p></td>
+        <td><p>Hamilton &amp; Fulton counties aggregated to 10k population</p></td>
+      </tr><tr><td>
+          <p><code><a href="hfagg615k.html">hfagg615k</a></code> </p>
+        </td>
+        <td><p>Hamilton &amp; Fulton counties aggregated to 15k population</p></td>
+      </tr><tr><td>
+          <p><code><a href="hfcw610k.html">hfcw610k</a></code> </p>
+        </td>
+        <td><p>Hamilton &amp; Fulton counties aggregation to 10k population crosswalk</p></td>
+      </tr><tr><td>
+          <p><code><a href="hfcw615k.html">hfcw615k</a></code> </p>
+        </td>
+        <td><p>Hamilton &amp; Fulton counties aggregation to 15k population crosswalk</p></td>
       </tr><tr><td>
           <p><code><a href="hfpop.html">hfpop</a></code> </p>
         </td>
-        <td><p>Hamilton &amp; Fulton block-level population spatial polygon data frame</p></td>
+        <td><p>Hamilton &amp; Fulton counties block group-level population spatial layer</p></td>
       </tr><tr><td>
           <p><code><a href="hftown.html">hftown</a></code> </p>
         </td>
@@ -290,7 +298,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

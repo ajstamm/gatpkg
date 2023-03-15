@@ -1,16 +1,71 @@
-To do list
++------------+
+| To do list |
++------------+
+
+Changes for V3?
+* Add ability to use point level population-weighting data, and possibly raster
+* Add compatibility with linux/unix - need workaround for Windows-specific choose.files function when locating shapefiles
+* Add a way to bypass the GUI entirely
+* Add a vignette describing how to create a settings file before running GAT
+
+To keep in mind:
+* if I want to zip shapefiles, use the code `unz()` to unzip and read them
+  * this would bypass the "2022 DBF is an executable" bug
+* Where I alter par settings for maps, dev.off reverts to default - is this desired?
+* tibble causes trouble - imported random function as temporary fix
+* Create function to handle progress bar drawing? Lots of repeated code.
+* Also, buttons at bottoms of dialogs repeated - shift to function?
 
 Examples to create:
 * combineGATcrosswalks
 
 Fixes and improvements to address:
-* Pre-truncate variable names over 10 characters, especially "old_GATflag" and too-long rate names
 * Streamline warnings
 * Add any "old_*" variables created/renamed to the log
-* Where I alter par settings for maps, I revert them to default, but I should revert to user settings
-* Add code to re-draw the progress bar if the user closes it (me, repeatedly and accidentally, in testing)
-* Add ability to use point level population-weighting data, and possibly raster
 * For all vignettes and help files, check image alt/descriptions
-* Opening any help dialog changes all background colors to white
-* convert all instances of rgdal/rgeos and if possible sp to sf, which is faster and better maintained
+  * tutorial completed through end of user input section (except help, quit, errors)
+  * redo all user input screenshots
+* convert spdep and maptools to sf? note: spdep works with sf
+* basic geographic aggregation miscalculates values over min, so nothing aggregates
+
+
+Completed - test
+	* runGATprogram (rgdal, sp, maptools)
+		- last (convert & test all functions, then combine everything here)
+		- to test:
+		  - error triggers
+		  - randomly deleting progress bar
+		- step 3: I think the flagging & variable naming codes are redundant
+
+Completed - create examples
+	* combineGATcrosswalks (rgdal)
+		- export datasets to use as examples
+		- or create datasets as part of examples?
+
+Completed - divorce spdep?
+	* aggregateGATnb (spdep) - find sf equivalent?
+	* defineGATmerge (sp, spdep) - find sf equivalent?
+
+Completed - these output layers - wait to copy
+	* weightGATmap (sp structure)
+	* mergeGATareas (sp, maptools)
+	* rankGATdistance (sp)
+	* identifyGATfirstobs (sp structure)
+	* importGATweights (sp)
+	* calculateGATexclusions (sf structure)
+	* calculateGATcompactness (sp, rgeos)
+	* convertlatlong2UTM (sp)
+	* createGATregion (sp)
+	* zzz
+	  - hftown & hfpop converted
+	  - new aggregated and crosswalk objects created
+
+Completed - none of these output layers - copy to master now?
+	* writeGATlog (rgdal)
+	* weightGATregion (sp structure)
+	* convertlatlong2UTM (sp)
+	* plotGATmaps (sp)
+	* writeGATkml (sp)
+	* plotGATcompare (sp)
+	* checkGATvariabletypes
 

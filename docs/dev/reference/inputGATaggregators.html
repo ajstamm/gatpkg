@@ -31,7 +31,7 @@ Click Help to get further guidance and open the manual.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -40,31 +40,31 @@ Click Help to get further guidance and open the manual.
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -109,39 +109,56 @@ Then click on one of the following buttons.</p><ul><li><p>Click <code>Next</code
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">inputGATaggregators</span><span class="op">(</span>
-  <span class="va">mapdata</span>,
-  step <span class="op">=</span> <span class="fl">4</span>,
-  min1 <span class="op">=</span> <span class="st">"5,000"</span>,
-  min2 <span class="op">=</span> <span class="st">"none"</span>,
-  max1 <span class="op">=</span> <span class="st">"none"</span>,
-  max2 <span class="op">=</span> <span class="st">"none"</span>,
-  var1 <span class="op">=</span> <span class="st">""</span>,
-  var2 <span class="op">=</span> <span class="st">"NONE"</span>,
-  backopt <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">inputGATaggregators</span><span class="op">(</span></span>
+<span>  <span class="va">shp</span>,</span>
+<span>  step <span class="op">=</span> <span class="fl">4</span>,</span>
+<span>  min1 <span class="op">=</span> <span class="st">"5,000"</span>,</span>
+<span>  min2 <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  max1 <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  max2 <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  var1 <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  var2 <span class="op">=</span> <span class="st">"NONE"</span>,</span>
+<span>  backopt <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>mapdata</dt>
-<dd><p>A data frame.</p></dd>
+    <dl><dt>shp</dt>
+<dd><p>Spatial layer.</p></dd>
+
+
 <dt>step</dt>
-<dd><p>An integer step in the GAT program, for help reference.</p></dd>
+<dd><p>Integer step in GAT, for help reference.</p></dd>
+
+
 <dt>min1</dt>
-<dd><p>The minimum value for the first aggregation variable.</p></dd>
+<dd><p>Minimum value for the first aggregation variable.</p></dd>
+
+
 <dt>min2</dt>
-<dd><p>The minimum value for the second aggregation variable.</p></dd>
+<dd><p>Minimum value for the second aggregation variable.</p></dd>
+
+
 <dt>max1</dt>
-<dd><p>The maximum value for the first aggregation variable.</p></dd>
+<dd><p>Maximum value for the first aggregation variable.</p></dd>
+
+
 <dt>max2</dt>
-<dd><p>The maximum value for the second aggregation variable.</p></dd>
+<dd><p>Maximum value for the second aggregation variable.</p></dd>
+
+
 <dt>var1</dt>
-<dd><p>The name of the first aggregation variable.</p></dd>
+<dd><p>Name of the first aggregation variable.</p></dd>
+
+
 <dt>var2</dt>
-<dd><p>The name of the second aggregation variable.</p></dd>
+<dd><p>Name of the second aggregation variable.</p></dd>
+
+
 <dt>backopt</dt>
 <dd><p>Boolean denoting whether to include the back button.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -153,14 +170,29 @@ function inputGATvalue() to force you to enter a number.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># identify variable to aggregate</span></span>
-<span class="r-in"><span class="fu">inputGATaggregators</span><span class="op">(</span></span>
-<span class="r-in">  mapdata <span class="op">=</span> <span class="va">hftown</span><span class="op">@</span><span class="va">data</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="fu">inputGATaggregators</span><span class="op">(</span>shp <span class="op">=</span> <span class="va">hftown</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $var1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cancel"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $minval1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] 0</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $maxval1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $var2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "NONE"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $minval2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $maxval2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "none"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -175,7 +207,7 @@ function inputGATvalue() to force you to enter a number.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

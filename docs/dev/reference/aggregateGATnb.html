@@ -19,7 +19,7 @@ because in GAT, not having neighbors matters."><meta name="robots" content="noin
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -28,31 +28,31 @@ because in GAT, not having neighbors matters."><meta name="robots" content="noin
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -88,34 +88,39 @@ because in GAT, not having neighbors matters.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">aggregateGATnb</span><span class="op">(</span><span class="va">nb</span>, <span class="va">ids</span>, remove.self <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">aggregateGATnb</span><span class="op">(</span><span class="va">nb</span>, <span class="va">ids</span>, remove.self <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>nb</dt>
 <dd><p>Neighbors object.</p></dd>
+
+
 <dt>ids</dt>
 <dd><p>Vector of IDs corresponding to the neighbor object's
 "region.id" attribute.</p></dd>
+
+
 <dt>remove.self</dt>
 <dd><p>Boolean denoting whether to remove original areas.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="va">nb</span> <span class="op">&lt;-</span> <span class="fu">spdep</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/spdep/reference/poly2nb.html" class="external-link">poly2nb</a></span><span class="op">(</span><span class="va">hftown</span>, queen <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">                     row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">@</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># neighbors of areas being aggregated</span></span>
-<span class="r-in"><span class="va">nb</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span>; <span class="va">nb</span><span class="op">[[</span><span class="fl">13</span><span class="op">]</span><span class="op">]</span>; <span class="va">nb</span><span class="op">[[</span><span class="fl">20</span><span class="op">]</span><span class="op">]</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">nb</span> <span class="op">&lt;-</span> <span class="fu">spdep</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/spdep/reference/poly2nb.html" class="external-link">poly2nb</a></span><span class="op">(</span><span class="va">hftown</span>, queen <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>                     row.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># neighbors of areas being aggregated</span></span></span>
+<span class="r-in"><span><span class="va">nb</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span>; <span class="va">nb</span><span class="op">[[</span><span class="fl">13</span><span class="op">]</span><span class="op">]</span>; <span class="va">nb</span><span class="op">[[</span><span class="fl">20</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3  4 10 13 20</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3 12 14 16 17 18 19 20 21</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] 12 13 17</span>
-<span class="r-in"><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">:</span><span class="fl">19</span>, <span class="fl">12</span>, <span class="fl">21</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># neighbors of resulting area</span></span>
-<span class="r-in"><span class="fu">aggregateGATnb</span><span class="op">(</span><span class="va">nb</span>, <span class="va">ids</span><span class="op">)</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span></span>
+<span class="r-in"><span><span class="va">ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">12</span>, <span class="fl">12</span>, <span class="fl">14</span><span class="op">:</span><span class="fl">19</span>, <span class="fl">12</span>, <span class="fl">21</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># neighbors of resulting area</span></span></span>
+<span class="r-in"><span><span class="fu">aggregateGATnb</span><span class="op">(</span><span class="va">nb</span>, <span class="va">ids</span><span class="op">)</span><span class="op">[[</span><span class="fl">12</span><span class="op">]</span><span class="op">]</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1]  3  4 10 13 15 16 17 18 19</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -130,7 +135,7 @@ because in GAT, not having neighbors matters.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -22,11 +22,7 @@ criteria so that they will not be used in the merge.
 }
 \examples{
 
-calculateGATexclusions(
-  d = hftown@data,
-  var = "TOTAL_POP",
-  math = "less than",
-  val = 500
-)
+calculateGATexclusions(d = hftown, var = "TOTAL_POP",
+                       math = "less than", val = 1000)
 
 }

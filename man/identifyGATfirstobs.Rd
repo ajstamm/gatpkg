@@ -31,7 +31,7 @@ minvalue <- 5000       # identify the minimum value
 
 # observation with the highest POP2010
 my_firstobs <- identifyGATfirstobs(
-  tobemerged = hftown@data,
+  tobemerged = hftown,
   aggvar = aggvar,
   aggvar2 = aggvar, # repeat aggvar if only one variable
   minval = minvalue,

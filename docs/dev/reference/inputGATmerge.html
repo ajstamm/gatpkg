@@ -28,7 +28,7 @@ Click Help to get further guidance and open this manual.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">1.61.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
       </span>
     </div>
 
@@ -37,31 +37,31 @@ Click Help to get further guidance and open this manual.
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu"><li>
-      <a href="../articles/gat_changelog.html">Geographic Aggregation Tool (GAT) Change Log</a>
+      <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">Geographic Aggregation Tool (GAT) Citation Information</a>
+      <a href="../articles/gat_citation.html">GAT Citation Information</a>
     </li>
     <li>
-      <a href="../articles/gat_prepare_shapefile.html">Preparing your shapefile for GAT</a>
+      <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
     </li>
     <li>
-      <a href="../articles/gat_results_eval.html">Assessing Geographic Aggregation Tool (GAT) Results</a>
+      <a href="../articles/gat_results_eval.html">GAT Results Evaluation</a>
     </li>
     <li>
-      <a href="../articles/gat_setup.html">Geographic Aggregation Tool (GAT) Setup Instructions</a>
+      <a href="../articles/gat_setup.html">GAT Setup Instructions</a>
     </li>
     <li>
-      <a href="../articles/gat_tech_notes.html">Geographic Aggregation Tool (GAT) Technical Notes</a>
+      <a href="../articles/gat_tech_notes.html">GAT Technical Notes</a>
     </li>
     <li>
-      <a href="../articles/gat_troubleshooting.html">Geographic Aggregation Tool (GAT) Troubleshooting</a>
+      <a href="../articles/gat_troubleshooting.html">GAT Troubleshooting</a>
     </li>
     <li>
       <a href="../articles/gat_tutorial.html">Tutorial 1: GAT walkthrough</a>
@@ -103,36 +103,49 @@ need to supply two variables. Then click on one of the following buttons.</p><ul
 </ul></div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">inputGATmerge</span><span class="op">(</span>
-  <span class="va">mapdata</span>,
-  <span class="va">aggvar</span>,
-  <span class="va">aggvar2</span>,
-  step <span class="op">=</span> <span class="fl">8</span>,
-  limitdenom <span class="op">=</span> <span class="cn">TRUE</span>,
-  mergevars <span class="op">=</span> <span class="cn">NULL</span>,
-  backopt <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">inputGATmerge</span><span class="op">(</span></span>
+<span>  <span class="va">shp</span>,</span>
+<span>  <span class="va">aggvar</span>,</span>
+<span>  <span class="va">aggvar2</span>,</span>
+<span>  step <span class="op">=</span> <span class="fl">8</span>,</span>
+<span>  limitdenom <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  mergevars <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  backopt <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>mapdata</dt>
-<dd><p>The data frame.</p></dd>
+    <dl><dt>shp</dt>
+<dd><p>Spatial layer.</p></dd>
+
+
 <dt>aggvar</dt>
-<dd><p>A string denoting the name of the first aggregation
+<dd><p>String denoting the name of the first aggregation
 variable in the data frame.</p></dd>
+
+
 <dt>aggvar2</dt>
-<dd><p>A string denoting the name of the second aggregation
+<dd><p>String denoting the name of the second aggregation
 variable in the data frame.</p></dd>
+
+
 <dt>step</dt>
 <dd><p>Integer step in the GAT program, for help reference.</p></dd>
+
+
 <dt>limitdenom</dt>
 <dd><p>Boolean denoting whether to force denominators in rates
 and ratios to contain only non-zero values.</p></dd>
+
+
 <dt>mergevars</dt>
 <dd><p>List of variables created by the function if pre-defined.</p></dd>
+
+
 <dt>backopt</dt>
 <dd><p>Boolean denoting whether to include the back button.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -153,16 +166,24 @@ list will be blank.</p></li>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># make your selections and click "OK"</span></span>
-<span class="r-in"><span class="fu">inputGATmerge</span><span class="op">(</span></span>
-<span class="r-in">  mapdata <span class="op">=</span> <span class="va">hftown</span><span class="op">@</span><span class="va">data</span>,</span>
-<span class="r-in">  aggvar <span class="op">=</span> <span class="st">"TOTAL_POP"</span>,</span>
-<span class="r-in">  aggvar2 <span class="op">=</span> <span class="st">"W_TOT"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># make your selections and click "OK"</span></span></span>
+<span class="r-in"><span><span class="fu">inputGATmerge</span><span class="op">(</span>shp <span class="op">=</span> <span class="va">hftown</span>, aggvar <span class="op">=</span> <span class="st">"TOTAL_POP"</span>, aggvar2 <span class="op">=</span> <span class="st">"W_TOT"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $similar1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cancel"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $similar2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "NONE"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $mergeopt1</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $centroid</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "geographic"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -177,7 +198,7 @@ list will be blank.</p></li>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

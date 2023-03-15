@@ -6,17 +6,19 @@
 \usage{
 inputGATmessage(
   title = "GAT input window",
-  help = "There is no help for you.",
+  msg = "Is GAT fun?",
+  help = "There is no help.",
   helptitle = "inputGATmessage",
   helppage = "inputGATmessage",
   step = 0,
-  msg = "Is GAT fun?",
   buttonopt = "Cancel GAT",
   backopt = TRUE
 )
 }
 \arguments{
 \item{title}{A text string that denotes the dialog title.}
+
+\item{msg}{A text string that denotes the message for the user.}
 
 \item{help}{A text string containing the help message.}
 
@@ -26,8 +28,6 @@ inputGATmessage(
 relevant function (if any) in the help dialog.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
-
-\item{msg}{A text string that denotes the message for the user.}
 
 \item{buttonopt}{A string that denotes the display value for the
 no/cancel button.}
@@ -52,11 +52,9 @@ Select your desired variables and the exclusion criterion for each.
 }
 \examples{
 
-\donttest{
+if (interactive()) {
 # define your message
-inputGATmessage(
-  title = "Random message window"
-)
+inputGATmessage(title = "Random message window")
 }
 
 }

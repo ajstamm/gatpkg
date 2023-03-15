@@ -55,9 +55,6 @@
     <loc>https://ajstamm.github.io/gatpkg/docs/reference/calculateGATflag.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/docs/reference/checkGATshapefilesize.html</loc>
-  </url>
-  <url>
     <loc>https://ajstamm.github.io/gatpkg/docs/reference/checkGATvariabletypes.html</loc>
   </url>
   <url>
@@ -85,7 +82,16 @@
     <loc>https://ajstamm.github.io/gatpkg/docs/reference/gatpkg.html</loc>
   </url>
   <url>
-    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfagg5k.html</loc>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfagg610k.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfagg615k.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfcw610k.html</loc>
+  </url>
+  <url>
+    <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfcw615k.html</loc>
   </url>
   <url>
     <loc>https://ajstamm.github.io/gatpkg/docs/reference/hfpop.html</loc>

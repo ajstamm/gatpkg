@@ -124,20 +124,20 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                     "return to this dialog. \n To continue, choose 'None',",
                     "then click 'Confirm'. \n",
                     "If you modify Step 1, GAT will start over.")
-
-  fonthead <- tcltk2::tk2font.set(font = "fonthead", settings = list(family = "Segoe UI",
-                      size = 10, bold = TRUE, italic = FALSE))
-  stepslist <- c("1. File to aggregate",
-                 "2. Identifying variable",
-                 "3. Boundary variable",
-                 "4. Minimum and maximum values",
-                 "5. Exclusion criteria",
-                 "6. Merge type",
-                 "7. Population file",
-                 "8. Rate calculation",
-                 "9. Save KML file",
+  stepslist <- c(" 1. File to aggregate",
+                 " 2. Identifying variable",
+                 " 3. Boundary variable",
+                 " 4. Minimum and maximum values",
+                 " 5. Exclusion criteria",
+                 " 6. Merge type",
+                 " 7. Population file",
+                 " 8. Rate calculation",
+                 " 9. Save KML file",
                  "10. Save location",
                  "None")
+  fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
+  bgcol <- "lightskyblue3"
+  buttoncol <- "cornflowerblue"
 
   ## backwards compatibility check ####
   if (is.null(gatvars$ismax1)) gatvars$ismax1 <- FALSE
@@ -145,7 +145,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   if (is.null(gatvars$ismin2)) gatvars$ismin2 <- FALSE
 
   ## set up window ####
-  tt <- tcltk::tktoplevel()
+  tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": Review settings")
 
   ## define GAT settings ####
@@ -213,9 +213,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     }
     mysets <- paste(mysets, paste(rep(" ", 10), collapse = ""),
                     "Areas excluded:", exclist$flagsum, "of", gatvars$numrow, "\n")
-  } else {
-    mysets <- paste(mysets, "None selected \n")
-  }
+  } else mysets <- paste(mysets, "None selected \n")
 
   ### merge type ####
   mysets <- paste0(mysets, "  ", stepslist[6], ":")
@@ -229,17 +227,15 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                     mergevars$similar1, "/", mergevars$similar2, "\n")
   }
 
-  ### population weighting ####
+  # population weighting
   mysets <- paste0(mysets, "  ", stepslist[7], ":")
   if (mergevars$centroid == "population-weighted") {
     mysets <- paste(mysets, filevars$popfile, "\n",
                     paste(rep(" ", 10), collapse = ""),
                     "Population variable:", gatvars$popvar, "\n")
-  } else {
-    mysets <- paste(mysets, "Population weighting not selected \n")
-  }
+  } else mysets <- paste(mysets, "Population weighting not selected \n")
 
-  ### rate settings ####
+  # rate settings
   mysets <- paste0(mysets, "  ", stepslist[8], ":")
   if (ratevars$ratename == "no_rate") {
     mysets <- paste(mysets, "Not selected \n")
@@ -252,7 +248,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                     "Color scheme:", ratevars$colorname, "\n")
   }
 
-  ### save kml ####
+  # save kml
   mysets <- paste0(mysets, "  ", stepslist[9], "?")
   if (gatvars$savekml) {
     mysets <- paste(mysets, "Yes \n")
@@ -260,29 +256,36 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     mysets <- paste(mysets, "No \n")
   }
 
-  ### save location ####
+  # save location
   mysets <- paste0(mysets, stepslist[10], ": ", filevars$userout)
 
-  ## print GAT settings ####
-  tt$ins <- tcltk2::tk2label(tt, text = mysets)
+  ## print GAT settings ----
+  tt$settl <- tcltk::tklabel(tt, text = "Settings", font = fonthead,
+                              background = bgcol)
+  tcltk::tkgrid(tt$settl, sticky = "w", padx = 5, pady = 5)
+  tt$ins <- tcltk::tklabel(tt, text = mysets, justify = "left",
+                           background = bgcol)
   tcltk::tkgrid(tt$ins, sticky = "w", padx = 5, pady = 5)
-  tt$insttl <- tcltk2::tk2label(tt, text = "Instructions", font = "fonthead")
+  tt$insttl <- tcltk::tklabel(tt, text = "Instructions", font = fonthead,
+                              background = bgcol)
   tcltk::tkgrid(tt$insttl, sticky = "w", padx = 5, pady = 5)
-  tt$ins <- tcltk2::tk2label(tt, text = instruct)
+  tt$ins <- tcltk::tklabel(tt, text = instruct, justify = "left",
+                           background = bgcol)
   tcltk::tkgrid(tt$ins, sticky = "w", padx = 5, pady = 5)
 
-  ## request step selection ####
-  tt$stepdir <- tcltk::tkframe(tt)
+  ## request step selection ----
+  tt$stepdir <- tcltk::tkframe(tt, background = bgcol)
   stepvar <- tcltk::tclVar("None")
-  tt$stepdir$stepq <- tcltk2::tk2label(tt$stepdir,
-                      text = "Select the setting you wish to modify:")
+  tt$stepdir$stepq <- tcltk::tklabel(tt$stepdir,
+                      text = "Select the setting you wish to modify:",
+                      background = bgcol)
   tt$stepdir$steplist <- tcltk::ttkcombobox(tt$stepdir, values = stepslist,
                          textvariable = stepvar, state = "readonly")
   tcltk::tkgrid(tt$stepdir$stepq, tt$stepdir$steplist, sticky = "w",
                 padx = 5, pady = 5)
   tcltk::tkgrid(tt$stepdir)
 
-  ## help settings ####
+  ## help settings ----
   helppage <- "confirmGATbystep"
   hlp <- paste0("To continue, select a step to modify, \n",
                 "or 'None' if you are finished, then click 'Confirm'. \n",
@@ -304,22 +307,21 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     assign("myvalue", "cancel", envir=myenv)
   }
 
-  # draw buttons
-  tt$tf <- tcltk::tkframe(tt)
-  tt$tf$HelpBut <- tcltk2::tk2button(tt$tf, text="Help",
-                                     width = 12, command = onHelp)
-  tt$tf$OkBut <- tcltk2::tk2button(tt$tf, text = "Confirm",
-                                   width = 12, command = onOk,
-                                   default = "active")
-  tt$tf$CancelBut <- tcltk2::tk2button(tt$tf, text = "Cancel GAT",
-                                       width = 12, command = onCancel)
+  # draw buttons ----
+  tt$tf <- tcltk::tkframe(tt, background = bgcol)
+  tt$tf$HelpBut <- tcltk::tkbutton(tt$tf, text="Help", width = 12,
+                   command = onHelp, background = buttoncol)
+  tt$tf$OkBut <- tcltk::tkbutton(tt$tf, text = "Confirm", width = 12,
+                 command = onOk, default = "active", background = buttoncol)
+  tt$tf$CancelBut <- tcltk::tkbutton(tt$tf, text = "Cancel GAT",
+                     width = 12, command = onCancel, background = buttoncol)
 
   tcltk::tkgrid(tt$tf$OkBut, column = 2, row = 1, padx = 5)
   tcltk::tkgrid(tt$tf$CancelBut, column = 3, row = 1, padx = 5)
   tcltk::tkgrid(tt$tf$HelpBut, column = 4, row = 1, padx = 5)
   tcltk::tkgrid(tt$tf, padx = 1, pady = 5)
 
-  # wait to continue ####
+  # wait to continue ----
   tcltk::tkwait.window(tt)
   return(myenv$myvalue)
 }

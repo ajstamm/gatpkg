@@ -1,12 +1,14 @@
+<!-- badges: start -->
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![CRAN status](https://www.r-pkg.org/badges/version/sword)](https://CRAN.R-project.org/package=sword)
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Lifecycle:
+stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+<!-- badges: end -->
 
-**Please note: If you update R to 4.2.0, there appears to be a conflict with the package tcltk2, so if you install the master version of GAT on R 4.2.0, GAT may break. Please either use R 4.1.x or install the Dev version of GAT using `devtools::install_github("ajstamm/gatpkg@Dev", dependencies = TRUE)`.**
+
 
 
 # Geographic Aggregation Tool (GAT)
-
 
 The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding from the CDC administered through Health Research Incorporated. GAT is maintained by Abigail Stamm at the NYSDOH. 
 
@@ -26,8 +28,7 @@ install.packages("devtools")
 devtools::install_github("ajstamm/gatpkg", dependencies = TRUE)
 ```
 
-If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_1.61.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](presentations/gat_install_instructions.pdf), including a list of required R packages on CRAN. (Please note plotKML was removed from CRAN and is no longer required for GAT - this note will be removed when the instructions PDF is updated.)
-
+If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_2.0.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](compiles/gat2.x_install_instructions.pdf), including a list of required R packages on CRAN.
 
 ### Why create GAT
 
@@ -45,7 +46,7 @@ GAT reads in a polygon shapefile. The shapefile must contain at minimum a charac
 
 GAT outputs two shapefiles, one containing aggregated areas and one containing a crosswalk between the original areas and the aggregated areas. GAT also outputs a log, several maps to help you identify potential issues in the aggregation process, and, optionally, a KML file.
 
-The package for GAT includes a tutorial to learn the tool, an embedded map file to use when testing several of the package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
+The package for GAT includes a tutorial to learn the tool, an embedded map file to use for examples in many package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.
 
 To learn more about GAT, view our [presentations](presentations/).
 
@@ -54,7 +55,7 @@ To learn more about GAT, view our [presentations](presentations/).
 
 GAT is provided as is. We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the "Issues" tab or by emailing [NYSDOH EPHT](mailto:epht@health.ny.gov?subject=[GAT in R]).
 
-GAT was written in R-2.9.2 in Windows XP and was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-3.6.1 and runs in R-3.5 through R-4.1. 
+GAT was written in R-2.9.2 in Windows XP and was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-4.2.2 and runs in R-4.0 through R-4.2.
 
 If you are interested in GAT's history, including the original SAS and R scripts, visit the [archive](archive/). 
 
