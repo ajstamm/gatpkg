@@ -121,8 +121,8 @@
 <span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="co"># install the development version of GAT from Github with all </span></span>
 <span><span class="co"># required packages from CRAN</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ajstamm/gatpkg"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p>If running the code above doesn’t work, you can also install GAT manually. Download the <a href="compiles/gatpkg_2.0.0.tar.gz?raw=TRUE">most recently compiled version of GAT</a> or check the <a href="compiles">compiles</a> folder for earlier versions of GAT, then download and follow <a href="compiles/gat2.x_install_instructions.pdf">instructions on how to install GAT</a>, including a list of required R packages on CRAN.</p>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"ajstamm/gatpkg"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span>, build_vignette <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p>If running the code above doesn’t work, you can also install GAT manually. Download the <a href="https://github.com/NYSTracking/gatpkg/tree/master/compiles/gatpkg_2.0.0.tar.gz?raw=TRUE">most recently compiled version of GAT</a> or check the <a href="https://github.com/NYSTracking/gatpkg/tree/master/compiles">compiles</a> folder for earlier versions of GAT, then download and follow <a href="https://github.com/NYSTracking/gatpkg/tree/master/compiles/GAT2.x_install_instructions.pdf">instructions on how to install GAT</a>, including a list of required R packages on CRAN.</p>
 </div>
 <div class="section level3">
 <h3 id="why-create-gat">Why create GAT<a class="anchor" aria-label="anchor" href="#why-create-gat"></a>
@@ -142,14 +142,14 @@
 </ol>
 <p>GAT outputs two shapefiles, one containing aggregated areas and one containing a crosswalk between the original areas and the aggregated areas. GAT also outputs a log, several maps to help you identify potential issues in the aggregation process, and, optionally, a KML file.</p>
 <p>The package for GAT includes a tutorial to learn the tool, an embedded map file to use for examples in many package functions, and several other documents describing how GAT works and how to evaluate the resulting aggregated shapefile.</p>
-<p>To learn more about GAT, view our <a href="presentations/">presentations</a>.</p>
+<p>To learn more about GAT, view our <a href="https://github.com/NYSTracking/gatpkg/tree/master/presentations">presentations</a>.</p>
 </div>
 <div class="section level3">
 <h3 id="disclaimer">Disclaimer<a class="anchor" aria-label="anchor" href="#disclaimer"></a>
 </h3>
 <p>GAT is provided as is. We welcome feedback on what worked well, suggestions for improvement, and bugs you encounter. Report all issues via the “Issues” tab or by emailing <a href="mailto:epht@health.ny.gov?subject=%5BGAT%20in%20R%5D">NYSDOH EPHT</a>.</p>
 <p>GAT was written in R-2.9.2 in Windows XP and was revised and converted to a package in R-3.4.3 in Windows 10 using RStudio-1.4.1103 and devtools-2.3.2. The latest version of GAT was compiled in R-4.2 and runs in R-4.0 through R-4.2.</p>
-<p>If you are interested in GAT’s history, including the original SAS and R scripts, visit the <a href="archive/">archive</a>.</p>
+<p>If you are interested in GAT’s history, including the original SAS and R scripts, visit the <a href="https://github.com/NYSTracking/gatpkg/tree/master/archive"">archive</a>.</p>
 </div>
 </div>
 
@@ -206,7 +206,7 @@
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+<p>Developed by Abigail Stamm and Gwen Babcock with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">
