@@ -25,7 +25,7 @@ Run the code below in R to install GAT directly from GitHub.
 install.packages("devtools")
 # install the development version of GAT from Github with all 
 # required packages from CRAN
-devtools::install_github("ajstamm/gatpkg", dependencies = TRUE, 
+devtools::install_github("nystracking/gatpkg", dependencies = TRUE, 
                          build_vignette = TRUE)
 ```
 
