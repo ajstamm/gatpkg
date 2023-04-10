@@ -11,6 +11,7 @@ The geographic aggregation tool (GAT) was developed by the New York State Depart
 
 GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
 
+View [GAT's webpage](https://nystracking.github.io/gatpkg/dev/).
 
 ### Installing GAT 
 
