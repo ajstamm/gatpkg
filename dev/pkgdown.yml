@@ -1,0 +1,17 @@
+pandoc: 2.7.3
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  gat_changelog: gat_changelog.html
+  gat_citation: gat_citation.html
+  gat_prepare_shapefile: gat_prepare_shapefile.html
+  gat_results_eval: gat_results_eval.html
+  gat_setup: gat_setup.html
+  gat_tech_notes: gat_tech_notes.html
+  gat_troubleshooting: gat_troubleshooting.html
+  gat_tutorial: gat_tutorial.html
+last_built: 2023-04-10T14:35Z
+urls:
+  reference: https://ajstamm.github.io/gatpkg/docs/reference
+  article: https://ajstamm.github.io/gatpkg/docs/articles
+
