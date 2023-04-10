@@ -14,7 +14,7 @@ The geographic aggregation tool (GAT) was developed by the New York State Depart
 
 GAT aggregates, or dissolves, geographic areas based on numeric values for each area, such as case or population numbers.
 
-View [GAT's webpage](https://ajstamm.github.io/gatpkg/docs/dev/index.html).
+View [GAT's webpage](https://nystracking.github.io/gatpkg/dev/).
 
 ### Installing GAT 
 
@@ -29,7 +29,7 @@ devtools::install_github("ajstamm/gatpkg", dependencies = TRUE,
                          build_vignette = TRUE)
 ```
 
-If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_2.0.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](compiles/gat2.x_install_instructions.pdf), including a list of required R packages on CRAN.
+If running the code above doesn't work, you can also install GAT manually. Download the [most recently compiled version of GAT](compiles/gatpkg_2.0.0.tar.gz?raw=TRUE) or check the [compiles](compiles) folder for earlier versions of GAT, then download and follow [instructions on how to install GAT](compiles/GAT2.x_install_instructions.pdf), including a list of required R packages on CRAN.
 
 ### Why create GAT
 

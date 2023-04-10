@@ -30,7 +30,7 @@ Until GAT is posted to CRAN, the easiest way to install is from GitHub. You will
 
 ```{r, eval=FALSE}
 install.packages("devtools")
-devtools::install_github("ajstamm/gatpkg", dependencies = TRUE,
+devtools::install_github("NYSTracking/gatpkg", dependencies = TRUE,
                          build_vignettes = TRUE)
 ```
 
@@ -43,7 +43,7 @@ The full default program to run GAT looks like this:
 ```{r, eval=FALSE}
 # from GitHub
 install.packages("devtools")
-devtools::install_github("ajstamm/gatpkg", dependencies = TRUE,
+devtools::install_github("NYSTracking/gatpkg", dependencies = TRUE,
                          build_vignettes = TRUE)
 # from CRAN (not yet available)
 # install.packages("gatpkg") 
