@@ -30,6 +30,9 @@
 #'                   and will result in maps remaining open after GAT is
 #'                   finished running. Maps are saved to PDF irrespective of
 #'                   this setting.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @details
 #' For more information  on how the different merge options work, see
@@ -50,7 +53,9 @@
 # adjacent = TRUE; minfirst = TRUE; closemap = TRUE
 
 runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
-                          adjacent = TRUE, minfirst = FALSE, closemap = FALSE) {
+                          adjacent = TRUE, minfirst = FALSE, closemap = FALSE,
+                          bgcol = "lightskyblue3", buttoncol = "cornflowerblue",
+                          quitopt = "Cancel GAT") {
   #  1. start the GAT program ----
   gatenv <- new.env()
 
@@ -251,7 +256,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
 
       # identify GAT polygon identifier variable
       gatvars$myidvar <- identifyGATid(shp = temp$shp, step = step,
-                                       backopt = !temp$flagconfirm)
+                                       backopt = !temp$flagconfirm,
+                                       bgcol = bgcol, quitopt = quitopt,
+                                       buttoncol = buttoncol)
 
       if (gatvars$myidvar == "back"){
         step <- step - 1
@@ -295,7 +302,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         tempbound <- identifyGATboundary(shp = temp$shp, step = step,
                                          boundary = gatvars$boundary,
                                          borders = gatvars$rigidbound,
-                                         backopt = !temp$flagconfirm)
+                                         backopt = !temp$flagconfirm,
+                                         bgcol = bgcol, quitopt = quitopt,
+                                         buttoncol = buttoncol)
       }
 
       gatvars$rigidbound <- tempbound$check
@@ -349,7 +358,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       while (temp$error) {
         agglist <- identifyGATaggregators(shp = temp$shp, step = step,
                                           agglist = agglist,
-                                          backopt = !temp$flagconfirm)
+                                          backopt = !temp$flagconfirm,
+                                          bgcol = bgcol, quitopt = quitopt,
+                                          buttoncol = buttoncol)
         temp$error <- FALSE
         if (is.null(agglist)) {
           x <- confirmGATquit()
@@ -427,7 +438,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
 
       while (temp$error) {
         exclist <- inputGATexclusions(shp = temp$shp, exclist = exclist,
-                                      step = step, backopt = !temp$flagconfirm)
+                                      step = step, backopt = !temp$flagconfirm,
+                                      bgcol = bgcol, quitopt = quitopt,
+                                      buttoncol = buttoncol)
         temp$error <- FALSE
         if (is.null(exclist)) {
           x <- confirmGATquit()
@@ -455,11 +468,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                      exclist$var1),
                          help = paste0("To continue, enter a valid number and click 'Next >',",
                                        "\nto return to exclusion selection, click '< Back',",
-                                       "\nand to quit the program, click 'Cancel'."))
+                                       "\nand to quit the program, click '", quitopt, "'."))
             exclist$val1 <- inputGATvalue(title = gats$title, help = gats$help,
                                           message = gats$msg, defaulttext = "1,000",
                                           helppage = "inputGATvalue", step = step,
-                                          backopt = !temp$flagconfirm)
+                                          backopt = !temp$flagconfirm,
+                                          bgcol = bgcol, quitopt = quitopt,
+                                          buttoncol = buttoncol)
             if (exclist$val1 == "back") {
               exclist$var1 <- "back"
               exclist$val1 <- 0
@@ -483,11 +498,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                      exclist$var2),
                          help = paste0("To continue, enter a valid number and click 'Next >',",
                                        "\nto return to exclusion selection, click '< Back',",
-                                       "\nand to quit the program, click 'Cancel'."))
+                                       "\nand to quit the program, click '", quitopt, "'."))
             exclist$val2 <- inputGATvalue(title = gats$title, help = gats$help,
                                           message = gats$msg, defaulttext = "1,000",
                                           helppage = "inputGATvalue", step = step,
-                                          backopt = !temp$flagconfirm)
+                                          backopt = !temp$flagconfirm,
+                                          bgcol = bgcol, quitopt = quitopt,
+                                          buttoncol = buttoncol)
             if (exclist$val2 == "back") {
               exclist$var1 <- "back"
               exclist$val2 <- 0
@@ -511,11 +528,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                                      exclist$var3),
                          help = paste0("To continue, enter a valid number and click 'Next >',",
                                        "\nto return to exclusion selection, click '< Back',",
-                                       "\nand to quit the program, click 'Cancel'."))
+                                       "\nand to quit the program, click '", quitopt, "'."))
             exclist$val3 <- inputGATvalue(title = gats$title, help = gats$help,
                                           message = gats$msg, defaulttext = "1,000",
                                           helppage = "inputGATvalue", step = step,
-                                          backopt = !temp$flagconfirm)
+                                          backopt = !temp$flagconfirm,
+                                          bgcol = bgcol, quitopt = quitopt,
+                                          buttoncol = buttoncol)
             if (exclist$val3 == "back") {
               exclist$var1 <- "back"
               exclist$val3 <- 0
@@ -573,8 +592,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
           temp$cancel <- inputGATmessage(title = "Excluded areas", help = temp$help,
                                          helptitle = "inputGATmessage",
                                          helppage = "inputGATmessage", step = 6,
-                                         msg = temp$msg, buttonopt = "Repeat",
-                                         backopt = FALSE)
+                                         msg = temp$msg, quitopt = "Repeat",
+                                         backopt = FALSE, bgcol = bgcol,
+                                         buttoncol = buttoncol)
           if (temp$cancel == "cancel") {
             exclist$var1 <- "repeat"
           } else if (temp$cancel == "back") {
@@ -609,7 +629,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
@@ -625,8 +646,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         mergevars <- inputGATmerge(shp = temp$mapflag, mergevars = mergevars,
                                    aggvar = gatvars$aggregator1,
                                    aggvar2 = gatvars$aggregator2, step = step,
-                                   limitdenom = limitdenom,
-                                   backopt = !temp$flagconfirm)
+                                   limitdenom = limitdenom, bgcol = bgcol,
+                                   backopt = !temp$flagconfirm,
+                                   quitopt = quitopt, buttoncol = buttoncol)
         temp$error <- FALSE
         if (is.null(mergevars)) {
           x <- confirmGATquit()
@@ -684,7 +706,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
@@ -721,9 +744,11 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
               temp$error <- TRUE
             } else if (!is.null(temp$popnumvars)) {
               gatvars$popvar <- identifyGATpopulation(varlist = temp$popnumvars,
-                                                      step = step,
+                                                      step = step, bgcol = bgcol,
                                                       var = gatvars$popvar,
-                                                      backopt = !temp$flagconfirm)
+                                                      backopt = !temp$flagconfirm,
+                                                      quitopt = quitopt,
+                                                      buttoncol = buttoncol)
             }
           }
           if (gatvars$popvar == "back") {
@@ -753,7 +778,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
@@ -765,7 +791,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         while (temp$error) {
           ratevars <- inputGATrate(shp = temp$mapflag, limitdenom = limitdenom,
                                    step = step, ratevars = ratevars,
-                                   backopt = !temp$flagconfirm)
+                                   backopt = !temp$flagconfirm, bgcol = bgcol,
+                                   quitopt = quitopt, buttoncol = buttoncol)
           temp$error <- FALSE
 
           # returns list(multiplier, ratename, numerator, denominator, colorscheme)
@@ -805,14 +832,16 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                              help = paste0("Enter a valid number. \n",
                                            "  \u2022  To continue,  click 'Next >'. \n",
                                            "  \u2022  To return to rate settings, click '< Back'.",
-                                           "  \u2022  To quit GAT, click 'Cancel'."))
+                                           "  \u2022  To quit GAT, click '", quitopt, "'."))
                 ratevars$multiplier <- inputGATvalue(title = gats$title,
                                                      help = gats$help,
                                                      message = gats$msg,
                                                      defaulttext = "10,000",
                                                      helppage = "inputGATvalue",
-                                                     step = step,
-                                                     backopt = !temp$flagconfirm)
+                                                     step = step, bgcol = bgcol,
+                                                     backopt = !temp$flagconfirm,
+                                                     quitopt = quitopt,
+                                                     buttoncol = buttoncol)
                 if (ratevars$multiplier == "back") {
                   ratevars$ratename <- "back"
                   ratevars$multiplier <- 1
@@ -896,11 +925,13 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
-      temp$kml <- saveGATkml(step = step, backopt = !temp$flagconfirm)
+      temp$kml <- saveGATkml(step = step, backopt = !temp$flagconfirm, bgcol = bgcol,
+                             quitopt = quitopt, buttoncol = buttoncol)
 
       if (temp$kml %in% c("Yes", "No")) {
         if (temp$kml == "Yes") {
@@ -927,7 +958,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
@@ -951,7 +983,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                error = function(e) gatenv$tpb <- NULL)
       if (is.null(gatenv$tpb)) {
         gatenv$tpb <- tcltk::tkProgressBar(title = gatenv$pb$title, initial = 0,
-                                           label = gatenv$pb$label, min = 0, max = 26, width = 400)
+                                           label = gatenv$pb$label, min = 0,
+                                           max = 26, width = 400)
         tcltk::setTkProgressBar(gatenv$tpb, value = step)
       }
 
@@ -961,7 +994,9 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       while (temp$error) {
         temp$cancel <- confirmGATbystep(gatvars = gatvars, ratevars = ratevars,
                                         exclist = exclist, mergevars = mergevars,
-                                        filevars = filevars, step = step)
+                                        filevars = filevars, step = step,
+                                        bgcol = bgcol, quitopt = quitopt,
+                                        buttoncol = buttoncol)
         temp$error <- FALSE
         if (is.null(temp$cancel)) {
           x <- confirmGATquit()

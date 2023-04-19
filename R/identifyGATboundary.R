@@ -23,16 +23,19 @@
 #' are (1) character and (2) not unique, since only these variables will be
 #' suitable for defining larger geographic areas in GAT.
 #'
-#' @param shp      Spatial layer.
-#' @param step     Integer step in GAT, for help reference.
-#' @param boundary Boundary variable, if pre-selected. Defaults to "NONE",
-#'                 which means no boundary selected.
-#' @param borders  Boolean denoting whether to enforce boundary. Default is
-#'                 FALSE.
-#' @param myvar    Boundary variable, if pre-selected.
-#' @param check    Checkbox setting, if pre-selected. Currently does not do
-#'                 anything.
-#' @param backopt  Boolean denoting whether to include the back button.
+#' @param shp        Spatial layer.
+#' @param step       Integer step in GAT, for help reference.
+#' @param boundary   Boundary variable, if pre-selected. Defaults to "NONE",
+#'                   which means no boundary selected.
+#' @param borders    Boolean denoting whether to enforce boundary. Default is
+#'                   FALSE.
+#' @param myvar      Boundary variable, if pre-selected.
+#' @param check      Checkbox setting, if pre-selected. Currently does not do
+#'                   anything.
+#' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -44,7 +47,9 @@
 #' @export
 
 identifyGATboundary <- function(shp, step = 3, boundary = "NONE", myvar = "NONE",
-                                borders = FALSE, check = FALSE, backopt = TRUE) {
+                                borders = FALSE, check = FALSE, backopt = TRUE,
+                                bgcol = "lightskyblue3", quitopt = "Quit",
+                                buttoncol = "cornflowerblue") {
   # should be at least two choices, because we add "NONE"
   chars <- checkGATvariabletypes(shp, type = "character")
   idlist <- c()
@@ -66,7 +71,7 @@ identifyGATboundary <- function(shp, step = 3, boundary = "NONE", myvar = "NONE"
                   "boundary variable, select 'NONE'. \n",
                   "  \u2022  To continue,  click 'Next >'. \n",
                   "  \u2022  To return to identifier selection, click '< Back'. \n",
-                  "  \u2022  To quit GAT, click 'Cancel'.")
+                  "  \u2022  To quit GAT, click '", quitopt, "'.")
 
     error <- TRUE
 

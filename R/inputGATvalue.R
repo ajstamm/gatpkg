@@ -18,6 +18,9 @@
 #' @param helptitle   The step name to display in the title bar.
 #' @param step        Integer step in the GAT program, for help reference.
 #' @param backopt     Boolean denoting whether to include the back button.
+#' @param quitopt     Text string for the cancel button.
+#' @param bgcol       Text string containing UI background color.
+#' @param buttoncol   Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -44,9 +47,8 @@ inputGATvalue <- function(title = "GAT input window", helppage = NULL, step = 0,
                           help = "Enter the desired value and click 'Next >'.",
                           message = "Please enter something in the box.",
                           defaulttext = "default text", helptitle = "this step",
-                          backopt = TRUE) {
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+                          backopt = TRUE, bgcol = "lightskyblue3",
+                          quitopt = "Quit", buttoncol = "cornflowerblue") {
 
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- title

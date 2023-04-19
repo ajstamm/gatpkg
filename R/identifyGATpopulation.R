@@ -19,11 +19,14 @@
 #'
 #'
 #'
-#' @param varlist A vector of names of variables. Within GAT, these variables
-#'                must be numeric, but the function does not require that.
-#' @param step    Integer step in the GAT program, for help reference.
-#' @param var     Population variable to use for weighting, if pre-selected.
-#' @param backopt Boolean denoting whether to include the back button.
+#' @param varlist    Vector of names of variables. Within GAT, these variables
+#'                   must be numeric, but the function does not require that.
+#' @param step       Integer step in the program, for help reference.
+#' @param var        Population variable to use for weighting, if pre-selected.
+#' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -35,7 +38,9 @@
 #' @export
 
 identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
-                                  backopt = TRUE) {
+                                  backopt = TRUE,
+                                  bgcol = "lightskyblue3", quitopt = "Quit",
+                                  buttoncol = "cornflowerblue") {
   noofchoices <- length(varlist)
   if (noofchoices == 1) {
     msg <- paste0("The only numeric variable is ", varlist,
@@ -53,7 +58,7 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
       hlp <- paste0("Select your base population variable.  \n",
                     "  \u2022  To continue,  click 'Next >'. \n",
                     "  \u2022  To return to merge type selection, click '< Back'. \n",
-                    "  \u2022  To quit GAT, click 'Cancel'.")
+                    "  \u2022  To quit GAT, click '", quitopt, "'.")
 
     popvar <- "repeat"
 
@@ -62,7 +67,9 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
                                  instruction = msg, valuebox = FALSE,
                                  title = title, help = hlp, step = step,
                                  helppage = "identifyGATpopulation",
-                                 backopt = backopt)$myvar
+                                 backopt = backopt,
+                                 bgcol = bgcol, quitopt = quitopt,
+                                 buttoncol = buttoncol)$myvar
 
       if (is.null(popvar)) {
         x <- confirmGATquit()

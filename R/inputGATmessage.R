@@ -16,15 +16,16 @@
 #' * Click \code{Help} to get further guidance and open the manual.
 #'
 #'
-#' @param title     A text string that denotes the dialog title.
-#' @param help      A text string containing the help message.
-#' @param helppage  A text string that cntains the function name for the
-#'                  relevant function (if any) in the help dialog.
+#' @param title     Text string containing the dialog title.
+#' @param help      Text string containing the help message.
+#' @param helppage  Text string for function name for the relevant function
+#'                  (if any) in the help dialog.
 #' @param step      Integer step in the GAT program, for help reference.
-#' @param buttonopt A string that denotes the display value for the
-#'                  no/cancel button.
-#' @param msg       A text string that denotes the message for the user.
-#' @param helptitle A text string denoting the title bar for the help window.
+#' @param quitopt   Text string for the cancel button.
+#' @param bgcol     Text string containing UI background color.
+#' @param buttoncol Text string containing UI button color.
+#' @param msg       Text string containing the message for the user.
+#' @param helptitle Text string containing the title bar for the help window.
 #' @param backopt   Boolean denoting whether to include the back button.
 #'
 #' @examples
@@ -40,9 +41,9 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
                             help = "There is no help.",
                             helptitle = "inputGATmessage",
                             helppage = "inputGATmessage", step = 0,
-                            buttonopt = "Cancel GAT", backopt = TRUE) {
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+                            quitopt = "Quit", backopt = TRUE,
+                            bgcol = "lightskyblue3",
+                            buttoncol = "cornflowerblue") {
 
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
@@ -86,7 +87,7 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
   tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,
                                        command = onHelp,
                                        background = buttoncol)
-  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = buttonopt,
+  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = quitopt,
                                          width = 12, command = onCancel,
                                          background = buttoncol)
 

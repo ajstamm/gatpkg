@@ -33,6 +33,9 @@
 #' @param check       Boolean denoting the status of the checkbox. If TRUE,
 #'                    the checkbox starts checked.
 #' @param backopt     Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -66,9 +69,9 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                              checkopt = "Check this box.", checkbox = FALSE,
                              valuebox = FALSE, value = 0, check = FALSE,
                              valueopt = "Enter a number:", mylist = letters,
-                             myvar = NULL) {
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+                             myvar = NULL, bgcol = "lightskyblue3",
+                             buttoncol = "cornflowerblue", quitopt = "Quit") {
+
 
   # create frames ----
   tt <- tcltk::tktoplevel(background = bgcol)
@@ -196,7 +199,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                                        background = buttoncol)
   }
 
-  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = quitopt,
                                          command = onCancel, width = 12,
                                          background = buttoncol)
   tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text = "Help", width = 12,

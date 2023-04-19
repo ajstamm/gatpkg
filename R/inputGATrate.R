@@ -51,16 +51,19 @@
 #'   The formal name of the selected ColorBrewer color scheme.
 #' }
 #'
-#' @param help       A text string containing the help message.
+#' @param help       Text string containing the help message.
 #' @param defaultopt An integer that notes which initial list item should be
 #'                   highlighted.
-#' @param shp        The layer from which to select variables.
-#' @param limitdenom A boolean denoting whether to limit the denominator to
+#' @param shp        Layer from which to select variables.
+#' @param limitdenom Boolean denoting whether to limit the denominator to
 #'                   only variables without zeroes or missings before
 #'                   aggregation.
-#' @param step       Integer step in the GAT program, for help reference.
+#' @param step       Integer step in the program, for help reference.
 #' @param ratevars   Rate settings, if pre-defined.
 #' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -92,7 +95,9 @@
 inputGATrate <- function(shp, defaultopt = 0,
                          help = "There is no help for you.",
                          limitdenom = TRUE, step = 9,
-                         ratevars = NULL, backopt = TRUE) {
+                         ratevars = NULL, backopt = TRUE,
+                         bgcol = "lightskyblue3", quitopt = "Quit",
+                         buttoncol = "cornflowerblue") {
   # define variable lists ----
   gatlist1 <- checkGATvariabletypes(shp, type = "number")
   idlist <- c()
@@ -120,9 +125,7 @@ inputGATrate <- function(shp, defaultopt = 0,
                 "If you do not want to calculate a rate, check the box at the top. \n",
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to boundary selection, click '< Back'. \n",
-                "  \u2022  To quit GAT, click 'Cancel'.")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+                "  \u2022  To quit GAT, click '", quitopt, "'.")
 
 
   # color vectors ----
@@ -286,7 +289,7 @@ inputGATrate <- function(shp, defaultopt = 0,
                                        command = onOk, default = "active",
                                        background = buttoncol)
   }
-  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = quitopt,
                                          command = onCancel, width = 12,
                                          background = buttoncol)
   tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text = "Help", width = 12,

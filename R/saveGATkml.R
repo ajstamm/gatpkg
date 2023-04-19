@@ -22,8 +22,11 @@
 #' Google Earth. GE 5.0 or higher is recommended. KML files were tested on
 #' GE in Chrome v9.2.90.1.
 #'
-#' @param step    Integer step in the GAT program, for help reference.
-#' @param backopt Boolean denoting whether to include the back button.
+#' @param step       Integer step in the GAT program, for help reference.
+#' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -33,7 +36,8 @@
 #'
 #' @export
 
-saveGATkml <- function(step = 0, backopt = TRUE) {
+saveGATkml <- function(step = 0, backopt = TRUE, bgcol = "lightskyblue3",
+                       buttoncol = "cornflowerblue", quitopt = "Quit") {
   # set up ####
   msg <- paste("Would you like to save a KML file as well as a shapefile?",
                "\n(The KML file may take a while to write.)")
@@ -42,8 +46,6 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   helppage <- "saveGATkml_radio"
   title <- "Save KML file?"
   rbValue <- tcltk::tclVar("no")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
 
   # draw window ####
   tt <- tcltk::tktoplevel(background = bgcol)
@@ -109,7 +111,7 @@ saveGATkml <- function(step = 0, backopt = TRUE) {
   }
   tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text="Help", width = 12,
                                        command = onHelp, background = buttoncol)
-  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel", width = 12,
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = quitopt, width = 12,
                                          command = onCancel, background = buttoncol)
 
   if (backopt) {

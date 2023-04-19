@@ -10,11 +10,14 @@
 #' aggregation variable.
 #'
 #'
-#' @param shp     Spatial layer.
-#' @param step    Integer step in GAT, for help reference.
-#' @param agglist List of aggregation variables, with minimum and maximum values,
-#'                if pre-selected.
-#' @param backopt Boolean denoting whether to include the back button.
+#' @param shp        Spatial layer.
+#' @param step       Integer step in GAT, for help reference.
+#' @param agglist    List of aggregation variables, with minimum and maximum values,
+#'                   if pre-selected.
+#' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -27,7 +30,9 @@
 # I want to shorten this code, since I write the same thing three times ...
 
 identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
-                                   backopt = TRUE) {
+                                   backopt = TRUE,
+                                   bgcol = "lightskyblue3", quitopt = "Quit",
+                                   buttoncol = "cornflowerblue") {
   ## enter settings ####
   error <- TRUE
 
@@ -58,7 +63,9 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
       agglist <- inputGATaggregators(shp = shp, step = step, backopt = backopt,
                                      var1 = agglist$var1, var2 = agglist$var2,
                                      min1 = agglist$minval1, min2 = agglist$minval2,
-                                     max1 = agglist$maxval1, max2 = agglist$maxval2)
+                                     max1 = agglist$maxval1, max2 = agglist$maxval2,
+                                     bgcol = bgcol, quitopt = quitopt,
+                                     buttoncol = buttoncol)
     }
 
     ## if settings fail ####
@@ -99,7 +106,7 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
                        help = paste0("Enter a valid number. \n",
                                      "  \u2022  To continue,  click 'Next >'. \n",
                                      "  \u2022  To return to boundary selection, click '< Back'.",
-                                     "  \u2022  To quit GAT, click 'Cancel'."),
+                                     "  \u2022  To quit GAT, click '", quitopt, "'."),
                        minvalue = min(data.frame(shp)[, agglist$var1], na.rm = TRUE))
           gats$msg = paste0("Please enter a valid minimum value for ",
                             agglist$var1, "\n", "that is at least ", gats$minvalue, ".")
@@ -107,7 +114,9 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
                                            message = gats$msg,
                                            defaulttext = gats$minvalue,
                                            helppage = "inputGATvalue",
-                                           step = step, backopt = backopt)
+                                           step = step, backopt = backopt,
+                                           bgcol = bgcol, quitopt = quitopt,
+                                           buttoncol = buttoncol)
           if (is.null(agglist$minval1)) {
             x <- confirmGATquit()
             if (x == "quit") {
@@ -152,13 +161,15 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
                                        agglist$minval1, ". \n",
                                        "  \u2022  To continue,  click 'Next >'. \n",
                                        "  \u2022  To return to boundary selection, click '< Back'.",
-                                       "  \u2022  To quit GAT, click 'Cancel'."),
+                                       "  \u2022  To quit GAT, click '", quitopt, "'."),
                          maxvalue = sum(data.frame(shp)[, agglist$var1], na.rm = TRUE))
             agglist$maxval1 <- inputGATvalue(title = gats$title, help = gats$help,
                                              message = gats$msg,
                                              defaulttext = gats$maxvalue,
                                              helppage = "inputGATvalue",
-                                             step = step, backopt = backopt)
+                                             step = step, backopt = backopt,
+                                             bgcol = bgcol, quitopt = quitopt,
+                                             buttoncol = buttoncol)
             if (is.null(agglist$maxval1)) {
               x <- confirmGATquit()
               if (x == "quit") {
@@ -194,7 +205,7 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
                          help = paste0("Enter a valid number. \n",
                                        "  \u2022  To continue,  click 'Next >'. \n",
                                        "  \u2022  To return to boundary selection, click '< Back'.",
-                                       "  \u2022  To quit GAT, click 'Cancel'."),
+                                       "  \u2022  To quit GAT, click '", quitopt, "'."),
                          minvalue = min(data.frame(shp)[, agglist$var2], na.rm = TRUE))
             gats$msg = paste0("Please enter a valid minimum value for ",
                               agglist$var2, "\n", "that is at least ", gats$minvalue, ".")
@@ -202,7 +213,9 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
                                              message = gats$msg,
                                              defaulttext = gats$minvalue,
                                              helppage = "inputGATvalue",
-                                             step = step, backopt = backopt)
+                                             step = step, backopt = backopt,
+                                             bgcol = bgcol, quitopt = quitopt,
+                                             buttoncol = buttoncol)
             if (is.null(agglist$minval2)) {
               x <- confirmGATquit()
               if (x == "quit") {
@@ -246,7 +259,7 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
                                        agglist$minval2, ". \n",
                                        "  \u2022  To continue,  click 'Next >'. \n",
                                        "  \u2022  To return to boundary selection, click '< Back'.",
-                                       "  \u2022  To quit GAT, click 'Cancel'."),
+                                       "  \u2022  To quit GAT, click '", quitopt, "'."),
                          maxvalue = sum(data.frame(shp)[, agglist$var2], na.rm = TRUE),
                          minvalue = min(data.frame(shp)[, agglist$var2], na.rm = TRUE))
             if (agglist$minval2 != "none") {
@@ -262,7 +275,9 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
                                              message = gats$msg,
                                              defaulttext = gats$maxvalue,
                                              helppage = "inputGATvalue",
-                                             step = step, backopt = backopt)
+                                             step = step, backopt = backopt,
+                                             bgcol = bgcol, quitopt = quitopt,
+                                             buttoncol = buttoncol)
             if (is.null(agglist$maxval2)) {
               x <- confirmGATquit()
               if (x == "quit") {

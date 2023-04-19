@@ -22,9 +22,12 @@
 #' new identifiers for newly created polygons. Any unmerged polygons will
 #' retain their original identifiers.
 #'
-#' @param shp     Spatial layer.
-#' @param step    Integer step in the GAT program, for help reference.
-#' @param backopt Boolean denoting whether to include the back button.
+#' @param shp        Spatial layer.
+#' @param step       Integer step in the GAT program, for help reference.
+#' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -35,7 +38,9 @@
 #'
 #' @export
 
-identifyGATid <- function(shp, step = 2, backopt = TRUE) {
+identifyGATid <- function(shp, step = 2, backopt = TRUE,
+                          bgcol = "lightskyblue3", quitopt = "Quit",
+                          buttoncol = "cornflowerblue") {
   iditems <- checkGATvariabletypes(shp, type = "character")
   idlist <- c()
   for (i in 1:length(iditems)) {
@@ -55,7 +60,8 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE) {
                                 help = hlp, step = step, msg = msg,
                                 helptitle = "inputGATmessage",
                                 helppage = "inputGATmessage",
-                                buttonopt = "Cancel",
+                                quitopt = quitopt, bgcol = bgcol,
+                                buttoncol = buttoncol,
                                 backopt = backopt)
 
     if (is.null(mycancel)) {
@@ -70,7 +76,7 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE) {
     hlp <- paste0("Select your identifying variable. \n",
                   "  \u2022  To continue,  click 'Next >'. \n",
                   "  \u2022  To return to shapefile selection, click '< Back'. \n",
-                  "  \u2022  To quit GAT, click 'Cancel'.")
+                  "  \u2022  To quit GAT, click '", quitopt, "'.")
     msg <- "Select a variable that uniquely identifies the areas:"
 
     myidvar <- "repeat"
@@ -81,6 +87,8 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE) {
                                     step = step, help = hlp,
                                     helptitle = "the identification variable",
                                     helppage = "identifyGATid",
+                                    quitopt = quitopt, bgcol = bgcol,
+                                    buttoncol = buttoncol,
                                     backopt = backopt)
       if (!is.null(myoptions)) {
         if (length(myoptions$myvar) > 0) {
