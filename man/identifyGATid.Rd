@@ -4,7 +4,14 @@
 \alias{identifyGATid}
 \title{Identify GAT Shapefile Identifier}
 \usage{
-identifyGATid(shp, step = 2, backopt = TRUE)
+identifyGATid(
+  shp,
+  step = 2,
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue"
+)
 }
 \arguments{
 \item{shp}{Spatial layer.}
@@ -12,6 +19,12 @@ identifyGATid(shp, step = 2, backopt = TRUE)
 \item{step}{Integer step in the GAT program, for help reference.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a dialog window for the user to select which

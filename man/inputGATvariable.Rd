@@ -19,7 +19,10 @@ inputGATvariable(
   check = FALSE,
   valueopt = "Enter a number:",
   mylist = letters,
-  myvar = NULL
+  myvar = NULL,
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue",
+  quitopt = "Quit"
 )
 }
 \arguments{
@@ -59,6 +62,12 @@ is FALSE, this is ignored.}
 \item{mylist}{A character vector of variable names for the list.}
 
 \item{myvar}{Variable selected, if pre-defined.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{quitopt}{Text string for the cancel button.}
 }
 \description{
 This function creates a dialog box to ask the user to select an item from

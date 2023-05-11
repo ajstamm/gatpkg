@@ -4,17 +4,31 @@
 \alias{identifyGATpopulation}
 \title{Identify GAT Population Variable}
 \usage{
-identifyGATpopulation(varlist, step = 8, var = "NONE", backopt = TRUE)
+identifyGATpopulation(
+  varlist,
+  step = 8,
+  var = "NONE",
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue"
+)
 }
 \arguments{
-\item{varlist}{A vector of names of variables. Within GAT, these variables
+\item{varlist}{Vector of names of variables. Within GAT, these variables
 must be numeric, but the function does not require that.}
 
-\item{step}{Integer step in the GAT program, for help reference.}
+\item{step}{Integer step in the program, for help reference.}
 
 \item{var}{Population variable to use for weighting, if pre-selected.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a dialog window for the user to select which variable

@@ -11,26 +11,35 @@ inputGATrate(
   limitdenom = TRUE,
   step = 9,
   ratevars = NULL,
-  backopt = TRUE
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue"
 )
 }
 \arguments{
-\item{shp}{The layer from which to select variables.}
+\item{shp}{Layer from which to select variables.}
 
 \item{defaultopt}{An integer that notes which initial list item should be
 highlighted.}
 
-\item{help}{A text string containing the help message.}
+\item{help}{Text string containing the help message.}
 
-\item{limitdenom}{A boolean denoting whether to limit the denominator to
+\item{limitdenom}{Boolean denoting whether to limit the denominator to
 only variables without zeroes or missings before
 aggregation.}
 
-\item{step}{Integer step in the GAT program, for help reference.}
+\item{step}{Integer step in the program, for help reference.}
 
 \item{ratevars}{Rate settings, if pre-defined.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a dialog window for the user to select the settings to

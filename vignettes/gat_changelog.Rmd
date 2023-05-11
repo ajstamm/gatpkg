@@ -16,6 +16,11 @@ knitr::opts_chunk$set(
 )
 ```
 
+## GAT v2.0.1 (May 11, 2023)
+
+* Added check for operating system in `locateGATshapefile()` and updated `runGATprogram()` accordingly.
+* Added new minor function options to make some functions compatible with the NYS Geomasking Tool (geomask package still in development).
+
 ## GAT v2.0.0 (March 15, 2023)
 
 * Added advanced options to the settings file and log.

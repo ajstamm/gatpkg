@@ -10,8 +10,11 @@ confirmGATbystep(
   mergevars,
   filevars,
   exclist,
-  savekml,
-  step = 0
+  savekml = FALSE,
+  step = 0,
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue",
+  quitopt = "Quit"
 )
 }
 \arguments{
@@ -39,6 +42,12 @@ number of excluded areas, flagsum.}
 \item{savekml}{A boolean, whether or not to save a KML file.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{quitopt}{Text string for the cancel button.}
 }
 \description{
 This function opens a dialog window for the user to select whether the

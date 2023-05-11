@@ -12,7 +12,11 @@ inputGATvalue(
   message = "Please enter something in the box.",
   defaulttext = "default text",
   helptitle = "this step",
-  backopt = TRUE
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue",
+  helpopt = TRUE
 )
 }
 \arguments{
@@ -32,6 +36,14 @@ relevant function (if any) in the help dialog.}
 \item{helptitle}{The step name to display in the title bar.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{helpopt}{Boolean denoting whether to include the help button.}
 }
 \description{
 This function creates a dialog box to ask the user for a specific value

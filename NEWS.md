@@ -1,5 +1,9 @@
 # gatpkg v2.0.0
 
+* Added check for operating system in `locateGATshapefile()`.
+
+# gatpkg v2.0.0
+
 * Revised `writeGATkml` so that it also writes to KMZ.
 * Removed dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp.
 * Removed `checkGATshapefilesize` and fixed bugs. 

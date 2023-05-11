@@ -1,7 +1,7 @@
 Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
-Version: 2.0.0
+Version: 2.0.1
 Date: 2023-03-15
 Authors@R: c(
     person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 

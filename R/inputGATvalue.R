@@ -21,6 +21,7 @@
 #' @param quitopt     Text string for the cancel button.
 #' @param bgcol       Text string containing UI background color.
 #' @param buttoncol   Text string containing UI button color.
+#' @param helpopt     Boolean denoting whether to include the help button.
 #'
 #' @examples
 #'
@@ -48,7 +49,8 @@ inputGATvalue <- function(title = "GAT input window", helppage = NULL, step = 0,
                           message = "Please enter something in the box.",
                           defaulttext = "default text", helptitle = "this step",
                           backopt = TRUE, bgcol = "lightskyblue3",
-                          quitopt = "Quit", buttoncol = "cornflowerblue") {
+                          quitopt = "Quit", buttoncol = "cornflowerblue",
+                          helpopt = TRUE) {
 
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- title
@@ -72,8 +74,8 @@ inputGATvalue <- function(title = "GAT input window", helppage = NULL, step = 0,
     assign("myvalue", "cancel", envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helptitle, helppage = helppage,
-                step = step)
+    gatpkg::showGAThelp(help = help, helptitle = helptitle,
+                        helppage = helppage, step = step)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
@@ -92,10 +94,12 @@ inputGATvalue <- function(title = "GAT input window", helppage = NULL, step = 0,
                                        command = onOk, default = "active",
                                        background = buttoncol)
   }
+  if (helpopt) {
+    tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,
+                                         command = onHelp, background = buttoncol)
+  }
 
-  tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,
-                                       command = onHelp, background = buttoncol)
-  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = "Cancel GAT",
+  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = quitopt,
                                          width = 12, command = onCancel,
                                          background = buttoncol)
 
@@ -106,8 +110,10 @@ inputGATvalue <- function(title = "GAT input window", helppage = NULL, step = 0,
   }
   tcltk::tkgrid(tt$env$tf$OkBut, column = 2, row = 1, pady = 5)
   tcltk::tkgrid(tt$env$tf$CancelBut, column = 3, row = 1, pady = 5)
-  tcltk::tkgrid(tt$env$tf$HelpBut, column = 4, row = 1, pady = 5,
-                padx = c(0, 5))
+  if (helpopt) {
+    tcltk::tkgrid(tt$env$tf$HelpBut, column = 4, row = 1, pady = 5,
+                  padx = c(0, 5))
+  }
 
   # tkwm.resizable(tt, 0, 0)
   tcltk::tkfocus(tt$env$txt)

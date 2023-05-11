@@ -159,7 +159,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
 
       # identify shapefile
       filevars <- locateGATshapefile(myfile = filevars$userin, step = step,
-                                     msg = "Select the shapefile to aggregate")
+                                     msg = "Select the shapefile to aggregate",
+                                     bgcol = bgcol, buttoncol = buttoncol)
 
       if (filevars$userin == "cancel") {
         step <- 20
@@ -719,7 +720,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
         while (temp$error) {
           temp$msg <- "Select the population shapefile"
           tempfiles <- locateGATshapefile(msg = temp$msg,
-                                          myfile = filevars$popin, step = step)
+                                          myfile = filevars$popin, step = step,
+                                          bgcol = bgcol, buttoncol = buttoncol)
           temp$error <- FALSE
           if (tempfiles$userin == "cancel") {
             gatvars$popvar <- "back"

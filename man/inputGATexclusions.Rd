@@ -4,7 +4,15 @@
 \alias{inputGATexclusions}
 \title{Input GAT Exclusions}
 \usage{
-inputGATexclusions(shp, step = 0, exclist = NULL, backopt = TRUE)
+inputGATexclusions(
+  shp,
+  step = 0,
+  exclist = NULL,
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue"
+)
 }
 \arguments{
 \item{shp}{Spatial layer.}
@@ -14,6 +22,12 @@ inputGATexclusions(shp, step = 0, exclist = NULL, backopt = TRUE)
 \item{exclist}{The list of exclusion criteria, if pre-defined.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a dialog window for the user to select the variables
