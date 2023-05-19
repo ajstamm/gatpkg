@@ -1,6 +1,6 @@
 # Archive for historical information on GAT's development
 
-This folder contains prior versions of GAT prior to converting GAT to an R package. These files are provided for historical use only and are no longer being maintained or supported. The only version of GAT that we support currently is the R package. If you have questions about the history of GAT, please email epht@health.ny.gov.
+This folder contains prior versions of GAT prior to converting GAT to an R package. These files are provided for historical use only and are no longer being maintained or supported. The only version of GAT that we support currently is the R package. If you have questions about GAT's history, please email epht@health.ny.gov.
 
 ## GAT for R
 
@@ -33,7 +33,7 @@ The script was designed to run in SAS versions 9.1-9.4 and may run in later vers
 Download [GAT for SAS v4.1](NYS_GAT_SAS-4-1.zip)
 
 
-## Publications that have used or cited GAT
+## Publications that have used or cited prior iterations of GAT
 
 * Sherman RL, Henry KA, Tannenbaum SL, Feaster DJ, Kobetz E, Lee DJ. Prev Chronic Dis.   
     DOI: http://dx.doi.org/10.5888/pcd11.130264   
@@ -50,7 +50,10 @@ Download [GAT for SAS v4.1](NYS_GAT_SAS-4-1.zip)
 * Boothe VL, Fierro LA, Laurent A, Shih M. Global Diaspora News. Published 3/28/2020.   
     https://www.globaldiasporanews.com/a-tool-to-improve-communitv-health-and-advance-health-equity/   
     Used R v1.33 
-    
+* California Department off Public Health & Mariposa County Health Department. Community Assessment for Public Health Emergency Response (CASPER) addressing the California drought—Mariposa County, California, November, 2015.
+    https://www.cdph.ca.gov/Programs/CCDPHP/DEODC/CDPH%20Document%20Library/Mariposa%202015%20CASPER%20report.pdf  
+    Uses SAS v1.31
+  
 ## Presentations about legacy versions of GAT
 
 * Talbot, T & LaSelva, G. "GIS Tools for Sharing Health Data and Protecting Patient Confidentiality." NYGeoCon, Saratoga Springs, NY, November 12-13, 2013.  
