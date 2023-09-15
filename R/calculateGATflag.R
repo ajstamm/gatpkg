@@ -27,6 +27,8 @@ calculateGATflag <- function(exclist, d) {
   if (!"GATflag" %in% names(d)) {
     d$GATflag <- 0 # for non-default uses of this function
   }
+  d$GATflag <- ifelse(d$GATflag == 1, 0, d$GATflag)
+
 
   if (exclist$var1 != "NONE") {
     d <- calculateGATexclusions(d, exclist$var1, exclist$math1, exclist$val1)

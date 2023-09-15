@@ -42,7 +42,7 @@ my_data <- sf::st_as_sf(my_data, coords = c("GATx", "GATy"),
                         crs = sf::st_crs(hftown))
 first <- my_data[which(grepl("37374", my_data$ID)), ] # only one observation
 
-# hard coded for simplicity; use spdep::poly2nb() to get these obs
+# hard coded for simplicity; use sfdep::st_contiguity to get these obs
 nbdata <- my_data[which(grepl("43412|02572|40794|79059", my_data$ID)), ]
           # only adjacent neighbors to first
 

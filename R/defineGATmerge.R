@@ -89,7 +89,7 @@
 #' @export
 
 # exclist = NULL; pwrepeat = FALSE; minfirst = FALSE; adjacent = TRUE
-# progressbar = TRUE; pop = NULL
+# progressbar = FALSE; pop = NULL
 
 defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                            pwrepeat = FALSE, adjacent = TRUE, pop = NULL,
@@ -99,6 +99,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   data <- data.frame(area)
   sf::st_agr(area) <- "constant"
   if (!is.null(pop)) sf::st_agr(pop) <- "constant"
+  area <- sf::st_make_valid(area, dist=0)
 
   min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
   max1 <- as.numeric(gsub(",", "", gatvars$maxvalue1))
@@ -129,7 +130,8 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
     data$GATid <- data[, gatvars$myidvar]
     area$GATid <- data$GATid
   }
-  row.names(area) <- data$GATid
+  area$GATid <- data.frame(area)[, gatvars$myidvar]
+  row.names(area) <- area$GATid
 
   warnings <- c(
     ab = "No physically adjacent neighbors found within the same boundary.",
@@ -183,7 +185,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   if (is.na(mapvars$projection)) mapvars$projection <- FALSE
 
   # add centroids to polygon data ----
-  aggvars <- list(IDlist = data$GATid, newregno = 1, logmsg = "",
+  aggvars <- list(IDlist = data.frame(area)$GATid, newregno = 1, logmsg = "",
                   shp = cbind(area, mapvars$centroids))
 
   # set up temporary variables ----
@@ -195,7 +197,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   temp <- list(alldata = aggvars$shp[which(aggvars$shp$GATflag == 0), ],
                digits = nchar(nrow(aggvars$shp)),
                index = sapply(data.frame(aggvars$shp), is.integer),
-               rownames = data$GATid)
+               rownames = data.frame(area)$GATid)
 
   # set up loop ----
   if (nrow(temp$alldata) > 0) {
@@ -215,12 +217,10 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
     }
 
     # set up town variables ----
-    # replace with sf
-    # get list of neighbors using poly2nb method from spdep package
-    townvars <- list(oldtownnb = spdep::poly2nb(area, queen = FALSE,
-                                                row.names = temp$rownames),
-                     townnb = spdep::poly2nb(area, queen = FALSE,
-                                             row.names = temp$rownames))
+    townvars <- list(oldtownnb = sfdep::st_contiguity(area, queen = FALSE),
+                     townnb = sfdep::st_contiguity(area, queen = FALSE))
+    names(townvars$oldtownnb) <- aggvars$IDlist
+    names(townvars$townnb) <- aggvars$IDlist
 
     # convert integers to double (change to convert when I read in file?)
     # might be redundant now, but check later
@@ -291,7 +291,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       temp$idfail <- TRUE
       temp$island <- FALSE
 
-      townvars$townnbid <- attr(townvars$townnb, "region.id")
+      townvars$townnbid <- names(townvars$townnb)
       # as of this point, townvars$nbdata is sf
       # sometimes attr() fails and just gives index numbers
       if (data.frame(temp$first)$GATid %in% townvars$townnbid) {
@@ -492,8 +492,16 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                         data.frame(townvars$newreg)$GATid), ]
 
         # update neighbor listings ----
-        townvars$townnb <- aggregateGATnb(nb = townvars$oldtownnb,
-                                          ids = aggvars$IDlist)
+        townvars$townnb <- townvars$oldtownnb
+        names(townvars$townnb) <- aggvars$IDlist
+        townvars$townnb <- tapply(unlist(townvars$townnb,
+                                         use.names = FALSE),
+                                  rep(names(townvars$townnb),
+                                      lengths(townvars$townnb)), FUN = c)
+
+        townvars$townnb <- sfdep::st_contiguity(aggvars$shp, queen = FALSE)
+        names(townvars$townnb) <- rownames(aggvars$shp)
+
       }
 
       # find the minimum population ----
@@ -504,11 +512,11 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       temp$minpop2 <- min(data.frame(aggvars$shp)[which(aggvars$shp$GATflag == 0),
                                               gatvars$aggregator2])
 
+      # 'garbage collection': free up memory ----
       if (temp$warnkey != "n") {
         aggvars$logmsg <- paste(aggvars$logmsg, temp$logmsg,
                                 warnings[temp$warnkey], "\n")
       }
-      # 'garbage collection': free up memory ----
       gc(verbose = FALSE)
     }
   } else {

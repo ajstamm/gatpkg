@@ -51,6 +51,7 @@
 
 # limitdenom = FALSE; pwrepeat = FALSE; settings = NULL
 # adjacent = TRUE; minfirst = TRUE; closemap = TRUE
+# bgcol = "lightskyblue3"; buttoncol = "cornflowerblue"; quitopt = "Cancel GAT"
 
 runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
                           adjacent = TRUE, minfirst = FALSE, closemap = FALSE,
@@ -228,6 +229,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
           }
 
           temp$shp$GATflag <- 0
+          temp$shp <- temp$shp[!sf::st_is_empty(temp$shp),]
 
           step <- step + 1
         }
@@ -759,6 +761,8 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
             if (temp$flagconfirm) {
               step <- 11
             } else {
+              temp$pop <- temp$pop[!sf::st_is_empty(temp$pop),]
+
               step <- step + 1
             }
           }
@@ -1048,6 +1052,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       gatvars$myidvar <- "temp_id"
     }
 
+    myshps$original <- myshps$original[!sf::st_is_empty(myshps$original),]
     sf::st_agr(myshps$original) <- "constant"
     temp$pts <- sf::st_centroid(myshps$original)
 

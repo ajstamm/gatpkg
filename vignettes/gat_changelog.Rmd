@@ -16,10 +16,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GAT v2.0.1 (May 11, 2023)
+## GAT v2.0.1 (September 15, 2023)
 
+* Added check to filter out empty geographies.
+* Removed `aggregateGATnb()`.
+* Rewrote spdep sections to use sfdep or alternate code and removed dependency on spdep.
 * Added check for operating system in `locateGATshapefile()` and updated `runGATprogram()` accordingly.
-* Added new minor function options to make some functions compatible with the NYS Geomasking Tool (geomask package still in development).
+* Added new advanced function options to make some functions compatible with the NYS Geomasking Tool (geomask package still in development).
 
 ## GAT v2.0.0 (March 15, 2023)
 
