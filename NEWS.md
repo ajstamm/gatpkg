@@ -1,7 +1,11 @@
+# gatpkg v2.1.0
+
+* Removed dependency on spdep and fixed associated bugs.
+* Added check for empty geographies.
+
 # gatpkg v2.0.1
 
 * Added check for operating system in `locateGATshapefile()`.
-* Removed dependency on spdep and fixed associated bugs.
 * Removed function `aggregateGATnb()`.
 
 # gatpkg v2.0.0
@@ -10,7 +14,6 @@
 * Removed dependencies on rgeos, lwgeom, rgdal, foreign, tcltk2, plotkml, and sp.
 * Removed `checkGATshapefilesize()` and fixed bugs. 
 * Added advanced options to the settings file and log.
-* Fixed several bugs that broke GAT.
 * Revised and standardized all pop-up fonts and colors except the pre-defined progress bar and file-selection window.
 * Revised population weighting to read in the population file only once.
 * Added a 'GATid' variable to clone the selected merge variable instead of overwriting it.

@@ -77,7 +77,7 @@
 #' )
 #'
 #' exclist <- list(
-#'   var1 = "TOTAL_POP", math1 = "less than", val1 = 500,
+#'   var1 = "TOTAL_POP", math1 = "less than", val1 = 200,
 #'   var2 = "NONE", # if not "NONE", define math2 & val2
 #'   var3 = "NONE"  # if not "NONE", define math3 & val3
 #' )
@@ -133,16 +133,31 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   area$GATid <- data.frame(area)[, gatvars$myidvar]
   row.names(area) <- area$GATid
 
+  # warnings ----
+  # capitol letter = TRUE, lower case = FALSE
+  # a = adjacent, b = boundatr, m = min, f = found
+  # rethink warnings to what was found
   warnings <- c(
-    ab = "No physically adjacent neighbors found within the same boundary.",
-    amb = paste("No physically adjacent neighbors below the minimum value",
-                "found within the same boundary."),
-    mb = paste("Found areas in the same boundary below the minimum value,",
-               "but they are not physically adjacent."),
-    b = "Found areas in the same boundary, but they are not physically adjacent.",
-    f = "No neighbors found. This area cannot be merged further.",
-    nb = "No neighbors found in boundary.",
-    am = "No physically adjacent neighbors found below the minimum aggregation value."
+    # rigidbound
+    fAMB = "", # desired, never used
+    fAmB = "", # acceptable, never used
+    faMB = paste("Found areas in the same boundary below the minimum value,",
+                 "but they are not physically adjacent."),
+    faB = paste("Found areas in the same boundary,",
+                "but they are not physically adjacent."),
+    fAMb = paste("Found physically adjacent areas below the minimum value,",
+                 "but they are not in the same boundary."),
+    fAb = paste("Found physically adjacent areas,",
+                "but they are not in the same boundary."),
+    faMb = paste("Found areas to merge below the minimum value,",
+                 "but they are not physically adjacent or in the same boundary."),
+    fab = paste("Found areas to merge, but they are not physically adjacent",
+                "or in the same boundary."),
+    faM = paste("Found areas to merge below the minimum value,",
+                "but they are not physically adjacent."),
+    fa = paste("Found areas to merge, but they are not physically adjacent",
+               "or in the same boundary."),
+    na = "No areas found to merge. This area cannot be merged further."
   )
   # draw progress bar ----
   definenv <- new.env()
@@ -187,6 +202,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   # add centroids to polygon data ----
   aggvars <- list(IDlist = data.frame(area)$GATid, newregno = 1, logmsg = "",
                   shp = cbind(area, mapvars$centroids))
+  as <- data.frame(aggvars$shp)
 
   # set up temporary variables ----
   aggvars$shp[, gatvars$aggregator1] <-
@@ -194,16 +210,16 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
   aggvars$shp[, gatvars$aggregator2] <-
     as.numeric(as.character(data.frame(aggvars$shp)[, gatvars$aggregator2]))
 
-  temp <- list(alldata = aggvars$shp[which(aggvars$shp$GATflag == 0), ],
+  temp <- list(aggdata = aggvars$shp[which(aggvars$shp$GATflag == 0), ],
                digits = nchar(nrow(aggvars$shp)),
                index = sapply(data.frame(aggvars$shp), is.integer),
                rownames = data.frame(area)$GATid)
 
   # set up loop ----
-  if (nrow(temp$alldata) > 0) {
+  if (nrow(temp$aggdata) > 0) {
     # set up more temporary variables ----
-    temp$minpop1 = min(data.frame(temp$alldata)[, gatvars$aggregator1])
-    temp$minpop2 = min(data.frame(temp$alldata)[, gatvars$aggregator2])
+    temp$minpop1 = min(data.frame(temp$aggdata)[, gatvars$aggregator1])
+    temp$minpop2 = min(data.frame(temp$aggdata)[, gatvars$aggregator2])
 
     myids <- as.character(unlist(data$GATid))
     myids <- myids[grepl("GATid", myids)]
@@ -216,36 +232,23 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       temp$digits <- nchar(myids[1])
     }
 
-    # set up town variables ----
-    townvars <- list(oldtownnb = sfdep::st_contiguity(area, queen = FALSE),
-                     townnb = sfdep::st_contiguity(area, queen = FALSE))
-    names(townvars$oldtownnb) <- aggvars$IDlist
-    names(townvars$townnb) <- aggvars$IDlist
-
-    # convert integers to double (change to convert when I read in file?)
-    # might be redundant now, but check later
-    aggvars$shp[, temp$index] <-
-      sapply(data.frame(aggvars$shp)[, temp$index], as.numeric)
-
     # start while loop ----
     while (temp['minpop1'] < min1 | temp['minpop2'] < min2){
       # identify who can merge ----
-      # remove flagged areas
-      temp$aggdata <-
-        aggvars$shp[which(aggvars$shp$GATflag == 0), ]
-
-      # isolate areas that are too small
-      t <- data.frame(temp$aggdata)
+      # isolate areas that are below minimum
       temp$tobemerged <- temp$aggdata[which(
-        t[, gatvars$aggregator1] < min1 |
-        t[, gatvars$aggregator2] < min2 ), ]
+        a[, gatvars$aggregator1] < min1 |
+        a[, gatvars$aggregator2] < min2 ), ]
+      t <- data.frame(temp$tobemerged)
 
       # change the merge order high to low
       temp$tobemerged <-
-        if (temp$minpop1 < min1)
-          temp$tobemerged[order(-data.frame(temp$tobemerged)[,
-                          gatvars$aggregator1]), ] else
-          temp$tobemerged[order(-temp$tobemerged[, gatvars$aggregator2]), ]
+        if (temp$minpop1 < min1) {
+          temp$tobemerged[order(-t[, gatvars$aggregator1]), ]
+        } else {
+          temp$tobemerged[order(-t[, gatvars$aggregator2]), ]
+        }
+      t <- data.frame(temp$tobemerged)
 
       # default merge option is the one selected
       mergevars$mergeopt2 <- mergevars$mergeopt1
@@ -272,251 +275,178 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                                         aggvar = gatvars$aggregator1,
                                         aggvar2 = gatvars$aggregator2,
                                         minval = min1, minval2 = min2)
+      f <- data.frame(temp$first)
 
       # remove areas that are too large
       temp$aggdata <- temp$aggdata[which(
-        (data.frame(temp$aggdata)[, gatvars$aggregator1] +
-           data.frame(temp$first)[, gatvars$aggregator1] < max1) |
-          (data.frame(temp$aggdata)[, gatvars$aggregator2] +
-             data.frame(temp$first)[, gatvars$aggregator2] < max2)), ]
+        (a[, gatvars$aggregator1] + f[, gatvars$aggregator1] < max1) |
+        (a[, gatvars$aggregator2] + f[, gatvars$aggregator2] < max2)), ]
+      a <- data.frame(temp$aggdata)
 
 
       # set up warnings ----
-      temp$logmsg <- paste0("Merge ", aggvars$newregno + maxid, " (",
-                            data.frame(temp$first)$GATid, "):")
-      temp$warnkey <- "n" # no warnings
+      temp$logmsg <- "" # start with empty log
+      temp$warnkey <- "" # no warnings
 
       # find neighbors ----
       # temporary flag: neighbors found?
       temp$idfail <- TRUE
       temp$island <- FALSE
 
-      townvars$townnbid <- names(townvars$townnb)
-      # as of this point, townvars$nbdata is sf
-      # sometimes attr() fails and just gives index numbers
-      if (data.frame(temp$first)$GATid %in% townvars$townnbid) {
-        townvars$townnbidloc <- which(townvars$townnbid ==
-                                      data.frame(temp$first)$GATid)
-        townvars$neighbors <- townvars$townnb[[townvars$townnbidloc]]
-        townvars$neighborid <- townvars$townnbid[townvars$neighbors]
-        townvars$nbdata <-
-          temp$aggdata[which(data.frame(temp$aggdata)$GATid %in%
-                             townvars$neighborid), ]
+      rooks <- lengths(sf::st_relate(temp$aggdata, temp$first,
+                                     pattern = "F***1****")) == 1
+      if (sum(rooks) > 0) {
+        temp$towns <- temp$aggdata[rooks, ]
       } else {
-        townvars$nbdata <- data.frame()
+        temp$towns <- data.frame()
       }
+      w <- data.frame(temp$towns)
 
       # get the data about these neighbors ----
-      # if boundary variable
       if (gatvars$boundary != "NONE") {
-        if (nrow(townvars$nbdata) > 0) {
-          temp$firstboundary <- as.character(data.frame(temp$first)[, gatvars$boundary])
-          # index of neighbors in same county
-          temp$inboundary <- townvars$nbdata[which(
-            data.frame(townvars$nbdata)[, gatvars$boundary] == temp$firstboundary), ]
-          # find neighbors in boundary, adjacent, below minimum value
+        # if boundary variable
+        if (nrow(temp$towns) > 0) {
+          temp$townbound <- temp$towns[which(
+            w[, gatvars$boundary] == as.character(f[, gatvars$boundary])), ]
+          b <- data.frame(temp$townbound)
           if (minfirst) {
-            townvars$nbdata <-
-              temp$inboundary[which(data.frame(temp$inboundary)[,
-                                               gatvars$aggregator1] < min1 |
-                                      data.frame(temp$inboundary)[,
-                                                 gatvars$aggregator2] < min2), ]
-            temp$inco_dex <- which(data.frame(townvars$nbdata)[,
-                                              gatvars$boundary] == temp$firstboundary)
-            temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
-            if (nrow(temp$inco_nbdata) > 0) {
-              townvars$nbdata <- temp$inco_nbdata
-              temp$idfail <- FALSE
-            } else {
-              temp$warnkey <- "amb" # no adjacent below min within boundary
-              temp$idfail <- TRUE
-            }
-          }
-          # if no neighbors, find neighbors in boundary, adjacent
-          if (temp$idfail & adjacent) {
-            townvars$nbdata <-
-              temp$inboundary[which(data.frame(temp$inboundary)$GATid %in%
-                                      townvars$neighborid), ]
-            # index of neighbors in same county
-            temp$inco_dex <- which(data.frame(townvars$nbdata)[, gatvars$boundary] ==
-                                     temp$firstboundary)
-            temp$inco_nbdata <- townvars$nbdata[temp$inco_dex, ]
-            if (nrow(temp$inco_nbdata) > 0) {
-              townvars$nbdata <- temp$inco_nbdata
-              temp$idfail <- FALSE # found neighbor
-            } else {
-              temp$warnkey <- "ab" # no adjacent within boundary
-              temp$idfail <- TRUE # still failed
-            }
-          }
-        }
-        # if no neighbors, find other area in boundary
+            temp$nbdata <-
+              temp$townbound[which(b[, gatvars$aggregator1] < min1 |
+                                   b[, gatvars$aggregator2] < min2), ]
+            temp$idfail <- if (nrow(temp$nbdata) > 0) FALSE else TRUE
+          } # in boundary, adjacent, below min
+          if (temp$idfail) { # assumes adjacent
+            temp$nbdata <- temp$townbound
+            temp$idfail <- if (nrow(temp$nbdata) > 0) FALSE else TRUE
+          } # in boundary, adjacent
+        } # in boundary, adjacent, maybe below min
         if (temp$idfail & !adjacent) {
-          # below minimum preferred?
-          if (minfirst) {
-            temp$inco_nbdata <-
-              temp$tobemerged[which(data.frame(temp$tobemerged)[, gatvars$boundary] ==
-                                    temp$firstboundary &
-                                    data.frame(temp$tobemerged)$GATid !=
-                                    data.frame(temp$first)$GATid), ]
-            if(nrow(temp$inco_nbdata) > 0) {
-              townvars$nbdata <- temp$inco_nbdata
-              mergevars$mergeopt2 <- "closest"
-              temp$warnkey <- "mb"
+          # if no neighbors, find other area in boundary
+          temp$townbound <- temp$aggdata[which(
+            a[, gatvars$boundary] == temp$boundary &
+            a$GATid != f$GATid), ]
+          b <- data.frame(temp$townbound)
+          if (minfirst) { # below minimum preferred?
+            temp$nbdata <-
+              temp$townbound[which(b[, gatvars$aggregator1] < min1 |
+                                   b[, gatvars$aggregator2] < min2), ]
+            if (nrow(temp$nbdata) > 0) {
+              temp$warnkey <- "faMB"
               temp$idfail <- FALSE
             } else {
+              temp$warnkey <- "mB" # no below min within boundary
               temp$idfail <- TRUE
             }
-          }
-          # if still failing
+          } # in boundary, below min
           if (temp$idfail) {
-            temp$inco_nbdata <-
-              temp$aggdata[which(data.frame(temp$aggdata)[, gatvars$boundary] ==
-                                 temp$firstboundary &
-                                 data.frame(temp$aggdata)$GATid !=
-                                 data.frame(temp$first)$GATid), ]
-            if(nrow(temp$inco_nbdata) > 0){
-              townvars$nbdata <- temp$inco_nbdata
-              mergevars$mergeopt2 <- "closest"
-              temp$warnkey <- "b"
-              temp$idfail <- FALSE
-            } else {
-              temp$idfail <- TRUE
-            }
-          }
-        }
-        # if no neighbors, quit loop
-        if (temp$idfail) temp$warnkey <- "nb"
-      }
-      # if boundary not enforced
-      if (temp$idfail & !gatvars$rigidbound) {
-        # if merge below minimum first
-        if (minfirst) {
-          # reset town list, just in case
-          townvars$nbdata <-
-            temp$tobemerged[which(data.frame(temp$tobemerged)$GATid %in%
-                                    townvars$neighborid), ]
-          if (nrow(townvars$nbdata) > 0) {
-            temp$idfail <- FALSE # found neighbor
-          } else {
-            temp$warnkey <- "am" # no adjacent below minimum
-            temp$idfail <- TRUE # still failed
-          }
-        }
-        # if must be adjacent
-        if (temp$idfail & adjacent) {
-          townvars$nbdata <-
-            temp$aggdata[which(data.frame(temp$aggdata)$GATid %in%
-                                    townvars$neighborid), ]
-          if (nrow(townvars$nbdata) > 0) {
-            temp$idfail <- FALSE # found neighbor
-          } else {
-            temp$warnkey <- "ab" # no adjacent within boundary
-            temp$idfail <- TRUE # still failed
-          }
-        }
-        # if not adjacent
-        if (temp$idfail & !adjacent) {
-          # reset town list, just in case
-          townvars$nbdata <-
-            temp$aggdata[which(data.frame(temp$aggdata)$GATid %in%
-                                 townvars$neighborid), ]
-          if (nrow(townvars$nbdata) > 0) {
-            temp$idfail <- FALSE # found neighbor
-          } else {
-            if (temp$logmsg == "") {
-              temp$logmsg <- paste0(temp$logmsg, "Merge ", aggvars$newregno + maxid,
-                                    " (", data.frame(temp$first)$GATid, "):")
-            }
-            temp$logmsg <- paste(temp$logmsg,
-                                 "No physically adjacent neighbors found.")
-            temp$idfail <- TRUE # still failed
-          }
-
-          if (temp$idfail) {
-            # don't want to use least or similar if no adjacent neighbors
-            temp$island <- TRUE
+            temp$nbdata <-
+              temp$townbound
             mergevars$mergeopt2 <- "closest"
-            townvars$nbdata <- aggvars$shp[which(
-              data.frame(aggvars$shp)$GATid !=
-                data.frame(temp$first)$GATid), ]
-            if (nrow(townvars$nbdata) > 0) {
-              temp$idfail <- FALSE # found neighbor
+            if (nrow(temp$nbdata) > 0) {
+              temp$idfail <- FALSE
             } else {
-              temp$idfail <- TRUE # still failed
+              temp$idfail <- TRUE
+              temp$warnkey <- "B"
             }
-          }
+          } # in boundary
+        } # in boundary, not adjacent, maybe below min
+      } # in boundary, maybe adjacent, below min
+      if (temp$idfail & !gatvars$rigidbound) {
+        # if boundary not enforced, adjacent
+        if (sum(rooks) > 0) {
+          temp$towns <- temp$aggdata[rooks, ]
+        } else {
+          temp$towns <- data.frame()
         }
-      }
+        w <- data.frame(temp$towns)
+        if (minfirst) { # assume adjacent
+          # if merge below minimum first
+          temp$nbdata <-
+            temp$towns[which(w[, gatvars$aggregator1] < min1 |
+                             w[, gatvars$aggregator2] < min2), ]
+          temp$idfail <- if (nrow(temp$nbdata) > 0) FALSE else TRUE
+          if (gatvars$boundary != "NONE" & !temp$idfail) temp$warnkey <- "fAMb"
+        } # adjacent, below min
+        if (temp$idfail) { # check among adjacent
+          temp$nbdata <- temp$towns
+          temp$idfail <- if (nrow(temp$nbdata) > 0) FALSE else TRUE
+          if (gatvars$boundary != "NONE" & !temp$idfail) temp$warnkey <- "fAb"
+        } # adjacent
+      } # adjacent, maybe below min
+      if (temp$idfail & !adjacent) { # only if not adjacent allowed
+        temp$island <- TRUE
+        mergevars$mergeopt2 <- "closest"
+        if (minfirst) {
+          temp$nbdata <-
+            temp$aggdata[which(a[, gatvars$aggregator1] < min1 |
+                               a[, gatvars$aggregator2] < min2), ]
+          temp$idfail <- if (nrow(temp$nbdata) > 0) FALSE else TRUE
+          temp$warnkey <- if (gatvars$boundary != "NONE" & !temp$idfail)
+            "faMb" else "faM"
+        } # below min
+        if (temp$idfail) {
+          temp$nbdata <- temp$aggdata
+          temp$idfail <- if (nrow(temp$nbdata) > 0) FALSE else TRUE
+          temp$warnkey <- if (gatvars$boundary != "NONE" & !temp$idfail)
+            "fab" else "fa"
+        } # any area
+      } # maybe below min
+      if (temp$idfail) {
+        temp$warnkey <- "na"
+        aggvars$shp$GATflag[as$GATid == f$GATid] <- 10
+      } # no merge
 
       # quit searching for neighbors ----
-      if(temp$idfail) {
-        # check for and remove flags and oversized at beginning of loop
-        aggvars$shp$GATflag[data.frame(aggvars$shp)$GATid ==
-                                      data.frame(temp$first)$GATid] <- 10
-        temp$warnkey <- "f"
-      } else {
+      if (!temp$idfail) {
         # rank centroid distances ----
-        townvars$nborder <- rankGATdistance(area = area, mergevars = mergevars,
-                            nbdata = townvars$nbdata, first = temp$first,
-                            gatvars = gatvars)
+        temp$nborder <- rankGATdistance(area = area, nbdata = temp$nbdata,
+                        first = temp$first, mergevars = mergevars,
+                        gatvars = gatvars)
 
         # data that will be combined to form new region ----
-        t <- rbind(temp$first, townvars$nbdata[townvars$nborder[1], ])
-        townvars$newreg <- sf::st_make_valid(t) # fix invalid areas
+        temp$nbdata <- sf::st_transform(temp$nbdata, sf::st_crs(area))
+        t <- rbind(temp$first, temp$nbdata[temp$nborder[1], ])
+        temp$newreg <- sf::st_make_valid(t) # fix invalid areas
+
+        n <- data.frame(temp$newreg)
 
         # add leading zeroes based on maximum number of areas ----
-        townvars$nrid <- paste0("GATid_", formatC(aggvars$newregno + maxid,
-                                width = temp$digits, format = "d", flag = "0"))
-
-        temp$IDloc <- which(aggvars$IDlist %in%
-                              data.frame(townvars$newreg)$GATid)
-        aggvars$IDlist[temp$IDloc] <- townvars$nrid
+        temp$nrid <- paste0("GATid_", formatC(aggvars$newregno + maxid,
+                            width = temp$digits, format = "d", flag = "0"))
+        aggvars$IDlist[which(aggvars$IDlist %in% n$GATid)] <- temp$nrid
 
         # calculate new region ----
-        aggvars$IDlist[aggvars$IDlist %in%
-                         data.frame(townvars$newreg)$ID] <- townvars$nrid
-
-        townvars$newregdata <- createGATregion(pop = mapvars$pop, area = area,
-                               newreg = townvars$newreg, myidvar = "GATid",
-                               nrid = townvars$nrid, IDlist = aggvars$IDlist,
+        aggvars$IDlist[aggvars$IDlist %in% n$ID] <- temp$nrid
+        temp$newregdata <- createGATregion(pop = mapvars$pop, area = area,
+                               newreg = temp$newreg, myidvar = "GATid",
+                               nrid = temp$nrid, IDlist = aggvars$IDlist,
                                pwrepeat = pwrepeat, popwt = gatvars$popwt)
 
-        # add the new region to the list of data about the regions ----
-        # aggvars$shp <- sf::st_as_sf(aggvars$shp)
-        aggvars$shp <- rbind(aggvars$shp, townvars$newregdata)
+        # add new region to layer of merged regions ----
+        aggvars$shp <- rbind(aggvars$shp, temp$newregdata)
+        as <- data.frame(aggvars$shp)
 
-        # need to remove the info about the old regions
-        aggvars$shp <- aggvars$shp[which(
-                      !data.frame(aggvars$shp)$GATid %in%
-                        data.frame(townvars$newreg)$GATid), ]
-
-        # update neighbor listings ----
-        townvars$townnb <- townvars$oldtownnb
-        names(townvars$townnb) <- aggvars$IDlist
-        townvars$townnb <- tapply(unlist(townvars$townnb,
-                                         use.names = FALSE),
-                                  rep(names(townvars$townnb),
-                                      lengths(townvars$townnb)), FUN = c)
-
-        townvars$townnb <- sfdep::st_contiguity(aggvars$shp, queen = FALSE)
-        names(townvars$townnb) <- rownames(aggvars$shp)
-
+        # need to remove the old regions
+        aggvars$shp <- aggvars$shp[which(!as$GATid %in% n$GATid), ]
+        as <- data.frame(aggvars$shp)
       }
-
       # find the minimum population ----
       aggvars$newregno <- aggvars$newregno + 1
-
-      temp$minpop1 <- min(data.frame(aggvars$shp)[which(aggvars$shp$GATflag == 0),
-                                              gatvars$aggregator1])
-      temp$minpop2 <- min(data.frame(aggvars$shp)[which(aggvars$shp$GATflag == 0),
-                                              gatvars$aggregator2])
+      temp$minpop1 <- min(as[which(as$GATflag == 0), gatvars$aggregator1])
+      temp$minpop2 <- min(as[which(as$GATflag == 0), gatvars$aggregator2])
 
       # 'garbage collection': free up memory ----
-      if (temp$warnkey != "n") {
-        aggvars$logmsg <- paste(aggvars$logmsg, temp$logmsg,
+      # remove flagged areas
+      as <- data.frame(aggvars$shp)
+      temp$aggdata <- aggvars$shp[which(as$GATflag == 0), ]
+      a <- data.frame(temp$aggdata)
+
+      if (!temp$warnkey == "") {
+        aggvars$logmsg <- paste(aggvars$logmsg,
+                                paste0("Merge ", aggvars$newregno + maxid,
+                                       " (", f$GATid, "):"),
                                 warnings[temp$warnkey], "\n")
-      }
+      } # write warning to log
       gc(verbose = FALSE)
     }
   } else {

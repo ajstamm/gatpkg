@@ -60,6 +60,9 @@ rankGATdistance <- function(area, nbdata, first, gatvars, mergevars) {
   area <- sf::st_as_sf(area)
   nbdata <- sf::st_as_sf(nbdata)
   first <- sf::st_as_sf(first)
+  nbdata <- sf::st_transform(nbdata, sf::st_crs(area))
+  first <- sf::st_transform(first, sf::st_crs(area))
+
 
   min1 <- as.numeric(gsub(",", "", gatvars$minvalue1))
   min2 <- as.numeric(gsub(",", "", gatvars$minvalue2))
