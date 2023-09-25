@@ -128,8 +128,19 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
       temp$pop <- sf::st_read(dsn = filevars$poppath,
                               layer = filevars$popfile)
     }
+    temp$nrow <- nrow(temp$shp)
+    temp$shp <- temp$shp[!sf::st_is_empty(temp$shp),]
+    temp$invalid <- nrow(temp$shp) - temp$nrow
+
+    if (temp$invalid > 0) {
+      temp$msg <- paste("Please note", temp$invalid,
+                        "areas were removed because they were empty.")
+      tcltk::tkmessageBox(title = "Areas invalid", type = "ok",
+                          icon = "warning", message = temp$msg)
+    }
+
   } else {
-    gatvars <- list()
+    gatvars <- list(invalid = temp$invalid)
     filevars <- list(userin = "")
     mergevars <- NULL
     ratevars <- NULL
@@ -229,7 +240,16 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
           }
 
           temp$shp$GATflag <- 0
+          temp$nrow <- nrow(temp$shp)
           temp$shp <- temp$shp[!sf::st_is_empty(temp$shp),]
+          gatvars$invalid <- nrow(temp$shp) - temp$nrow
+
+          if (gatvars$invalid > 0) {
+            temp$msg <- paste("Please note", gatvars$invalid,
+                              "areas were removed because they were invalid.")
+            tcltk::tkmessageBox(title = "Areas invalid", type = "ok",
+                                icon = "warning", message = temp$msg)
+          }
 
           step <- step + 1
         }

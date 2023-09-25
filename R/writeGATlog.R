@@ -55,7 +55,8 @@
 #'   exclmaxval = 2,
 #'   ismax1 = TRUE,       # user selected "NONE" as maximum value
 #'   ismin2 = FALSE,
-#'   ismax2 = FALSE
+#'   ismax2 = FALSE,
+#'   invalid = 2,
 #' )
 #'
 #' mergevars <- list(
@@ -178,13 +179,14 @@ writeGATlog <- function(area = NULL, gatvars = NULL, aggvars = NULL,
   write(logtext, file = logfile, ncolumns = length(logtext), append = FALSE)
 
   # input file ####
-  logtext <- c("\nInput file:          ", filevars$userin,
-               "\n  Projection:        ",
+  logtext <- c("\nInput file:           ", filevars$userin,
+               "\n  Projection:         ",
                sf::st_crs(area, parameters = TRUE)$proj4string,
-               "\n  Field names:       ", myvars,
-               "\n  Identifier:        ", gatvars$myidvar,
-               "\n  Adjacency required?", mysettings$adjacent,
-               "\n  Boundary variable: ", gatvars$boundary)
+               "\n  Field names:        ", myvars,
+               "\n  Identifier:         ", gatvars$myidvar,
+               "\n  Adjacency required? ", mysettings$adjacent,
+               "\n  Boundary variable:  ", gatvars$boundary,
+               "\n  Empty areas removed:", gatvars$invalid)
   if (!gatvars$rigidbound & gatvars$boundary != "NONE") {
     logtext <- c(logtext, "\n    You did not require the aggregation to",
                  "respect the borders of", gatvars$boundary)

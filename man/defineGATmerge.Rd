@@ -102,7 +102,7 @@ mergevars <- list(
 )
 
 exclist <- list(
-  var1 = "TOTAL_POP", math1 = "less than", val1 = 500,
+  var1 = "TOTAL_POP", math1 = "less than", val1 = 200,
   var2 = "NONE", # if not "NONE", define math2 & val2
   var3 = "NONE"  # if not "NONE", define math3 & val3
 )

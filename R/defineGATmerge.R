@@ -214,6 +214,7 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                digits = nchar(nrow(aggvars$shp)),
                index = sapply(data.frame(aggvars$shp), is.integer),
                rownames = data.frame(area)$GATid)
+  a <- data.frame(temp$aggdata)
 
   # set up loop ----
   if (nrow(temp$aggdata) > 0) {
@@ -235,6 +236,12 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
     # start while loop ----
     while (temp['minpop1'] < min1 | temp['minpop2'] < min2){
       # identify who can merge ----
+      # remove flagged areas
+      as <- data.frame(aggvars$shp)
+      temp$aggdata <- aggvars$shp[which(as$GATflag == 0), ]
+      temp$aggdata <- temp$aggdata[which(!is.na(temp$aggdata$GATid)), ]
+      a <- data.frame(temp$aggdata)
+
       # isolate areas that are below minimum
       temp$tobemerged <- temp$aggdata[which(
         a[, gatvars$aggregator1] < min1 |
@@ -276,11 +283,13 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
                                         aggvar2 = gatvars$aggregator2,
                                         minval = min1, minval2 = min2)
       f <- data.frame(temp$first)
+      temp$aggdata <- temp$aggdata[which(!temp$aggdata$GATid == temp$first$GATid), ]
 
       # remove areas that are too large
       temp$aggdata <- temp$aggdata[which(
         (a[, gatvars$aggregator1] + f[, gatvars$aggregator1] < max1) |
         (a[, gatvars$aggregator2] + f[, gatvars$aggregator2] < max2)), ]
+      temp$aggdata <- temp$aggdata[which(!is.na(temp$aggdata$GATid)), ]
       a <- data.frame(temp$aggdata)
 
 
@@ -293,13 +302,23 @@ defineGATmerge <- function(area, gatvars, mergevars, exclist = NULL,
       temp$idfail <- TRUE
       temp$island <- FALSE
 
-      rooks <- lengths(sf::st_relate(temp$aggdata, temp$first,
-                                     pattern = "F***1****")) == 1
-      if (sum(rooks) > 0) {
-        temp$towns <- temp$aggdata[rooks, ]
-      } else {
-        temp$towns <- data.frame()
-      }
+      # some fails - try tiny buffer
+      # temp$first <- sf::st_buffer(temp$first, dist = 0)
+      # temp$aggdata <- sf::st_buffer(temp$aggdata, dist = 0)
+
+      # rooks <- lengths(sf::st_relate(temp$aggdata, temp$first,
+      #                                pattern = "F***1****")) == 1
+      # if (sum(rooks) > 0) {
+      #   temp$towns <- temp$aggdata[rooks, ]
+      # } else {
+        rooks <- lengths(sf::st_relate(temp$aggdata, temp$first,
+                                       pattern = "****1****")) == 1
+        if (sum(rooks) > 0) {
+          temp$towns <- temp$aggdata[rooks, ]
+        } else {
+          temp$towns <- data.frame()
+        }
+      # }
       w <- data.frame(temp$towns)
 
       # get the data about these neighbors ----
