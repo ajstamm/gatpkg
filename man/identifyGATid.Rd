@@ -10,7 +10,9 @@ identifyGATid(
   backopt = TRUE,
   bgcol = "lightskyblue3",
   quitopt = "Quit",
-  buttoncol = "cornflowerblue"
+  buttoncol = "cornflowerblue",
+  helptitle = "the identification variable",
+  helppage = "identifyGATid"
 )
 }
 \arguments{
@@ -25,6 +27,11 @@ identifyGATid(
 \item{quitopt}{Text string for the cancel button.}
 
 \item{buttoncol}{Text string containing UI button color.}
+
+\item{helptitle}{Text string containing the title bar for the help window.}
+
+\item{helppage}{Text string for function name for the relevant function
+(if any) in the help dialog.}
 }
 \description{
 This function opens a dialog window for the user to select which

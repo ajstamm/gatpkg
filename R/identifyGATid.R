@@ -28,6 +28,9 @@
 #' @param quitopt    Text string for the cancel button.
 #' @param bgcol      Text string containing UI background color.
 #' @param buttoncol  Text string containing UI button color.
+#' @param helppage  Text string for function name for the relevant function
+#'                  (if any) in the help dialog.
+#' @param helptitle Text string containing the title bar for the help window.
 #'
 #' @examples
 #'
@@ -40,7 +43,10 @@
 
 identifyGATid <- function(shp, step = 2, backopt = TRUE,
                           bgcol = "lightskyblue3", quitopt = "Quit",
-                          buttoncol = "cornflowerblue") {
+                          buttoncol = "cornflowerblue",
+                          helptitle="the identification variable",
+                          helppage = "identifyGATid"
+                          ) {
   iditems <- checkGATvariabletypes(shp, type = "character")
   idlist <- c()
   for (i in 1:length(iditems)) {
@@ -58,8 +64,8 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE,
 
     mycancel <- inputGATmessage(title = "Identification Variable",
                                 help = hlp, step = step, msg = msg,
-                                helptitle = "inputGATmessage",
-                                helppage = "inputGATmessage",
+                                helptitle = helptitle,
+                                helppage = helppage,
                                 quitopt = quitopt, bgcol = bgcol,
                                 buttoncol = buttoncol,
                                 backopt = backopt)
@@ -76,7 +82,7 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE,
     hlp <- paste0("Select your identifying variable. \n",
                   "  \u2022  To continue,  click 'Next >'. \n",
                   "  \u2022  To return to shapefile selection, click '< Back'. \n",
-                  "  \u2022  To quit GAT, click '", quitopt, "'.")
+                  "  \u2022  To quit, click '", quitopt, "'.")
     msg <- "Select a variable that uniquely identifies the areas:"
 
     myidvar <- "repeat"
@@ -85,8 +91,8 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE,
       myoptions <- inputGATvariable(mylist = iditems, instruction = msg,
                                     title = "Identification Variable",
                                     step = step, help = hlp,
-                                    helptitle = "the identification variable",
-                                    helppage = "identifyGATid",
+                                    helptitle = helptitle,
+                                    helppage = helppage,
                                     quitopt = quitopt, bgcol = bgcol,
                                     buttoncol = buttoncol,
                                     backopt = backopt)
