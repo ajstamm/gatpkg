@@ -11,7 +11,9 @@ identifyGATpopulation(
   backopt = TRUE,
   bgcol = "lightskyblue3",
   quitopt = "Quit",
-  buttoncol = "cornflowerblue"
+  buttoncol = "cornflowerblue",
+  helptitle = NULL,
+  helppage = "identifyGATpopulation"
 )
 }
 \arguments{
@@ -29,6 +31,11 @@ must be numeric, but the function does not require that.}
 \item{quitopt}{Text string for the cancel button.}
 
 \item{buttoncol}{Text string containing UI button color.}
+
+\item{helptitle}{A text string that denotes the help dialog title.}
+
+\item{helppage}{A text string that contains the function name for the
+relevant function (if any) in the help dialog.}
 }
 \description{
 This function opens a dialog window for the user to select which variable

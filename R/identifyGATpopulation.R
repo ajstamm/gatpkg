@@ -27,6 +27,9 @@
 #' @param quitopt    Text string for the cancel button.
 #' @param bgcol      Text string containing UI background color.
 #' @param buttoncol  Text string containing UI button color.
+#' @param helptitle   A text string that denotes the help dialog title.
+#' @param helppage   A text string that contains the function name for the
+#'                    relevant function (if any) in the help dialog.
 #'
 #' @examples
 #'
@@ -40,7 +43,9 @@
 identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
                                   backopt = TRUE,
                                   bgcol = "lightskyblue3", quitopt = "Quit",
-                                  buttoncol = "cornflowerblue") {
+                                  buttoncol = "cornflowerblue",
+                                  helptitle = NULL,
+                                  helppage = "identifyGATpopulation") {
   noofchoices <- length(varlist)
   if (noofchoices == 1) {
     msg <- paste0("The only numeric variable is ", varlist,
@@ -58,7 +63,7 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
       hlp <- paste0("Select your base population variable.  \n",
                     "  \u2022  To continue,  click 'Next >'. \n",
                     "  \u2022  To return to merge type selection, click '< Back'. \n",
-                    "  \u2022  To quit GAT, click '", quitopt, "'.")
+                    "  \u2022  To quit, click '", quitopt, "'.")
 
     popvar <- "repeat"
 
@@ -66,7 +71,8 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
       popvar <- inputGATvariable(mylist = varlist, myvar = var,
                                  instruction = msg, valuebox = FALSE,
                                  title = title, help = hlp, step = step,
-                                 helppage = "identifyGATpopulation",
+                                 helppage = helppage,
+                                 helptitle = helptitle,
                                  backopt = backopt,
                                  bgcol = bgcol, quitopt = quitopt,
                                  buttoncol = buttoncol)$myvar
