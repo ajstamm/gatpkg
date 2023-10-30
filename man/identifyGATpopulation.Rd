@@ -12,8 +12,14 @@ identifyGATpopulation(
   bgcol = "lightskyblue3",
   quitopt = "Quit",
   buttoncol = "cornflowerblue",
-  helptitle = NULL,
-  helppage = "identifyGATpopulation"
+  helptitle = "identifyGATpopulation",
+  helppage = "identifyGATpopulation",
+  helpimg = NULL,
+  tool = "GAT",
+  help = paste0("Select your base population variable.  \\n",
+    "  •  To continue,  click 'Next >'. \\n",
+    "  •  To return to merge type selection, click '< Back'. \\n", "  •  To quit ",
+    tool, " click '", quitopt, "'.")
 )
 }
 \arguments{
@@ -36,6 +42,13 @@ must be numeric, but the function does not require that.}
 
 \item{helppage}{A text string that contains the function name for the
 relevant function (if any) in the help dialog.}
+
+\item{helpimg}{A text string denoting the file name of the GAT image to be
+shown, or path and filename of other image to be shown}
+
+\item{tool}{A text string that contains the name of the tool}
+
+\item{help}{A text string containing help message}
 }
 \description{
 This function opens a dialog window for the user to select which variable

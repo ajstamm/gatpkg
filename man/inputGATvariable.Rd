@@ -11,6 +11,7 @@ inputGATvariable(
   helppage = NULL,
   helptitle = NULL,
   step = 0,
+  helpimg = NULL,
   backopt = TRUE,
   checkopt = "Check this box.",
   checkbox = FALSE,
@@ -22,7 +23,8 @@ inputGATvariable(
   myvar = NULL,
   bgcol = "lightskyblue3",
   buttoncol = "cornflowerblue",
-  quitopt = "Quit"
+  quitopt = "Quit",
+  tool = "GAT"
 )
 }
 \arguments{
@@ -38,6 +40,9 @@ relevant function (if any) in the help dialog.}
 \item{helptitle}{A text string that denotes the help dialog title.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
+
+\item{helpimg}{A text string denoting the file name of the GAT image to be
+shown, or path and filename of other image to be shown}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
 
@@ -68,6 +73,8 @@ is FALSE, this is ignored.}
 \item{buttoncol}{Text string containing UI button color.}
 
 \item{quitopt}{Text string for the cancel button.}
+
+\item{tool}{Text string containing the name of the tool}
 }
 \description{
 This function creates a dialog box to ask the user to select an item from

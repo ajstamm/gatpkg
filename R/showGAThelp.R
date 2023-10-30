@@ -4,12 +4,15 @@
 #' assistance in using GAT, including instructions and links to help pages.
 #'
 #' @param help      A text string containing the help message.
-#' @param helppage  A text string that contains the funcion name for the
+#' @param helppage  A text string that contains the function name for the
 #'                  relevant function (if any) in the help dialog.
 #' @param helptitle The step name to display in the title bar.
 #' @param step      Integer step in the GAT program, for help reference.
-#' @param helpimg   A text string denoting the file name of the image to be
-#'                  shown.
+#' @param helpimg   A text string denoting the file name of the GAT image to be
+#'                  shown, or path and filename of other image to be shown
+#' @param tool      A text string denoting the name of the tool
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -21,16 +24,18 @@
 
 showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
                         step = 0, helptitle = "this step",
-                        helpimg = "showGAThelp") {
+                        helpimg = "showGAThelp",
+                        tool="GAT",bgcol="lightskyblue3",
+                        buttoncol="cornflowerblue") {
   # define objects ####
-  help <- paste(help, "\n\n For further guidance, check the GAT manual")
+  help <- paste(help, "\n\n For further guidance, check the ", tool, " manual")
   if (!is.null(helppage)) {
     help <- paste(help, "\n or the function help for", helppage)
   }
   help <- paste0(help, ".")
   path <- find.package("gatpkg")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+  #bgcol <- "lightskyblue3"
+  #buttoncol <- "cornflowerblue"
 
   # create window ####
   hlp <- tcltk::tktoplevel(background = bgcol)
@@ -40,9 +45,10 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
   tcltk::tkgrid(hlp$note, sticky = "w", columnspan = 3, padx = 5)
 
   # add image and text ####
-  if (helpimg == "showGAThelp" & helppage != helpimg) helpimg <- helppage
+  if (helpimg == "showGAThelp" & helppage != helpimg & tool == "GAT"){helpimg <- helppage}
   if (!is.null(helpimg)) {
-    imgpath <- paste0(path, "/help/figures/", helpimg, ".png")
+    if (tool == "GAT"){imgpath <- paste0(path, "/man/figures/", helpimg, ".png")}
+    else{imgpath<-helpimg}
     imgold <- tcltk::tkimage.create("photo", "imgold", file = imgpath)
     # note: zoom increases size by integer only; subsample reduces size
     # imgnew <- tcltk::tkimage.create("photo", "imgnew")
@@ -61,7 +67,7 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
                                    background = bgcol)
   hlp$env$button$Manual <-
     tcltk::tkbutton(hlp$env$button, command = onManual, width = 15,
-                    text = paste("GAT manual: \n   Step", step),
+                    text = paste(tool, " manual: \n   Step", step),
                     background = buttoncol)
   tcltk::tkgrid(hlp$env$button$Manual, column = 2, row = 1, pady = 5, padx = 5)
 

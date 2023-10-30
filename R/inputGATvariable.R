@@ -29,6 +29,8 @@
 #' @param value       A number or string that denotes the default value for
 #'                    the text box.
 #' @param helptitle   A text string that denotes the help dialog title.
+#' @param helpimg     A text string denoting the file name of the GAT image to be
+#'                    shown, or path and filename of other image to be shown
 #' @param myvar       Variable selected, if pre-defined.
 #' @param check       Boolean denoting the status of the checkbox. If TRUE,
 #'                    the checkbox starts checked.
@@ -36,6 +38,7 @@
 #' @param quitopt    Text string for the cancel button.
 #' @param bgcol      Text string containing UI background color.
 #' @param buttoncol  Text string containing UI button color.
+#' @param tool       Text string containing the name of the tool
 #'
 #' @examples
 #'
@@ -65,12 +68,14 @@
 
 inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                              help = "There is no help.", helppage = NULL,
-                             helptitle = NULL, step = 0, backopt = TRUE,
+                             helptitle = NULL, step = 0, helpimg= NULL,
+                             backopt = TRUE,
                              checkopt = "Check this box.", checkbox = FALSE,
                              valuebox = FALSE, value = 0, check = FALSE,
                              valueopt = "Enter a number:", mylist = letters,
                              myvar = NULL, bgcol = "lightskyblue3",
-                             buttoncol = "cornflowerblue", quitopt = "Quit") {
+                             buttoncol = "cornflowerblue", quitopt = "Quit",
+                             tool="GAT") {
 
 
   # create frames ----
@@ -177,8 +182,9 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                             threshold = 0), envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helppage,
-                helppage = helppage, helpimg = helppage, step = step)
+    showGAThelp(help = help, helptitle = helptitle,
+                helppage = helppage, helpimg = helpimg, step = step, tool=tool,
+                bgcol=bgcol,buttoncol=buttoncol)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
