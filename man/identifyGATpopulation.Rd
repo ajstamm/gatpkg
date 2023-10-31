@@ -14,7 +14,7 @@ identifyGATpopulation(
   buttoncol = "cornflowerblue",
   helptitle = "identifyGATpopulation",
   helppage = "identifyGATpopulation",
-  helpimg = NULL,
+  helpimg = "",
   tool = "GAT",
   help = paste0("Select your base population variable.  \\n",
     "  •  To continue,  click 'Next >'. \\n",
