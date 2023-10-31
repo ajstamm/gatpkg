@@ -39,6 +39,9 @@
 #' @param bgcol      Text string containing UI background color.
 #' @param buttoncol  Text string containing UI button color.
 #' @param tool       Text string containing the name of the tool
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
 #'
 #' @examples
 #'
@@ -68,14 +71,15 @@
 
 inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                              help = "There is no help.", helppage = NULL,
-                             helptitle = NULL, step = 0, helpimg= NULL,
-                             backopt = TRUE,
+                             helptitle = NULL, step = 0,
+                             helpimg= "inputGATvariable", backopt = TRUE,
                              checkopt = "Check this box.", checkbox = FALSE,
                              valuebox = FALSE, value = 0, check = FALSE,
                              valueopt = "Enter a number:", mylist = letters,
                              myvar = NULL, bgcol = "lightskyblue3",
                              buttoncol = "cornflowerblue", quitopt = "Quit",
-                             tool="GAT") {
+                             tool="GAT",
+                             manual = "/docs/dev/articles/gat_tutorial.html") {
 
 
   # create frames ----
@@ -184,7 +188,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
   onHelp <- function() {
     gatpkg::showGAThelp(help = help, helptitle = helptitle,
                 helppage = helppage, helpimg = helpimg, step = step, tool=tool,
-                buttoncol=buttoncol, bgcol=bgcol)
+                buttoncol=buttoncol, bgcol=bgcol, manual = manual)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)

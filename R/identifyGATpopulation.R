@@ -34,6 +34,9 @@
 #' @param helpimg     A text string denoting the file name of the GAT image to be
 #'                    shown, or path and filename of other image to be shown
 #' @param tool       A text string that contains the name of the tool
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
 #'
 #' @examples
 #'
@@ -52,6 +55,7 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
                                   helppage = "identifyGATpopulation",
                                   helpimg="",
                                   tool="GAT",
+                                  manual = "/docs/dev/articles/gat_tutorial.html",
                                   help=paste0(
                                     "Select your base population variable.  \n",
                                     "  \u2022  To continue,  click 'Next >'. \n",
@@ -88,7 +92,8 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
                                  helpimg=helpimg,
                                  backopt = backopt,
                                  bgcol = bgcol, quitopt = quitopt,
-                                 buttoncol = buttoncol, tool=tool)$myvar
+                                 buttoncol = buttoncol, tool = tool,
+                                 manual = manual)$myvar
 
       if (is.null(popvar)) {
         x <- confirmGATquit()

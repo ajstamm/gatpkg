@@ -30,7 +30,13 @@
 #' @param buttoncol  Text string containing UI button color.
 #' @param helppage  Text string for function name for the relevant function
 #'                  (if any) in the help dialog.
+#' @param helpimg     A text string denoting the file name of the GAT image to be
+#'                    shown, or path and filename of other image to be shown
 #' @param helptitle Text string containing the title bar for the help window.
+#' @param tool       A text string that contains the name of the tool
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
 #'
 #' @examples
 #'
@@ -45,7 +51,9 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE,
                           bgcol = "lightskyblue3", quitopt = "Quit",
                           buttoncol = "cornflowerblue",
                           helptitle="the identification variable",
-                          helppage = "identifyGATid"
+                          helppage = "identifyGATid", tool = "GAT",
+                          manual = "/docs/dev/articles/gat_tutorial.html",
+                          helpimg="identifyGATid"
                           ) {
   iditems <- checkGATvariabletypes(shp, type = "character")
   idlist <- c()
@@ -68,7 +76,8 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE,
                                 helppage = helppage,
                                 quitopt = quitopt, bgcol = bgcol,
                                 buttoncol = buttoncol,
-                                backopt = backopt)
+                                backopt = backopt,
+                                manual = manual, tool=tool, helpimg=helpimg)
 
     if (is.null(mycancel)) {
       myidvar <- as.character(iditems)
@@ -95,7 +104,8 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE,
                                     helppage = helppage,
                                     quitopt = quitopt, bgcol = bgcol,
                                     buttoncol = buttoncol,
-                                    backopt = backopt)
+                                    backopt = backopt, tool=tool,
+                                    manual=manual, helpimg=helpimg)
       if (!is.null(myoptions)) {
         if (length(myoptions$myvar) > 0) {
           myidvar <- myoptions$myvar

@@ -27,6 +27,12 @@
 #' @param msg       Text string containing the message for the user.
 #' @param helptitle Text string containing the title bar for the help window.
 #' @param backopt   Boolean denoting whether to include the back button.
+#' @param tool       A text string that contains the name of the tool
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
+#' @param helpimg     A text string denoting the file name of the GAT image to be
+#'                    shown, or path and filename of other image to be shown
 #'
 #' @examples
 #'
@@ -43,7 +49,10 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
                             helppage = "inputGATmessage", step = 0,
                             quitopt = "Quit", backopt = TRUE,
                             bgcol = "lightskyblue3",
-                            buttoncol = "cornflowerblue") {
+                            buttoncol = "cornflowerblue",
+                            tool = "GAT",
+                            manual = "/docs/dev/articles/gat_tutorial.html",
+                            helpimg="inputGATmessage") {
 
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
@@ -64,7 +73,8 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
   onHelp <- function() {
     gatpkg::showGAThelp(help = help, helptitle = helppage,
                 helppage = helppage, step = step, bgcol=bgcol,
-                buttoncol=buttoncol, bgcol=bgcol, buttoncol=buttoncol)
+                buttoncol=buttoncol, bgcol=bgcol, buttoncol=buttoncol,
+                manual=manual, tool=tool, helpimg=helpimg)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)

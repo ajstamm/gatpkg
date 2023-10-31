@@ -22,6 +22,10 @@
 #' @param bgcol       Text string containing UI background color.
 #' @param buttoncol   Text string containing UI button color.
 #' @param helpopt     Boolean denoting whether to include the help button.
+#' @param tool       A text string that contains the name of the tool
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
 #'
 #' @examples
 #'
@@ -50,7 +54,8 @@ inputGATvalue <- function(title = "GAT input window", helppage = NULL, step = 0,
                           defaulttext = "default text", helptitle = "this step",
                           backopt = TRUE, bgcol = "lightskyblue3",
                           quitopt = "Quit", buttoncol = "cornflowerblue",
-                          helpopt = TRUE) {
+                          helpopt = TRUE, tool = "GAT",
+                          manual = "/docs/dev/articles/gat_tutorial.html") {
 
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- title
@@ -75,8 +80,8 @@ inputGATvalue <- function(title = "GAT input window", helppage = NULL, step = 0,
   }
   onHelp <- function() {
     gatpkg::showGAThelp(help = help, helptitle = helptitle,
-                        helppage = helppage, step = step, bgcol=bgcol,
-                        buttoncol=buttoncol)
+                        helppage = helppage, step = step, bgcol = bgcol,
+                        buttoncol = buttoncol, tool = tool, manual = manual)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)

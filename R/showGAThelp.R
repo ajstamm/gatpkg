@@ -13,6 +13,9 @@
 #' @param tool      A text string denoting the name of the tool
 #' @param bgcol      Text string containing UI background color.
 #' @param buttoncol  Text string containing UI button color.
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
 #'
 #' @examples
 #'
@@ -26,14 +29,18 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
                         step = 0, helptitle = "this step",
                         helpimg = "showGAThelp",
                         tool="GAT",bgcol = "lightskyblue3",
-                        buttoncol = "cornflowerblue") {
+                        buttoncol = "cornflowerblue",
+                        manual = "/docs/dev/articles/gat_tutorial.html") {
   # define objects ####
   help <- paste(help, "\n\n For further guidance, check the ", tool, " manual")
   if (!is.null(helppage)) {
     help <- paste(help, "\n or the function help for", helppage)
   }
   help <- paste0(help, ".")
-  path <- find.package("gatpkg")
+  gatpath <- find.package("gatpkg")
+  if(tool == 'GAT'){path <- find.package("gatpkg")}
+  else
+  {path <- getwd()}
   #bgcol <- "lightskyblue3"
   #buttoncol <- "cornflowerblue"
 
@@ -47,21 +54,22 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
   # add image and text ####
   if (helpimg == "showGAThelp" & helppage != helpimg & tool == "GAT"){helpimg <- helppage}
   if (!is.null(helpimg)) {
-    if (tool == "GAT"){imgpath <- paste0(path, "/man/figures/", helpimg, ".png")}
-    else{imgpath<-helpimg}
-    imgold <- tcltk::tkimage.create("photo", "imgold", file = imgpath)
+    if (tool == "GAT"){imgpath <- paste0(gatpath, "/man/figures/", helpimg, ".png")}
+    else if (tool != "GAT" & helpimg != helppage){imgpath<-helpimg}
+    else{imgpath<-NULL}
+    if(!is.null(imgpath)){imgold <- tcltk::tkimage.create("photo", "imgold", file = imgpath)
     # note: zoom increases size by integer only; subsample reduces size
     # imgnew <- tcltk::tkimage.create("photo", "imgnew")
     # tcltk::tcl(imgnew, "copy", imgold, subsample = 2)
     # source: https://stackoverflow.com/questions/7191662/fit-image-size-to-a-small-button
     hlp$img <- tcltk::ttklabel(hlp, image = imgold, compound = "image")
-    tcltk::tkgrid(hlp$img, columnspan = 3, padx = 5)
+    tcltk::tkgrid(hlp$img, columnspan = 3, padx = 5)}
   }
 
   # add buttons ----
   onDone <- function() tcltk::tkdestroy(hlp)
   # vignette("gat_step_by_step", package = "gatpkg")
-  onManual <- function() utils::browseURL(paste0(path, "/doc/gat_step_by_step.html"))
+  onManual <- function() utils::browseURL(paste0(path, manual))
 
   hlp$env$button <- tcltk::tkframe(hlp, width = 200, height = 40,
                                    background = bgcol)
@@ -73,7 +81,7 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
 
   if (!is.null(helppage)) {
     # help(helppage, package = "gatpkg")
-    onHelppage <- function() utils::browseURL(paste0(path, "/html/", helppage, ".html"))
+    onHelppage <- function() utils::browseURL(paste0(gatpath, "/docs/dev/reference/", helppage, ".html"))
     hlp$env$button$Helppage <-
       tcltk::tkbutton(hlp$env$button, command = onHelppage, width = 25,
                       text = paste("Function help: \n   ", helppage),
