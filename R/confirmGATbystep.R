@@ -296,8 +296,8 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   myenv <- new.env()
   # button functions and layout
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = helppage, helppage = helppage,
-                step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = helppage, helppage = helppage,
+                step = step, bgcol=bgcol, buttoncol=buttoncol)
   }
   onOk <- function() {
     Rbval <- tcltk::tclvalue(stepvar)

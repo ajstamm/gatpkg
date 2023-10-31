@@ -182,9 +182,10 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                             threshold = 0), envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helptitle,
+    gatpkg::showGAThelp(help = help, helptitle = helptitle,
                 helppage = helppage, helpimg = helpimg, step = step, tool=tool,
-                bgcol=bgcol,buttoncol=buttoncol)
+                bgcol=bgcol,buttoncol=buttoncol, bgcol=bgcol,
+                buttoncol=buttoncol)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)

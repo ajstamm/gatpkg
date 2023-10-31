@@ -90,8 +90,8 @@ saveGATkml <- function(step = 0, backopt = TRUE, bgcol = "lightskyblue3",
     assign("myvalue", "cancel", envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helppage, helppage = helppage,
-                step = step)
+    gatpkg::showGAThelp(help = help, helptitle = helppage, helppage = helppage,
+                step = step, bgcol=bgcol, buttoncol=buttoncol)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)

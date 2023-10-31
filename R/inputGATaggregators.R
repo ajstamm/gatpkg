@@ -177,8 +177,9 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
            envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = "aggregation variable settings",
-                helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = "aggregation variable settings",
+                helppage = helppage, step = step, bgcol=bgcol,
+                buttoncol=buttoncol)
   }
 
   ## draw buttons ----

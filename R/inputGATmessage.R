@@ -62,8 +62,9 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
     assign("myvalue", "cancel", envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helppage,
-                helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = help, helptitle = helppage,
+                helppage = helppage, step = step, bgcol=bgcol,
+                buttoncol=buttoncol, bgcol=bgcol, buttoncol=buttoncol)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)

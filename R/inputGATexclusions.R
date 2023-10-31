@@ -230,8 +230,9 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE,
            envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = "exclusion settings",
-                helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = "exclusion settings",
+                helppage = helppage, step = step, bgcol=bgcol,
+                buttoncol=buttoncol)
   }
 
   ## draw buttons ----

@@ -272,8 +272,9 @@ inputGATrate <- function(shp, defaultopt = 0,
                            colorname = "NONE"), envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = "rate settings",
-                helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = "rate settings",
+                helppage = helppage, step = step, bgcol=bgcol,
+                buttoncol=buttoncol)
   }
   # button layout ----
   tt$tfbuts <- tcltk::tkframe(tt, width = 400, height = 40, background = bgcol)

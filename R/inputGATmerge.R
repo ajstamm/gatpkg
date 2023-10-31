@@ -217,7 +217,8 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
                         mergeopt1 = Rbval, centroid = centype), envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = helppage, helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = helppage, helppage = helppage,
+                        step = step, bgcol=bgcol, buttoncol=buttoncol)
   }
   onCancel <- function() {
     Rbval <- tcltk::tclvalue(rbValue)
