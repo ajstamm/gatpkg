@@ -67,8 +67,8 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE,
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to aggregation variable selection,",
                 "click '< Back'. \n", "  \u2022  To quit GAT, click '", quitopt, "'.")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+  #bgcol <- "lightskyblue3"
+  #buttoncol <- "cornflowerblue"
 
   mylist <- checkGATvariabletypes(shp, type = "number")
   mylist <- c("NONE", mylist)

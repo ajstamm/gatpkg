@@ -25,8 +25,8 @@
 showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
                         step = 0, helptitle = "this step",
                         helpimg = "showGAThelp",
-                        tool="GAT",bgcol="lightskyblue3",
-                        buttoncol="cornflowerblue") {
+                        tool="GAT",bgcol = "lightskyblue3",
+                        buttoncol = "cornflowerblue") {
   # define objects ####
   help <- paste(help, "\n\n For further guidance, check the ", tool, " manual")
   if (!is.null(helppage)) {

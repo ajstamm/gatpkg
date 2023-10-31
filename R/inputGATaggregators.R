@@ -69,8 +69,8 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
                     "is not \n     required. \n \n",
                     "Note: The first variable and its minimum aggregation value",
                     "are required. \n")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+  #bgcol <- "lightskyblue3"
+  #buttoncol <- "cornflowerblue"
 
   fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
   mylist1 <- checkGATvariabletypes(shp, type = "number")

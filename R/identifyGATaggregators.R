@@ -38,7 +38,8 @@ identifyGATaggregators <- function(shp, step = 4, agglist = NULL,
 
   while(error) {
     if (is.null(agglist)) {
-      agglist <- inputGATaggregators(shp = shp, step = step, backopt = backopt)
+      agglist <- inputGATaggregators(shp = shp, step = step, backopt = backopt,
+                                     bgcol = bgcol, buttoncol = buttoncol)
     } else if (agglist$var1 %in% c("back", "cancel", "repeat")) {
       agglist <- inputGATaggregators(shp = shp, step = step, backopt = backopt)
     } else {

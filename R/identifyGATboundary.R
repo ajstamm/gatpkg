@@ -79,7 +79,8 @@ identifyGATboundary <- function(shp, step = 3, boundary = "NONE", myvar = "NONE"
       boundaryvars <- inputGATvariable(mylist = boundaryitems, instruction = msg,
                       title = "Boundary Variable", checkopt = chk, checkbox = TRUE,
                       help = hlp, step = step, helppage = "identifyGATboundary",
-                      myvar = boundary, check = borders, backopt = backopt)
+                      myvar = boundary, check = borders, backopt = backopt,
+                      bgcol = bgcol, buttoncol=buttoncol)
       error <- FALSE
       if (is.null(boundaryvars)) {
         x <- confirmGATquit()
