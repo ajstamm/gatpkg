@@ -46,7 +46,7 @@ this setting.}
 
 \item{bgcol}{Text string containing UI background color.}
 
-\item{buttoncol}{Text stringontaining UI button color.}
+\item{buttoncol}{Text string containing UI button color.}
 
 \item{quitopt}{Text string for the cancel button.}
 }

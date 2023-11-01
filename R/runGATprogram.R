@@ -32,7 +32,7 @@
 #'                   this setting.
 #' @param quitopt    Text string for the cancel button.
 #' @param bgcol      Text string containing UI background color.
-#' @param buttoncol  Text stringontaining UI button color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @details
 #' For more information  on how the different merge options work, see
