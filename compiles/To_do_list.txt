@@ -25,7 +25,7 @@ Fixes and improvements to address:
 * For all vignettes and help files, check image alt/descriptions
   * tutorial completed through end of user input section (except help, quit, errors)
   * redo all user input screenshots
-* convert spdep and maptools to sf? note: spdep works with sf
+* convert maptools to sf?
 * basic geographic aggregation miscalculates values over min, so nothing aggregates
 
 
@@ -42,11 +42,11 @@ Completed - create examples
 		- export datasets to use as examples
 		- or create datasets as part of examples?
 
-Completed - divorce spdep?
-	* aggregateGATnb (spdep) - find sf equivalent?
-	* defineGATmerge (sp, spdep) - find sf equivalent?
+Removed
+	* aggregateGATnb (spdep)
 
-Completed - these output layers - wait to copy
+Completed - these output layers
+	* defineGATmerge (sp, spdep)
 	* weightGATmap (sp structure)
 	* mergeGATareas (sp, maptools)
 	* rankGATdistance (sp)
@@ -60,7 +60,7 @@ Completed - these output layers - wait to copy
 	  - hftown & hfpop converted
 	  - new aggregated and crosswalk objects created
 
-Completed - none of these output layers - copy to master now?
+Completed - none of these output layers
 	* writeGATlog (rgdal)
 	* weightGATregion (sp structure)
 	* convertlatlong2UTM (sp)

@@ -2,13 +2,14 @@ Package: gatpkg
 Type: Package
 Title: Geographic Aggregation Tool (GAT)
 Version: 2.1.0
-Date: 2023-09-25
+Date: 2023-10-31
 Authors@R: c(
-    person("Abigail", "Stamm", email = "abigail.stamm@health.ny.gov", 
-      role = c("cre", "aut"), comment = "author of R package"),
     person("Gwen", "Babcock", email = "gdb02@health.state.ny.us", 
-      role = c("aut", "trl"), comment = "author of SAS and R scripts, 
-                                         contributed to technical notes"),
+      role = c("cre", "aut", "trl"), comment = "maintainer, 
+                                     author of SAS and R scripts, 
+                                     contributed to technical notes"),
+    person("Abigail", "Stamm", email = "abby.stamm@state.mn.us", 
+      role = c("aut"), comment = "author of R package"),
     person("Thomas", "Talbot", 
       role = c("ctb"), comment = "GAT concept creator, 
                                   contributed to technical notes"),

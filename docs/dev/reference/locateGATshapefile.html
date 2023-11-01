@@ -22,7 +22,7 @@ on this window will trigger a flag to cancel GAT."><meta name="robots" content="
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.1.0</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@ on this window will trigger a flag to cancel GAT."><meta name="robots" content="
       <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">GAT Citation Information</a>
+      <a href="../articles/gat_citation.html">Citation Information</a>
     </li>
     <li>
       <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
@@ -94,7 +94,14 @@ on this window will trigger a flag to cancel GAT.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">locateGATshapefile</span><span class="op">(</span>myfile <span class="op">=</span> <span class="st">""</span>, step <span class="op">=</span> <span class="fl">1</span>, msg <span class="op">=</span> <span class="st">""</span>, myprogram <span class="op">=</span> <span class="st">"GAT"</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">locateGATshapefile</span><span class="op">(</span></span>
+<span>  myfile <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  step <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  msg <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  myprogram <span class="op">=</span> <span class="st">"GAT"</span>,</span>
+<span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
+<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -113,6 +120,14 @@ on this window will trigger a flag to cancel GAT.</p>
 
 <dt>myprogram</dt>
 <dd><p>String denoting the program name. GAT is the default.</p></dd>
+
+
+<dt>bgcol</dt>
+<dd><p>Text string containing UI background color.</p></dd>
+
+
+<dt>buttoncol</dt>
+<dd><p>Text string containing UI button color.</p></dd>
 
 </dl></div>
     <div id="details">
@@ -139,15 +154,7 @@ other windows or click on it to bring it to the front.</p>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $userin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "cancel"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $filein</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $pathin</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (length(userfile) &gt; 0 &amp; !userfile == "cancel") {    if (isWindows) {        userfile &lt;- gsub("\\\\", "/", userfile)    }    periodloc &lt;- max(unlist(gregexpr(".", userfile, fixed = TRUE)))    if (periodloc &gt; 0) {        userfile &lt;- substr(userfile, 1, periodloc[1] - 1)    }    checkfile &lt;- file.access(paste0(userfile, ".shp"), mode = 4)    if (checkfile != 0) {        msg &lt;- paste("Sorry,", myprogram, "could not find your shapefile.",             "Please select a new shapefile.")        tcltk::tkmessageBox(title = "File error", message = msg,             type = "ok", icon = "error")    }    else if (length(userfile) &gt; 0) {        slashloc = max(unlist(gregexpr("/", userfile, fixed = TRUE)))        filein = substr(userfile, slashloc + 1, nchar(userfile))        pathin = substr(userfile, 1, slashloc - 1)        myfiles &lt;- list(userin = userfile, filein = filein, pathin = pathin)    }} else {    myfiles &lt;- list(userin = "cancel", filein = "", pathin = "")    checkfile &lt;- 0}:</span> argument is of length zero</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -159,7 +166,7 @@ other windows or click on it to bring it to the front.</p>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p><p>Developed by Gwen Babcock and Abigail Stamm with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">

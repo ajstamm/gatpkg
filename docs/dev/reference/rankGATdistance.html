@@ -18,7 +18,7 @@ nearest to farthest and returns a vector of integers."><meta name="robots" conte
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.1.0</span>
       </span>
     </div>
 
@@ -36,7 +36,7 @@ nearest to farthest and returns a vector of integers."><meta name="robots" conte
       <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">GAT Citation Information</a>
+      <a href="../articles/gat_citation.html">Citation Information</a>
     </li>
     <li>
       <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
@@ -134,7 +134,7 @@ zero.</p></dd>
 <span class="r-in"><span>                        crs <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_crs.html" class="external-link">st_crs</a></span><span class="op">(</span><span class="va">hftown</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">first</span> <span class="op">&lt;-</span> <span class="va">my_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"37374"</span>, <span class="va">my_data</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span> <span class="co"># only one observation</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># hard coded for simplicity; use spdep::poly2nb() to get these obs</span></span></span>
+<span class="r-in"><span><span class="co"># hard coded for simplicity; use sfdep::st_contiguity to get these obs</span></span></span>
 <span class="r-in"><span><span class="va">nbdata</span> <span class="op">&lt;-</span> <span class="va">my_data</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"43412|02572|40794|79059"</span>, <span class="va">my_data</span><span class="op">$</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span>, <span class="op">]</span></span></span>
 <span class="r-in"><span>          <span class="co"># only adjacent neighbors to first</span></span></span>
 <span class="r-in"><span></span></span>
@@ -167,7 +167,7 @@ zero.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p><p>Developed by Gwen Babcock and Abigail Stamm with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">

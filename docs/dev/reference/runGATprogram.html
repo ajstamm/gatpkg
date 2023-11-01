@@ -22,7 +22,7 @@ vignette("gat_tutorial", package = "gatpkg").'><meta name="robots" content="noin
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.1.0</span>
       </span>
     </div>
 
@@ -40,7 +40,7 @@ vignette("gat_tutorial", package = "gatpkg").'><meta name="robots" content="noin
       <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">GAT Citation Information</a>
+      <a href="../articles/gat_citation.html">Citation Information</a>
     </li>
     <li>
       <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
@@ -100,7 +100,10 @@ which you can access via
 <span>  settings <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  adjacent <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  minfirst <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  closemap <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  closemap <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
+<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
+<span>  quitopt <span class="op">=</span> <span class="st">"Cancel GAT"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -144,6 +147,18 @@ and will result in maps remaining open after GAT is
 finished running. Maps are saved to PDF irrespective of
 this setting.</p></dd>
 
+
+<dt>bgcol</dt>
+<dd><p>Text string containing UI background color.</p></dd>
+
+
+<dt>buttoncol</dt>
+<dd><p>Text string containing UI button color.</p></dd>
+
+
+<dt>quitopt</dt>
+<dd><p>Text string for the cancel button.</p></dd>
+
 </dl></div>
     <div id="details">
     <h2>Details</h2>
@@ -160,6 +175,7 @@ this setting.</p></dd>
 <span class="r-in"><span><span class="co"># this code will run the default version of GAT</span></span></span>
 <span class="r-in"><span><span class="fu">runGATprogram</span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in if (length(userfile) &gt; 0 &amp; !userfile == "cancel") {    if (isWindows) {        userfile &lt;- gsub("\\\\", "/", userfile)    }    periodloc &lt;- max(unlist(gregexpr(".", userfile, fixed = TRUE)))    if (periodloc &gt; 0) {        userfile &lt;- substr(userfile, 1, periodloc[1] - 1)    }    checkfile &lt;- file.access(paste0(userfile, ".shp"), mode = 4)    if (checkfile != 0) {        msg &lt;- paste("Sorry,", myprogram, "could not find your shapefile.",             "Please select a new shapefile.")        tcltk::tkmessageBox(title = "File error", message = msg,             type = "ok", icon = "error")    }    else if (length(userfile) &gt; 0) {        slashloc = max(unlist(gregexpr("/", userfile, fixed = TRUE)))        filein = substr(userfile, slashloc + 1, nchar(userfile))        pathin = substr(userfile, 1, slashloc - 1)        myfiles &lt;- list(userin = userfile, filein = filein, pathin = pathin)    }} else {    myfiles &lt;- list(userin = "cancel", filein = "", pathin = "")    checkfile &lt;- 0}:</span> argument is of length zero</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -171,7 +187,7 @@ this setting.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p><p>Developed by Gwen Babcock and Abigail Stamm with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">

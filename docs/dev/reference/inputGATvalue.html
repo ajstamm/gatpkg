@@ -20,7 +20,7 @@ Figure: Dialog to enter an alphanumeric value"><meta name="robots" content="noin
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.1.0</span>
       </span>
     </div>
 
@@ -38,7 +38,7 @@ Figure: Dialog to enter an alphanumeric value"><meta name="robots" content="noin
       <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">GAT Citation Information</a>
+      <a href="../articles/gat_citation.html">Citation Information</a>
     </li>
     <li>
       <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
@@ -98,7 +98,11 @@ and provides a link to the relevant help file in the GAT program.</p>
 <span>  message <span class="op">=</span> <span class="st">"Please enter something in the box."</span>,</span>
 <span>  defaulttext <span class="op">=</span> <span class="st">"default text"</span>,</span>
 <span>  helptitle <span class="op">=</span> <span class="st">"this step"</span>,</span>
-<span>  backopt <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  backopt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
+<span>  quitopt <span class="op">=</span> <span class="st">"Quit"</span>,</span>
+<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
+<span>  helpopt <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -136,6 +140,22 @@ relevant function (if any) in the help dialog.</p></dd>
 <dt>backopt</dt>
 <dd><p>Boolean denoting whether to include the back button.</p></dd>
 
+
+<dt>bgcol</dt>
+<dd><p>Text string containing UI background color.</p></dd>
+
+
+<dt>quitopt</dt>
+<dd><p>Text string for the cancel button.</p></dd>
+
+
+<dt>buttoncol</dt>
+<dd><p>Text string containing UI button color.</p></dd>
+
+
+<dt>helpopt</dt>
+<dd><p>Boolean denoting whether to include the help button.</p></dd>
+
 </dl></div>
 
     <div id="ref-examples">
@@ -158,7 +178,7 @@ relevant function (if any) in the help dialog.</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p><p>Developed by Gwen Babcock and Abigail Stamm with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">

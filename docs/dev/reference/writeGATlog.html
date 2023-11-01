@@ -20,7 +20,7 @@ any warnings that were generated."><meta name="robots" content="noindex"><!-- ma
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.1.0</span>
       </span>
     </div>
 
@@ -38,7 +38,7 @@ any warnings that were generated."><meta name="robots" content="noindex"><!-- ma
       <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">GAT Citation Information</a>
+      <a href="../articles/gat_citation.html">Citation Information</a>
     </li>
     <li>
       <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
@@ -180,7 +180,8 @@ settings saved to the *.Rdata file as GAT has evolved.</p></li>
 <span class="r-in"><span>  exclmaxval <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span>  ismax1 <span class="op">=</span> <span class="cn">TRUE</span>,       <span class="co"># user selected "NONE" as maximum value</span></span></span>
 <span class="r-in"><span>  ismin2 <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
-<span class="r-in"><span>  ismax2 <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  ismax2 <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  invalid <span class="op">=</span> <span class="fl">2</span>,</span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">mergevars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span></span>
@@ -248,6 +249,7 @@ settings saved to the *.Rdata file as GAT has evolved.</p></li>
 <span class="r-in"><span>  exclist <span class="op">=</span> <span class="va">exclist</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in list(myidvar = "ID", aggregator1 = "TOTAL_POP", aggregator2 = "TOTAL_POP",     minvalue1 = 5000, minvalue2 = 5000, maxvalue1 = 16423, maxvalue2 = 15000,     boundary = "COUNTY", mergeopt1 = "closest", rigidbound = FALSE,     savekml = FALSE, popwt = FALSE, exclmaxval = 2, ismax1 = TRUE,     ismin2 = FALSE, ismax2 = FALSE, invalid = 2, ):</span> argument 18 is empty</span>
 </code></pre></div>
     </div>
   </div>
@@ -258,7 +260,7 @@ settings saved to the *.Rdata file as GAT has evolved.</p></li>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+  <p></p><p>Developed by Gwen Babcock and Abigail Stamm with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">

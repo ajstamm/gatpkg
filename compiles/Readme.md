@@ -1,7 +1,7 @@
 # Geographic Aggregation Tool (GAT) Change Log
 
 
-## [GAT v2.1.0](gatpkg_2.0.1.tar.gz) (September 22, 2023)
+## [GAT v2.1.0](gatpkg_2.0.1.tar.gz) (October 31, 2023)
 
 * Removed dependency on spdep.
 * Added check for empty geographies.
@@ -9,7 +9,7 @@
 
 ## [GAT v2.0.0](gatpkg_2.0.0.tar.gz) (March 15, 2023)
 
-> Use this version of GAT for R version 4.0 and above.
+> Use at least this version of GAT for R version 4.0 and above.
 > You must use this version of GAT or higher for R version 4.2 and above.
 
 * Added advanced options to the settings file and log.

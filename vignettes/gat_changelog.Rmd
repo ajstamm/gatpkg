@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-## GAT v2.1.0 (September 25, 2023)
+## GAT v2.1.0 (October 31, 2023)
 
 * Rewrote `defineGATmerge()` to remove spdep entirely and rewrote merge fail messages for the log.
 * Rewrote spdep sections to use sfdep or alternate code and removed dependency on spdep.
