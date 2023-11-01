@@ -164,6 +164,10 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   } else {
     mysets <- paste(mysets, "None selected \n")
   }
+  if(gatvars$invalid > 0) {
+    mysets <- paste(mysets, "Empty areas removed (invalid):",
+                    gatvars$invalid, "\n")
+  }
 
   ### aggregation variables ####
   min1 <- format(as.numeric(gsub(",", "", gatvars$minvalue1)),

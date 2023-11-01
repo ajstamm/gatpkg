@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.1.0</span>
       </span>
     </div>
 
@@ -54,7 +54,7 @@
       <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">GAT Citation Information</a>
+      <a href="../articles/gat_citation.html">Citation Information</a>
     </li>
     <li>
       <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
@@ -104,7 +104,7 @@
                         <h4 data-toc-skip class="author">Abigail Stamm,
 Thomas Talbot, and Gwen Babcock</h4>
             
-            <h4 data-toc-skip class="date">2023-03-15</h4>
+            <h4 data-toc-skip class="date">2023-10-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_tech_notes.Rmd" class="external-link"><code>vignettes/gat_tech_notes.Rmd</code></a></small>
       <div class="hidden name"><code>gat_tech_notes.Rmd</code></div>
@@ -330,7 +330,7 @@ is calculated by averaging the latitudes and longitudes of the two
 areas. This speeds up GAT considerably, but can result in centroids that
 do not exactly match the area’s center.</p>
 <div class="figure">
-<img src="images/merge_geo_animated.gif" alt="Animation showing five areas merging by closest geographic centroid" width="50%"><p class="caption">
+<img src="../articles/images/merge_geo_animated.gif" alt="Animation showing five areas merging by closest geographic centroid" width="50%"><p class="caption">
 Merging by closest geographic centroid
 </p>
 </div>
@@ -361,7 +361,7 @@ the centroid of the new area using the underlying populations of both
 areas in the population file. To access this method, use
 <code>runGATprogram(pwrepeat = TRUE)</code>.</p>
 <div class="figure">
-<img src="images/merge_pop_animated.gif" alt="Animation showing five areas merging by closest population-weighted centroid" width="50%"><p class="caption">
+<img src="../articles/images/merge_pop_animated.gif" alt="Animation showing five areas merging by closest population-weighted centroid" width="50%"><p class="caption">
 Merging by closest population-weighted centroid
 </p>
 </div>
@@ -383,7 +383,7 @@ value is selected. If there are two minimum values specified, the area
 with the lowest proportion of aggregation variable to minimum value
 specified is selected.</p>
 <div class="figure">
-<img src="images/merge_least_animated.gif" alt="Animation showing five areas merging to their neighbor with the least value" width="50%"><p class="caption">
+<img src="../articles/images/merge_least_animated.gif" alt="Animation showing five areas merging to their neighbor with the least value" width="50%"><p class="caption">
 Merging to neighbor with least value
 </p>
 </div>
@@ -406,7 +406,7 @@ the area to be merged has a percent under poverty of 10%, and it has
 neighbors have 9%, 13%, and 15% under poverty, then then it would be
 merged with the area with 9% under poverty.</p>
 <div class="figure">
-<img src="images/merge_similar_animated.gif" alt="Animation showing five areas merging to their neighbor with the most similar ratio" width="50%"><p class="caption">
+<img src="../articles/images/merge_similar_animated.gif" alt="Animation showing five areas merging to their neighbor with the most similar ratio" width="50%"><p class="caption">
 Merging to neighbor with most similar ratio
 </p>
 </div>
@@ -435,7 +435,7 @@ may appear crude. If high resolution maps are needed for display, the
 thinned map used for processing data can be linked back to the high
 resolution boundaries using unique area identifiers.</p>
 <div class="figure">
-<img src="images/node_spacing.png" alt="Example of three decreasing levels of detail as nodes are thinned" width="80%"><p class="caption">
+<img src="../articles/images/node_spacing.png" alt="Example of three decreasing levels of detail as nodes are thinned" width="80%"><p class="caption">
 Comparing detail as nodes are thinned
 </p>
 </div>
@@ -457,7 +457,7 @@ the shape is drawn and its area is calculated. Next, the area of the
 shape is divided by the area of the circle. A highly compact shape will
 have a compactness ratio close to 1.</p>
 <div class="figure">
-<img src="images/compactness_example.png" alt="Examples of two areas with high and low compactness, with overlaid circles" width="80%"><p class="caption">
+<img src="../articles/images/compactness_example.png" alt="Examples of two areas with high and low compactness, with overlaid circles" width="80%"><p class="caption">
 Compactness examples
 </p>
 </div>
@@ -476,7 +476,7 @@ Compactness examples
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+<p>Developed by Gwen Babcock and Abigail Stamm with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">

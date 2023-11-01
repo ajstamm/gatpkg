@@ -34,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">NYS EPHT GAT</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.0.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="In-development version">2.1.0</span>
       </span>
     </div>
 
@@ -54,7 +54,7 @@
       <a href="../articles/gat_changelog.html">GAT Change Log</a>
     </li>
     <li>
-      <a href="../articles/gat_citation.html">GAT Citation Information</a>
+      <a href="../articles/gat_citation.html">Citation Information</a>
     </li>
     <li>
       <a href="../articles/gat_prepare_shapefile.html">GAT Shapefile Preparation</a>
@@ -104,7 +104,7 @@
                         <h4 data-toc-skip class="author">Abigail
 Stamm</h4>
             
-            <h4 data-toc-skip class="date">2023-03-15</h4>
+            <h4 data-toc-skip class="date">2023-10-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ajstamm/gatpkg/blob/master/vignettes/gat_tutorial.Rmd" class="external-link"><code>vignettes/gat_tutorial.Rmd</code></a></small>
       <div class="hidden name"><code>gat_tutorial.Rmd</code></div>
@@ -186,7 +186,7 @@ cancelled, GAT will quit.</p>
 <p>GAT starts with this progress bar, which will update as GAT
 proceeds:</p>
 <div class="figure">
-<img src="images/pb_start.png" alt="Initial Progress Bar" width="222"><p class="caption">
+<img src="../articles/images/pb_start.png" alt="Initial Progress Bar" width="222"><p class="caption">
 Initial Progress Bar
 </p>
 </div>
@@ -203,7 +203,7 @@ GAT will crash with this error:</p>
 <p>This step requests the shapefile from the user using a pop-up dialog.
 This progress bar will be displayed:</p>
 <div class="figure">
-<img src="images/pb_loadshp.png" alt="Progress Bar: Identify Shapefile" width="222"><p class="caption">
+<img src="../articles/images/pb_loadshp.png" alt="Progress Bar: Identify Shapefile" width="222"><p class="caption">
 Progress Bar: Identify Shapefile
 </p>
 </div>
@@ -216,7 +216,7 @@ in your installation of “gatpkg”, which you can reach via your filepath
 in <a href="#running-gat">Running GAT</a>. Select the “hftown”
 shapefile.</p>
 <div class="figure">
-<img src="images/pick_shp.png" alt="Dialog: Identify Shapefile" width="211"><p class="caption">
+<img src="../articles/images/pick_shp.png" alt="Dialog: Identify Shapefile" width="211"><p class="caption">
 Dialog: Identify Shapefile
 </p>
 </div>
@@ -249,7 +249,7 @@ pop-up dialog. This ID will be overwritten as areas are aggregated and a
 crosswalk from these identifiers to the ones produced by GAT will be
 generated at the end.</p>
 <div class="figure">
-<img src="images/pb_id.png" alt="Progress Bar: Identify Identifier" width="222"><p class="caption">
+<img src="../articles/images/pb_id.png" alt="Progress Bar: Identify Identifier" width="222"><p class="caption">
 Progress Bar: Identify Identifier
 </p>
 </div>
@@ -259,7 +259,7 @@ Progress Bar: Identify Identifier
 <p>In this dialog, select the variable you would like to use from the
 drop-down list. To follow the steps as shown, select “ID”.</p>
 <div class="figure">
-<img src="images/pick_id.png" alt="Dialog: Identify Identifier" width="194"><p class="caption">
+<img src="../articles/images/pick_id.png" alt="Dialog: Identify Identifier" width="194"><p class="caption">
 Dialog: Identify Identifier
 </p>
 </div>
@@ -285,7 +285,7 @@ before running GAT.</p>
 <p>This step requests the boundary variable from the user using a pop-up
 dialog. GAT will aggregate within this boundary first, if possible.</p>
 <div class="figure">
-<img src="images/pb_border.png" alt="Progress Bar: Identify Boundary" width="222"><p class="caption">
+<img src="../articles/images/pb_border.png" alt="Progress Bar: Identify Boundary" width="222"><p class="caption">
 Progress Bar: Identify Boundary
 </p>
 </div>
@@ -298,7 +298,7 @@ boundaries, click the checkbox as shown in the image. If you do not want
 to use a boundary, select “NONE” from the drop-down menu. If you select
 “NONE”, the program will ignore whether you checked the box.</p>
 <div class="figure">
-<img src="images/pick_border.png" alt="Dialog: Identify Boundary" width="194"><p class="caption">
+<img src="../articles/images/pick_border.png" alt="Dialog: Identify Boundary" width="194"><p class="caption">
 Dialog: Identify Boundary
 </p>
 </div>
@@ -323,7 +323,7 @@ it may either be numeric or contain no non-unique values.</p>
 <p>This step requests the aggregation variables and their desired
 minimum and maximum values from the user using a pop-up dialog.</p>
 <div class="figure">
-<img src="images/pb_aggs.png" alt="Progress Bar: Identify Aggregators" width="222"><p class="caption">
+<img src="../articles/images/pb_aggs.png" alt="Progress Bar: Identify Aggregators" width="222"><p class="caption">
 Progress Bar: Identify Aggregators
 </p>
 </div>
@@ -337,7 +337,7 @@ values to increase the likelihood of stable rates and a maximum value to
 either exclude very populous areas or to ensure most areas have roughly
 the same population size.</p>
 <div class="figure">
-<img src="images/pick_aggregators.png" alt="Dialog: Identify Aggregators" width="212"><p class="caption">
+<img src="../articles/images/pick_aggregators.png" alt="Dialog: Identify Aggregators" width="212"><p class="caption">
 Dialog: Identify Aggregators
 </p>
 </div>
@@ -370,7 +370,7 @@ and the sum of values for the selected variable for “maximum value”.</p>
 <p>This step requests up to three exclusion criteria from the user using
 a pop-up dialog.</p>
 <div class="figure">
-<img src="images/pb_exclude.png" alt="Progress Bar: Identify Exclusion Criteria" width="222"><p class="caption">
+<img src="../articles/images/pb_exclude.png" alt="Progress Bar: Identify Exclusion Criteria" width="222"><p class="caption">
 Progress Bar: Identify Exclusions
 </p>
 </div>
@@ -385,7 +385,7 @@ shapefile. If you do not want to use an exclusion criterion, select
 “NONE” from the drop-down menu. If you select “NONE”, the program will
 ignore the corresponding condition and value.</p>
 <div class="figure">
-<img src="images/pick_exclude.png" alt="Dialog: Identify Exclusion Criteria" width="221"><p class="caption">
+<img src="../articles/images/pick_exclude.png" alt="Dialog: Identify Exclusion Criteria" width="221"><p class="caption">
 Dialog: Identify Exclusions
 </p>
 </div>
@@ -400,7 +400,7 @@ move to the previous step (selecting the aggregation variables),
 further guidance.</p>
 <p>You will get the following confirmation dialog.</p>
 <div class="figure">
-<img src="images/confirm_exclude.png" alt="Dialog: Confirm Exclusion Criteria" width="124"><p class="caption">
+<img src="../articles/images/confirm_exclude.png" alt="Dialog: Confirm Exclusion Criteria" width="124"><p class="caption">
 Dialog: Confirm Exclusion Criteria
 </p>
 </div>
@@ -432,7 +432,7 @@ comma, decimal, or dash</li>
 <p>This step requests the merge method from the user using a pop-up
 dialog.</p>
 <div class="figure">
-<img src="images/pb_pickmerge.png" alt="Progress Bar: Identify Merge Type" width="222"><p class="caption">
+<img src="../articles/images/pb_pickmerge.png" alt="Progress Bar: Identify Merge Type" width="222"><p class="caption">
 Progress Bar: Identify Merge Type
 </p>
 </div>
@@ -444,7 +444,7 @@ areas. If you select any option other than “closest area by
 population-weighted centroid”, geographic centroid will be used.
 Drop-downs are ignored for options that are not selected.</p>
 <div class="figure">
-<img src="images/pick_merge.png" alt="Dialog: Identify Merge Type" width="192"><p class="caption">
+<img src="../articles/images/pick_merge.png" alt="Dialog: Identify Merge Type" width="192"><p class="caption">
 Dialog: Identify Merge Type
 </p>
 </div>
@@ -482,7 +482,7 @@ pop-up dialog. If you select an option other than “closest
 population-weighted centroid” in the previous dialog, this step is
 skipped.</p>
 <div class="figure">
-<img src="images/pb_loadpop.png" alt="Progress Bar: Identify Population Shapefile" width="222"><p class="caption">
+<img src="../articles/images/pb_loadpop.png" alt="Progress Bar: Identify Population Shapefile" width="222"><p class="caption">
 Progress Bar: Identify Population Shapefile
 </p>
 </div>
@@ -492,7 +492,7 @@ Progress Bar: Identify Population Shapefile
 <p>In this dialog, you can navigate to any shapefile on your computer or
 network.</p>
 <div class="figure">
-<img src="images/pick_pop.png" alt="Dialog: Identify Population Shapefile" width="211"><p class="caption">
+<img src="../articles/images/pick_pop.png" alt="Dialog: Identify Population Shapefile" width="211"><p class="caption">
 Dialog: Identify Population Shapefile
 </p>
 </div>
@@ -505,7 +505,7 @@ the merge selection dialog.</p>
 requesting that you select one. If there is only one suitable variable,
 you will get this message:</p>
 <div class="figure">
-<img src="images/confirm_pop.png" alt="Dialog: Confirm Population Shapefile" width="197"><p class="caption">
+<img src="../articles/images/confirm_pop.png" alt="Dialog: Confirm Population Shapefile" width="197"><p class="caption">
 Dialog: Confirm Population Shapefile
 </p>
 </div>
@@ -537,7 +537,7 @@ GAT.</p>
 <p>This step requests the rate calculation information from the user
 using a pop-up dialog.</p>
 <div class="figure">
-<img src="images/pb_rate.png" alt="Progress Bar: Identify Rate Settings" width="222"><p class="caption">
+<img src="../articles/images/pb_rate.png" alt="Progress Bar: Identify Rate Settings" width="222"><p class="caption">
 Progress Bar: Identify Rate Settings
 </p>
 </div>
@@ -549,7 +549,7 @@ scheme from the drop-downs. Enter a rate name and multiplier value. If
 you check “Do NOT calculate a rate” at the top, all other options are
 ignored.</p>
 <div class="figure">
-<img src="images/pick_rate.png" alt="Dialog: Identify Rate Settings" width="187"><p class="caption">
+<img src="../articles/images/pick_rate.png" alt="Dialog: Identify Rate Settings" width="187"><p class="caption">
 Dialog: Identify Rate Settings
 </p>
 </div>
@@ -594,7 +594,7 @@ multiplier. To calculate a ratio, set the multiplier to 1.</p>
 <p>This step asks whether the user wants to save a KML file using a
 pop-up dialog.</p>
 <div class="figure">
-<img src="images/pb_pickkml.png" alt="Progress Bar: Save KML" width="222"><p class="caption">
+<img src="../articles/images/pb_pickkml.png" alt="Progress Bar: Save KML" width="222"><p class="caption">
 Progress Bar: Save KML
 </p>
 </div>
@@ -603,7 +603,7 @@ Progress Bar: Save KML
 </h4>
 <p>In this dialog, select “Yes” or “No”.</p>
 <div class="figure">
-<img src="images/pick_kml.png" alt="Dialog: Save KML" width="170"><p class="caption">
+<img src="../articles/images/pick_kml.png" alt="Dialog: Save KML" width="170"><p class="caption">
 Dialog: Save KML
 </p>
 </div>
@@ -627,7 +627,7 @@ shapefile is saved by default.</p>
 <p>This step asks the user where to save the shapefile using a pop-up
 dialog.</p>
 <div class="figure">
-<img src="images/pb_picksave.png" alt="Progress Bar: Save File" width="222"><p class="caption">
+<img src="../articles/images/pb_picksave.png" alt="Progress Bar: Save File" width="222"><p class="caption">
 Progress Bar: Save File
 </p>
 </div>
@@ -637,7 +637,7 @@ Progress Bar: Save File
 <p>In this dialog, you can navigate to any folder on your computer or
 network.</p>
 <div class="figure">
-<img src="images/pick_save.png" alt="Dialog: Save File" width="306"><p class="caption">
+<img src="../articles/images/pick_save.png" alt="Dialog: Save File" width="306"><p class="caption">
 Dialog: Save File
 </p>
 </div>
@@ -660,7 +660,7 @@ requested).</p>
 <h3 id="step-11--request-settings-confirmation">Step 11. Request settings confirmation<a class="anchor" aria-label="anchor" href="#step-11--request-settings-confirmation"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_confirm.png" alt="Progress Bar: Confirm GAT Settings" width="222"><p class="caption">
+<img src="../articles/images/pb_confirm.png" alt="Progress Bar: Confirm GAT Settings" width="222"><p class="caption">
 Progress Bar: Confirm GAT Settings
 </p>
 </div>
@@ -674,7 +674,7 @@ steps, select the first step you want to modify from top to bottom.
 After each modification, you will return to this dialog to select the
 next step.</p>
 <div class="figure">
-<img src="images/pick_confirm.png" alt="Dialog: Confirm GAT Settings" width="258"><p class="caption">
+<img src="../articles/images/pick_confirm.png" alt="Dialog: Confirm GAT Settings" width="258"><p class="caption">
 Dialog: Confirm GAT Settings
 </p>
 </div>
@@ -701,7 +701,7 @@ shapefile processing begins.</p>
 <h3 id="step-12--read-shapefile">Step 12. Read shapefile<a class="anchor" aria-label="anchor" href="#step-12--read-shapefile"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_readshp.png" alt="Progress Bar: Read the Shapefile" width="221"><p class="caption">
+<img src="../articles/images/pb_readshp.png" alt="Progress Bar: Read the Shapefile" width="221"><p class="caption">
 Progress Bar: Read the Shapefile
 </p>
 </div>
@@ -722,7 +722,7 @@ retained in memory at that point.</p>
 <h3 id="step-13--run-aggregation-loop">Step 13. Run aggregation loop<a class="anchor" aria-label="anchor" href="#step-13--run-aggregation-loop"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_doagg.png" alt="Progress Bar: Run the Aggregation" width="60%"><p class="caption">
+<img src="../articles/images/pb_doagg.png" alt="Progress Bar: Run the Aggregation" width="60%"><p class="caption">
 Progress Bar: Run the Aggregation
 </p>
 </div>
@@ -747,7 +747,7 @@ settings.</p>
 <h3 id="step-14--aggregate-areas">Step 14. Aggregate areas<a class="anchor" aria-label="anchor" href="#step-14--aggregate-areas"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_endagg.png" alt="Progress Bar: Clean Up the Shapefile" width="60%"><p class="caption">
+<img src="../articles/images/pb_endagg.png" alt="Progress Bar: Clean Up the Shapefile" width="60%"><p class="caption">
 Progress Bar: Clean Up the Shapefile
 </p>
 </div>
@@ -766,7 +766,7 @@ not have been properly retained during the aggregation.</p>
 <h3 id="step-15--calculate-compactness-ratio">Step 15. Calculate compactness ratio<a class="anchor" aria-label="anchor" href="#step-15--calculate-compactness-ratio"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_cratio.png" alt="Progress Bar: Calculate GAT Compactness Ratio" width="60%"><p class="caption">
+<img src="../articles/images/pb_cratio.png" alt="Progress Bar: Calculate GAT Compactness Ratio" width="60%"><p class="caption">
 Progress Bar: Calculate GAT Compactness Ratio
 </p>
 </div>
@@ -809,7 +809,7 @@ and selecting, “Open image in new tab.”</p>
 <h3 id="step-16--map-first-aggregation-variable">Step 16. Map first aggregation variable<a class="anchor" aria-label="anchor" href="#step-16--map-first-aggregation-variable"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_mapagg.png" alt="Progress Bar: Map First Aggregation Variable" width="60%"><p class="caption">
+<img src="../articles/images/pb_mapagg.png" alt="Progress Bar: Map First Aggregation Variable" width="60%"><p class="caption">
 Progress Bar: Map First Aggregation Variable
 </p>
 </div>
@@ -824,7 +824,7 @@ same color scale and range, which should make comparisons easy.</p>
 <em>after</em> aggregating.</li>
 </ul>
 <div class="figure">
-<img src="images/map_before.png" alt="Maps: First Aggregation Variable Before and After Aggregating" width="45%"><img src="images/map_after.png" alt="Maps: First Aggregation Variable Before and After Aggregating" width="45%"><p class="caption">
+<img src="../articles/images/map_before.png" alt="Maps: First Aggregation Variable Before and After Aggregating" width="45%"><img src="../articles/images/map_after.png" alt="Maps: First Aggregation Variable Before and After Aggregating" width="45%"><p class="caption">
 Maps: First Aggregation Variable Before and After Aggregating
 </p>
 </div>
@@ -851,7 +851,7 @@ distribution after aggregating.</p>
 <h3 id="step-18--map-comparison-of-old-and-new-areas">Step 18. Map comparison of old and new areas<a class="anchor" aria-label="anchor" href="#step-18--map-comparison-of-old-and-new-areas"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_mapdiff.png" alt="Progress Bar: Compare Original and Aggregated Areas" width="60%"><p class="caption">
+<img src="../articles/images/pb_mapdiff.png" alt="Progress Bar: Compare Original and Aggregated Areas" width="60%"><p class="caption">
 Progress Bar: Compare Original and Aggregated Areas
 </p>
 </div>
@@ -859,7 +859,7 @@ Progress Bar: Compare Original and Aggregated Areas
 original map so you can see how smaller areas combined into larger
 ones.</p>
 <div class="figure">
-<img src="images/map_compare.png" alt="Map: Compare Original and Aggregated Areas" width="90%"><p class="caption">
+<img src="../articles/images/map_compare.png" alt="Map: Compare Original and Aggregated Areas" width="90%"><p class="caption">
 Map: Compare Original and Aggregated Areas
 </p>
 </div>
@@ -874,14 +874,14 @@ map.</p>
 <h3 id="step-19--map-compactness-ratio">Step 19. Map compactness ratio<a class="anchor" aria-label="anchor" href="#step-19--map-compactness-ratio"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_mapcr.png" alt="Progress Bar: Map GAT Compactness Ratio" width="60%"><p class="caption">
+<img src="../articles/images/pb_mapcr.png" alt="Progress Bar: Map GAT Compactness Ratio" width="60%"><p class="caption">
 Progress Bar: Map GAT Compactness Ratio
 </p>
 </div>
 <p>This map displays a choropleth scale of the compactness ratios for
 the aggregated areas.</p>
 <div class="figure">
-<img src="images/map_cratio.png" alt="Map: Compactness Ratio" width="90%"><p class="caption">
+<img src="../articles/images/map_cratio.png" alt="Map: Compactness Ratio" width="90%"><p class="caption">
 Map: Compactness Ratio
 </p>
 </div>
@@ -897,7 +897,7 @@ Ratio</a> in the Technical Notes.</p>
 <h3 id="step-20--map-rate">Step 20. Map rate<a class="anchor" aria-label="anchor" href="#step-20--map-rate"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_maprate.png" alt="Progress Bar: Map Your Desired Rate" width="60%"><p class="caption">
+<img src="../articles/images/pb_maprate.png" alt="Progress Bar: Map Your Desired Rate" width="60%"><p class="caption">
 Progress Bar: Map Your Desired Rate
 </p>
 </div>
@@ -905,7 +905,7 @@ Progress Bar: Map Your Desired Rate
 decided to calculate. It also includes the rate function and summary
 statistics.</p>
 <div class="figure">
-<img src="images/map_rate.png" alt="Map: Choropleth of Rate for Aggregated Areas" width="90%"><p class="caption">
+<img src="../articles/images/map_rate.png" alt="Map: Choropleth of Rate for Aggregated Areas" width="90%"><p class="caption">
 Map: Choropleth of Rate for Aggregated Areas
 </p>
 </div>
@@ -924,7 +924,7 @@ Map: Choropleth of Rate for Aggregated Areas
 <h3 id="step-21--save-maps-and-settings">Step 21. Save maps and settings<a class="anchor" aria-label="anchor" href="#step-21--save-maps-and-settings"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_savemaps.png" alt="Progress Bar: Save a PDF of the maps" width="60%"><p class="caption">
+<img src="../articles/images/pb_savemaps.png" alt="Progress Bar: Save a PDF of the maps" width="60%"><p class="caption">
 Progress Bar: Save a PDF of the maps
 </p>
 </div>
@@ -948,7 +948,7 @@ you want to use the Rdata file to re-run GAT, use this code and change
 <h3 id="step-22--save-original-shapefile">Step 22. Save original shapefile<a class="anchor" aria-label="anchor" href="#step-22--save-original-shapefile"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_saveold.png" alt="Progress Bar: Save the Original Shapefile" width="60%"><p class="caption">
+<img src="../articles/images/pb_saveold.png" alt="Progress Bar: Save the Original Shapefile" width="60%"><p class="caption">
 Progress Bar: Save the Original Shapefile
 </p>
 </div>
@@ -983,7 +983,7 @@ the end and saved in the same folder as the aggregated shapefile.</li>
 <h3 id="step-23--save-aggregated-shapefile">Step 23. Save aggregated shapefile<a class="anchor" aria-label="anchor" href="#step-23--save-aggregated-shapefile"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_savenew.png" alt="Progress Bar: Save the Aggregated Shapefile" width="60%"><p class="caption">
+<img src="../articles/images/pb_savenew.png" alt="Progress Bar: Save the Aggregated Shapefile" width="60%"><p class="caption">
 Progress Bar: Save the Aggregated Shapefile
 </p>
 </div>
@@ -1040,7 +1040,7 @@ aggregation</li>
 <h3 id="step-24--save-kml-file">Step 24. Save KML file<a class="anchor" aria-label="anchor" href="#step-24--save-kml-file"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_savekml.png" alt="Progress Bar: Save the KML File" width="60%"><p class="caption">
+<img src="../articles/images/pb_savekml.png" alt="Progress Bar: Save the KML File" width="60%"><p class="caption">
 Progress Bar: Save the KML File
 </p>
 </div>
@@ -1057,7 +1057,7 @@ be opened in Google Earth.</p>
 <h3 id="step-25--save-log">Step 25. Save log<a class="anchor" aria-label="anchor" href="#step-25--save-log"></a>
 </h3>
 <div class="figure">
-<img src="images/pb_log.png" alt="Progress Bar: Save the Log of Your Run" width="60%"><p class="caption">
+<img src="../articles/images/pb_log.png" alt="Progress Bar: Save the Log of Your Run" width="60%"><p class="caption">
 Progress Bar: Save the Log of Your Run
 </p>
 </div>
@@ -1133,7 +1133,7 @@ Notepad++.</li>
 
       <footer><div class="copyright">
   <p></p>
-<p>Developed by Abigail Stamm, Gwen Babcock, Centers for Disease Control and Prevention.</p>
+<p>Developed by Gwen Babcock and Abigail Stamm with funding from Centers for Disease Control and Prevention.</p>
 </div>
 
 <div class="pkgdown">

@@ -242,7 +242,7 @@ runGATprogram <- function(limitdenom = FALSE, pwrepeat = FALSE, settings = NULL,
           temp$shp$GATflag <- 0
           temp$nrow <- nrow(temp$shp)
           temp$shp <- temp$shp[!sf::st_is_empty(temp$shp),]
-          gatvars$invalid <- nrow(temp$shp) - temp$nrow
+          gatvars$invalid <- temp$nrow - nrow(temp$shp)
 
           if (gatvars$invalid > 0) {
             temp$msg <- paste("Please note", gatvars$invalid,
