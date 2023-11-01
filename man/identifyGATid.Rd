@@ -12,7 +12,10 @@ identifyGATid(
   quitopt = "Quit",
   buttoncol = "cornflowerblue",
   helptitle = "the identification variable",
-  helppage = "identifyGATid"
+  helppage = "identifyGATid",
+  tool = "GAT",
+  manual = "/docs/dev/articles/gat_tutorial.html",
+  helpimg = ""
 )
 }
 \arguments{
@@ -32,6 +35,17 @@ identifyGATid(
 
 \item{helppage}{Text string for function name for the relevant function
 (if any) in the help dialog.}
+
+\item{tool}{A text string that contains the name of the tool}
+
+\item{manual}{Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.}
+
+\item{helpimg}{A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory}
 }
 \description{
 This function opens a dialog window for the user to select which

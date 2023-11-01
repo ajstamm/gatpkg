@@ -8,8 +8,10 @@
 #'                  relevant function (if any) in the help dialog.
 #' @param helptitle The step name to display in the title bar.
 #' @param step      Integer step in the GAT program, for help reference.
-#' @param helpimg   A text string denoting the file name of the GAT image to be
-#'                  shown, or path and filename of other image to be shown
+#' @param helpimg   A text string denoting the file name of the GAT PNG image to
+#'                  be shown, or path and filename of other image to be shown,
+#'                  (PNF, PFM, PPM, GIF) relative to the current working
+#'                  directory
 #' @param tool      A text string denoting the name of the tool
 #' @param bgcol      Text string containing UI background color.
 #' @param buttoncol  Text string containing UI button color.
@@ -27,10 +29,12 @@
 
 showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
                         step = 0, helptitle = "this step",
-                        helpimg = "showGAThelp",
-                        tool="GAT",bgcol = "lightskyblue3",
+                        helpimg = "",
+                        tool="GAT",
+                        bgcol = "lightskyblue3",
                         buttoncol = "cornflowerblue",
                         manual = "/docs/dev/articles/gat_tutorial.html") {
+
   # define objects ####
   help <- paste(help, "\n\n For further guidance, check the ", tool, " manual")
   if (!is.null(helppage)) {
@@ -52,18 +56,19 @@ showGAThelp <- function(help = "Find help here.", helppage = "showGAThelp",
   tcltk::tkgrid(hlp$note, sticky = "w", columnspan = 3, padx = 5)
 
   # add image and text ####
-  if (helpimg == "showGAThelp" & helppage != helpimg & tool == "GAT"){helpimg <- helppage}
+  #if (helpimg == "showGAThelp" & helppage != helpimg & tool == "GAT"){helpimg <- helppage}
+  if(tool == "GAT" & helpimg == ""){helpimg <- "showGAThelp"}
   if (!is.null(helpimg)) {
     if (tool == "GAT"){imgpath <- paste0(gatpath, "/man/figures/", helpimg, ".png")}
-    else if (tool != "GAT" & helpimg != helppage){imgpath<-helpimg}
-    else{imgpath<-NULL}
-    if(!is.null(imgpath)){imgold <- tcltk::tkimage.create("photo", "imgold", file = imgpath)
+    else if (tool != "GAT" & helpimg != "" & !is.null(helpimg)){imgpath<-paste0(path,helpimg)}
+    else{imgpath<-""}
+    imgold <- tcltk::tkimage.create("photo", "imgold", file = imgpath)
     # note: zoom increases size by integer only; subsample reduces size
     # imgnew <- tcltk::tkimage.create("photo", "imgnew")
     # tcltk::tcl(imgnew, "copy", imgold, subsample = 2)
     # source: https://stackoverflow.com/questions/7191662/fit-image-size-to-a-small-button
     hlp$img <- tcltk::ttklabel(hlp, image = imgold, compound = "image")
-    tcltk::tkgrid(hlp$img, columnspan = 3, padx = 5)}
+    tcltk::tkgrid(hlp$img, columnspan = 3, padx = 5)
   }
 
   # add buttons ----

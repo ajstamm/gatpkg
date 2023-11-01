@@ -16,6 +16,7 @@ identifyGATpopulation(
   helppage = "identifyGATpopulation",
   helpimg = "",
   tool = "GAT",
+  manual = "/docs/dev/articles/gat_tutorial.html",
   help = paste0("Select your base population variable.  \\n",
     "  •  To continue,  click 'Next >'. \\n",
     "  •  To return to merge type selection, click '< Back'. \\n", "  •  To quit ",
@@ -43,10 +44,16 @@ must be numeric, but the function does not require that.}
 \item{helppage}{A text string that contains the function name for the
 relevant function (if any) in the help dialog.}
 
-\item{helpimg}{A text string denoting the file name of the GAT image to be
-shown, or path and filename of other image to be shown}
+\item{helpimg}{A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory}
 
 \item{tool}{A text string that contains the name of the tool}
+
+\item{manual}{Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.}
 
 \item{help}{A text string containing help message}
 }

@@ -16,7 +16,9 @@ inputGATvalue(
   bgcol = "lightskyblue3",
   quitopt = "Quit",
   buttoncol = "cornflowerblue",
-  helpopt = TRUE
+  helpopt = TRUE,
+  tool = "GAT",
+  manual = "/docs/dev/articles/gat_tutorial.html"
 )
 }
 \arguments{
@@ -44,6 +46,12 @@ relevant function (if any) in the help dialog.}
 \item{buttoncol}{Text string containing UI button color.}
 
 \item{helpopt}{Boolean denoting whether to include the help button.}
+
+\item{tool}{A text string that contains the name of the tool}
+
+\item{manual}{Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.}
 }
 \description{
 This function creates a dialog box to ask the user for a specific value

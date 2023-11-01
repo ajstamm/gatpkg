@@ -31,8 +31,10 @@
 #' @param helptitle  A text string that denotes the help dialog title.
 #' @param helppage   A text string that contains the function name for the
 #'                    relevant function (if any) in the help dialog.
-#' @param helpimg     A text string denoting the file name of the GAT image to be
-#'                    shown, or path and filename of other image to be shown
+#' @param helpimg   A text string denoting the file name of the GAT PNG image to
+#'                  be shown, or path and filename of other image to be shown,
+#'                  (PNF, PFM, PPM, GIF) relative to the current working
+#'                  directory
 #' @param tool       A text string that contains the name of the tool
 #' @param manual    Text String containing the relative path of the tool
 #'                  instruction manual.  For GAT, it is relative to the gatpkg
@@ -63,6 +65,7 @@ identifyGATpopulation <- function(varlist, step = 8, var = "NONE",
                                     "  \u2022  To quit ",tool," click '", quitopt, "'.")
                                   ) {
   noofchoices <- length(varlist)
+  if(tool == "GAT" & helpimg == ""){helpimg <- "identifyGATpopulation"}
   if (noofchoices == 1) {
     msg <- paste0("The only numeric variable is ", varlist,
                   ". It will be used as the base population.")

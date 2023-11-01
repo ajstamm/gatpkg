@@ -30,8 +30,10 @@
 #' @param buttoncol  Text string containing UI button color.
 #' @param helppage  Text string for function name for the relevant function
 #'                  (if any) in the help dialog.
-#' @param helpimg     A text string denoting the file name of the GAT image to be
-#'                    shown, or path and filename of other image to be shown
+#' @param helpimg   A text string denoting the file name of the GAT PNG image to
+#'                  be shown, or path and filename of other image to be shown,
+#'                  (PNF, PFM, PPM, GIF) relative to the current working
+#'                  directory
 #' @param helptitle Text string containing the title bar for the help window.
 #' @param tool       A text string that contains the name of the tool
 #' @param manual    Text String containing the relative path of the tool
@@ -51,12 +53,14 @@ identifyGATid <- function(shp, step = 2, backopt = TRUE,
                           bgcol = "lightskyblue3", quitopt = "Quit",
                           buttoncol = "cornflowerblue",
                           helptitle="the identification variable",
-                          helppage = "identifyGATid", tool = "GAT",
+                          helppage = "identifyGATid",
+                          tool = "GAT",
                           manual = "/docs/dev/articles/gat_tutorial.html",
-                          helpimg="identifyGATid"
+                          helpimg=""
                           ) {
   iditems <- checkGATvariabletypes(shp, type = "character")
   idlist <- c()
+  if(tool == "GAT" & helpimg == ""){helpimg <- "identifyGATid"}
   for (i in 1:length(iditems)) {
     t <- table(data.frame(shp)[, iditems[i]])
     idlist[i] <- length(t) == nrow(shp)

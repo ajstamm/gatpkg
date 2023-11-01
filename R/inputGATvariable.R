@@ -29,8 +29,10 @@
 #' @param value       A number or string that denotes the default value for
 #'                    the text box.
 #' @param helptitle   A text string that denotes the help dialog title.
-#' @param helpimg     A text string denoting the file name of the GAT image to be
-#'                    shown, or path and filename of other image to be shown
+#' @param helpimg   A text string denoting the file name of the GAT PNG image to
+#'                  be shown, or path and filename of other image to be shown,
+#'                  (PNF, PFM, PPM, GIF) relative to the current working
+#'                  directory
 #' @param myvar       Variable selected, if pre-defined.
 #' @param check       Boolean denoting the status of the checkbox. If TRUE,
 #'                    the checkbox starts checked.
@@ -81,7 +83,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                              tool="GAT",
                              manual = "/docs/dev/articles/gat_tutorial.html") {
 
-
+  if(tool == "GAT" & helpimg == ""){helpimg <- "inputGATvariable"}
   # create frames ----
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)

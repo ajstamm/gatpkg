@@ -31,8 +31,10 @@
 #' @param manual    Text String containing the relative path of the tool
 #'                  instruction manual.  For GAT, it is relative to the gatpkg
 #'                  directory, otherwise it is relative to the working directory.
-#' @param helpimg     A text string denoting the file name of the GAT image to be
-#'                    shown, or path and filename of other image to be shown
+#' @param helpimg   A text string denoting the file name of the GAT PNG image to
+#'                  be shown, or path and filename of other image to be shown,
+#'                  (PNF, PFM, PPM, GIF) relative to the current working
+#'                  directory
 #'
 #' @examples
 #'
@@ -52,8 +54,9 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
                             buttoncol = "cornflowerblue",
                             tool = "GAT",
                             manual = "/docs/dev/articles/gat_tutorial.html",
-                            helpimg="inputGATmessage") {
+                            helpimg="") {
 
+  if(tool == "GAT" & helpimg == ""){helpimg <- "inputGATmessage"}
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
   tt$env$tm <- tcltk::tklabel(tt, text = msg, justify = "left",

@@ -11,7 +11,7 @@ inputGATvariable(
   helppage = NULL,
   helptitle = NULL,
   step = 0,
-  helpimg = NULL,
+  helpimg = "inputGATvariable",
   backopt = TRUE,
   checkopt = "Check this box.",
   checkbox = FALSE,
@@ -24,7 +24,8 @@ inputGATvariable(
   bgcol = "lightskyblue3",
   buttoncol = "cornflowerblue",
   quitopt = "Quit",
-  tool = "GAT"
+  tool = "GAT",
+  manual = "/docs/dev/articles/gat_tutorial.html"
 )
 }
 \arguments{
@@ -41,8 +42,10 @@ relevant function (if any) in the help dialog.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
 
-\item{helpimg}{A text string denoting the file name of the GAT image to be
-shown, or path and filename of other image to be shown}
+\item{helpimg}{A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
 
@@ -75,6 +78,10 @@ is FALSE, this is ignored.}
 \item{quitopt}{Text string for the cancel button.}
 
 \item{tool}{Text string containing the name of the tool}
+
+\item{manual}{Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.}
 }
 \description{
 This function creates a dialog box to ask the user to select an item from
