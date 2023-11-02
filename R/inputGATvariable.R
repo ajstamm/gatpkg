@@ -29,10 +29,21 @@
 #' @param value       A number or string that denotes the default value for
 #'                    the text box.
 #' @param helptitle   A text string that denotes the help dialog title.
+#' @param helpimg   A text string denoting the file name of the GAT PNG image to
+#'                  be shown, or path and filename of other image to be shown,
+#'                  (PNF, PFM, PPM, GIF) relative to the current working
+#'                  directory
 #' @param myvar       Variable selected, if pre-defined.
 #' @param check       Boolean denoting the status of the checkbox. If TRUE,
 #'                    the checkbox starts checked.
 #' @param backopt     Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
+#' @param tool       Text string containing the name of the tool
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
 #'
 #' @examples
 #'
@@ -62,14 +73,17 @@
 
 inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                              help = "There is no help.", helppage = NULL,
-                             helptitle = NULL, step = 0, backopt = TRUE,
+                             helptitle = NULL, step = 0,
+                             helpimg= "inputGATvariable", backopt = TRUE,
                              checkopt = "Check this box.", checkbox = FALSE,
                              valuebox = FALSE, value = 0, check = FALSE,
                              valueopt = "Enter a number:", mylist = letters,
-                             myvar = NULL) {
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+                             myvar = NULL, bgcol = "lightskyblue3",
+                             buttoncol = "cornflowerblue", quitopt = "Quit",
+                             tool="GAT",
+                             manual = "/docs/dev/articles/gat_tutorial.html") {
 
+  if(tool == "GAT" & helpimg == ""){helpimg <- "inputGATvariable"}
   # create frames ----
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
@@ -174,8 +188,9 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                             threshold = 0), envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helppage,
-                helppage = helppage, helpimg = helppage, step = step)
+    gatpkg::showGAThelp(help = help, helptitle = helptitle,
+                helppage = helppage, helpimg = helpimg, step = step, tool=tool,
+                buttoncol=buttoncol, bgcol=bgcol, manual = manual)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
@@ -196,7 +211,7 @@ inputGATvariable <- function(title = "GAT window", instruction = "Select one.",
                                        background = buttoncol)
   }
 
-  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = quitopt,
                                          command = onCancel, width = 12,
                                          background = buttoncol)
   tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text = "Help", width = 12,

@@ -49,6 +49,9 @@
 #'                   and ratios to contain only non-zero values.
 #' @param mergevars  List of variables created by the function if pre-defined.
 #' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -60,12 +63,11 @@
 #' @export
 
 inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
-                          mergevars = NULL, backopt = TRUE) {
+                          mergevars = NULL, backopt = TRUE, quitopt = "Quit",
+                          bgcol = "lightskyblue3", buttoncol = "cornflowerblue") {
   # create variable lists ----
   nums <- checkGATvariabletypes(shp, type = "number")
-  helppage = "inputGATmerge"
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+  helppage <- "inputGATmerge"
 
   idlist <- c()
   for (i in 1:length(nums)) {
@@ -192,7 +194,7 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
                 "please also select the ratio variables. \n",
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to exclusions selection, click '< Back'. \n",
-                "  \u2022  To quit GAT, click 'Cancel'.")
+                "  \u2022  To quit GAT, click '", quitopt, "'.")
 
   # button functions ----
   onBack <- function() {
@@ -215,7 +217,8 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
                         mergeopt1 = Rbval, centroid = centype), envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = helppage, helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = helppage, helppage = helppage,
+                        step = step, bgcol=bgcol, buttoncol=buttoncol)
   }
   onCancel <- function() {
     Rbval <- tcltk::tclvalue(rbValue)
@@ -241,7 +244,7 @@ inputGATmerge <- function(shp, aggvar, aggvar2, step = 8, limitdenom = TRUE,
   tt$tfbuts$HelpBut <- tcltk::tkbutton(tt$tfbuts, text="Help",
                                        width = 12, command = onHelp,
                                        background = buttoncol)
-  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = "Cancel GAT",
+  tt$tfbuts$CancelBut <- tcltk::tkbutton(tt$tfbuts, text = quitopt,
                                          width = 12, command = onCancel,
                                          background = buttoncol)
     # button layout ----

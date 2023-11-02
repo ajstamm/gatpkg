@@ -39,7 +39,6 @@ reference:
 - title: "Aggregation functions"
   desc: "Functions used in the aggregation process"
 - contents:
-  - aggregateGATnb
   - createGATregion
   - defineGATmerge
   - identifyGATfirstobs

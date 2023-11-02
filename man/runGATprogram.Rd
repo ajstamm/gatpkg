@@ -10,7 +10,10 @@ runGATprogram(
   settings = NULL,
   adjacent = TRUE,
   minfirst = FALSE,
-  closemap = FALSE
+  closemap = FALSE,
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue",
+  quitopt = "Cancel GAT"
 )
 }
 \arguments{
@@ -40,6 +43,12 @@ the maps are drawn and saved. The default setting is TRUE
 and will result in maps remaining open after GAT is
 finished running. Maps are saved to PDF irrespective of
 this setting.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{quitopt}{Text string for the cancel button.}
 }
 \description{
 This function runs GAT and does not require any inputs. The pop-up dialogs

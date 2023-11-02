@@ -31,6 +31,8 @@
 #' @param myfile     String denoting default file name and location to open.
 #' @param step       Step number to print in title bar. Default is 1.
 #' @param myprogram  String denoting the program name. GAT is the default.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -49,19 +51,35 @@
 #' @export
 
 locateGATshapefile <- function(myfile = "", step = 1, msg = "",
-                               myprogram = "GAT") {
+                               myprogram = "GAT", bgcol = "lightskyblue3",
+                               buttoncol = "cornflowerblue") {
   fil <- cbind("Shapefiles", "*.shp") # creates 1x2 matrix
   checkfile <- 100
   if (msg != "") {
     mycaption <- paste0("Step ", step, ": ", msg)
+    mymsg <- msg
   } else {
     mycaption <- paste0("Step ", step, ": Select your shapefile")
+    mymsg <- "Select the shapefile you wish to load"
   }
+
+  isWindows <- Sys.info()['sysname'] == "Windows"
   while (checkfile != 0){
-    userfile <- utils::choose.files(filters = fil, caption = mycaption,
-                                    default = myfile)
-    if (length(userfile) > 0) {
-      userfile <- gsub("\\\\", "/", userfile) # add "if Windows" tag
+    if (isWindows) {
+      userfile <- utils::choose.files(filters = fil, caption = mycaption,
+                                      default = myfile)
+    } else {
+      # to avoid recursion error
+      userfile <- inputGATvalue(title = mycaption, message = mymsg,
+                                defaulttext = myfile, quitopt = "Cancel",
+                                bgcol = bgcol, buttoncol = buttoncol,
+                                step = step, backopt = FALSE, helpopt = FALSE)
+    }
+
+    if (length(userfile) > 0 & !userfile == "cancel") {
+      if (isWindows) {
+        userfile <- gsub("\\\\", "/", userfile) # add "if Windows" tag
+      }
       # remove extension if present
       periodloc <- max(unlist(gregexpr(".", userfile, fixed = TRUE)))
                    # will be -1 if no match, otherwise location(s) of matches

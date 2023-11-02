@@ -23,15 +23,10 @@
 #' @export
 
 confirmGATquit <- function() {
-  msg <- "Are you sure you want to quit GAT?"
-  x <- tcltk::tkmessageBox(title = "GAT cancelled",
-                      message = msg,
-                      type = "yesno", icon = "warning")
+  msg <- "Are you sure you want to quit?"
+  x <- tcltk::tkmessageBox(title = "Program cancelled", message = msg,
+                           type = "yesno", icon = "warning")
   x <- tcltk::tclvalue(x)
-  if (x == "yes") {
-    x <- "quit"
-  } else if (x == "no") {
-    x <- "continue"
-  }
+  x <- if (x == "yes") "quit" else if (x == "no") "continue"
   return(x)
 }

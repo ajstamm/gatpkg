@@ -9,21 +9,37 @@ showGAThelp(
   helppage = "showGAThelp",
   step = 0,
   helptitle = "this step",
-  helpimg = "showGAThelp"
+  helpimg = "",
+  tool = "GAT",
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue",
+  manual = "/docs/dev/articles/gat_tutorial.html"
 )
 }
 \arguments{
 \item{help}{A text string containing the help message.}
 
-\item{helppage}{A text string that contains the funcion name for the
+\item{helppage}{A text string that contains the function name for the
 relevant function (if any) in the help dialog.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
 
 \item{helptitle}{The step name to display in the title bar.}
 
-\item{helpimg}{A text string denoting the file name of the image to be
-shown.}
+\item{helpimg}{A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory}
+
+\item{tool}{A text string denoting the name of the tool}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{manual}{Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.}
 }
 \description{
 This function creates a dialog box to provide the user with additional

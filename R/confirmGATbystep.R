@@ -38,6 +38,9 @@
 #'                  shapefile to save to, all without extensions.
 #' @param savekml   A boolean, whether or not to save a KML file.
 #' @param step      Integer step in the GAT program, for help reference.
+#' @param quitopt   Text string for the cancel button.
+#' @param bgcol     Text string containing UI background color.
+#' @param buttoncol Text string containing UI button color.
 #'
 #### examples ####
 #' @examples
@@ -117,7 +120,8 @@
 #### end roxygen ####
 
 confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
-                             savekml, step = 0) {
+                             savekml = FALSE, step = 0, bgcol = "lightskyblue3",
+                             buttoncol = "cornflowerblue", quitopt = "Quit") {
   ## initial settings ####
   instruct <- paste("To modify a step, choose it from the list and click",
                     "'Confirm'. \n After you modify most steps, you will",
@@ -136,8 +140,6 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                  "10. Save location",
                  "None")
   fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
 
   ## backwards compatibility check ####
   if (is.null(gatvars$ismax1)) gatvars$ismax1 <- FALSE
@@ -161,6 +163,10 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
     }
   } else {
     mysets <- paste(mysets, "None selected \n")
+  }
+  if(gatvars$invalid > 0) {
+    mysets <- paste(mysets, "Empty areas removed (invalid):",
+                    gatvars$invalid, "\n")
   }
 
   ### aggregation variables ####
@@ -294,8 +300,8 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
   myenv <- new.env()
   # button functions and layout
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = helppage, helppage = helppage,
-                step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = helppage, helppage = helppage,
+                step = step, bgcol=bgcol, buttoncol=buttoncol)
   }
   onOk <- function() {
     Rbval <- tcltk::tclvalue(stepvar)
@@ -313,7 +319,7 @@ confirmGATbystep <- function(gatvars, ratevars, mergevars, filevars, exclist,
                    command = onHelp, background = buttoncol)
   tt$tf$OkBut <- tcltk::tkbutton(tt$tf, text = "Confirm", width = 12,
                  command = onOk, default = "active", background = buttoncol)
-  tt$tf$CancelBut <- tcltk::tkbutton(tt$tf, text = "Cancel GAT",
+  tt$tf$CancelBut <- tcltk::tkbutton(tt$tf, text = quitopt,
                      width = 12, command = onCancel, background = buttoncol)
 
   tcltk::tkgrid(tt$tf$OkBut, column = 2, row = 1, padx = 5)

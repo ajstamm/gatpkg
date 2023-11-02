@@ -26,15 +26,18 @@
 #' function will allow it, but GAT will run a check that triggers the
 #' function inputGATvalue() to force you to enter a number.
 #'
-#' @param shp     Spatial layer.
-#' @param step    Integer step in GAT, for help reference.
-#' @param min1    Minimum value for the first aggregation variable.
-#' @param min2    Minimum value for the second aggregation variable.
-#' @param max1    Maximum value for the first aggregation variable.
-#' @param max2    Maximum value for the second aggregation variable.
-#' @param var1    Name of the first aggregation variable.
-#' @param var2    Name of the second aggregation variable.
-#' @param backopt Boolean denoting whether to include the back button.
+#' @param shp        Spatial layer.
+#' @param step       Integer step in GAT, for help reference.
+#' @param min1       Minimum value for the first aggregation variable.
+#' @param min2       Minimum value for the second aggregation variable.
+#' @param max1       Maximum value for the first aggregation variable.
+#' @param max2       Maximum value for the second aggregation variable.
+#' @param var1       Name of the first aggregation variable.
+#' @param var2       Name of the second aggregation variable.
+#' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -46,14 +49,16 @@
 
 inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
                                 max1 = "none", max2 = "none", var1 = "",
-                                var2 = "NONE", backopt = TRUE) {
+                                var2 = "NONE", backopt = TRUE,
+                                bgcol = "lightskyblue3", quitopt = "Quit",
+                                buttoncol = "cornflowerblue") {
   ## define objects ----
   helppage <- "inputGATaggregators"
   hlp <- paste0("Select your aggregation variables. In the text boxes, \n",
                 "enter your desired minimum and maximum values. \n",
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to aggregation variable selection,",
-                "click '< Back'. \n", "  \u2022  To quit GAT, click 'Cancel'.")
+                "click '< Back'. \n", "  \u2022  To quit GAT, click '", quitopt, "'.")
   instruct <- paste(" 1. Select each variable you would like to aggregate. \n",
                     "     To ignore the second aggregation variable, select",
                     "'NONE' \n      for its variable name. \n",
@@ -64,8 +69,8 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
                     "is not \n     required. \n \n",
                     "Note: The first variable and its minimum aggregation value",
                     "are required. \n")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+  #bgcol <- "lightskyblue3"
+  #buttoncol <- "cornflowerblue"
 
   fonthead <- tcltk::tkfont.create(family = "Segoe UI", size = 10, weight = "bold")
   mylist1 <- checkGATvariabletypes(shp, type = "number")
@@ -172,8 +177,9 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
            envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = "aggregation variable settings",
-                helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = "aggregation variable settings",
+                helppage = helppage, step = step, bgcol=bgcol,
+                buttoncol=buttoncol)
   }
 
   ## draw buttons ----
@@ -195,7 +201,7 @@ inputGATaggregators <- function(shp, step = 4, min1 = "5,000", min2 = "none",
   tt$tf$HelpBut <- tcltk::tkbutton(tt$tf, text="Help", width = 12,
                                    command = onHelp,
                                    background = buttoncol)
-  tt$tf$CancelBut <- tcltk::tkbutton(tt$tf, text = "Cancel GAT",
+  tt$tf$CancelBut <- tcltk::tkbutton(tt$tf, text = quitopt,
                                      width = 12, command = onCancel,
                                      background = buttoncol)
 

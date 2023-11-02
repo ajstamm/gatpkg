@@ -4,7 +4,14 @@
 \alias{locateGATshapefile}
 \title{Locate GAT Shapefile}
 \usage{
-locateGATshapefile(myfile = "", step = 1, msg = "", myprogram = "GAT")
+locateGATshapefile(
+  myfile = "",
+  step = 1,
+  msg = "",
+  myprogram = "GAT",
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue"
+)
 }
 \arguments{
 \item{myfile}{String denoting default file name and location to open.}
@@ -14,6 +21,10 @@ locateGATshapefile(myfile = "", step = 1, msg = "", myprogram = "GAT")
 \item{msg}{String denoting your message to display in the status bar.}
 
 \item{myprogram}{String denoting the program name. GAT is the default.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a window that asks the user to select a shapefile for

@@ -11,7 +11,10 @@ inputGATmerge(
   step = 8,
   limitdenom = TRUE,
   mergevars = NULL,
-  backopt = TRUE
+  backopt = TRUE,
+  quitopt = "Quit",
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue"
 )
 }
 \arguments{
@@ -31,6 +34,12 @@ and ratios to contain only non-zero values.}
 \item{mergevars}{List of variables created by the function if pre-defined.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a dialog window for the user to select the desired

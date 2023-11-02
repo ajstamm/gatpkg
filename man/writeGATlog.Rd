@@ -81,7 +81,8 @@ gatvars <- list(
   exclmaxval = 2,
   ismax1 = TRUE,       # user selected "NONE" as maximum value
   ismin2 = FALSE,
-  ismax2 = FALSE
+  ismax2 = FALSE,
+  invalid = 2,
 )
 
 mergevars <- list(

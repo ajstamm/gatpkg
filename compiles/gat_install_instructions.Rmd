@@ -43,7 +43,7 @@ Before installing GAT, install the necessary packages (or check that you have th
 
 ```{r, eval = FALSE}
 libs <- c("classInt", "graphics", "grDevices", "methods", "raster",
-          "RColorBrewer", "sf", "spdep", "stats", "tcltk", "tibble", "utils")
+          "RColorBrewer", "sf", "stats", "tcltk", "tibble", "utils")
 req <- unlist(lapply(libs, require, character.only = TRUE))
 req <- libs[!req]
 if (length(req) > 0) {

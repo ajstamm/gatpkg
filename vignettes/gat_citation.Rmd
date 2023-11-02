@@ -1,10 +1,10 @@
 ---
-title: "GAT Citation Information"
+title: "Citation Information"
 author: "Abigail Stamm"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{GAT Citation Information}
+  %\VignetteIndexEntry{Citation Information}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -31,21 +31,21 @@ citation(package = "gatpkg")
 The conversion of GAT to an R package would not have been possible without the support of the Centers for Disease Control and Prevention (CDC) National Environmental Health Tracking Program (NEPHT) and NYS Department of Health (NYSDOH) Bureau of Environmental and Occupational Epidemiology (BEOE) staff and interns, including:
 
 **Major contributors**  
-Abigail Stamm, NYSDOH BEOE  
+Abigail Stamm, formerly NYSDOH BEOE  
 Gwen (Babcock) LaSelva, NYSDOH BEOE  
-Thomas Talbot  
+Thomas Talbot, formerly NYSDOH BEOE   
 
 **Alpha testers and contributors**  
 Neil Muscatiello, NYSDOH BEOE  
-Arjita Rai  
+Arjita Rai, formerly NYSDOH BEOE    
 Catherine Wargo, NYSDOH BEOE  
 Douglas Done, NYSDOH BEOE  
-Maxime Fokoua Dongmo  
-Marine Nalbandyan  
+Maxime Fokoua Dongmo, formerly NYSDOH BEOE    
+Marine Nalbandyan, formerly NYSDOH BEOE   
 
 **Beta testers**  
 Angela Werner, CDC NEPHT  
-Aya Abdelfattah  
+Aya Abdelfattah, formerly NYSDOH BEOE    
 Anne Pysnik, NYSDOH BEOE
 
 GAT was made possible through funding made available to the New York State Department of Health / Health Research, Incorporated by the CDC through grant # NUE1EH001341-03-01. Its content is solely the responsibility of the authors and does not necessarily represent the official views of the CDC.

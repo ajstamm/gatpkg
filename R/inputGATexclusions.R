@@ -41,10 +41,13 @@
 #'   The values to use in the exclusion calculations.
 #' }
 #'
-#' @param shp     Spatial layer.
-#' @param step    Integer step in the GAT program, for help reference.
-#' @param exclist The list of exclusion criteria, if pre-defined.
-#' @param backopt Boolean denoting whether to include the back button.
+#' @param shp        Spatial layer.
+#' @param step       Integer step in the GAT program, for help reference.
+#' @param exclist    The list of exclusion criteria, if pre-defined.
+#' @param backopt    Boolean denoting whether to include the back button.
+#' @param quitopt    Text string for the cancel button.
+#' @param bgcol      Text string containing UI background color.
+#' @param buttoncol  Text string containing UI button color.
 #'
 #' @examples
 #'
@@ -54,16 +57,18 @@
 #'
 #' @export
 
-inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
+inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE,
+                               bgcol = "lightskyblue3", quitopt = "Quit",
+                               buttoncol = "cornflowerblue") {
   ## define objects ----
   helppage <- "inputGATexclusions"
   hlp <- paste0("Select your first aggregation variable. In the text box, \n",
                 "enter your desired minimum value. \n",
                 "  \u2022  To continue,  click 'Next >'. \n",
                 "  \u2022  To return to aggregation variable selection,",
-                "click '< Back'. \n", "  \u2022  To quit GAT, click 'Cancel'.")
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+                "click '< Back'. \n", "  \u2022  To quit GAT, click '", quitopt, "'.")
+  #bgcol <- "lightskyblue3"
+  #buttoncol <- "cornflowerblue"
 
   mylist <- checkGATvariabletypes(shp, type = "number")
   mylist <- c("NONE", mylist)
@@ -225,8 +230,9 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
            envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = hlp, helptitle = "exclusion settings",
-                helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = hlp, helptitle = "exclusion settings",
+                helppage = helppage, step = step, bgcol=bgcol,
+                buttoncol=buttoncol)
   }
 
   ## draw buttons ----
@@ -246,7 +252,7 @@ inputGATexclusions <- function(shp, step = 0, exclist = NULL, backopt = TRUE) {
   tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help",
                                        width = 12, command = onHelp,
                                        background = buttoncol)
-  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = "Cancel GAT",
+  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = quitopt,
                                          width = 12, command = onCancel,
                                          background = buttoncol)
   if (backopt) {

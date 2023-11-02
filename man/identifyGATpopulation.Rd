@@ -4,17 +4,58 @@
 \alias{identifyGATpopulation}
 \title{Identify GAT Population Variable}
 \usage{
-identifyGATpopulation(varlist, step = 8, var = "NONE", backopt = TRUE)
+identifyGATpopulation(
+  varlist,
+  step = 8,
+  var = "NONE",
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue",
+  helptitle = "identifyGATpopulation",
+  helppage = "identifyGATpopulation",
+  helpimg = "",
+  tool = "GAT",
+  manual = "/docs/dev/articles/gat_tutorial.html",
+  help = paste0("Select your base population variable.  \\n",
+    "  •  To continue,  click 'Next >'. \\n",
+    "  •  To return to merge type selection, click '< Back'. \\n", "  •  To quit ",
+    tool, " click '", quitopt, "'.")
+)
 }
 \arguments{
-\item{varlist}{A vector of names of variables. Within GAT, these variables
+\item{varlist}{Vector of names of variables. Within GAT, these variables
 must be numeric, but the function does not require that.}
 
-\item{step}{Integer step in the GAT program, for help reference.}
+\item{step}{Integer step in the program, for help reference.}
 
 \item{var}{Population variable to use for weighting, if pre-selected.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{helptitle}{A text string that denotes the help dialog title.}
+
+\item{helppage}{A text string that contains the function name for the
+relevant function (if any) in the help dialog.}
+
+\item{helpimg}{A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory}
+
+\item{tool}{A text string that contains the name of the tool}
+
+\item{manual}{Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.}
+
+\item{help}{A text string containing help message}
 }
 \description{
 This function opens a dialog window for the user to select which variable

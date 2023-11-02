@@ -4,12 +4,24 @@
 \alias{saveGATkml}
 \title{Save GAT KML File}
 \usage{
-saveGATkml(step = 0, backopt = TRUE)
+saveGATkml(
+  step = 0,
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue",
+  quitopt = "Quit"
+)
 }
 \arguments{
 \item{step}{Integer step in the GAT program, for help reference.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{quitopt}{Text string for the cancel button.}
 }
 \description{
 This function opens a dialog window for the user to select whether or not

@@ -11,28 +11,47 @@ inputGATmessage(
   helptitle = "inputGATmessage",
   helppage = "inputGATmessage",
   step = 0,
-  buttonopt = "Cancel GAT",
-  backopt = TRUE
+  quitopt = "Quit",
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  buttoncol = "cornflowerblue",
+  tool = "GAT",
+  manual = "/docs/dev/articles/gat_tutorial.html",
+  helpimg = ""
 )
 }
 \arguments{
-\item{title}{A text string that denotes the dialog title.}
+\item{title}{Text string containing the dialog title.}
 
-\item{msg}{A text string that denotes the message for the user.}
+\item{msg}{Text string containing the message for the user.}
 
-\item{help}{A text string containing the help message.}
+\item{help}{Text string containing the help message.}
 
-\item{helptitle}{A text string denoting the title bar for the help window.}
+\item{helptitle}{Text string containing the title bar for the help window.}
 
-\item{helppage}{A text string that cntains the function name for the
-relevant function (if any) in the help dialog.}
+\item{helppage}{Text string for function name for the relevant function
+(if any) in the help dialog.}
 
 \item{step}{Integer step in the GAT program, for help reference.}
 
-\item{buttonopt}{A string that denotes the display value for the
-no/cancel button.}
+\item{quitopt}{Text string for the cancel button.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{buttoncol}{Text string containing UI button color.}
+
+\item{tool}{A text string that contains the name of the tool}
+
+\item{manual}{Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.}
+
+\item{helpimg}{A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory}
 }
 \description{
 This function opens a dialog window for the user to confirm the contents

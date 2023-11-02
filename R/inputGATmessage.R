@@ -16,16 +16,25 @@
 #' * Click \code{Help} to get further guidance and open the manual.
 #'
 #'
-#' @param title     A text string that denotes the dialog title.
-#' @param help      A text string containing the help message.
-#' @param helppage  A text string that cntains the function name for the
-#'                  relevant function (if any) in the help dialog.
+#' @param title     Text string containing the dialog title.
+#' @param help      Text string containing the help message.
+#' @param helppage  Text string for function name for the relevant function
+#'                  (if any) in the help dialog.
 #' @param step      Integer step in the GAT program, for help reference.
-#' @param buttonopt A string that denotes the display value for the
-#'                  no/cancel button.
-#' @param msg       A text string that denotes the message for the user.
-#' @param helptitle A text string denoting the title bar for the help window.
+#' @param quitopt   Text string for the cancel button.
+#' @param bgcol     Text string containing UI background color.
+#' @param buttoncol Text string containing UI button color.
+#' @param msg       Text string containing the message for the user.
+#' @param helptitle Text string containing the title bar for the help window.
 #' @param backopt   Boolean denoting whether to include the back button.
+#' @param tool       A text string that contains the name of the tool
+#' @param manual    Text String containing the relative path of the tool
+#'                  instruction manual.  For GAT, it is relative to the gatpkg
+#'                  directory, otherwise it is relative to the working directory.
+#' @param helpimg   A text string denoting the file name of the GAT PNG image to
+#'                  be shown, or path and filename of other image to be shown,
+#'                  (PNF, PFM, PPM, GIF) relative to the current working
+#'                  directory
 #'
 #' @examples
 #'
@@ -40,10 +49,14 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
                             help = "There is no help.",
                             helptitle = "inputGATmessage",
                             helppage = "inputGATmessage", step = 0,
-                            buttonopt = "Cancel GAT", backopt = TRUE) {
-  bgcol <- "lightskyblue3"
-  buttoncol <- "cornflowerblue"
+                            quitopt = "Quit", backopt = TRUE,
+                            bgcol = "lightskyblue3",
+                            buttoncol = "cornflowerblue",
+                            tool = "GAT",
+                            manual = "/docs/dev/articles/gat_tutorial.html",
+                            helpimg="") {
 
+  if(tool == "GAT" & helpimg == ""){helpimg <- "inputGATmessage"}
   tt <- tcltk::tktoplevel(background = bgcol)
   tcltk::tktitle(tt) <- paste0("Step ", step, ": ", title)
   tt$env$tm <- tcltk::tklabel(tt, text = msg, justify = "left",
@@ -61,8 +74,10 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
     assign("myvalue", "cancel", envir=myenv)
   }
   onHelp <- function() {
-    showGAThelp(help = help, helptitle = helppage,
-                helppage = helppage, step = step)
+    gatpkg::showGAThelp(help = help, helptitle = helppage,
+                helppage = helppage, step = step, bgcol=bgcol,
+                buttoncol=buttoncol, bgcol=bgcol, buttoncol=buttoncol,
+                manual=manual, tool=tool, helpimg=helpimg)
   }
   onBack <- function() {
     tcltk::tkdestroy(tt)
@@ -86,7 +101,7 @@ inputGATmessage <- function(title = "GAT input window", msg = "Is GAT fun?",
   tt$env$tf$HelpBut <- tcltk::tkbutton(tt$env$tf, text="Help", width = 12,
                                        command = onHelp,
                                        background = buttoncol)
-  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = buttonopt,
+  tt$env$tf$CancelBut <- tcltk::tkbutton(tt$env$tf, text = quitopt,
                                          width = 12, command = onCancel,
                                          background = buttoncol)
 

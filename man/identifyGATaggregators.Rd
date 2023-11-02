@@ -4,7 +4,15 @@
 \alias{identifyGATaggregators}
 \title{Identify and Check GAT Aggregation Variables}
 \usage{
-identifyGATaggregators(shp, step = 4, agglist = NULL, backopt = TRUE)
+identifyGATaggregators(
+  shp,
+  step = 4,
+  agglist = NULL,
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue"
+)
 }
 \arguments{
 \item{shp}{Spatial layer.}
@@ -15,6 +23,12 @@ identifyGATaggregators(shp, step = 4, agglist = NULL, backopt = TRUE)
 if pre-selected.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a dialog window for the user to select which variables

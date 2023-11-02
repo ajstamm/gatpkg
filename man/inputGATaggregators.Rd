@@ -13,7 +13,10 @@ inputGATaggregators(
   max2 = "none",
   var1 = "",
   var2 = "NONE",
-  backopt = TRUE
+  backopt = TRUE,
+  bgcol = "lightskyblue3",
+  quitopt = "Quit",
+  buttoncol = "cornflowerblue"
 )
 }
 \arguments{
@@ -34,6 +37,12 @@ inputGATaggregators(
 \item{var2}{Name of the second aggregation variable.}
 
 \item{backopt}{Boolean denoting whether to include the back button.}
+
+\item{bgcol}{Text string containing UI background color.}
+
+\item{quitopt}{Text string for the cancel button.}
+
+\item{buttoncol}{Text string containing UI button color.}
 }
 \description{
 This function opens a dialog window for the user to select which variables
