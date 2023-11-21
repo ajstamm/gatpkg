@@ -5,6 +5,9 @@
 stable](https://lifecycle.r-lib.org/articles/figures/lifecycle-stable.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 <!-- badges: end -->
 
+
+
+
 # Geographic Aggregation Tool (GAT)
 
 The geographic aggregation tool (GAT) was developed by the New York State Department of Health (NYSDOH) Environmental Public Health Tracking (EPHT) Program with funding from the CDC administered through Health Research Incorporated. GAT is maintained by Abigail Stamm at the NYSDOH. 
@@ -22,7 +25,7 @@ Run the code below in R to install GAT directly from GitHub.
 install.packages("devtools")
 # install the development version of GAT from Github with all 
 # required packages from CRAN
-devtools::install_github("NYSTracking/gatpkg", dependencies = TRUE, 
+devtools::install_github("nystracking/gatpkg", dependencies = TRUE, 
                          build_vignette = TRUE)
 ```
 
