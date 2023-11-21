@@ -111,7 +111,10 @@ of the provided message.</p>
 <span>  quitopt <span class="op">=</span> <span class="st">"Quit"</span>,</span>
 <span>  backopt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
-<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span></span>
+<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
+<span>  tool <span class="op">=</span> <span class="st">"GAT"</span>,</span>
+<span>  manual <span class="op">=</span> <span class="st">"/docs/dev/articles/gat_tutorial.html"</span>,</span>
+<span>  helpimg <span class="op">=</span> <span class="st">""</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -156,6 +159,23 @@ of the provided message.</p>
 
 <dt>buttoncol</dt>
 <dd><p>Text string containing UI button color.</p></dd>
+
+
+<dt>tool</dt>
+<dd><p>A text string that contains the name of the tool</p></dd>
+
+
+<dt>manual</dt>
+<dd><p>Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.</p></dd>
+
+
+<dt>helpimg</dt>
+<dd><p>A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory</p></dd>
 
 </dl></div>
 
