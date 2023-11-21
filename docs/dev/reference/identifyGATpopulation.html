@@ -112,7 +112,16 @@ following buttons.</p><ul><li><p>Click <code>Next</code> to continue to the next
 <span>  backopt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
 <span>  quitopt <span class="op">=</span> <span class="st">"Quit"</span>,</span>
-<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span></span>
+<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
+<span>  helptitle <span class="op">=</span> <span class="st">"identifyGATpopulation"</span>,</span>
+<span>  helppage <span class="op">=</span> <span class="st">"identifyGATpopulation"</span>,</span>
+<span>  helpimg <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  tool <span class="op">=</span> <span class="st">"GAT"</span>,</span>
+<span>  manual <span class="op">=</span> <span class="st">"/docs/dev/articles/gat_tutorial.html"</span>,</span>
+<span>  help <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Select your base population variable.  \n"</span>,</span>
+<span>    <span class="st">"  •  To continue,  click 'Next &gt;'. \n"</span>,</span>
+<span>    <span class="st">"  •  To return to merge type selection, click '&lt; Back'. \n"</span>, <span class="st">"  •  To quit "</span>,</span>
+<span>    <span class="va">tool</span>, <span class="st">" click '"</span>, <span class="va">quitopt</span>, <span class="st">"'."</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -145,6 +154,36 @@ must be numeric, but the function does not require that.</p></dd>
 
 <dt>buttoncol</dt>
 <dd><p>Text string containing UI button color.</p></dd>
+
+
+<dt>helptitle</dt>
+<dd><p>A text string that denotes the help dialog title.</p></dd>
+
+
+<dt>helppage</dt>
+<dd><p>A text string that contains the function name for the
+relevant function (if any) in the help dialog.</p></dd>
+
+
+<dt>helpimg</dt>
+<dd><p>A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory</p></dd>
+
+
+<dt>tool</dt>
+<dd><p>A text string that contains the name of the tool</p></dd>
+
+
+<dt>manual</dt>
+<dd><p>Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.</p></dd>
+
+
+<dt>help</dt>
+<dd><p>A text string containing help message</p></dd>
 
 </dl></div>
 

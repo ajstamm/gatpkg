@@ -19,6 +19,6 @@ pkgdown::build_site(install = FALSE, new_process = FALSE)
 # if images are glitching, may need to run "find in files"
 # and search for "../../R%20repos/gatpkg/", then replace all with ""
 
-# find in files "Gwen Babcock and Abigail Stamm with funding from Centers"
+# find in files "Gwen Babcock, Abigail Stamm, Centers"
 # and replace with "Gwen Babcock and Abigail Stamm with funding from Centers"
 

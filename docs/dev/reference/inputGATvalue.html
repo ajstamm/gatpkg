@@ -102,7 +102,9 @@ and provides a link to the relevant help file in the GAT program.</p>
 <span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
 <span>  quitopt <span class="op">=</span> <span class="st">"Quit"</span>,</span>
 <span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
-<span>  helpopt <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  helpopt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  tool <span class="op">=</span> <span class="st">"GAT"</span>,</span>
+<span>  manual <span class="op">=</span> <span class="st">"/docs/dev/articles/gat_tutorial.html"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -155,6 +157,16 @@ relevant function (if any) in the help dialog.</p></dd>
 
 <dt>helpopt</dt>
 <dd><p>Boolean denoting whether to include the help button.</p></dd>
+
+
+<dt>tool</dt>
+<dd><p>A text string that contains the name of the tool</p></dd>
+
+
+<dt>manual</dt>
+<dd><p>Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.</p></dd>
 
 </dl></div>
 

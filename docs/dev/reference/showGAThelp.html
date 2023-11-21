@@ -91,7 +91,11 @@ assistance in using GAT, including instructions and links to help pages.</p>
 <span>  helppage <span class="op">=</span> <span class="st">"showGAThelp"</span>,</span>
 <span>  step <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  helptitle <span class="op">=</span> <span class="st">"this step"</span>,</span>
-<span>  helpimg <span class="op">=</span> <span class="st">"showGAThelp"</span></span>
+<span>  helpimg <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  tool <span class="op">=</span> <span class="st">"GAT"</span>,</span>
+<span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
+<span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
+<span>  manual <span class="op">=</span> <span class="st">"/docs/dev/articles/gat_tutorial.html"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -102,7 +106,7 @@ assistance in using GAT, including instructions and links to help pages.</p>
 
 
 <dt>helppage</dt>
-<dd><p>A text string that contains the funcion name for the
+<dd><p>A text string that contains the function name for the
 relevant function (if any) in the help dialog.</p></dd>
 
 
@@ -115,8 +119,28 @@ relevant function (if any) in the help dialog.</p></dd>
 
 
 <dt>helpimg</dt>
-<dd><p>A text string denoting the file name of the image to be
-shown.</p></dd>
+<dd><p>A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory</p></dd>
+
+
+<dt>tool</dt>
+<dd><p>A text string denoting the name of the tool</p></dd>
+
+
+<dt>bgcol</dt>
+<dd><p>Text string containing UI background color.</p></dd>
+
+
+<dt>buttoncol</dt>
+<dd><p>Text string containing UI button color.</p></dd>
+
+
+<dt>manual</dt>
+<dd><p>Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.</p></dd>
 
 </dl></div>
 
@@ -126,7 +150,7 @@ shown.</p></dd>
 <span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="fu">showGAThelp</span><span class="op">(</span>helptitle <span class="op">=</span> <span class="st">"GAT help dialog"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> &lt;Tcl&gt;  </span>
+<span class="r-err co"><span class="r-pr">#&gt;</span> <span class="error">Error in structure(.External(.C_dotTclObjv, objv), class = "tclObj"):</span> [tcl] couldn't open "C:/Users/ajstamm/AppData/Local/R/win-library/4.3/gatpkg/man/figures/showGAThelp.png": no such file or directory.</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

@@ -99,6 +99,7 @@ includes options to add a check box or text box if desired.</p>
 <span>  helppage <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  helptitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  step <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  helpimg <span class="op">=</span> <span class="st">"inputGATvariable"</span>,</span>
 <span>  backopt <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  checkopt <span class="op">=</span> <span class="st">"Check this box."</span>,</span>
 <span>  checkbox <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -110,7 +111,9 @@ includes options to add a check box or text box if desired.</p>
 <span>  myvar <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bgcol <span class="op">=</span> <span class="st">"lightskyblue3"</span>,</span>
 <span>  buttoncol <span class="op">=</span> <span class="st">"cornflowerblue"</span>,</span>
-<span>  quitopt <span class="op">=</span> <span class="st">"Quit"</span></span>
+<span>  quitopt <span class="op">=</span> <span class="st">"Quit"</span>,</span>
+<span>  tool <span class="op">=</span> <span class="st">"GAT"</span>,</span>
+<span>  manual <span class="op">=</span> <span class="st">"/docs/dev/articles/gat_tutorial.html"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -139,6 +142,13 @@ relevant function (if any) in the help dialog.</p></dd>
 
 <dt>step</dt>
 <dd><p>Integer step in the GAT program, for help reference.</p></dd>
+
+
+<dt>helpimg</dt>
+<dd><p>A text string denoting the file name of the GAT PNG image to
+be shown, or path and filename of other image to be shown,
+(PNF, PFM, PPM, GIF) relative to the current working
+directory</p></dd>
 
 
 <dt>backopt</dt>
@@ -193,6 +203,16 @@ is FALSE, this is ignored.</p></dd>
 
 <dt>quitopt</dt>
 <dd><p>Text string for the cancel button.</p></dd>
+
+
+<dt>tool</dt>
+<dd><p>Text string containing the name of the tool</p></dd>
+
+
+<dt>manual</dt>
+<dd><p>Text String containing the relative path of the tool
+instruction manual.  For GAT, it is relative to the gatpkg
+directory, otherwise it is relative to the working directory.</p></dd>
 
 </dl></div>
 
